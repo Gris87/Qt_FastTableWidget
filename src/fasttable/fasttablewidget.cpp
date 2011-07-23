@@ -121,6 +121,68 @@ void FastTableWidget::resetFont(const int row, const int column)
     }
 }
 
+void FastTableWidget::selectRow(const int row)
+{
+    for (int i=0; i<mColumnCount; ++i)
+    {
+        setCellSelected(row, i, true);
+    }
+}
+
+void FastTableWidget::unselectRow(const int row)
+{
+    for (int i=0; i<mColumnCount; ++i)
+    {
+        setCellSelected(row, i, false);
+    }
+}
+
+void FastTableWidget::selectColumn(const int column)
+{
+    for (int i=0; i<mRowCount; ++i)
+    {
+        setCellSelected(i, column, true);
+    }
+}
+
+void FastTableWidget::unselectColumn(const int column)
+{
+    for (int i=0; i<mRowCount; ++i)
+    {
+        setCellSelected(i, column, false);
+    }
+}
+
+void FastTableWidget::selectAll()
+{
+    unselectAll();
+
+    QPair<int, int> aCellPos;
+
+    for (int i=0; i<mRowCount; ++i)
+    {
+        for (int j=0; j<mColumnCount; ++j)
+        {
+            aCellPos.first=i;
+            aCellPos.second=j;
+
+            mCurSelection.append(aCellPos);
+
+            mSelectedCells[i][j]=true;
+        }
+    }
+}
+
+void FastTableWidget::unselectAll()
+{
+    for (int i=0; i<mCurSelection.length(); ++i)
+    {
+        mSelectedCells[mCurSelection.at(i).first][mCurSelection.at(i).second]=false;
+    }
+
+    mCurSelection.clear();
+}
+
 void FastTableWidget::mousePressEvent(QMouseEvent *event)
 {
     QAbstractScrollArea::mousePressEvent(event);

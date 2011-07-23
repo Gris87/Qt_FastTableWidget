@@ -34,6 +34,15 @@ public:
     void resetForegroundColor(const int row, const int column);
     void resetFont(const int row, const int column);
 
+    void selectRow(const int row);
+    void unselectRow(const int row);
+
+    void selectColumn(const int column);
+    void unselectColumn(const int column);
+
+    void selectAll();
+    void unselectAll();
+
     int rowCount();
     void setRowCount(int count);
 
