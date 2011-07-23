@@ -4,6 +4,8 @@
 #include <QDialog>
 
 #include <QLabel>
+#include <QFont>
+#include "qdebug.h"
 
 #include "src/fasttable/fasttabletest.h"
 

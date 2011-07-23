@@ -23,3 +23,8 @@ HEADERS  += src/main/mainwindow.h \
 
 FORMS    += src/main/mainwindow.ui \
             src/main/testdialog.ui
+
+OTHER_FILES += \
+    README \
+    push.sh \
+    .gitignore
