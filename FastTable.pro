@@ -13,11 +13,13 @@ TEMPLATE = app
 SOURCES += src/main.cpp\
         src/main/mainwindow.cpp \
         src/main/testdialog.cpp \
-        src/fasttable/fasttablewidget.cpp
+        src/fasttable/fasttablewidget.cpp \
+        src/fasttable/fasttabletest.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += src/main/mainwindow.h \
         src/main/testdialog.h \
-        src/main/fasttable/fasttablewidget.h
+        src/fasttable/fasttablewidget.h \
+        src/fasttable/fasttabletest.h
 
 FORMS    += src/main/mainwindow.ui \
-        src/main/testdialog.ui
+            src/main/testdialog.ui

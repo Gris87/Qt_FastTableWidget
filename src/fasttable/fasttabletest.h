@@ -1,0 +1,35 @@
+#ifndef FASTTABLETEST_H
+#define FASTTABLETEST_H
+
+#include "fasttablewidget.h"
+
+class FastTableTest : public FastTableWidget
+{
+    Q_OBJECT
+public:
+    explicit FastTableTest(QWidget *parent = 0);
+
+    int getRowCount();
+    int getColumnCount();
+
+    quint16 getDefaultHeight();
+    quint16 getDefaultWidth();
+    int     getTotalHeight();
+    int     getTotalWidth();
+
+    QColor getDefaultBackgroundColor();
+    QColor getDefaultForegroundColor();
+
+    QList< QStringList >      *getData();
+    QList< quint16 >          *getRowHeights();
+    QList< quint16 >          *getColumnWidths();
+    QList< QList<bool> >      *getSelectedCells();
+    QList< QPair<int, int> >  *getCurSelection();
+    QList< QList<QColor *> >  *getBackgroundColors();
+    QList< QList<QColor *> >  *getForegroundColors();
+    QList< QList<QFont *> >   *getCellFonts();
+
+    bool getStartSelection();
+};
+
+#endif // FASTTABLETEST_H

@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "src/main/testdialog.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -12,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     move(frect.topLeft());
 
     FastTableWidget* aFastTableWidget=new FastTableWidget(this);
-    ui->verticalLayout->addWidget(aFastTableWidget);
+    ui->fastTableLayout->addWidget(aFastTableWidget);
 
     qint64 aStart=QDateTime::currentMSecsSinceEpoch();
 
@@ -26,8 +28,6 @@ MainWindow::MainWindow(QWidget *parent) :
         aFastTableWidget->setText(i, 0, QString::number(i+1));
     }
 
-    qDebug()<<QDateTime::currentMSecsSinceEpoch()-aStart;
-
     for (int i=0; i<aFastTableWidget->rowCount(); i++)
     {
         for (int j=1; j<aFastTableWidget->columnCount(); j++)
@@ -36,10 +36,16 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     }
 
-    qDebug()<<QDateTime::currentMSecsSinceEpoch()-aStart;
+    qDebug()<<"Time to fill with data:"<<QDateTime::currentMSecsSinceEpoch()-aStart<<"ms";
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_testButton_clicked()
+{
+    TestDialog dialog(this);
+    dialog.exec();
 }

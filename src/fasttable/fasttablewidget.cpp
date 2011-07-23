@@ -15,6 +15,9 @@ FastTableWidget::FastTableWidget(QWidget *parent) :
     mDefaultForegroundColor.setRgb(0, 0, 0);
 
     mStartSelection=false;
+
+    horizontalScrollBar()->setSingleStep(100);
+    verticalScrollBar()->setSingleStep(100);
 }
 
 FastTableWidget::~FastTableWidget()
@@ -302,7 +305,7 @@ void FastTableWidget::setColumnCount(int count)
         }
         else
         {
-            for (int i=mColumnCount-1; i>=count; ++i)
+            for (int i=mColumnCount-1; i>=count; --i)
             {
                 mTotalWidth-=mColumnWidths.at(i);
                 mColumnWidths.removeLast();
