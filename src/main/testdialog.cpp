@@ -416,7 +416,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 16: setCellFont
+    // TEST 17: setCellFont
     // ----------------------------------------------------------------
     {
         QFont aNewCellFont("Arial", 12, 1, true);
@@ -481,6 +481,96 @@ TestDialog::TestDialog(QWidget *parent) :
         }
 
         testCompleted(success, ui->setCellFontResLabel);
+        ui->progressBar->setValue(ui->progressBar->value()+1);
+    }
+    // ----------------------------------------------------------------
+    // TEST 18: setCellSelected
+    // ----------------------------------------------------------------
+    {
+        mFastTableWidget->selectAll();
+
+        success=true;
+
+        for (int i=0; i<mFastTableWidget->getRowCount(); ++i)
+        {
+            for (int j=0; j<mFastTableWidget->getColumnCount(); ++j)
+            {
+                if (!mSelectedCells->at(i).at(j))
+                {
+                    success=false;
+                    break;
+                }
+            }
+
+            if (!success)
+            {
+                break;
+            }
+        }
+
+        mFastTableWidget->setCellSelected(10, 5, false);
+
+        success = success && !mSelectedCells->at(10).at(5);
+
+        mFastTableWidget->unselectAll();
+
+        if (success)
+        {
+            for (int i=0; i<mFastTableWidget->getRowCount(); ++i)
+            {
+                for (int j=0; j<mFastTableWidget->getColumnCount(); ++j)
+                {
+                    if (mSelectedCells->at(i).at(j))
+                    {
+                        success=false;
+                        break;
+                    }
+                }
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        testCompleted(success, ui->setCellSelectedResLabel);
+        ui->progressBar->setValue(ui->progressBar->value()+1);
+    }
+    // ----------------------------------------------------------------
+    // TEST 19: setRowHeight
+    // ----------------------------------------------------------------
+    {
+        int     aTotalHeight=mFastTableWidget->getTotalHeight();
+        quint16 aRowHeight=mRowHeights->at(30);
+
+        mFastTableWidget->setRowHeight(30, aRowHeight+100);
+
+        success =            mFastTableWidget->getTotalHeight()==aTotalHeight+100;
+
+        mFastTableWidget->setRowHeight(30, aRowHeight);
+
+        success = success && mFastTableWidget->getTotalHeight()==aTotalHeight;
+
+        testCompleted(success, ui->setRowHeightResLabel);
+        ui->progressBar->setValue(ui->progressBar->value()+1);
+    }
+    // ----------------------------------------------------------------
+    // TEST 20: setColumnWidth
+    // ----------------------------------------------------------------
+    {
+        int     aTotalWidth=mFastTableWidget->getTotalWidth();
+        quint16 aColumnWidth=mColumnWidths->at(10);
+
+        mFastTableWidget->setColumnWidth(10, aColumnWidth+100);
+
+        success =            mFastTableWidget->getTotalWidth()==aTotalWidth+100;
+
+        mFastTableWidget->setColumnWidth(10, aColumnWidth);
+
+        success = success && mFastTableWidget->getTotalWidth()==aTotalWidth;
+
+        testCompleted(success, ui->setColumnWidthResLabel);
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
