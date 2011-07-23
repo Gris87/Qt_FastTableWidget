@@ -10,11 +10,14 @@ TARGET = FastTable
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    src/fasttablewidget.cpp
+SOURCES += src/main.cpp\
+        src/main/mainwindow.cpp \
+        src/main/testdialog.cpp \
+        src/fasttable/fasttablewidget.cpp
 
 HEADERS  += mainwindow.h \
-    src/fasttablewidget.h
+        src/main/testdialog.h \
+        src/main/fasttable/fasttablewidget.h
 
-FORMS    += mainwindow.ui
+FORMS    += src/main/mainwindow.ui \
+        src/main/testdialog.ui
