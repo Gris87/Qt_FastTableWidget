@@ -60,6 +60,16 @@ QList< quint16 >          *FastTableTest::getColumnWidths()
     return &mColumnWidths;
 }
 
+QList< int >              *FastTableTest::getOffsetX()
+{
+    return &mOffsetX;
+}
+
+QList< int >              *FastTableTest::getOffsetY()
+{
+    return &mOffsetY;
+}
+
 QList< QList<bool> >      *FastTableTest::getSelectedCells()
 {
     return &mSelectedCells;

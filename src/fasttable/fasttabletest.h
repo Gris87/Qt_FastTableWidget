@@ -23,6 +23,8 @@ public:
     QList< QStringList >      *getData();
     QList< quint16 >          *getRowHeights();
     QList< quint16 >          *getColumnWidths();
+    QList< int >              *getOffsetX();
+    QList< int >              *getOffsetY();
     QList< QList<bool> >      *getSelectedCells();
     QList< QPair<int, int> >  *getCurSelection();
     QList< QList<QColor *> >  *getBackgroundColors();

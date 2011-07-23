@@ -15,6 +15,8 @@ TestDialog::TestDialog(QWidget *parent) :
     mData             = mFastTableWidget->getData();
     mRowHeights       = mFastTableWidget->getRowHeights();
     mColumnWidths     = mFastTableWidget->getColumnWidths();
+    mOffsetX          = mFastTableWidget->getOffsetX();
+    mOffsetY          = mFastTableWidget->getOffsetY();
     mSelectedCells    = mFastTableWidget->getSelectedCells();
     mCurSelection     = mFastTableWidget->getCurSelection();
     mBackgroundColors = mFastTableWidget->getBackgroundColors();
@@ -35,6 +37,8 @@ TestDialog::TestDialog(QWidget *parent) :
         success = success && mFastTableWidget->getTotalWidth()==0;
         success = success && mFastTableWidget->getRowCount()==0;
         success = success && mFastTableWidget->getColumnCount()==0;
+        success = success && !mFastTableWidget->getStartSelection();
+        success = success && checkForSizes(0, 0);
 
         testCompleted(success, ui->initialResLabel);
         ui->progressBar->setValue(ui->progressBar->value()+1);
@@ -47,6 +51,7 @@ TestDialog::TestDialog(QWidget *parent) :
 
         success =            mFastTableWidget->getTotalHeight()==mFastTableWidget->getDefaultHeight()*50;
         success = success && mFastTableWidget->getTotalWidth()==0;
+        success = success && mOffsetY->at(49)==mFastTableWidget->getDefaultHeight()*49;
         success = success && checkForSizes(50, 0);
 
         testCompleted(success, ui->setRow50ResLabel);
@@ -60,6 +65,8 @@ TestDialog::TestDialog(QWidget *parent) :
 
         success =            mFastTableWidget->getTotalHeight()==mFastTableWidget->getDefaultHeight()*50;
         success = success && mFastTableWidget->getTotalWidth()==mFastTableWidget->getDefaultWidth()*20;
+        success = success && mOffsetX->at(19)==mFastTableWidget->getDefaultWidth()*19;
+        success = success && mOffsetY->at(49)==mFastTableWidget->getDefaultHeight()*49;
         success = success && checkForSizes(50, 20);
 
         testCompleted(success, ui->setCol20ResLabel);
@@ -73,6 +80,8 @@ TestDialog::TestDialog(QWidget *parent) :
 
         success =            mFastTableWidget->getTotalHeight()==mFastTableWidget->getDefaultHeight()*50;
         success = success && mFastTableWidget->getTotalWidth()==mFastTableWidget->getDefaultWidth();
+        success = success && mOffsetX->at(0)==0;
+        success = success && mOffsetY->at(49)==mFastTableWidget->getDefaultHeight()*49;
         success = success && checkForSizes(50, 1);
 
         testCompleted(success, ui->setCol1ResLabel);
@@ -86,6 +95,8 @@ TestDialog::TestDialog(QWidget *parent) :
 
         success =            mFastTableWidget->getTotalHeight()==mFastTableWidget->getDefaultHeight()*2;
         success = success && mFastTableWidget->getTotalWidth()==mFastTableWidget->getDefaultWidth();
+        success = success && mOffsetX->at(0)==0;
+        success = success && mOffsetY->at(1)==mFastTableWidget->getDefaultHeight();
         success = success && checkForSizes(2, 1);
 
         testCompleted(success, ui->setRow2ResLabel);
@@ -99,6 +110,8 @@ TestDialog::TestDialog(QWidget *parent) :
 
         success =            mFastTableWidget->getTotalHeight()==mFastTableWidget->getDefaultHeight()*50;
         success = success && mFastTableWidget->getTotalWidth()==mFastTableWidget->getDefaultWidth();
+        success = success && mOffsetX->at(0)==0;
+        success = success && mOffsetY->at(49)==mFastTableWidget->getDefaultHeight()*49;
         success = success && checkForSizes(50, 1);
 
         testCompleted(success, ui->setRow50ResLabel2);
@@ -112,6 +125,8 @@ TestDialog::TestDialog(QWidget *parent) :
 
         success =            mFastTableWidget->getTotalHeight()==mFastTableWidget->getDefaultHeight()*50;
         success = success && mFastTableWidget->getTotalWidth()==mFastTableWidget->getDefaultWidth()*20;
+        success = success && mOffsetX->at(19)==mFastTableWidget->getDefaultWidth()*19;
+        success = success && mOffsetY->at(49)==mFastTableWidget->getDefaultHeight()*49;
         success = success && checkForSizes(50, 20);
 
         testCompleted(success, ui->setCol20ResLabel2);
@@ -166,6 +181,8 @@ TestDialog::TestDialog(QWidget *parent) :
         success =            mFastTableWidget->getDefaultHeight()==aNewDefaultHeight;
         success = success && mFastTableWidget->getTotalHeight()==aDefaultHeight*50+aNewDefaultHeight;
         success = success && mFastTableWidget->getTotalWidth()==mFastTableWidget->getDefaultWidth()*20;
+        success = success && mOffsetX->at(19)==mFastTableWidget->getDefaultWidth()*19;
+        success = success && mOffsetY->at(50)==mFastTableWidget->getDefaultHeight()*50;
         success = success && checkForSizes(51, 20);
 
         mFastTableWidget->setDefaultHeight(aDefaultHeight);
@@ -174,6 +191,8 @@ TestDialog::TestDialog(QWidget *parent) :
         success =            mFastTableWidget->getDefaultHeight()==aDefaultHeight;
         success = success && mFastTableWidget->getTotalHeight()==aDefaultHeight*50;
         success = success && mFastTableWidget->getTotalWidth()==mFastTableWidget->getDefaultWidth()*20;
+        success = success && mOffsetX->at(19)==mFastTableWidget->getDefaultWidth()*19;
+        success = success && mOffsetY->at(49)==mFastTableWidget->getDefaultHeight()*49;
         success = success && checkForSizes(50, 20);
 
         testCompleted(success, ui->setDefHeightResLabel);
@@ -192,6 +211,8 @@ TestDialog::TestDialog(QWidget *parent) :
         success =            mFastTableWidget->getDefaultWidth()==aNewDefaultWidth;
         success = success && mFastTableWidget->getTotalHeight()==mFastTableWidget->getDefaultHeight()*50;
         success = success && mFastTableWidget->getTotalWidth()==aDefaultWidth*20+aNewDefaultWidth;
+        success = success && mOffsetX->at(19)==mFastTableWidget->getDefaultWidth()*19;
+        success = success && mOffsetY->at(50)==mFastTableWidget->getDefaultHeight()*50;
         success = success && checkForSizes(50, 21);
 
         mFastTableWidget->setDefaultWidth(aDefaultWidth);
@@ -200,6 +221,8 @@ TestDialog::TestDialog(QWidget *parent) :
         success =            mFastTableWidget->getDefaultWidth()==aDefaultWidth;
         success = success && mFastTableWidget->getTotalHeight()==mFastTableWidget->getDefaultHeight()*50;
         success = success && mFastTableWidget->getTotalWidth()==aDefaultWidth*20;
+        success = success && mOffsetX->at(19)==mFastTableWidget->getDefaultWidth()*19;
+        success = success && mOffsetY->at(49)==mFastTableWidget->getDefaultHeight()*49;
         success = success && checkForSizes(50, 20);
 
         testCompleted(success, ui->setDefWidthResLabel);
@@ -210,13 +233,16 @@ TestDialog::TestDialog(QWidget *parent) :
     // ----------------------------------------------------------------
     {
         int     aTotalHeight=mFastTableWidget->getTotalHeight();
-        quint16 aRowHeight=mRowHeights->at(30);
+        quint16 aRowHeight=mRowHeights->at(49);
 
-        mFastTableWidget->setRowHeight(30, aRowHeight+100);
+        mFastTableWidget->setRowHeight(49, aRowHeight+100);
+        mFastTableWidget->setRowCount(51);
 
-        success =            mFastTableWidget->getTotalHeight()==aTotalHeight+100;
+        success =            mFastTableWidget->getTotalHeight()==aTotalHeight+mFastTableWidget->getDefaultHeight()+100;
+        success = success && mOffsetY->at(50)==aTotalHeight+100;
 
-        mFastTableWidget->setRowHeight(30, aRowHeight);
+        mFastTableWidget->setRowHeight(49, aRowHeight);
+        mFastTableWidget->setRowCount(50);
 
         success = success && mFastTableWidget->getTotalHeight()==aTotalHeight;
 
@@ -228,13 +254,16 @@ TestDialog::TestDialog(QWidget *parent) :
     // ----------------------------------------------------------------
     {
         int     aTotalWidth=mFastTableWidget->getTotalWidth();
-        quint16 aColumnWidth=mColumnWidths->at(10);
+        quint16 aColumnWidth=mColumnWidths->at(19);
 
-        mFastTableWidget->setColumnWidth(10, aColumnWidth+100);
+        mFastTableWidget->setColumnWidth(19, aColumnWidth+100);
+        mFastTableWidget->setColumnCount(21);
 
-        success =            mFastTableWidget->getTotalWidth()==aTotalWidth+100;
+        success =            mFastTableWidget->getTotalWidth()==aTotalWidth+mFastTableWidget->getDefaultWidth()+100;
+        success = success && mOffsetX->at(20)==aTotalWidth+100;
 
-        mFastTableWidget->setColumnWidth(10, aColumnWidth);
+        mFastTableWidget->setColumnWidth(19, aColumnWidth);
+        mFastTableWidget->setColumnCount(20);
 
         success = success && mFastTableWidget->getTotalWidth()==aTotalWidth;
 
@@ -592,6 +621,8 @@ bool TestDialog::checkForSizes(int rows, int columns)
     success = success && mData->length()==rows;
     success = success && mRowHeights->length()==rows;
     success = success && mColumnWidths->length()==columns;
+    success = success && mOffsetX->length()==columns;
+    success = success && mOffsetY->length()==rows;
     success = success && mSelectedCells->length()==rows;
     success = success && mBackgroundColors->length()==rows;
     success = success && mForegroundColors->length()==rows;

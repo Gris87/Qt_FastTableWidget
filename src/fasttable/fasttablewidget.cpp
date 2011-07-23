@@ -39,6 +39,8 @@ void FastTableWidget::clearTable()
 
     mRowHeights.clear();
     mColumnWidths.clear();
+    mOffsetX.clear();
+    mOffsetY.clear();
     mData.clear();
     mBackgroundColors.clear();
     mBackgroundColors.clear();
@@ -202,21 +204,12 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
     int offsetX=-horizontalScrollBar()->value();
     int offsetY=-verticalScrollBar()->value();
 
-    int curXPos=0;
-    int curYPos=0;
-
     for (int i=0; i<mRowCount; ++i)
     {
-        curXPos=0;
-
         for (int j=0; j<mColumnCount; ++j)
         {
-            paintCell(painter, offsetX+curXPos, offsetY+curYPos, i, j);
-
-            curXPos+=mColumnWidths.at(j);
+            paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), i, j);
         }
-
-        curYPos+=mRowHeights.at(i);
     }
 }
 
@@ -262,6 +255,7 @@ void FastTableWidget::setRowCount(int count)
 
             mData.append(aNewRow);
             mRowHeights.append(mDefaultHeight);
+            mOffsetY.append(mRowCount==0? 0 : (mOffsetY.at(mRowCount-1)+mRowHeights.at(mRowCount-1)));
             mBackgroundColors.append(aNewRowColor);
             mForegroundColors.append(aNewRowColor);
             mCellFonts.append(aNewRowFont);
@@ -305,6 +299,7 @@ void FastTableWidget::setRowCount(int count)
 
             mData.removeLast();
             mRowHeights.removeLast();
+            mOffsetY.removeLast();
             mBackgroundColors.removeLast();
             mForegroundColors.removeLast();
             mCellFonts.removeLast();
@@ -351,6 +346,8 @@ void FastTableWidget::setColumnCount(int count)
             {
                 mColumnWidths.append(mDefaultWidth);
                 mTotalWidth+=mDefaultWidth;
+
+                mOffsetX.append(i==0? 0 : (mOffsetX.at(i-1)+mColumnWidths.at(i-1)));
             }
 
             for (int i=0; i<mData.length(); ++i)
@@ -371,6 +368,7 @@ void FastTableWidget::setColumnCount(int count)
             {
                 mTotalWidth-=mColumnWidths.at(i);
                 mColumnWidths.removeLast();
+                mOffsetX.removeLast();
             }
 
             for (int i=0; i<mData.length(); ++i)
@@ -487,8 +485,18 @@ quint16 FastTableWidget::rowHeight(const int row)
 
 void FastTableWidget::setRowHeight(const int row, const quint16 height)
 {
-    mTotalHeight+=height-mRowHeights.at(row);
-    mRowHeights[row]=height;
+    if (mRowHeights.at(row)!=height)
+    {
+        int aDiff=height-mRowHeights.at(row);
+
+        mTotalHeight+=aDiff;
+        mRowHeights[row]=height;
+
+        for (int i=row+1; i<mRowCount; ++i)
+        {
+            mOffsetY[i]=mOffsetY.at(i)+aDiff;
+        }
+    }
 }
 
 quint16 FastTableWidget::columnWidth(const int column)
@@ -498,8 +506,18 @@ quint16 FastTableWidget::columnWidth(const int column)
 
 void FastTableWidget::setColumnWidth(const int column, const quint16 width)
 {
-    mTotalWidth+=width-mColumnWidths.at(column);
-    mColumnWidths[column]=width;
+    if (mColumnWidths.at(column)!=width)
+    {
+        int aDiff=width-mColumnWidths.at(column);
+
+        mTotalWidth+=aDiff;
+        mColumnWidths[column]=width;
+
+        for (int i=column+1; i<mColumnCount; ++i)
+        {
+            mOffsetX[i]=mOffsetX.at(i)+aDiff;
+        }
+    }
 }
 
 QColor FastTableWidget::backgroundColor(const int row, const int column)

@@ -26,6 +26,8 @@ public:
     QList< QStringList >      *mData;
     QList< quint16 >          *mRowHeights;
     QList< quint16 >          *mColumnWidths;
+    QList< int >              *mOffsetX;
+    QList< int >              *mOffsetY;
     QList< QList<bool> >      *mSelectedCells;
     QList< QPair<int, int> >  *mCurSelection;
     QList< QList<QColor *> >  *mBackgroundColors;
