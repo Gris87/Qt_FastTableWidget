@@ -66,6 +66,8 @@ public:
     int totalHeight();
     int totalWidth();
 
+    QRect visibleRange();
+
     QString text(const int row, const int column);
     void setText(const int row, const int column, const QString text);
 
@@ -99,6 +101,11 @@ protected:
     QColor mDefaultBackgroundColor;
     QColor mDefaultForegroundColor;
 
+    int mVisibleLeft;
+    int mVisibleRight;
+    int mVisibleTop;
+    int mVisibleBottom;
+
     QList< QStringList > mData;
     QList< quint16 > mRowHeights;
     QList< quint16 > mColumnWidths;
@@ -118,6 +125,11 @@ protected:
     void paintCell(QPainter &painter, const int x, const int y, const int row, const int column);
 
     void updateBarsRanges();
+    void updateVisibleRange();
+
+protected slots:
+    void horizontalScrollBarValueChanged(int value);
+    void verticalScrollBarValueChanged(int value);
 };
 
 #endif // FASTTABLEWIDGET_H

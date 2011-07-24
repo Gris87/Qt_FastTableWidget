@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     aFastTableWidget->setRowCount(50);
     aFastTableWidget->setColumnCount(20);
     //aFastTableWidget->setRowCount(30000);
-    //aFastTableWidget->setColumnCount(400);
+    //aFastTableWidget->setColumnCount(500);
 
     for (int i=0; i<aFastTableWidget->rowCount(); i++)
     {
@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         for (int j=1; j<aFastTableWidget->columnCount(); j++)
         {
-            aFastTableWidget->setText(i, j, QChar(i*aFastTableWidget->columnCount()+j));
+            aFastTableWidget->setText(i, j, "A");
         }
     }
 

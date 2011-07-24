@@ -6,7 +6,7 @@ FastTableWidget::FastTableWidget(QWidget *parent) :
     mRowCount=0;
     mColumnCount=0;
 
-    mDefaultHeight=20;
+    mDefaultHeight=30;
     mDefaultWidth=100;
     mTotalHeight=0;
     mTotalWidth=0;
@@ -14,10 +14,18 @@ FastTableWidget::FastTableWidget(QWidget *parent) :
     mDefaultBackgroundColor.setRgb(255, 255, 255);
     mDefaultForegroundColor.setRgb(0, 0, 0);
 
+    mVisibleLeft=-1;
+    mVisibleRight=-1;
+    mVisibleTop=-1;
+    mVisibleBottom=-1;
+
     mStartSelection=false;
 
     horizontalScrollBar()->setSingleStep(100);
     verticalScrollBar()->setSingleStep(100);
+
+    connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(horizontalScrollBarValueChanged(int)));
+    connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(verticalScrollBarValueChanged(int)));
 }
 
 FastTableWidget::~FastTableWidget()
@@ -36,6 +44,11 @@ void FastTableWidget::clearTable()
 
     mTotalHeight=0;
     mTotalWidth=0;
+
+    mVisibleLeft=-1;
+    mVisibleRight=-1;
+    mVisibleTop=-1;
+    mVisibleBottom=-1;
 
     mRowHeights.clear();
     mColumnWidths.clear();
@@ -193,6 +206,7 @@ void FastTableWidget::mousePressEvent(QMouseEvent *event)
 void FastTableWidget::resizeEvent(QResizeEvent *event)
 {
     updateBarsRanges();
+    updateVisibleRange();
 
     QAbstractScrollArea::resizeEvent(event);
 }
@@ -204,9 +218,9 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
     int offsetX=-horizontalScrollBar()->value();
     int offsetY=-verticalScrollBar()->value();
 
-    for (int i=0; i<mRowCount; ++i)
+    for (int i=mVisibleTop; i<=mVisibleBottom; ++i)
     {
-        for (int j=0; j<mColumnCount; ++j)
+        for (int j=mVisibleLeft; j<=mVisibleRight; ++j)
         {
             paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), i, j);
         }
@@ -219,6 +233,16 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
     painter.drawText(x+2, y+2, mColumnWidths.at(column)-4, mRowHeights.at(row)-4, 0, mData.at(row).at(column));
 }
 
+void FastTableWidget::horizontalScrollBarValueChanged(int value)
+{
+    updateVisibleRange();
+}
+
+void FastTableWidget::verticalScrollBarValueChanged(int value)
+{
+    updateVisibleRange();
+}
+
 void FastTableWidget::updateBarsRanges()
 {
     QSize areaSize = viewport()->size();
@@ -228,6 +252,99 @@ void FastTableWidget::updateBarsRanges()
 
     horizontalScrollBar()->setRange(0, mTotalWidth - areaSize.width());
     verticalScrollBar()->setRange(0, mTotalHeight - areaSize.height());
+}
+
+void FastTableWidget::updateVisibleRange()
+{
+    if (mRowCount==0 || mColumnCount==0)
+    {
+        mVisibleLeft=-1;
+        mVisibleRight=-1;
+        mVisibleTop=-1;
+        mVisibleBottom=-1;
+    }
+    else
+    {
+        if (
+            mVisibleLeft==-1
+            ||
+            mVisibleRight==-1
+            ||
+            mVisibleTop==-1
+            ||
+            mVisibleBottom==-1
+           )
+        {
+            mVisibleLeft=0;
+            mVisibleRight=0;
+            mVisibleTop=0;
+            mVisibleBottom=0;
+        }
+        else
+        {
+            if (mVisibleLeft>=mColumnCount)
+            {
+                mVisibleLeft=mColumnCount-1;
+            }
+            if (mVisibleRight>=mColumnCount)
+            {
+                mVisibleRight=mColumnCount-1;
+            }
+            if (mVisibleTop>=mRowCount)
+            {
+                mVisibleTop=mRowCount-1;
+            }
+            if (mVisibleBottom>=mRowCount)
+            {
+                mVisibleBottom=mRowCount-1;
+            }
+        }
+
+        int minX=horizontalScrollBar()->value();
+        int minY=verticalScrollBar()->value();
+        int maxX=minX+viewport()->width();
+        int maxY=minY+viewport()->height();
+
+        while (mVisibleLeft<mColumnCount-1 && mOffsetX.at(mVisibleLeft)<minX && mOffsetX.at(mVisibleLeft)+mColumnWidths.at(mVisibleLeft)<minX)
+        {
+            mVisibleLeft++;
+        }
+
+        while (mVisibleLeft>0 && mOffsetX.at(mVisibleLeft)>minX && mOffsetX.at(mVisibleLeft)+mColumnWidths.at(mVisibleLeft)>minX)
+        {
+            mVisibleLeft--;
+        }
+
+        while (mVisibleRight<mColumnCount-1 && mOffsetX.at(mVisibleRight)<maxX && mOffsetX.at(mVisibleRight)+mColumnWidths.at(mVisibleRight)<maxX)
+        {
+            mVisibleRight++;
+        }
+
+        while (mVisibleRight>0 && mOffsetX.at(mVisibleRight)>maxX && mOffsetX.at(mVisibleRight)+mColumnWidths.at(mVisibleRight)>maxX)
+        {
+            mVisibleRight--;
+        }
+
+        while (mVisibleTop<mRowCount-1 && mOffsetY.at(mVisibleTop)<minY && mOffsetY.at(mVisibleTop)+mRowHeights.at(mVisibleTop)<minY)
+        {
+            mVisibleTop++;
+        }
+
+        while (mVisibleTop>0 && mOffsetY.at(mVisibleTop)>minY && mOffsetY.at(mVisibleTop)+mRowHeights.at(mVisibleTop)>minY)
+        {
+            mVisibleTop--;
+        }
+
+        while (mVisibleBottom<mRowCount-1 && mOffsetY.at(mVisibleBottom)<maxY && mOffsetY.at(mVisibleBottom)+mRowHeights.at(mVisibleBottom)<maxY)
+        {
+            mVisibleBottom++;
+        }
+
+        while (mVisibleBottom>0 && mOffsetY.at(mVisibleBottom)>maxY && mOffsetY.at(mVisibleBottom)+mRowHeights.at(mVisibleBottom)>maxY)
+        {
+            mVisibleBottom--;
+        }
+    }
 }
 
 int FastTableWidget::rowCount()
@@ -323,6 +440,7 @@ void FastTableWidget::setRowCount(int count)
         }
 
         updateBarsRanges();
+        updateVisibleRange();
     }
 }
 
@@ -415,6 +533,7 @@ void FastTableWidget::setColumnCount(int count)
         mColumnCount=count;
 
         updateBarsRanges();
+        updateVisibleRange();
     }
 }
 
@@ -468,6 +587,13 @@ int FastTableWidget::totalWidth()
     return mTotalWidth;
 }
 
+QRect FastTableWidget::visibleRange()
+{
+    QRect aRect;
+    aRect.setCoords(mVisibleLeft, mVisibleTop, mVisibleRight, mVisibleBottom);
+    return aRect;
+}
+
 QString FastTableWidget::text(const int row, const int column)
 {
     return mData.at(row).at(column);
@@ -496,6 +622,9 @@ void FastTableWidget::setRowHeight(const int row, const quint16 height)
         {
             mOffsetY[i]=mOffsetY.at(i)+aDiff;
         }
+
+        updateBarsRanges();
+        updateVisibleRange();
     }
 }
 
@@ -517,6 +646,9 @@ void FastTableWidget::setColumnWidth(const int column, const quint16 width)
         {
             mOffsetX[i]=mOffsetX.at(i)+aDiff;
         }
+
+        updateBarsRanges();
+        updateVisibleRange();
     }
 }
 
