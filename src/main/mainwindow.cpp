@@ -3,6 +3,8 @@
 
 #include "src/main/testdialog.h"
 
+#include <time.h>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -16,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     FastTableWidget* aFastTableWidget=new FastTableWidget(this);
     ui->fastTableLayout->addWidget(aFastTableWidget);
 
-    qint64 aStart=QDateTime::currentMSecsSinceEpoch();
+    clock_t aStart=clock();
 
     aFastTableWidget->setRowCount(50);
     aFastTableWidget->setColumnCount(20);
@@ -36,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     }
 
-    qDebug()<<"Time to fill with data:"<<QDateTime::currentMSecsSinceEpoch()-aStart<<"ms";
+    qDebug()<<"Time to fill with data:"<<(int)(((double)(clock()-aStart))/CLOCKS_PER_SEC*1000)<<"ms";
 }
 
 MainWindow::~MainWindow()
