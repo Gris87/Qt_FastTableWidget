@@ -32,6 +32,7 @@ TestDialog::TestDialog(QWidget *parent) :
     mBackgroundColors = mFastTableWidget->getBackgroundColors();
     mForegroundColors = mFastTableWidget->getForegroundColors();
     mCellFonts        = mFastTableWidget->getCellFonts();
+    mCellTextFlags    = mFastTableWidget->getCellTextFlags();
 
     // --------------------------------------------------------
 
@@ -561,7 +562,71 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 20: setCellSelected
+    // TEST 20: setTextFlags
+    // ----------------------------------------------------------------
+    {
+        int aNewFlag=Qt::AlignRight | Qt::AlignTop;
+
+        for (int i=0; i<mFastTableWidget->rowCount(); ++i)
+        {
+            for (int j=0; j<mFastTableWidget->columnCount(); ++j)
+            {
+                mFastTableWidget->setCellTextFlags(i, j, aNewFlag);
+            }
+        }
+
+        success=true;
+
+        for (int i=0; i<mFastTableWidget->getRowCount(); ++i)
+        {
+            for (int j=0; j<mFastTableWidget->getColumnCount(); ++j)
+            {
+                if (
+                    mFastTableWidget->cellTextFlags(i, j)!=aNewFlag
+                   )
+                {
+                    success=false;
+                    break;
+                }
+            }
+
+            if (!success)
+            {
+                break;
+            }
+        }
+
+        mFastTableWidget->resetTextFlag(10, 5);
+
+        success = success && mFastTableWidget->cellTextFlags(10, 5)==(Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap);
+
+        mFastTableWidget->resetTextFlags();
+
+        if (success)
+        {
+            for (int i=0; i<mFastTableWidget->getRowCount(); ++i)
+            {
+                for (int j=0; j<mFastTableWidget->getColumnCount(); ++j)
+                {
+                    if (mFastTableWidget->cellTextFlags(i, j)!=(Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap))
+                    {
+                        success=false;
+                        break;
+                    }
+                }
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        testCompleted(success, ui->setCellTextFlagsResLabel);
+        ui->progressBar->setValue(ui->progressBar->value()+1);
+    }
+    // ----------------------------------------------------------------
+    // TEST 21: setCellSelected
     // ----------------------------------------------------------------
     {
         mFastTableWidget->selectAll();
@@ -615,7 +680,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 21: setRowHeight
+    // TEST 22: setRowHeight
     // ----------------------------------------------------------------
     {
         int     aTotalHeight=mFastTableWidget->getTotalHeight();
@@ -633,7 +698,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 22: setColumnWidth
+    // TEST 23: setColumnWidth
     // ----------------------------------------------------------------
     {
         int     aTotalWidth=mFastTableWidget->getTotalWidth();
@@ -675,6 +740,7 @@ bool TestDialog::checkForSizes(int rows, int columns)
     success = success && mBackgroundColors->length()==rows;
     success = success && mForegroundColors->length()==rows;
     success = success && mCellFonts->length()==rows;
+    success = success && mCellTextFlags->length()==rows;
 
     if (success)
     {
@@ -729,6 +795,18 @@ bool TestDialog::checkForSizes(int rows, int columns)
         for (int i=0; i<mCellFonts->length(); ++i)
         {
             if (mCellFonts->at(i).length()!=columns)
+            {
+                success=false;
+                break;
+            }
+        }
+    }
+
+    if (success)
+    {
+        for (int i=0; i<mCellTextFlags->length(); ++i)
+        {
+            if (mCellTextFlags->at(i).length()!=columns)
             {
                 success=false;
                 break;

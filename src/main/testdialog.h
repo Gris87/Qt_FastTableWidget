@@ -36,6 +36,7 @@ public:
     QList< QList<QColor *> >  *mBackgroundColors;
     QList< QList<QColor *> >  *mForegroundColors;
     QList< QList<QFont *> >   *mCellFonts;
+    QList< QList<int> >       *mCellTextFlags;
 
     bool checkForSizes(int rows, int columns);
 

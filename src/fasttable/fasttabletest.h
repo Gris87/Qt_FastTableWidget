@@ -32,6 +32,7 @@ public:
     QList< QList<QColor *> >  *getBackgroundColors();
     QList< QList<QColor *> >  *getForegroundColors();
     QList< QList<QFont *> >   *getCellFonts();
+    QList< QList<int> >       *getCellTextFlags();
 
     bool getStartSelection();
 };

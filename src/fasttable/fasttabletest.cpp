@@ -105,6 +105,11 @@ QList< QList<QFont *> >   *FastTableTest::getCellFonts()
     return &mCellFonts;
 }
 
+QList< QList<int> >       *FastTableTest::getCellTextFlags()
+{
+    return &mCellTextFlags;
+}
+
 bool FastTableTest::getStartSelection()
 {
     return mStartSelection;

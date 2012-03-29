@@ -31,10 +31,12 @@ public:
     void resetBackgroundColors();
     void resetForegroundColors();
     void resetFonts();
+    void resetTextFlags();
 
     void resetBackgroundColor(const int row, const int column);
     void resetForegroundColor(const int row, const int column);
     void resetFont(const int row, const int column);
+    void resetTextFlag(const int row, const int column);
 
     void selectRow(const int row);
     void unselectRow(const int row);
@@ -92,6 +94,9 @@ public:
     QFont cellFont(const int row, const int column);
     void setCellFont(const int row, const int column, const QFont font);
 
+    int cellTextFlags(const int row, const int column);
+    void setCellTextFlags(const int row, const int column, const int flags);
+
     bool cellSelected(const int row, const int column);
     void setCellSelected(const int row, const int column, const bool selected);
 
@@ -124,6 +129,7 @@ protected:
     QList< QList<QColor *> > mBackgroundColors;
     QList< QList<QColor *> > mForegroundColors;
     QList< QList<QFont *> > mCellFonts;
+    QList< QList<int> > mCellTextFlags;
 
     bool mStartSelection;
 

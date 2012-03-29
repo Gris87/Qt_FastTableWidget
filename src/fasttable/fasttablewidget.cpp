@@ -60,6 +60,7 @@ void FastTableWidget::clearTable()
     mBackgroundColors.clear();
     mBackgroundColors.clear();
     mCellFonts.clear();
+    mCellTextFlags.clear();
     mSelectedCells.clear();
     mCurSelection.clear();
 
@@ -111,6 +112,17 @@ void FastTableWidget::resetFonts()
     }
 }
 
+void FastTableWidget::resetTextFlags()
+{
+    for (int i=0; i<mRowCount; ++i)
+    {
+        for (int j=0; j<mColumnCount; ++j)
+        {
+            mCellTextFlags[i][j]=Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
+        }
+    }
+}
+
 void FastTableWidget::resetBackgroundColor(const int row, const int column)
 {
     if (mBackgroundColors.at(row).at(column))
@@ -136,6 +148,11 @@ void FastTableWidget::resetFont(const int row, const int column)
         delete mCellFonts.at(row).at(column);
         mCellFonts[row][column]=0;
     }
+}
+
+void FastTableWidget::resetTextFlag(const int row, const int column)
+{
+    mCellTextFlags[row][column]=Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
 }
 
 void FastTableWidget::selectRow(const int row)
@@ -273,7 +290,7 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
     painter.drawRect(x, y, mColumnWidths.at(column), mRowHeights.at(row));
 
     painter.setPen(QPen(*aForegroundColor));
-    painter.drawText(x+2, y+2, mColumnWidths.at(column)-4, mRowHeights.at(row)-4, 0, mData.at(row).at(column));
+    painter.drawText(x+2, y+2, mColumnWidths.at(column)-4, mRowHeights.at(row)-4, mCellTextFlags.at(row).at(column), mData.at(row).at(column));
 }
 
 void FastTableWidget::horizontalScrollBarValueChanged(int value)
@@ -410,6 +427,7 @@ void FastTableWidget::setRowCount(int count)
             QList<QColor *> aNewRowColor;
             QList<QFont *> aNewRowFont;
             QList<bool> aNewRowbool;
+            QList<int> aNewRowint;
 
             mTotalHeight+=mDefaultHeight;
 
@@ -419,6 +437,7 @@ void FastTableWidget::setRowCount(int count)
             mBackgroundColors.append(aNewRowColor);
             mForegroundColors.append(aNewRowColor);
             mCellFonts.append(aNewRowFont);
+            mCellTextFlags.append(aNewRowint);
             mSelectedCells.append(aNewRowbool);
 
             for (int i=0; i<mColumnCount; ++i)
@@ -427,6 +446,7 @@ void FastTableWidget::setRowCount(int count)
                 mBackgroundColors[mRowCount].append(0);
                 mForegroundColors[mRowCount].append(0);
                 mCellFonts[mRowCount].append(0);
+                mCellTextFlags[mRowCount].append(Qt::AlignTop | Qt::AlignVCenter | Qt::TextWordWrap);
                 mSelectedCells[mRowCount].append(false);
             }
 
@@ -463,6 +483,7 @@ void FastTableWidget::setRowCount(int count)
             mBackgroundColors.removeLast();
             mForegroundColors.removeLast();
             mCellFonts.removeLast();
+            mCellTextFlags.removeLast();
 
             for (int i=0; i<mColumnCount; ++i)
             {
@@ -519,6 +540,7 @@ void FastTableWidget::setColumnCount(int count)
                     mBackgroundColors[i].append(0);
                     mForegroundColors[i].append(0);
                     mCellFonts[i].append(0);
+                    mCellTextFlags[i].append(0);
                     mSelectedCells[i].append(false);
                 }
             }
@@ -555,6 +577,7 @@ void FastTableWidget::setColumnCount(int count)
                     mBackgroundColors[i].removeLast();
                     mForegroundColors[i].removeLast();
                     mCellFonts[i].removeLast();
+                    mCellTextFlags[i].removeLast();
 
                     if (mSelectedCells.at(i).last())
                     {
@@ -779,6 +802,16 @@ void FastTableWidget::setCellFont(const int row, const int column, const QFont f
     {
         mCellFonts[row][column]=new QFont(font);
     }
+}
+
+int FastTableWidget::cellTextFlags(const int row, const int column)
+{
+    return mCellTextFlags.at(row).at(column);
+}
+
+void FastTableWidget::setCellTextFlags(const int row, const int column, const int flags)
+{
+    mSelectedCells[row][column]=flags;
 }
 
 bool FastTableWidget::cellSelected(const int row, const int column)
