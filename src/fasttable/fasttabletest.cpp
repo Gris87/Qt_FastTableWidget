@@ -45,6 +45,16 @@ QColor FastTableTest::getDefaultForegroundColor()
     return mDefaultForegroundColor;
 }
 
+QColor FastTableTest::getGridColor()
+{
+    return mGridColor;
+}
+
+QColor FastTableTest::getSelectionColor()
+{
+    return mSelectionColor;
+}
+
 QList< QStringList >      *FastTableTest::getData()
 {
     return &mData;

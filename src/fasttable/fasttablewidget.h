@@ -57,6 +57,12 @@ public:
     QColor defaultForegroundColor();
     void setDefaultForegroundColor(QColor color);
 
+    QColor gridColor();
+    void setGridColor(QColor color);
+
+    QColor selectionColor();
+    void setSelectionColor(QColor color);
+
     quint16 defaultHeight();
     void setDefaultHeight(quint16 height);
 
@@ -100,6 +106,8 @@ protected:
 
     QColor mDefaultBackgroundColor;
     QColor mDefaultForegroundColor;
+    QColor mGridColor;
+    QColor mSelectionColor;
 
     int mVisibleLeft;
     int mVisibleRight;

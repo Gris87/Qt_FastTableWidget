@@ -19,6 +19,8 @@ public:
 
     QColor getDefaultBackgroundColor();
     QColor getDefaultForegroundColor();
+    QColor getGridColor();
+    QColor getSelectionColor();
 
     QList< QStringList >      *getData();
     QList< quint16 >          *getRowHeights();

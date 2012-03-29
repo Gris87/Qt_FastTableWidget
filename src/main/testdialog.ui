@@ -522,7 +522,7 @@
              </property>
             </widget>
            </item>
-           <item row="9" column="0">
+           <item row="11" column="0">
             <widget class="QLabel" name="setDefHeightLabel">
              <property name="text">
               <string>setDefaultHeight</string>
@@ -532,7 +532,7 @@
              </property>
             </widget>
            </item>
-           <item row="9" column="2">
+           <item row="11" column="2">
             <widget class="QLabel" name="setDefHeightResLabel">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -588,7 +588,7 @@
              </property>
             </widget>
            </item>
-           <item row="10" column="0">
+           <item row="12" column="0">
             <widget class="QLabel" name="setDefWidthLabel">
              <property name="text">
               <string>setDefaultWidth</string>
@@ -598,7 +598,7 @@
              </property>
             </widget>
            </item>
-           <item row="10" column="2">
+           <item row="12" column="2">
             <widget class="QLabel" name="setDefWidthResLabel">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -654,7 +654,7 @@
              </property>
             </widget>
            </item>
-           <item row="12" column="2">
+           <item row="14" column="2">
             <widget class="QLabel" name="totalWidthResLabel">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -710,7 +710,7 @@
              </property>
             </widget>
            </item>
-           <item row="11" column="2">
+           <item row="13" column="2">
             <widget class="QLabel" name="totalHeightResLabel">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -766,7 +766,7 @@
              </property>
             </widget>
            </item>
-           <item row="11" column="0">
+           <item row="13" column="0">
             <widget class="QLabel" name="totalHeightLabel">
              <property name="text">
               <string>totalHeight</string>
@@ -776,7 +776,7 @@
              </property>
             </widget>
            </item>
-           <item row="12" column="0">
+           <item row="14" column="0">
             <widget class="QLabel" name="totalWidthLabel">
              <property name="text">
               <string>totalWidth</string>
@@ -786,7 +786,7 @@
              </property>
             </widget>
            </item>
-           <item row="14" column="0">
+           <item row="16" column="0">
             <widget class="QLabel" name="setBackgroundLabel">
              <property name="text">
               <string>setBackgroundColor</string>
@@ -796,7 +796,7 @@
              </property>
             </widget>
            </item>
-           <item row="14" column="2">
+           <item row="16" column="2">
             <widget class="QLabel" name="setBackgroundResLabel">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -852,7 +852,7 @@
              </property>
             </widget>
            </item>
-           <item row="13" column="0">
+           <item row="15" column="0">
             <widget class="QLabel" name="setTextLabel">
              <property name="text">
               <string>setText</string>
@@ -862,7 +862,7 @@
              </property>
             </widget>
            </item>
-           <item row="13" column="2">
+           <item row="15" column="2">
             <widget class="QLabel" name="setTextResLabel">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -918,7 +918,7 @@
              </property>
             </widget>
            </item>
-           <item row="15" column="0">
+           <item row="17" column="0">
             <widget class="QLabel" name="setForegroundLabel">
              <property name="text">
               <string>setForegroundColor</string>
@@ -928,7 +928,7 @@
              </property>
             </widget>
            </item>
-           <item row="15" column="2">
+           <item row="17" column="2">
             <widget class="QLabel" name="setForegroundResLabel">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -984,7 +984,7 @@
              </property>
             </widget>
            </item>
-           <item row="16" column="0">
+           <item row="18" column="0">
             <widget class="QLabel" name="setCellFontLabel">
              <property name="text">
               <string>setCellFont</string>
@@ -994,7 +994,7 @@
              </property>
             </widget>
            </item>
-           <item row="17" column="0">
+           <item row="19" column="0">
             <widget class="QLabel" name="setCellSelectedLabel">
              <property name="text">
               <string>setCellSelected</string>
@@ -1004,7 +1004,7 @@
              </property>
             </widget>
            </item>
-           <item row="16" column="2">
+           <item row="18" column="2">
             <widget class="QLabel" name="setCellFontResLabel">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -1060,7 +1060,7 @@
              </property>
             </widget>
            </item>
-           <item row="17" column="2">
+           <item row="19" column="2">
             <widget class="QLabel" name="setCellSelectedResLabel">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -1116,7 +1116,7 @@
              </property>
             </widget>
            </item>
-           <item row="19" column="2">
+           <item row="21" column="2">
             <widget class="QLabel" name="setColumnWidthResLabel">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -1172,7 +1172,7 @@
              </property>
             </widget>
            </item>
-           <item row="18" column="2">
+           <item row="20" column="2">
             <widget class="QLabel" name="setRowHeightResLabel">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -1228,7 +1228,7 @@
              </property>
             </widget>
            </item>
-           <item row="18" column="0">
+           <item row="20" column="0">
             <widget class="QLabel" name="setRowHeightLabel">
              <property name="text">
               <string>setRowHeight</string>
@@ -1238,7 +1238,7 @@
              </property>
             </widget>
            </item>
-           <item row="19" column="0">
+           <item row="21" column="0">
             <widget class="QLabel" name="setColumnWidthLabel">
              <property name="text">
               <string>setColumnWidth</string>
@@ -1326,6 +1326,138 @@
            </item>
            <item row="6" column="2">
             <widget class="QLabel" name="setCol20ResLabel2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="palette">
+              <palette>
+               <active>
+                <colorrole role="WindowText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>0</red>
+                   <green>0</green>
+                   <blue>255</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </active>
+               <inactive>
+                <colorrole role="WindowText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>0</red>
+                   <green>0</green>
+                   <blue>255</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </inactive>
+               <disabled>
+                <colorrole role="WindowText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>120</red>
+                   <green>120</green>
+                   <blue>120</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </disabled>
+              </palette>
+             </property>
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>IN PROGRESS</string>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="0">
+            <widget class="QLabel" name="setSelectionColorLabel">
+             <property name="text">
+              <string>setSelectionColor</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="2">
+            <widget class="QLabel" name="setSelectionColorResLabel">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="palette">
+              <palette>
+               <active>
+                <colorrole role="WindowText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>0</red>
+                   <green>0</green>
+                   <blue>255</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </active>
+               <inactive>
+                <colorrole role="WindowText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>0</red>
+                   <green>0</green>
+                   <blue>255</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </inactive>
+               <disabled>
+                <colorrole role="WindowText">
+                 <brush brushstyle="SolidPattern">
+                  <color alpha="255">
+                   <red>120</red>
+                   <green>120</green>
+                   <blue>120</blue>
+                  </color>
+                 </brush>
+                </colorrole>
+               </disabled>
+              </palette>
+             </property>
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>IN PROGRESS</string>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="0">
+            <widget class="QLabel" name="setGridColorLabel">
+             <property name="text">
+              <string>setGridColor</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="2">
+            <widget class="QLabel" name="setGridColorResLabel">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
                <horstretch>0</horstretch>

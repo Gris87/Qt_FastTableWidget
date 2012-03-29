@@ -13,6 +13,8 @@ FastTableWidget::FastTableWidget(QWidget *parent) :
 
     mDefaultBackgroundColor.setRgb(255, 255, 255);
     mDefaultForegroundColor.setRgb(0, 0, 0);
+    mGridColor.setRgb(0, 0, 0);
+    mSelectionColor.setRgb(0, 0, 255);
 
     mVisibleLeft=-1;
     mVisibleRight=-1;
@@ -170,7 +172,7 @@ void FastTableWidget::unselectColumn(const int column)
 
 void FastTableWidget::selectAll()
 {
-    unselectAll();
+    mCurSelection.clear();
 
     QPair<int, int> aCellPos;
 
@@ -229,7 +231,48 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
 
 void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int row, const int column)
 {
+    QColor *aBackgroundColor;
+
+    if (mSelectedCells.at(row).at(column))
+    {
+        aBackgroundColor=&mSelectionColor;
+    }
+    else
+    {
+        aBackgroundColor=mBackgroundColors.at(row).at(column);
+
+        if (aBackgroundColor==0)
+        {
+            aBackgroundColor=&mDefaultBackgroundColor;
+        }
+    }
+
+    QColor *aForegroundColor;
+
+    aForegroundColor=mForegroundColors.at(row).at(column);
+
+    if (aForegroundColor==0)
+    {
+        aForegroundColor=&mDefaultForegroundColor;
+    }
+
+    QFont *aFont=mCellFonts.at(row).at(column);
+
+    if (aFont)
+    {
+        painter.setFont(*aFont);
+    }
+    else
+    {
+        painter.setFont(font());
+    }
+
+    painter.setPen(QPen(mGridColor));
+
+    painter.fillRect(x, y, mColumnWidths.at(column), mRowHeights.at(row), *aBackgroundColor);
     painter.drawRect(x, y, mColumnWidths.at(column), mRowHeights.at(row));
+
+    painter.setPen(QPen(*aForegroundColor));
     painter.drawText(x+2, y+2, mColumnWidths.at(column)-4, mRowHeights.at(row)-4, 0, mData.at(row).at(column));
 }
 
@@ -555,6 +598,26 @@ QColor FastTableWidget::defaultForegroundColor()
 void FastTableWidget::setDefaultForegroundColor(QColor color)
 {
     mDefaultForegroundColor=color;
+}
+
+QColor FastTableWidget::gridColor()
+{
+    return mGridColor;
+}
+
+void FastTableWidget::setGridColor(QColor color)
+{
+    mGridColor=color;
+}
+
+QColor FastTableWidget::selectionColor()
+{
+    return mSelectionColor;
+}
+
+void FastTableWidget::setSelectionColor(QColor color)
+{
+    mSelectionColor=color;
 }
 
 quint16 FastTableWidget::defaultHeight()

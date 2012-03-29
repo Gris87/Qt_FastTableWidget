@@ -20,10 +20,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     clock_t aStart=clock();
 
-    aFastTableWidget->setRowCount(50);
-    aFastTableWidget->setColumnCount(20);
-    //aFastTableWidget->setRowCount(30000);
-    //aFastTableWidget->setColumnCount(500);
+    //aFastTableWidget->setRowCount(50);
+    //aFastTableWidget->setColumnCount(20);
+    aFastTableWidget->setRowCount(30000);
+    aFastTableWidget->setColumnCount(250);
 
     for (int i=0; i<aFastTableWidget->rowCount(); i++)
     {
@@ -34,9 +34,13 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         for (int j=1; j<aFastTableWidget->columnCount(); j++)
         {
-            aFastTableWidget->setText(i, j, "A");
+            aFastTableWidget->setText(i, j, "Hello, Wolrd");
         }
     }
+
+    aFastTableWidget->setGridColor(QColor(10,205,32));
+    aFastTableWidget->setDefaultBackgroundColor(QColor(0,0,0));
+    aFastTableWidget->setDefaultForegroundColor(QColor(255,255,255));
 
     qDebug()<<"Time to fill with data:"<<(int)(((double)(clock()-aStart))/CLOCKS_PER_SEC*1000)<<"ms";
 }

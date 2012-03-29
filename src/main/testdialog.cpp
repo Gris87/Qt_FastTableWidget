@@ -181,7 +181,43 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 10: setDefaultHeight
+    // TEST 10: setGridColor
+    // ----------------------------------------------------------------
+    {
+        QColor aGridColor=mFastTableWidget->getGridColor();
+        QColor aNewGridColor=QColor(255-aGridColor.red(), 255-aGridColor.green(), 255-aGridColor.blue());
+
+        mFastTableWidget->setGridColor(aNewGridColor);
+
+        success =            mFastTableWidget->getGridColor()==aNewGridColor;
+
+        mFastTableWidget->setGridColor(aGridColor);
+
+        success = success && mFastTableWidget->getGridColor()==aGridColor;
+
+        testCompleted(success, ui->setGridColorResLabel);
+        ui->progressBar->setValue(ui->progressBar->value()+1);
+    }
+    // ----------------------------------------------------------------
+    // TEST 11: setSelectionColor
+    // ----------------------------------------------------------------
+    {
+        QColor aSelectionColor=mFastTableWidget->getSelectionColor();
+        QColor aNewSelectionColor=QColor(255-aSelectionColor.red(), 255-aSelectionColor.green(), 255-aSelectionColor.blue());
+
+        mFastTableWidget->setSelectionColor(aNewSelectionColor);
+
+        success =            mFastTableWidget->getSelectionColor()==aNewSelectionColor;
+
+        mFastTableWidget->setSelectionColor(aSelectionColor);
+
+        success = success && mFastTableWidget->getSelectionColor()==aSelectionColor;
+
+        testCompleted(success, ui->setSelectionColorResLabel);
+        ui->progressBar->setValue(ui->progressBar->value()+1);
+    }
+    // ----------------------------------------------------------------
+    // TEST 12: setDefaultHeight
     // ----------------------------------------------------------------
     {
         quint16 aDefaultHeight=mFastTableWidget->getDefaultHeight();
@@ -211,7 +247,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 11: setDefaultWidth
+    // TEST 13: setDefaultWidth
     // ----------------------------------------------------------------
     {
         quint16 aDefaultWidth=mFastTableWidget->getDefaultWidth();
@@ -241,7 +277,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 12: totalHeight
+    // TEST 14: totalHeight
     // ----------------------------------------------------------------
     {
         int     aTotalHeight=mFastTableWidget->getTotalHeight();
@@ -262,7 +298,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 13: totalWidth
+    // TEST 15: totalWidth
     // ----------------------------------------------------------------
     {
         int     aTotalWidth=mFastTableWidget->getTotalWidth();
@@ -283,7 +319,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 14: setText
+    // TEST 16: setText
     // ----------------------------------------------------------------
     {
         for (int i=0; i<mFastTableWidget->rowCount(); ++i)
@@ -321,7 +357,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 15: setBackgroundColor
+    // TEST 17: setBackgroundColor
     // ----------------------------------------------------------------
     {
         QColor aNewBackgroundColor(1, 2, 3);
@@ -389,7 +425,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 16: setForegroundColor
+    // TEST 18: setForegroundColor
     // ----------------------------------------------------------------
     {
         QColor aNewForegroundColor(3, 2, 1);
@@ -457,7 +493,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 17: setCellFont
+    // TEST 19: setCellFont
     // ----------------------------------------------------------------
     {
         QFont aNewCellFont("Arial", 12, 1, true);
@@ -525,7 +561,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 18: setCellSelected
+    // TEST 20: setCellSelected
     // ----------------------------------------------------------------
     {
         mFastTableWidget->selectAll();
@@ -579,7 +615,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 19: setRowHeight
+    // TEST 21: setRowHeight
     // ----------------------------------------------------------------
     {
         int     aTotalHeight=mFastTableWidget->getTotalHeight();
@@ -597,7 +633,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 20: setColumnWidth
+    // TEST 22: setColumnWidth
     // ----------------------------------------------------------------
     {
         int     aTotalWidth=mFastTableWidget->getTotalWidth();
