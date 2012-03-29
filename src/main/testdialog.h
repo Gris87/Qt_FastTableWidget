@@ -5,6 +5,8 @@
 
 #include <QLabel>
 #include <QFont>
+#include <QSplitter>
+
 #include "qdebug.h"
 
 #include "src/fasttable/fasttabletest.h"
@@ -21,7 +23,8 @@ public:
     explicit TestDialog(QWidget *parent = 0);
     ~TestDialog();
 
-    FastTableTest* mFastTableWidget;
+    QSplitter     *mDividerSplitter;
+    FastTableTest *mFastTableWidget;
 
     QList< QStringList >      *mData;
     QList< quint16 >          *mRowHeights;

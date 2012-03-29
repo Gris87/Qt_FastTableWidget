@@ -10,7 +10,17 @@ TestDialog::TestDialog(QWidget *parent) :
     setWindowFlags(Qt::Window);
 
     mFastTableWidget=new FastTableTest(this);
-    ui->fastTableLayout->addWidget(mFastTableWidget);
+
+    mDividerSplitter=new QSplitter(Qt::Vertical, this);
+
+    ui->dividerLayout->removeWidget(ui->testsScrollArea);
+
+    mDividerSplitter->addWidget(mFastTableWidget);
+    mDividerSplitter->addWidget(ui->testsScrollArea);
+
+    ui->dividerLayout->addWidget(mDividerSplitter);
+
+    // --------------------------------------------------------
 
     mData             = mFastTableWidget->getData();
     mRowHeights       = mFastTableWidget->getRowHeights();
@@ -22,6 +32,8 @@ TestDialog::TestDialog(QWidget *parent) :
     mBackgroundColors = mFastTableWidget->getBackgroundColors();
     mForegroundColors = mFastTableWidget->getForegroundColors();
     mCellFonts        = mFastTableWidget->getCellFonts();
+
+    // --------------------------------------------------------
 
     bool success;
 
