@@ -3,6 +3,8 @@
 FastTableWidget::FastTableWidget(QWidget *parent) :
     QAbstractScrollArea(parent)
 {
+    START_PROFILE
+
     mRowCount=0;
     mColumnCount=0;
 
@@ -28,15 +30,23 @@ FastTableWidget::FastTableWidget(QWidget *parent) :
 
     connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(horizontalScrollBarValueChanged(int)));
     connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(verticalScrollBarValueChanged(int)));
+
+    END_PROFILE("FastTableWidget::FastTableWidget(QWidget *parent)")
 }
 
 FastTableWidget::~FastTableWidget()
 {
+    START_PROFILE
+
     clearTable();
+
+    END_PROFILE("FastTableWidget::~FastTableWidget()")
 }
 
 void FastTableWidget::clearTable()
 {
+    START_PROFILE
+
     resetBackgroundColors();
     resetForegroundColors();
     resetFonts();
@@ -65,10 +75,14 @@ void FastTableWidget::clearTable()
     mCurSelection.clear();
 
     mStartSelection=false;
+
+    END_PROFILE("void FastTableWidget::clearTable()")
 }
 
 void FastTableWidget::resetBackgroundColors()
 {
+    START_PROFILE
+
     for (int i=0; i<mRowCount; ++i)
     {
         for (int j=0; j<mColumnCount; ++j)
@@ -80,10 +94,14 @@ void FastTableWidget::resetBackgroundColors()
             }
         }
     }
+
+    END_PROFILE("void FastTableWidget::resetBackgroundColors()")
 }
 
 void FastTableWidget::resetForegroundColors()
 {
+    START_PROFILE
+
     for (int i=0; i<mRowCount; ++i)
     {
         for (int j=0; j<mColumnCount; ++j)
@@ -95,10 +113,14 @@ void FastTableWidget::resetForegroundColors()
             }
         }
     }
+
+    END_PROFILE("void FastTableWidget::resetForegroundColors()")
 }
 
 void FastTableWidget::resetFonts()
 {
+    START_PROFILE
+
     for (int i=0; i<mRowCount; ++i)
     {
         for (int j=0; j<mColumnCount; ++j)
@@ -110,10 +132,14 @@ void FastTableWidget::resetFonts()
             }
         }
     }
+
+    END_PROFILE("void FastTableWidget::resetFonts()")
 }
 
 void FastTableWidget::resetTextFlags()
 {
+    START_PROFILE
+
     for (int i=0; i<mRowCount; ++i)
     {
         for (int j=0; j<mColumnCount; ++j)
@@ -121,74 +147,110 @@ void FastTableWidget::resetTextFlags()
             mCellTextFlags[i][j]=Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
         }
     }
+
+    END_PROFILE("void FastTableWidget::resetTextFlags()")
 }
 
 void FastTableWidget::resetBackgroundColor(const int row, const int column)
 {
+    START_PROFILE
+
     if (mBackgroundColors.at(row).at(column))
     {
         delete mBackgroundColors.at(row).at(column);
         mBackgroundColors[row][column]=0;
     }
+
+    END_PROFILE("void FastTableWidget::resetBackgroundColor(const int row, const int column)")
 }
 
 void FastTableWidget::resetForegroundColor(const int row, const int column)
 {
+    START_PROFILE
+
     if (mForegroundColors.at(row).at(column))
     {
         delete mForegroundColors.at(row).at(column);
         mForegroundColors[row][column]=0;
     }
+
+    END_PROFILE("void FastTableWidget::resetForegroundColor(const int row, const int column)")
 }
 
 void FastTableWidget::resetFont(const int row, const int column)
 {
+    START_PROFILE
+
     if (mCellFonts.at(row).at(column))
     {
         delete mCellFonts.at(row).at(column);
         mCellFonts[row][column]=0;
     }
+
+    END_PROFILE("void FastTableWidget::resetFont(const int row, const int column)")
 }
 
 void FastTableWidget::resetTextFlag(const int row, const int column)
 {
+    START_PROFILE
+
     mCellTextFlags[row][column]=Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
+
+    END_PROFILE("void FastTableWidget::resetTextFlag(const int row, const int column)")
 }
 
 void FastTableWidget::selectRow(const int row)
 {
+    START_PROFILE
+
     for (int i=0; i<mColumnCount; ++i)
     {
         setCellSelected(row, i, true);
     }
+
+    END_PROFILE("void FastTableWidget::selectRow(const int row)")
 }
 
 void FastTableWidget::unselectRow(const int row)
 {
+    START_PROFILE
+
     for (int i=0; i<mColumnCount; ++i)
     {
         setCellSelected(row, i, false);
     }
+
+    END_PROFILE("void FastTableWidget::unselectRow(const int row)")
 }
 
 void FastTableWidget::selectColumn(const int column)
 {
+    START_PROFILE
+
     for (int i=0; i<mRowCount; ++i)
     {
         setCellSelected(i, column, true);
     }
+
+    END_PROFILE("void FastTableWidget::selectColumn(const int column)")
 }
 
 void FastTableWidget::unselectColumn(const int column)
 {
+    START_PROFILE
+
     for (int i=0; i<mRowCount; ++i)
     {
         setCellSelected(i, column, false);
     }
+
+    END_PROFILE("void FastTableWidget::unselectColumn(const int column)")
 }
 
 void FastTableWidget::selectAll()
 {
+    START_PROFILE
+
     mCurSelection.clear();
 
     QPoint aCellPos;
@@ -205,33 +267,49 @@ void FastTableWidget::selectAll()
             mSelectedCells[i][j]=true;
         }
     }
+
+    END_PROFILE("void FastTableWidget::selectAll()")
 }
 
 void FastTableWidget::unselectAll()
 {
+    START_PROFILE
+
     for (int i=0; i<mCurSelection.length(); ++i)
     {
         mSelectedCells[mCurSelection.at(i).y()][mCurSelection.at(i).x()]=false;
     }
 
     mCurSelection.clear();
+
+    END_PROFILE("void FastTableWidget::unselectAll()")
 }
 
 void FastTableWidget::mousePressEvent(QMouseEvent *event)
 {
+    START_PROFILE
+
     QAbstractScrollArea::mousePressEvent(event);
+
+    END_PROFILE("void FastTableWidget::mousePressEvent(QMouseEvent *event)")
 }
 
 void FastTableWidget::resizeEvent(QResizeEvent *event)
 {
+    START_PROFILE
+
     updateBarsRanges();
     updateVisibleRange();
 
     QAbstractScrollArea::resizeEvent(event);
+
+    END_PROFILE("void FastTableWidget::resizeEvent(QResizeEvent *event)")
 }
 
 void FastTableWidget::paintEvent(QPaintEvent *event)
 {
+    START_FREQUENT_PROFILE
+
     QPainter painter(viewport());
 
     int offsetX=-horizontalScrollBar()->value();
@@ -244,6 +322,8 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
             paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), i, j);
         }
     }
+
+    END_FREQUENT_PROFILE("void FastTableWidget::paintEvent(QPaintEvent *event)")
 }
 
 void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int row, const int column)
