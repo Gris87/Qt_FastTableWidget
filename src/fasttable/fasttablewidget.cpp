@@ -290,7 +290,7 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
     painter.drawRect(x, y, mColumnWidths.at(column), mRowHeights.at(row));
 
     painter.setPen(QPen(*aForegroundColor));
-    painter.drawText(x+2, y+2, mColumnWidths.at(column)-4, mRowHeights.at(row)-4, mCellTextFlags.at(row).at(column), mData.at(row).at(column));
+    painter.drawText(x+4, y+4, mColumnWidths.at(column)-8, mRowHeights.at(row)-8, mCellTextFlags.at(row).at(column), mData.at(row).at(column));
 }
 
 void FastTableWidget::horizontalScrollBarValueChanged(int value)
@@ -540,7 +540,7 @@ void FastTableWidget::setColumnCount(int count)
                     mBackgroundColors[i].append(0);
                     mForegroundColors[i].append(0);
                     mCellFonts[i].append(0);
-                    mCellTextFlags[i].append(0);
+                    mCellTextFlags[i].append(Qt::AlignTop | Qt::AlignVCenter | Qt::TextWordWrap);
                     mSelectedCells[i].append(false);
                 }
             }
@@ -811,7 +811,7 @@ int FastTableWidget::cellTextFlags(const int row, const int column)
 
 void FastTableWidget::setCellTextFlags(const int row, const int column, const int flags)
 {
-    mSelectedCells[row][column]=flags;
+    mCellTextFlags[row][column]=flags;
 }
 
 bool FastTableWidget::cellSelected(const int row, const int column)

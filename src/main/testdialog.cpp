@@ -598,7 +598,7 @@ TestDialog::TestDialog(QWidget *parent) :
 
         mFastTableWidget->resetTextFlag(10, 5);
 
-        success = success && mFastTableWidget->cellTextFlags(10, 5)==(Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap);
+        success = success && mFastTableWidget->cellTextFlags(10, 5)==(Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap);
 
         mFastTableWidget->resetTextFlags();
 
@@ -608,7 +608,7 @@ TestDialog::TestDialog(QWidget *parent) :
             {
                 for (int j=0; j<mFastTableWidget->getColumnCount(); ++j)
                 {
-                    if (mFastTableWidget->cellTextFlags(i, j)!=(Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap))
+                    if (mFastTableWidget->cellTextFlags(i, j)!=(Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap))
                     {
                         success=false;
                         break;

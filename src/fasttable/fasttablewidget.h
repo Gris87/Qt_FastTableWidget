@@ -21,6 +21,10 @@ class FastTableWidget : public QAbstractScrollArea
     Q_PROPERTY(quint16 defaultWidth           READ defaultWidth           WRITE setDefaultWidth)
     Q_PROPERTY(QColor  defaultBackgroundColor READ defaultBackgroundColor WRITE setDefaultBackgroundColor)
     Q_PROPERTY(QColor  defaultForegroundColor READ defaultForegroundColor WRITE setDefaultForegroundColor)
+    Q_PROPERTY(QColor  gridColor              READ gridColor              WRITE setGridColor)
+    Q_PROPERTY(QColor  selectionColor         READ selectionColor         WRITE setSelectionColor)
+    Q_PROPERTY(int     totalHeight            READ totalHeight)
+    Q_PROPERTY(int     totalWidth             READ totalWidth)
 
 public:
     explicit FastTableWidget(QWidget *parent = 0);
