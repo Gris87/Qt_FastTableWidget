@@ -191,14 +191,14 @@ void FastTableWidget::selectAll()
 {
     mCurSelection.clear();
 
-    QPair<int, int> aCellPos;
+    QPoint aCellPos;
 
     for (int i=0; i<mRowCount; ++i)
     {
         for (int j=0; j<mColumnCount; ++j)
         {
-            aCellPos.first=i;
-            aCellPos.second=j;
+            aCellPos.setX(j);
+            aCellPos.setY(i);
 
             mCurSelection.append(aCellPos);
 
@@ -211,7 +211,7 @@ void FastTableWidget::unselectAll()
 {
     for (int i=0; i<mCurSelection.length(); ++i)
     {
-        mSelectedCells[mCurSelection.at(i).first][mCurSelection.at(i).second]=false;
+        mSelectedCells[mCurSelection.at(i).y()][mCurSelection.at(i).x()]=false;
     }
 
     mCurSelection.clear();
@@ -491,7 +491,7 @@ void FastTableWidget::setRowCount(int count)
                 {
                     for (int j=0; j<mCurSelection.length(); ++j)
                     {
-                        if (mCurSelection.at(j).first==mRowCount && mCurSelection.at(j).second==i)
+                        if (mCurSelection.at(j).y()==mRowCount && mCurSelection.at(j).x()==i)
                         {
                             mCurSelection.removeAt(j);
                             break;
@@ -583,7 +583,7 @@ void FastTableWidget::setColumnCount(int count)
                     {
                         for (int k=0; k<mCurSelection.length(); ++k)
                         {
-                            if (mCurSelection.at(k).first==i && mCurSelection.at(k).second==j)
+                            if (mCurSelection.at(k).y()==i && mCurSelection.at(k).x()==j)
                             {
                                 mCurSelection.removeAt(k);
                                 break;
@@ -827,13 +827,13 @@ void FastTableWidget::setCellSelected(const int row, const int column, const boo
 
         if (selected)
         {
-            mCurSelection.append(QPair<int, int>(row, column));
+            mCurSelection.append(QPoint(column, row));
         }
         else
         {
             for (int i=0; i<mCurSelection.length(); ++i)
             {
-                if (mCurSelection.at(i).first==row && mCurSelection.at(i).second==column)
+                if (mCurSelection.at(i).y()==row && mCurSelection.at(i).x()==column)
                 {
                     mCurSelection.removeAt(i);
                     break;

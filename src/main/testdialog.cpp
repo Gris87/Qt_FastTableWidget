@@ -582,6 +582,8 @@ TestDialog::TestDialog(QWidget *parent) :
             for (int j=0; j<mFastTableWidget->getColumnCount(); ++j)
             {
                 if (
+                    mCellTextFlags->at(i).at(j)!=aNewFlag
+                    ||
                     mFastTableWidget->cellTextFlags(i, j)!=aNewFlag
                    )
                 {

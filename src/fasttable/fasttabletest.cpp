@@ -85,7 +85,7 @@ QList< QList<bool> >      *FastTableTest::getSelectedCells()
     return &mSelectedCells;
 }
 
-QList< QPair<int, int> >  *FastTableTest::getCurSelection()
+QList< QPoint >           *FastTableTest::getCurSelection()
 {
     return &mCurSelection;
 }

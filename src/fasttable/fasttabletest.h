@@ -28,7 +28,7 @@ public:
     QList< int >              *getOffsetX();
     QList< int >              *getOffsetY();
     QList< QList<bool> >      *getSelectedCells();
-    QList< QPair<int, int> >  *getCurSelection();
+    QList< QPoint >           *getCurSelection();
     QList< QList<QColor *> >  *getBackgroundColors();
     QList< QList<QColor *> >  *getForegroundColors();
     QList< QList<QFont *> >   *getCellFonts();

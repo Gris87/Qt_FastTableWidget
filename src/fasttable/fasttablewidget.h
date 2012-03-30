@@ -129,7 +129,7 @@ protected:
     QList< int > mOffsetX;
     QList< int > mOffsetY;
     QList< QList<bool> > mSelectedCells;
-    QList< QPair<int, int> > mCurSelection;
+    QList< QPoint > mCurSelection;
     QList< QList<QColor *> > mBackgroundColors;
     QList< QList<QColor *> > mForegroundColors;
     QList< QList<QFont *> > mCellFonts;
