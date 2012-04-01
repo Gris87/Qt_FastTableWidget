@@ -328,6 +328,8 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
 
 void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int row, const int column)
 {
+    START_FREQUENT_PROFILE
+
     QColor *aBackgroundColor;
 
     if (mSelectedCells.at(row).at(column))
@@ -371,20 +373,32 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 
     painter.setPen(QPen(*aForegroundColor));
     painter.drawText(x+4, y+4, mColumnWidths.at(column)-8, mRowHeights.at(row)-8, mCellTextFlags.at(row).at(column), mData.at(row).at(column));
+
+    END_FREQUENT_PROFILE("void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int row, const int column)")
 }
 
 void FastTableWidget::horizontalScrollBarValueChanged(int value)
 {
+    START_PROFILE
+
     updateVisibleRange();
+
+    END_PROFILE("void FastTableWidget::horizontalScrollBarValueChanged(int value)")
 }
 
 void FastTableWidget::verticalScrollBarValueChanged(int value)
 {
+    START_PROFILE
+
     updateVisibleRange();
+
+    END_PROFILE("void FastTableWidget::verticalScrollBarValueChanged(int value)")
 }
 
 void FastTableWidget::updateBarsRanges()
 {
+    START_PROFILE
+
     QSize areaSize = viewport()->size();
 
     horizontalScrollBar()->setPageStep(mTotalWidth);
@@ -392,10 +406,14 @@ void FastTableWidget::updateBarsRanges()
 
     horizontalScrollBar()->setRange(0, mTotalWidth - areaSize.width());
     verticalScrollBar()->setRange(0, mTotalHeight - areaSize.height());
+
+    END_PROFILE("void FastTableWidget::updateBarsRanges()")
 }
 
 void FastTableWidget::updateVisibleRange()
 {
+    START_PROFILE
+
     if (mRowCount==0 || mColumnCount==0)
     {
         mVisibleLeft=-1;
@@ -485,6 +503,8 @@ void FastTableWidget::updateVisibleRange()
             mVisibleBottom--;
         }
     }
+
+    END_PROFILE("void FastTableWidget::updateVisibleRange()")
 }
 
 int FastTableWidget::rowCount()
@@ -494,6 +514,8 @@ int FastTableWidget::rowCount()
 
 void FastTableWidget::setRowCount(int count)
 {
+    START_PROFILE
+
     if (count<0)
     {
         count=0;
@@ -586,6 +608,8 @@ void FastTableWidget::setRowCount(int count)
         updateBarsRanges();
         updateVisibleRange();
     }
+
+    END_PROFILE("void FastTableWidget::setRowCount(int count)")
 }
 
 int FastTableWidget::columnCount()
@@ -595,6 +619,8 @@ int FastTableWidget::columnCount()
 
 void FastTableWidget::setColumnCount(int count)
 {
+    START_PROFILE
+
     if (count<0)
     {
         count=0;
@@ -681,6 +707,8 @@ void FastTableWidget::setColumnCount(int count)
         updateBarsRanges();
         updateVisibleRange();
     }
+
+    END_PROFILE("void FastTableWidget::setColumnCount(int count)")
 }
 
 QColor FastTableWidget::defaultBackgroundColor()
@@ -690,7 +718,11 @@ QColor FastTableWidget::defaultBackgroundColor()
 
 void FastTableWidget::setDefaultBackgroundColor(QColor color)
 {
+    START_PROFILE
+
     mDefaultBackgroundColor=color;
+
+    END_PROFILE("void FastTableWidget::setDefaultBackgroundColor(QColor color)")
 }
 
 QColor FastTableWidget::defaultForegroundColor()
@@ -700,7 +732,11 @@ QColor FastTableWidget::defaultForegroundColor()
 
 void FastTableWidget::setDefaultForegroundColor(QColor color)
 {
+    START_PROFILE
+
     mDefaultForegroundColor=color;
+
+    END_PROFILE("void FastTableWidget::setDefaultForegroundColor(QColor color)")
 }
 
 QColor FastTableWidget::gridColor()
@@ -710,7 +746,11 @@ QColor FastTableWidget::gridColor()
 
 void FastTableWidget::setGridColor(QColor color)
 {
+    START_PROFILE
+
     mGridColor=color;
+
+    END_PROFILE("void FastTableWidget::setGridColor(QColor color)")
 }
 
 QColor FastTableWidget::selectionColor()
@@ -720,7 +760,11 @@ QColor FastTableWidget::selectionColor()
 
 void FastTableWidget::setSelectionColor(QColor color)
 {
+    START_PROFILE
+
     mSelectionColor=color;
+
+    END_PROFILE("void FastTableWidget::setSelectionColor(QColor color)")
 }
 
 quint16 FastTableWidget::defaultHeight()
@@ -730,7 +774,11 @@ quint16 FastTableWidget::defaultHeight()
 
 void FastTableWidget::setDefaultHeight(quint16 height)
 {
+    START_PROFILE
+
     mDefaultHeight=height;
+
+    END_PROFILE("void FastTableWidget::setDefaultHeight(quint16 height)")
 }
 
 quint16 FastTableWidget::defaultWidth()
@@ -740,7 +788,11 @@ quint16 FastTableWidget::defaultWidth()
 
 void FastTableWidget::setDefaultWidth(quint16 width)
 {
+    START_PROFILE
+
     mDefaultWidth=width;
+
+    END_PROFILE("void FastTableWidget::setDefaultWidth(quint16 width)")
 }
 
 int FastTableWidget::totalHeight()
@@ -755,8 +807,13 @@ int FastTableWidget::totalWidth()
 
 QRect FastTableWidget::visibleRange()
 {
+    START_PROFILE
+
     QRect aRect;
     aRect.setCoords(mVisibleLeft, mVisibleTop, mVisibleRight, mVisibleBottom);
+
+    END_PROFILE("QRect FastTableWidget::visibleRange()")
+
     return aRect;
 }
 
@@ -767,7 +824,11 @@ QString FastTableWidget::text(const int row, const int column)
 
 void FastTableWidget::setText(const int row, const int column, const QString text)
 {
+    START_FREQUENT_PROFILE
+
     mData[row][column]=text;
+
+    END_FREQUENT_PROFILE("void FastTableWidget::setText(const int row, const int column, const QString text)")
 }
 
 quint16 FastTableWidget::rowHeight(const int row)
@@ -777,6 +838,8 @@ quint16 FastTableWidget::rowHeight(const int row)
 
 void FastTableWidget::setRowHeight(const int row, const quint16 height)
 {
+    START_PROFILE
+
     if (mRowHeights.at(row)!=height)
     {
         int aDiff=height-mRowHeights.at(row);
@@ -792,6 +855,8 @@ void FastTableWidget::setRowHeight(const int row, const quint16 height)
         updateBarsRanges();
         updateVisibleRange();
     }
+
+    END_PROFILE("void FastTableWidget::setRowHeight(const int row, const quint16 height)")
 }
 
 quint16 FastTableWidget::columnWidth(const int column)
@@ -801,6 +866,8 @@ quint16 FastTableWidget::columnWidth(const int column)
 
 void FastTableWidget::setColumnWidth(const int column, const quint16 width)
 {
+    START_PROFILE
+
     if (mColumnWidths.at(column)!=width)
     {
         int aDiff=width-mColumnWidths.at(column);
@@ -816,20 +883,30 @@ void FastTableWidget::setColumnWidth(const int column, const quint16 width)
         updateBarsRanges();
         updateVisibleRange();
     }
+
+    END_PROFILE("void FastTableWidget::setColumnWidth(const int column, const quint16 width)")
 }
 
 QColor FastTableWidget::backgroundColor(const int row, const int column)
 {
-    if (mBackgroundColors.at(row).at(column))
+    START_PROFILE
+
+    QColor *aColor=mBackgroundColors.at(row).at(column);
+
+    if (aColor==0)
     {
-        return *mBackgroundColors.at(row).at(column);
+        aColor=&mDefaultBackgroundColor;
     }
 
-    return mDefaultBackgroundColor;
+    END_PROFILE("QColor FastTableWidget::backgroundColor(const int row, const int column)")
+
+    return *aColor;
 }
 
 void FastTableWidget::setBackgroundColor(const int row, const int column, const QColor color)
 {
+    START_PROFILE
+
     if (mBackgroundColors.at(row).at(column))
     {
         *mBackgroundColors[row][column]=color;
@@ -838,20 +915,30 @@ void FastTableWidget::setBackgroundColor(const int row, const int column, const 
     {
         mBackgroundColors[row][column]=new QColor(color);
     }
+
+    END_PROFILE("void FastTableWidget::setBackgroundColor(const int row, const int column, const QColor color)")
 }
 
 QColor FastTableWidget::foregroundColor(const int row, const int column)
 {
-    if (mForegroundColors.at(row).at(column))
+    START_PROFILE
+
+    QColor *aColor=mForegroundColors.at(row).at(column);
+
+    if (aColor==0)
     {
-        return *mForegroundColors.at(row).at(column);
+        aColor=&mDefaultForegroundColor;
     }
 
-    return mDefaultForegroundColor;
+    END_PROFILE("QColor FastTableWidget::foregroundColor(const int row, const int column)")
+
+    return *aColor;
 }
 
 void FastTableWidget::setForegroundColor(const int row, const int column, const QColor color)
 {
+    START_PROFILE
+
     if (mForegroundColors.at(row).at(column))
     {
         *mForegroundColors[row][column]=color;
@@ -860,6 +947,8 @@ void FastTableWidget::setForegroundColor(const int row, const int column, const 
     {
         mForegroundColors[row][column]=new QColor(color);
     }
+
+    END_PROFILE("void FastTableWidget::setForegroundColor(const int row, const int column, const QColor color)")
 }
 
 QFont FastTableWidget::cellFont(const int row, const int column)
@@ -874,6 +963,8 @@ QFont FastTableWidget::cellFont(const int row, const int column)
 
 void FastTableWidget::setCellFont(const int row, const int column, const QFont font)
 {
+    START_PROFILE
+
     if (mCellFonts.at(row).at(column))
     {
         *mCellFonts[row][column]=font;
@@ -882,6 +973,8 @@ void FastTableWidget::setCellFont(const int row, const int column, const QFont f
     {
         mCellFonts[row][column]=new QFont(font);
     }
+
+    END_PROFILE("void FastTableWidget::setCellFont(const int row, const int column, const QFont font)")
 }
 
 int FastTableWidget::cellTextFlags(const int row, const int column)
@@ -891,7 +984,11 @@ int FastTableWidget::cellTextFlags(const int row, const int column)
 
 void FastTableWidget::setCellTextFlags(const int row, const int column, const int flags)
 {
+    START_PROFILE
+
     mCellTextFlags[row][column]=flags;
+
+    END_PROFILE("void FastTableWidget::setCellTextFlags(const int row, const int column, const int flags)")
 }
 
 bool FastTableWidget::cellSelected(const int row, const int column)
@@ -901,6 +998,8 @@ bool FastTableWidget::cellSelected(const int row, const int column)
 
 void FastTableWidget::setCellSelected(const int row, const int column, const bool selected)
 {
+    START_PROFILE
+
     if (mSelectedCells.at(row).at(column)!=selected)
     {
         mSelectedCells[row][column]=selected;
@@ -921,4 +1020,6 @@ void FastTableWidget::setCellSelected(const int row, const int column, const boo
             }
         }
     }
+
+    END_PROFILE("void FastTableWidget::setCellSelected(const int row, const int column, const bool selected)")
 }
