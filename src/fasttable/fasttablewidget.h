@@ -40,10 +40,10 @@ class FastTableWidget : public QAbstractScrollArea
     Q_PROPERTY(int     columnCount            READ columnCount            WRITE setColumnCount)
     Q_PROPERTY(quint16 defaultHeight          READ defaultHeight          WRITE setDefaultHeight)
     Q_PROPERTY(quint16 defaultWidth           READ defaultWidth           WRITE setDefaultWidth)
-    Q_PROPERTY(QColor  defaultBackgroundColor READ defaultBackgroundColor WRITE setDefaultBackgroundColor)
+    Q_PROPERTY(QBrush  defaultBackgroundBrush READ defaultBackgroundBrush WRITE setDefaultBackgroundBrush)
     Q_PROPERTY(QColor  defaultForegroundColor READ defaultForegroundColor WRITE setDefaultForegroundColor)
     Q_PROPERTY(QColor  gridColor              READ gridColor              WRITE setGridColor)
-    Q_PROPERTY(QColor  selectionColor         READ selectionColor         WRITE setSelectionColor)
+    Q_PROPERTY(QBrush  selectionBrush         READ selectionBrush         WRITE setSelectionBrush)
     Q_PROPERTY(int     totalHeight            READ totalHeight)
     Q_PROPERTY(int     totalWidth             READ totalWidth)
 
@@ -53,12 +53,12 @@ public:
 
     void clearTable();
 
-    void resetBackgroundColors();
+    void resetBackgroundBrushes();
     void resetForegroundColors();
     void resetFonts();
     void resetTextFlags();
 
-    void resetBackgroundColor(const int row, const int column);
+    void resetBackgroundBrush(const int row, const int column);
     void resetForegroundColor(const int row, const int column);
     void resetFont(const int row, const int column);
     void resetTextFlag(const int row, const int column);
@@ -78,8 +78,8 @@ public:
     int columnCount();
     void setColumnCount(int count);
 
-    QColor defaultBackgroundColor();
-    void setDefaultBackgroundColor(QColor color);
+    QBrush defaultBackgroundBrush();
+    void setDefaultBackgroundBrush(QBrush brush);
 
     QColor defaultForegroundColor();
     void setDefaultForegroundColor(QColor color);
@@ -87,8 +87,8 @@ public:
     QColor gridColor();
     void setGridColor(QColor color);
 
-    QColor selectionColor();
-    void setSelectionColor(QColor color);
+    QBrush selectionBrush();
+    void setSelectionBrush(QBrush brush);
 
     quint16 defaultHeight();
     void setDefaultHeight(quint16 height);
@@ -110,8 +110,8 @@ public:
     quint16 columnWidth(const int column);
     void setColumnWidth(const int column, const quint16 width);
 
-    QColor backgroundColor(const int row, const int column);
-    void setBackgroundColor(const int row, const int column, const QColor color);
+    QBrush backgroundBrush(const int row, const int column);
+    void setBackgroundBrush(const int row, const int column, const QBrush brush);
 
     QColor foregroundColor(const int row, const int column);
     void setForegroundColor(const int row, const int column, const QColor color);
@@ -134,10 +134,10 @@ protected:
     int mTotalHeight;
     int mTotalWidth;
 
-    QColor mDefaultBackgroundColor;
+    QBrush mDefaultBackgroundBrush;
     QColor mDefaultForegroundColor;
     QColor mGridColor;
-    QColor mSelectionColor;
+    QBrush mSelectionBrush;
 
     int mVisibleLeft;
     int mVisibleRight;
@@ -151,7 +151,7 @@ protected:
     QList< int > mOffsetY;
     QList< QList<bool> > mSelectedCells;
     QList< QPoint > mCurSelection;
-    QList< QList<QColor *> > mBackgroundColors;
+    QList< QList<QBrush *> > mBackgroundBrushes;
     QList< QList<QColor *> > mForegroundColors;
     QList< QList<QFont *> > mCellFonts;
     QList< QList<int> > mCellTextFlags;

@@ -13,10 +13,10 @@ FastTableWidget::FastTableWidget(QWidget *parent) :
     mTotalHeight=0;
     mTotalWidth=0;
 
-    mDefaultBackgroundColor.setRgb(255, 255, 255);
+    mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
     mDefaultForegroundColor.setRgb(0, 0, 0);
     mGridColor.setRgb(0, 0, 0);
-    mSelectionColor.setRgb(0, 0, 255);
+    mSelectionBrush.setColor(QColor(0, 0, 255));
 
     mVisibleLeft=-1;
     mVisibleRight=-1;
@@ -47,7 +47,7 @@ void FastTableWidget::clearTable()
 {
     START_PROFILE
 
-    resetBackgroundColors();
+    resetBackgroundBrushes();
     resetForegroundColors();
     resetFonts();
 
@@ -67,8 +67,8 @@ void FastTableWidget::clearTable()
     mOffsetX.clear();
     mOffsetY.clear();
     mData.clear();
-    mBackgroundColors.clear();
-    mBackgroundColors.clear();
+    mBackgroundBrushes.clear();
+    mForegroundColors.clear();
     mCellFonts.clear();
     mCellTextFlags.clear();
     mSelectedCells.clear();
@@ -79,7 +79,7 @@ void FastTableWidget::clearTable()
     END_PROFILE("void FastTableWidget::clearTable()")
 }
 
-void FastTableWidget::resetBackgroundColors()
+void FastTableWidget::resetBackgroundBrushes()
 {
     START_PROFILE
 
@@ -87,15 +87,15 @@ void FastTableWidget::resetBackgroundColors()
     {
         for (int j=0; j<mColumnCount; ++j)
         {
-            if (mBackgroundColors.at(i).at(j))
+            if (mBackgroundBrushes.at(i).at(j))
             {
-                delete mBackgroundColors.at(i).at(j);
-                mBackgroundColors[i][j]=0;
+                delete mBackgroundBrushes.at(i).at(j);
+                mBackgroundBrushes[i][j]=0;
             }
         }
     }
 
-    END_PROFILE("void FastTableWidget::resetBackgroundColors()")
+    END_PROFILE("void FastTableWidget::resetBackgroundBrushes()")
 }
 
 void FastTableWidget::resetForegroundColors()
@@ -151,17 +151,17 @@ void FastTableWidget::resetTextFlags()
     END_PROFILE("void FastTableWidget::resetTextFlags()")
 }
 
-void FastTableWidget::resetBackgroundColor(const int row, const int column)
+void FastTableWidget::resetBackgroundBrush(const int row, const int column)
 {
     START_PROFILE
 
-    if (mBackgroundColors.at(row).at(column))
+    if (mBackgroundBrushes.at(row).at(column))
     {
-        delete mBackgroundColors.at(row).at(column);
-        mBackgroundColors[row][column]=0;
+        delete mBackgroundBrushes.at(row).at(column);
+        mBackgroundBrushes[row][column]=0;
     }
 
-    END_PROFILE("void FastTableWidget::resetBackgroundColor(const int row, const int column)")
+    END_PROFILE("void FastTableWidget::resetBackgroundBrush(const int row, const int column)")
 }
 
 void FastTableWidget::resetForegroundColor(const int row, const int column)
@@ -330,19 +330,19 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 {
     START_FREQUENT_PROFILE
 
-    QColor *aBackgroundColor;
+    QBrush *aBackgroundBrush;
 
     if (mSelectedCells.at(row).at(column))
     {
-        aBackgroundColor=&mSelectionColor;
+        aBackgroundBrush=&mSelectionBrush;
     }
     else
     {
-        aBackgroundColor=mBackgroundColors.at(row).at(column);
+        aBackgroundBrush=mBackgroundBrushes.at(row).at(column);
 
-        if (aBackgroundColor==0)
+        if (aBackgroundBrush==0)
         {
-            aBackgroundColor=&mDefaultBackgroundColor;
+            aBackgroundBrush=&mDefaultBackgroundBrush;
         }
     }
 
@@ -368,7 +368,7 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 
     painter.setPen(QPen(mGridColor));
 
-    painter.fillRect(x, y, mColumnWidths.at(column), mRowHeights.at(row), *aBackgroundColor);
+    painter.fillRect(x, y, mColumnWidths.at(column), mRowHeights.at(row), *aBackgroundBrush);
     painter.drawRect(x, y, mColumnWidths.at(column), mRowHeights.at(row));
 
     painter.setPen(QPen(*aForegroundColor));
@@ -526,6 +526,7 @@ void FastTableWidget::setRowCount(int count)
         while (mRowCount<count)
         {
             QStringList aNewRow;
+            QList<QBrush *> aNewRowBrush;
             QList<QColor *> aNewRowColor;
             QList<QFont *> aNewRowFont;
             QList<bool> aNewRowbool;
@@ -536,7 +537,7 @@ void FastTableWidget::setRowCount(int count)
             mData.append(aNewRow);
             mRowHeights.append(mDefaultHeight);
             mOffsetY.append(mRowCount==0? 0 : (mOffsetY.at(mRowCount-1)+mRowHeights.at(mRowCount-1)));
-            mBackgroundColors.append(aNewRowColor);
+            mBackgroundBrushes.append(aNewRowBrush);
             mForegroundColors.append(aNewRowColor);
             mCellFonts.append(aNewRowFont);
             mCellTextFlags.append(aNewRowint);
@@ -545,7 +546,7 @@ void FastTableWidget::setRowCount(int count)
             for (int i=0; i<mColumnCount; ++i)
             {
                 mData[mRowCount].append("");
-                mBackgroundColors[mRowCount].append(0);
+                mBackgroundBrushes[mRowCount].append(0);
                 mForegroundColors[mRowCount].append(0);
                 mCellFonts[mRowCount].append(0);
                 mCellTextFlags[mRowCount].append(Qt::AlignTop | Qt::AlignVCenter | Qt::TextWordWrap);
@@ -563,9 +564,9 @@ void FastTableWidget::setRowCount(int count)
 
             for (int i=0; i<mColumnCount; ++i)
             {
-                if (mBackgroundColors.at(mRowCount).at(i))
+                if (mBackgroundBrushes.at(mRowCount).at(i))
                 {
-                    delete mBackgroundColors.at(mRowCount).at(i);
+                    delete mBackgroundBrushes.at(mRowCount).at(i);
                 }
 
                 if (mForegroundColors.at(mRowCount).at(i))
@@ -582,7 +583,7 @@ void FastTableWidget::setRowCount(int count)
             mData.removeLast();
             mRowHeights.removeLast();
             mOffsetY.removeLast();
-            mBackgroundColors.removeLast();
+            mBackgroundBrushes.removeLast();
             mForegroundColors.removeLast();
             mCellFonts.removeLast();
             mCellTextFlags.removeLast();
@@ -643,7 +644,7 @@ void FastTableWidget::setColumnCount(int count)
                 for (int j=mColumnCount; j<count; ++j)
                 {
                     mData[i].append("");
-                    mBackgroundColors[i].append(0);
+                    mBackgroundBrushes[i].append(0);
                     mForegroundColors[i].append(0);
                     mCellFonts[i].append(0);
                     mCellTextFlags[i].append(Qt::AlignTop | Qt::AlignVCenter | Qt::TextWordWrap);
@@ -664,9 +665,9 @@ void FastTableWidget::setColumnCount(int count)
             {
                 for (int j=mColumnCount-1; j>=count; --j)
                 {
-                    if (mBackgroundColors.at(i).at(j))
+                    if (mBackgroundBrushes.at(i).at(j))
                     {
-                        delete mBackgroundColors.at(i).at(j);
+                        delete mBackgroundBrushes.at(i).at(j);
                     }
 
                     if (mForegroundColors.at(i).at(j))
@@ -680,7 +681,7 @@ void FastTableWidget::setColumnCount(int count)
                     }
 
                     mData[i].removeLast();
-                    mBackgroundColors[i].removeLast();
+                    mBackgroundBrushes[i].removeLast();
                     mForegroundColors[i].removeLast();
                     mCellFonts[i].removeLast();
                     mCellTextFlags[i].removeLast();
@@ -711,18 +712,18 @@ void FastTableWidget::setColumnCount(int count)
     END_PROFILE("void FastTableWidget::setColumnCount(int count)")
 }
 
-QColor FastTableWidget::defaultBackgroundColor()
+QBrush FastTableWidget::defaultBackgroundBrush()
 {
-    return mDefaultBackgroundColor;
+    return mDefaultBackgroundBrush;
 }
 
-void FastTableWidget::setDefaultBackgroundColor(QColor color)
+void FastTableWidget::setDefaultBackgroundBrush(QBrush brush)
 {
     START_PROFILE
 
-    mDefaultBackgroundColor=color;
+    mDefaultBackgroundBrush=brush;
 
-    END_PROFILE("void FastTableWidget::setDefaultBackgroundColor(QColor color)")
+    END_PROFILE("void FastTableWidget::setDefaultBackgroundBrush(QBrush brush)")
 }
 
 QColor FastTableWidget::defaultForegroundColor()
@@ -753,18 +754,18 @@ void FastTableWidget::setGridColor(QColor color)
     END_PROFILE("void FastTableWidget::setGridColor(QColor color)")
 }
 
-QColor FastTableWidget::selectionColor()
+QBrush FastTableWidget::selectionBrush()
 {
-    return mSelectionColor;
+    return mSelectionBrush;
 }
 
-void FastTableWidget::setSelectionColor(QColor color)
+void FastTableWidget::setSelectionBrush(QBrush brush)
 {
     START_PROFILE
 
-    mSelectionColor=color;
+    mSelectionBrush=brush;
 
-    END_PROFILE("void FastTableWidget::setSelectionColor(QColor color)")
+    END_PROFILE("void FastTableWidget::setSelectionBrush(QBrush brush)")
 }
 
 quint16 FastTableWidget::defaultHeight()
@@ -887,36 +888,36 @@ void FastTableWidget::setColumnWidth(const int column, const quint16 width)
     END_PROFILE("void FastTableWidget::setColumnWidth(const int column, const quint16 width)")
 }
 
-QColor FastTableWidget::backgroundColor(const int row, const int column)
+QBrush FastTableWidget::backgroundBrush(const int row, const int column)
 {
     START_PROFILE
 
-    QColor *aColor=mBackgroundColors.at(row).at(column);
+    QBrush *aBrush=mBackgroundBrushes.at(row).at(column);
 
-    if (aColor==0)
+    if (aBrush==0)
     {
-        aColor=&mDefaultBackgroundColor;
+        aBrush=&mDefaultBackgroundBrush;
     }
 
-    END_PROFILE("QColor FastTableWidget::backgroundColor(const int row, const int column)")
+    END_PROFILE("QBrush FastTableWidget::backgroundBrush(const int row, const int column)")
 
-    return *aColor;
+    return *aBrush;
 }
 
-void FastTableWidget::setBackgroundColor(const int row, const int column, const QColor color)
+void FastTableWidget::setBackgroundBrush(const int row, const int column, const QBrush brush)
 {
     START_PROFILE
 
-    if (mBackgroundColors.at(row).at(column))
+    if (mBackgroundBrushes.at(row).at(column))
     {
-        *mBackgroundColors[row][column]=color;
+        *mBackgroundBrushes[row][column]=brush;
     }
     else
     {
-        mBackgroundColors[row][column]=new QColor(color);
+        mBackgroundBrushes[row][column]=new QBrush(brush);
     }
 
-    END_PROFILE("void FastTableWidget::setBackgroundColor(const int row, const int column, const QColor color)")
+    END_PROFILE("void FastTableWidget::setBackgroundBrush(const int row, const int column, const QBrush brush)")
 }
 
 QColor FastTableWidget::foregroundColor(const int row, const int column)

@@ -22,17 +22,17 @@ TestDialog::TestDialog(QWidget *parent) :
 
     // --------------------------------------------------------
 
-    mData             = mFastTableWidget->getData();
-    mRowHeights       = mFastTableWidget->getRowHeights();
-    mColumnWidths     = mFastTableWidget->getColumnWidths();
-    mOffsetX          = mFastTableWidget->getOffsetX();
-    mOffsetY          = mFastTableWidget->getOffsetY();
-    mSelectedCells    = mFastTableWidget->getSelectedCells();
-    mCurSelection     = mFastTableWidget->getCurSelection();
-    mBackgroundColors = mFastTableWidget->getBackgroundColors();
-    mForegroundColors = mFastTableWidget->getForegroundColors();
-    mCellFonts        = mFastTableWidget->getCellFonts();
-    mCellTextFlags    = mFastTableWidget->getCellTextFlags();
+    mData              = mFastTableWidget->getData();
+    mRowHeights        = mFastTableWidget->getRowHeights();
+    mColumnWidths      = mFastTableWidget->getColumnWidths();
+    mOffsetX           = mFastTableWidget->getOffsetX();
+    mOffsetY           = mFastTableWidget->getOffsetY();
+    mSelectedCells     = mFastTableWidget->getSelectedCells();
+    mCurSelection      = mFastTableWidget->getCurSelection();
+    mBackgroundBrushes = mFastTableWidget->getBackgroundBrushes();
+    mForegroundColors  = mFastTableWidget->getForegroundColors();
+    mCellFonts         = mFastTableWidget->getCellFonts();
+    mCellTextFlags     = mFastTableWidget->getCellTextFlags();
 
     // --------------------------------------------------------
 
@@ -146,19 +146,19 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 8: setDefaultBackgroundColor
+    // TEST 8: setDefaultBackgroundBrush
     // ----------------------------------------------------------------
     {
-        QColor aDefaultBackgroundColor=mFastTableWidget->getDefaultBackgroundColor();
-        QColor aNewDefaultBackgroundColor=QColor(255-aDefaultBackgroundColor.red(), 255-aDefaultBackgroundColor.green(), 255-aDefaultBackgroundColor.blue());
+        QBrush aDefaultBackgroundBrush=mFastTableWidget->getDefaultBackgroundBrush();
+        QBrush aNewDefaultBackgroundBrush=QBrush(QColor(1, 2, 3));
 
-        mFastTableWidget->setDefaultBackgroundColor(aNewDefaultBackgroundColor);
+        mFastTableWidget->setDefaultBackgroundBrush(aNewDefaultBackgroundBrush);
 
-        success =            mFastTableWidget->getDefaultBackgroundColor()==aNewDefaultBackgroundColor;
+        success =            mFastTableWidget->getDefaultBackgroundBrush()==aNewDefaultBackgroundBrush;
 
-        mFastTableWidget->setDefaultBackgroundColor(aDefaultBackgroundColor);
+        mFastTableWidget->setDefaultBackgroundBrush(aDefaultBackgroundBrush);
 
-        success = success && mFastTableWidget->getDefaultBackgroundColor()==aDefaultBackgroundColor;
+        success = success && mFastTableWidget->getDefaultBackgroundBrush()==aDefaultBackgroundBrush;
 
         testCompleted(success, ui->setDefBackgroundResLabel);
         ui->progressBar->setValue(ui->progressBar->value()+1);
@@ -168,7 +168,7 @@ TestDialog::TestDialog(QWidget *parent) :
     // ----------------------------------------------------------------
     {
         QColor aDefaultForegroundColor=mFastTableWidget->getDefaultForegroundColor();
-        QColor aNewDefaultForegroundColor=QColor(255-aDefaultForegroundColor.red(), 255-aDefaultForegroundColor.green(), 255-aDefaultForegroundColor.blue());
+        QColor aNewDefaultForegroundColor=QColor(1, 2, 3);
 
         mFastTableWidget->setDefaultForegroundColor(aNewDefaultForegroundColor);
 
@@ -186,7 +186,7 @@ TestDialog::TestDialog(QWidget *parent) :
     // ----------------------------------------------------------------
     {
         QColor aGridColor=mFastTableWidget->getGridColor();
-        QColor aNewGridColor=QColor(255-aGridColor.red(), 255-aGridColor.green(), 255-aGridColor.blue());
+        QColor aNewGridColor=QColor(1, 2, 3);
 
         mFastTableWidget->setGridColor(aNewGridColor);
 
@@ -200,19 +200,19 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 11: setSelectionColor
+    // TEST 11: setSelectionBrush
     // ----------------------------------------------------------------
     {
-        QColor aSelectionColor=mFastTableWidget->getSelectionColor();
-        QColor aNewSelectionColor=QColor(255-aSelectionColor.red(), 255-aSelectionColor.green(), 255-aSelectionColor.blue());
+        QBrush aSelectionBrush=mFastTableWidget->getSelectionBrush();
+        QBrush aNewSelectionBrush=QBrush(QColor(1, 2, 3));
 
-        mFastTableWidget->setSelectionColor(aNewSelectionColor);
+        mFastTableWidget->setSelectionBrush(aNewSelectionBrush);
 
-        success =            mFastTableWidget->getSelectionColor()==aNewSelectionColor;
+        success =            mFastTableWidget->getSelectionBrush()==aNewSelectionBrush;
 
-        mFastTableWidget->setSelectionColor(aSelectionColor);
+        mFastTableWidget->setSelectionBrush(aSelectionBrush);
 
-        success = success && mFastTableWidget->getSelectionColor()==aSelectionColor;
+        success = success && mFastTableWidget->getSelectionBrush()==aSelectionBrush;
 
         testCompleted(success, ui->setSelectionColorResLabel);
         ui->progressBar->setValue(ui->progressBar->value()+1);
@@ -358,16 +358,16 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 17: setBackgroundColor
+    // TEST 17: setBackgroundBrush
     // ----------------------------------------------------------------
     {
-        QColor aNewBackgroundColor(1, 2, 3);
+        QBrush aNewBackgroundBrush(QColor(1, 2, 3));
 
         for (int i=0; i<mFastTableWidget->rowCount(); ++i)
         {
             for (int j=0; j<mFastTableWidget->columnCount(); ++j)
             {
-                mFastTableWidget->setBackgroundColor(i, j, aNewBackgroundColor);
+                mFastTableWidget->setBackgroundBrush(i, j, aNewBackgroundBrush);
             }
         }
 
@@ -378,11 +378,11 @@ TestDialog::TestDialog(QWidget *parent) :
             for (int j=0; j<mFastTableWidget->getColumnCount(); ++j)
             {
                 if (
-                    mBackgroundColors->at(i).at(j)==0
+                    mBackgroundBrushes->at(i).at(j)==0
                     ||
-                    *mBackgroundColors->at(i).at(j)!=aNewBackgroundColor
+                    *mBackgroundBrushes->at(i).at(j)!=aNewBackgroundBrush
                     ||
-                    mFastTableWidget->backgroundColor(i, j)!=aNewBackgroundColor
+                    mFastTableWidget->backgroundBrush(i, j)!=aNewBackgroundBrush
                    )
                 {
                     success=false;
@@ -396,11 +396,11 @@ TestDialog::TestDialog(QWidget *parent) :
             }
         }
 
-        mFastTableWidget->resetBackgroundColor(10, 5);
+        mFastTableWidget->resetBackgroundBrush(10, 5);
 
-        success = success && mBackgroundColors->at(10).at(5)==0;
+        success = success && mBackgroundBrushes->at(10).at(5)==0;
 
-        mFastTableWidget->resetBackgroundColors();
+        mFastTableWidget->resetBackgroundBrushes();
 
         if (success)
         {
@@ -408,7 +408,7 @@ TestDialog::TestDialog(QWidget *parent) :
             {
                 for (int j=0; j<mFastTableWidget->getColumnCount(); ++j)
                 {
-                    if (mBackgroundColors->at(i).at(j)!=0)
+                    if (mBackgroundBrushes->at(i).at(j)!=0)
                     {
                         success=false;
                         break;
@@ -739,7 +739,7 @@ bool TestDialog::checkForSizes(int rows, int columns)
     success = success && mOffsetX->length()==columns;
     success = success && mOffsetY->length()==rows;
     success = success && mSelectedCells->length()==rows;
-    success = success && mBackgroundColors->length()==rows;
+    success = success && mBackgroundBrushes->length()==rows;
     success = success && mForegroundColors->length()==rows;
     success = success && mCellFonts->length()==rows;
     success = success && mCellTextFlags->length()==rows;
@@ -770,9 +770,9 @@ bool TestDialog::checkForSizes(int rows, int columns)
 
     if (success)
     {
-        for (int i=0; i<mBackgroundColors->length(); ++i)
+        for (int i=0; i<mBackgroundBrushes->length(); ++i)
         {
-            if (mBackgroundColors->at(i).length()!=columns)
+            if (mBackgroundBrushes->at(i).length()!=columns)
             {
                 success=false;
                 break;
