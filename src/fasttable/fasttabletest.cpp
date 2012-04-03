@@ -35,9 +35,9 @@ int     FastTableTest::getTotalWidth()
     return mTotalWidth;
 }
 
-QColor FastTableTest::getDefaultBackgroundColor()
+QBrush FastTableTest::getDefaultBackgroundBrush()
 {
-    return mDefaultBackgroundColor;
+    return mDefaultBackgroundBrush;
 }
 
 QColor FastTableTest::getDefaultForegroundColor()
@@ -50,9 +50,9 @@ QColor FastTableTest::getGridColor()
     return mGridColor;
 }
 
-QColor FastTableTest::getSelectionColor()
+QBrush FastTableTest::getSelectionBrush()
 {
-    return mSelectionColor;
+    return mSelectionBrush;
 }
 
 QList< QStringList >      *FastTableTest::getData()
@@ -90,9 +90,9 @@ QList< QPoint >           *FastTableTest::getCurSelection()
     return &mCurSelection;
 }
 
-QList< QList<QColor *> >  *FastTableTest::getBackgroundColors()
+QList< QList<QBrush *> >  *FastTableTest::getBackgroundBrushes()
 {
-    return &mBackgroundColors;
+    return &mBackgroundBrushes;
 }
 
 QList< QList<QColor *> >  *FastTableTest::getForegroundColors()
@@ -108,6 +108,26 @@ QList< QList<QFont *> >   *FastTableTest::getCellFonts()
 QList< QList<int> >       *FastTableTest::getCellTextFlags()
 {
     return &mCellTextFlags;
+}
+
+QList< QList<quint16> >       *FastTableTest::getCellMergeX()
+{
+    return &mCellMergeX;
+}
+
+QList< QList<quint16> >       *FastTableTest::getCellMergeY()
+{
+    return &mCellMergeY;
+}
+
+QList< QList<int> >       *FastTableTest::getCellMergeParentRow()
+{
+    return &mCellMergeParentRow;
+}
+
+QList< QList<int> >       *FastTableTest::getCellMergeParentColumn()
+{
+    return &mCellMergeParentColumn;
 }
 
 bool FastTableTest::getStartSelection()

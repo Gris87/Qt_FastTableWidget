@@ -22,17 +22,21 @@ TestDialog::TestDialog(QWidget *parent) :
 
     // --------------------------------------------------------
 
-    mData              = mFastTableWidget->getData();
-    mRowHeights        = mFastTableWidget->getRowHeights();
-    mColumnWidths      = mFastTableWidget->getColumnWidths();
-    mOffsetX           = mFastTableWidget->getOffsetX();
-    mOffsetY           = mFastTableWidget->getOffsetY();
-    mSelectedCells     = mFastTableWidget->getSelectedCells();
-    mCurSelection      = mFastTableWidget->getCurSelection();
-    mBackgroundBrushes = mFastTableWidget->getBackgroundBrushes();
-    mForegroundColors  = mFastTableWidget->getForegroundColors();
-    mCellFonts         = mFastTableWidget->getCellFonts();
-    mCellTextFlags     = mFastTableWidget->getCellTextFlags();
+    mData                  = mFastTableWidget->getData();
+    mRowHeights            = mFastTableWidget->getRowHeights();
+    mColumnWidths          = mFastTableWidget->getColumnWidths();
+    mOffsetX               = mFastTableWidget->getOffsetX();
+    mOffsetY               = mFastTableWidget->getOffsetY();
+    mSelectedCells         = mFastTableWidget->getSelectedCells();
+    mCurSelection          = mFastTableWidget->getCurSelection();
+    mBackgroundBrushes     = mFastTableWidget->getBackgroundBrushes();
+    mForegroundColors      = mFastTableWidget->getForegroundColors();
+    mCellFonts             = mFastTableWidget->getCellFonts();
+    mCellTextFlags         = mFastTableWidget->getCellTextFlags();
+    mCellMergeX            = mFastTableWidget->getCellMergeX();
+    mCellMergeY            = mFastTableWidget->getCellMergeY();
+    mCellMergeParentRow    = mFastTableWidget->getCellMergeParentRow();
+    mCellMergeParentColumn = mFastTableWidget->getCellMergeParentColumn();
 
     // --------------------------------------------------------
 
@@ -116,22 +120,34 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 6: setRowCount(50)
+    // TEST 6: clearTable()
+    // ----------------------------------------------------------------
+    {
+        mFastTableWidget->clearTable();
+
+        success =            mFastTableWidget->getTotalHeight()==0;
+        success = success && mFastTableWidget->getTotalWidth()==0;
+        success = success && checkForSizes(0, 0);
+
+        testCompleted(success, ui->clearTableResLabel);
+        ui->progressBar->setValue(ui->progressBar->value()+1);
+    }
+    // ----------------------------------------------------------------
+    // TEST 7: setRowCount(50)
     // ----------------------------------------------------------------
     {
         mFastTableWidget->setRowCount(50);
 
         success =            mFastTableWidget->getTotalHeight()==mFastTableWidget->getDefaultHeight()*50;
-        success = success && mFastTableWidget->getTotalWidth()==mFastTableWidget->getDefaultWidth();
-        success = success && mOffsetX->at(0)==0;
+        success = success && mFastTableWidget->getTotalWidth()==0;
         success = success && mOffsetY->at(49)==mFastTableWidget->getDefaultHeight()*49;
-        success = success && checkForSizes(50, 1);
+        success = success && checkForSizes(50, 0);
 
         testCompleted(success, ui->setRow50ResLabel2);
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 7: setColumnCount(20)
+    // TEST 8: setColumnCount(20)
     // ----------------------------------------------------------------
     {
         mFastTableWidget->setColumnCount(20);
@@ -146,7 +162,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 8: setDefaultBackgroundBrush
+    // TEST 9: setDefaultBackgroundBrush
     // ----------------------------------------------------------------
     {
         QBrush aDefaultBackgroundBrush=mFastTableWidget->getDefaultBackgroundBrush();
@@ -164,7 +180,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 9: setDefaultForegroundColor
+    // TEST 10: setDefaultForegroundColor
     // ----------------------------------------------------------------
     {
         QColor aDefaultForegroundColor=mFastTableWidget->getDefaultForegroundColor();
@@ -182,7 +198,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 10: setGridColor
+    // TEST 11: setGridColor
     // ----------------------------------------------------------------
     {
         QColor aGridColor=mFastTableWidget->getGridColor();
@@ -200,7 +216,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 11: setSelectionBrush
+    // TEST 12: setSelectionBrush
     // ----------------------------------------------------------------
     {
         QBrush aSelectionBrush=mFastTableWidget->getSelectionBrush();
@@ -218,7 +234,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 12: setDefaultHeight
+    // TEST 13: setDefaultHeight
     // ----------------------------------------------------------------
     {
         quint16 aDefaultHeight=mFastTableWidget->getDefaultHeight();
@@ -248,7 +264,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 13: setDefaultWidth
+    // TEST 14: setDefaultWidth
     // ----------------------------------------------------------------
     {
         quint16 aDefaultWidth=mFastTableWidget->getDefaultWidth();
@@ -278,7 +294,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 14: totalHeight
+    // TEST 15: totalHeight
     // ----------------------------------------------------------------
     {
         int     aTotalHeight=mFastTableWidget->getTotalHeight();
@@ -299,7 +315,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 15: totalWidth
+    // TEST 16: totalWidth
     // ----------------------------------------------------------------
     {
         int     aTotalWidth=mFastTableWidget->getTotalWidth();
@@ -320,7 +336,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 16: setText
+    // TEST 17: setText
     // ----------------------------------------------------------------
     {
         for (int i=0; i<mFastTableWidget->rowCount(); ++i)
@@ -358,7 +374,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 17: setBackgroundBrush
+    // TEST 18: setBackgroundBrush
     // ----------------------------------------------------------------
     {
         QBrush aNewBackgroundBrush(QColor(1, 2, 3));
@@ -426,7 +442,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 18: setForegroundColor
+    // TEST 19: setForegroundColor
     // ----------------------------------------------------------------
     {
         QColor aNewForegroundColor(3, 2, 1);
@@ -494,7 +510,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 19: setCellFont
+    // TEST 20: setCellFont
     // ----------------------------------------------------------------
     {
         QFont aNewCellFont("Arial", 12, 1, true);
@@ -562,7 +578,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 20: setTextFlags
+    // TEST 21: setTextFlags
     // ----------------------------------------------------------------
     {
         int aNewFlag=Qt::AlignRight | Qt::AlignTop;
@@ -628,7 +644,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 21: setCellSelected
+    // TEST 22: setCellSelected
     // ----------------------------------------------------------------
     {
         mFastTableWidget->selectAll();
@@ -682,7 +698,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 22: setRowHeight
+    // TEST 23: setRowHeight
     // ----------------------------------------------------------------
     {
         int     aTotalHeight=mFastTableWidget->getTotalHeight();
@@ -700,7 +716,7 @@ TestDialog::TestDialog(QWidget *parent) :
         ui->progressBar->setValue(ui->progressBar->value()+1);
     }
     // ----------------------------------------------------------------
-    // TEST 23: setColumnWidth
+    // TEST 24: setColumnWidth
     // ----------------------------------------------------------------
     {
         int     aTotalWidth=mFastTableWidget->getTotalWidth();
@@ -743,6 +759,10 @@ bool TestDialog::checkForSizes(int rows, int columns)
     success = success && mForegroundColors->length()==rows;
     success = success && mCellFonts->length()==rows;
     success = success && mCellTextFlags->length()==rows;
+    success = success && mCellMergeX->length()==rows;
+    success = success && mCellMergeY->length()==rows;
+    success = success && mCellMergeParentRow->length()==rows;
+    success = success && mCellMergeParentColumn->length()==rows;
 
     if (success)
     {
@@ -809,6 +829,54 @@ bool TestDialog::checkForSizes(int rows, int columns)
         for (int i=0; i<mCellTextFlags->length(); ++i)
         {
             if (mCellTextFlags->at(i).length()!=columns)
+            {
+                success=false;
+                break;
+            }
+        }
+    }
+
+    if (success)
+    {
+        for (int i=0; i<mCellMergeX->length(); ++i)
+        {
+            if (mCellMergeX->at(i).length()!=columns)
+            {
+                success=false;
+                break;
+            }
+        }
+    }
+
+    if (success)
+    {
+        for (int i=0; i<mCellMergeY->length(); ++i)
+        {
+            if (mCellMergeY->at(i).length()!=columns)
+            {
+                success=false;
+                break;
+            }
+        }
+    }
+
+    if (success)
+    {
+        for (int i=0; i<mCellMergeParentRow->length(); ++i)
+        {
+            if (mCellMergeParentRow->at(i).length()!=columns)
+            {
+                success=false;
+                break;
+            }
+        }
+    }
+
+    if (success)
+    {
+        for (int i=0; i<mCellMergeParentColumn->length(); ++i)
+        {
+            if (mCellMergeParentColumn->at(i).length()!=columns)
             {
                 success=false;
                 break;

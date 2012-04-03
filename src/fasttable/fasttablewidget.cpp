@@ -73,6 +73,10 @@ void FastTableWidget::clearTable()
     mCellTextFlags.clear();
     mSelectedCells.clear();
     mCurSelection.clear();
+    mCellMergeX.clear();
+    mCellMergeY.clear();
+    mCellMergeParentRow.clear();
+    mCellMergeParentColumn.clear();
 
     mStartSelection=false;
 
@@ -531,6 +535,7 @@ void FastTableWidget::setRowCount(int count)
             QList<QFont *> aNewRowFont;
             QList<bool> aNewRowbool;
             QList<int> aNewRowint;
+            QList<quint16> aNewRowqint16;
 
             mTotalHeight+=mDefaultHeight;
 
@@ -542,6 +547,10 @@ void FastTableWidget::setRowCount(int count)
             mCellFonts.append(aNewRowFont);
             mCellTextFlags.append(aNewRowint);
             mSelectedCells.append(aNewRowbool);
+            mCellMergeX.append(aNewRowqint16);
+            mCellMergeY.append(aNewRowqint16);
+            mCellMergeParentRow.append(aNewRowint);
+            mCellMergeParentColumn.append(aNewRowint);
 
             for (int i=0; i<mColumnCount; ++i)
             {
@@ -551,6 +560,10 @@ void FastTableWidget::setRowCount(int count)
                 mCellFonts[mRowCount].append(0);
                 mCellTextFlags[mRowCount].append(Qt::AlignTop | Qt::AlignVCenter | Qt::TextWordWrap);
                 mSelectedCells[mRowCount].append(false);
+                mCellMergeX[mRowCount].append(1);
+                mCellMergeY[mRowCount].append(1);
+                mCellMergeParentRow[mRowCount].append(-1);
+                mCellMergeParentColumn[mRowCount].append(-1);
             }
 
             mRowCount++;
@@ -587,6 +600,10 @@ void FastTableWidget::setRowCount(int count)
             mForegroundColors.removeLast();
             mCellFonts.removeLast();
             mCellTextFlags.removeLast();
+            mCellMergeX.removeLast();
+            mCellMergeY.removeLast();
+            mCellMergeParentRow.removeLast();
+            mCellMergeParentColumn.removeLast();
 
             for (int i=0; i<mColumnCount; ++i)
             {
@@ -649,6 +666,10 @@ void FastTableWidget::setColumnCount(int count)
                     mCellFonts[i].append(0);
                     mCellTextFlags[i].append(Qt::AlignTop | Qt::AlignVCenter | Qt::TextWordWrap);
                     mSelectedCells[i].append(false);
+                    mCellMergeX[i].append(1);
+                    mCellMergeY[i].append(1);
+                    mCellMergeParentRow[i].append(-1);
+                    mCellMergeParentColumn[i].append(-1);
                 }
             }
         }
@@ -685,6 +706,10 @@ void FastTableWidget::setColumnCount(int count)
                     mForegroundColors[i].removeLast();
                     mCellFonts[i].removeLast();
                     mCellTextFlags[i].removeLast();
+                    mCellMergeX[i].removeLast();
+                    mCellMergeY[i].removeLast();
+                    mCellMergeParentRow[i].removeLast();
+                    mCellMergeParentColumn[i].removeLast();
 
                     if (mSelectedCells.at(i).last())
                     {
@@ -1023,4 +1048,88 @@ void FastTableWidget::setCellSelected(const int row, const int column, const boo
     }
 
     END_PROFILE("void FastTableWidget::setCellSelected(const int row, const int column, const bool selected)")
+}
+
+void FastTableWidget::clearSpans()
+{
+    START_PROFILE
+
+    for (int i=0; i<mRowCount; ++i)
+    {
+        for (int j=0; j<mColumnCount; ++j)
+        {
+            mCellMergeX[i][j]=1;
+            mCellMergeY[i][j]=1;
+            mCellMergeParentRow[i][j]=-1;
+            mCellMergeParentColumn[i][j]=-1;
+        }
+    }
+
+    END_PROFILE("void FastTableWidget::clearSpans()")
+}
+
+void FastTableWidget::setSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan)
+{
+    START_PROFILE
+
+    if (row+rowSpan>mRowCount)
+    {
+        rowSpan=mRowCount-row;
+    }
+
+    if (column+columnSpan>mColumnCount)
+    {
+        columnSpan=mColumnCount-column;
+    }
+
+    if (rowSpan<1)
+    {
+        rowSpan=1;
+    }
+
+    if (columnSpan<1)
+    {
+        columnSpan=1;
+    }
+
+    for (int i=0; i<rowSpan; i++)
+    {
+        for (int j=0; j<columnSpan; j++)
+        {
+            mCellMergeParentRow[i][j]=row;
+            mCellMergeParentColumn[i][j]=column;
+        }
+    }
+
+    mCellMergeX[row][column]=columnSpan;
+    mCellMergeY[row][column]=rowSpan;
+
+    END_PROFILE("void FastTableWidget::setSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan)")
+}
+
+quint16 FastTableWidget::rowSpan(const int row, const int column)
+{
+    START_PROFILE
+
+    return mCellMergeY.at(row).at(column);
+
+    END_PROFILE("quint16 FastTableWidget::rowSpan(const int row, const int column)")
+}
+
+quint16 FastTableWidget::columnSpan(const int row, const int column)
+{
+    START_PROFILE
+
+    return mCellMergeX.at(row).at(column);
+
+    END_PROFILE("quint16 FastTableWidget::columnSpan(const int row, const int column)")
+}
+
+QPoint FastTableWidget::spanParent(const int row, const int column)
+{
+    START_PROFILE
+
+    return QPoint(mCellMergeParentColumn.at(row).at(column), mCellMergeParentRow.at(row).at(column));
+
+    END_PROFILE("QPoint FastTableWidget::spanParent(const int row, const int column)")
 }

@@ -33,10 +33,14 @@ public:
     QList< int >              *mOffsetY;
     QList< QList<bool> >      *mSelectedCells;
     QList< QPoint >           *mCurSelection;
-    QList< QList<QColor *> >  *mBackgroundColors;
+    QList< QList<QBrush *> >  *mBackgroundBrushes;
     QList< QList<QColor *> >  *mForegroundColors;
     QList< QList<QFont *> >   *mCellFonts;
     QList< QList<int> >       *mCellTextFlags;
+    QList< QList<quint16> >   *mCellMergeX;
+    QList< QList<quint16> >   *mCellMergeY;
+    QList< QList<int> >       *mCellMergeParentRow;
+    QList< QList<int> >       *mCellMergeParentColumn;
 
     bool checkForSizes(int rows, int columns);
 

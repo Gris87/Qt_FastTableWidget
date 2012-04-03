@@ -15,7 +15,7 @@
 
 #define FASTTABLE_DEBUG
 
-#if 1
+#if 0
     #define START_PROFILE      qint64 profileStart=QDateTime::currentMSecsSinceEpoch();
     #define END_PROFILE(text)  qDebug()<<text" :"<<QDateTime::currentMSecsSinceEpoch()-profileStart;
 #else
@@ -125,6 +125,12 @@ public:
     bool cellSelected(const int row, const int column);
     void setCellSelected(const int row, const int column, const bool selected);
 
+    void clearSpans();
+    void setSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan);
+    quint16 rowSpan(const int row, const int column);
+    quint16 columnSpan(const int row, const int column);
+    QPoint spanParent(const int row, const int column);
+
 protected:
     int mRowCount;
     int mColumnCount;
@@ -155,6 +161,10 @@ protected:
     QList< QList<QColor *> > mForegroundColors;
     QList< QList<QFont *> > mCellFonts;
     QList< QList<int> > mCellTextFlags;
+    QList< QList<quint16> > mCellMergeX;
+    QList< QList<quint16> > mCellMergeY;
+    QList< QList<int> > mCellMergeParentRow;
+    QList< QList<int> > mCellMergeParentColumn;
 
     bool mStartSelection;
 

@@ -17,10 +17,10 @@ public:
     int     getTotalHeight();
     int     getTotalWidth();
 
-    QColor getDefaultBackgroundColor();
+    QBrush getDefaultBackgroundBrush();
     QColor getDefaultForegroundColor();
     QColor getGridColor();
-    QColor getSelectionColor();
+    QBrush getSelectionBrush();
 
     QList< QStringList >      *getData();
     QList< quint16 >          *getRowHeights();
@@ -29,10 +29,14 @@ public:
     QList< int >              *getOffsetY();
     QList< QList<bool> >      *getSelectedCells();
     QList< QPoint >           *getCurSelection();
-    QList< QList<QColor *> >  *getBackgroundColors();
+    QList< QList<QBrush *> >  *getBackgroundBrushes();
     QList< QList<QColor *> >  *getForegroundColors();
     QList< QList<QFont *> >   *getCellFonts();
     QList< QList<int> >       *getCellTextFlags();
+    QList< QList<quint16> >   *getCellMergeX();
+    QList< QList<quint16> >   *getCellMergeY();
+    QList< QList<int> >       *getCellMergeParentRow();
+    QList< QList<int> >       *getCellMergeParentColumn();
 
     bool getStartSelection();
 };
