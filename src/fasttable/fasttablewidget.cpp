@@ -323,14 +323,40 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
     {
         for (int j=mVisibleLeft; j<=mVisibleRight; ++j)
         {
-            paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), i, j);
+            if (mCellMergeParentRow.at(i).at(j)>=0 && mCellMergeParentColumn.at(i).at(j)>=0)
+            {
+                int spanX=mCellMergeX.at(i).at(j);
+                int spanY=mCellMergeY.at(i).at(j);
+
+                if (spanX>1 && spanY>1)
+                {
+                    int aWidth=0;
+                    int aHeight=0;
+
+                    for (int g=0; g<spanX; g++)
+                    {
+                        aWidth+=mColumnWidths.at(j+g);
+                    }
+
+                    for (int g=0; g<spanY; g++)
+                    {
+                        aHeight+=mRowHeights.at(i+g);
+                    }
+
+                    paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), aWidth, aHeight, i, j);
+                }
+            }
+            else
+            {
+                paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), mColumnWidths.at(j), mRowHeights.at(i), i, j);
+            }
         }
     }
 
     END_FREQUENT_PROFILE("void FastTableWidget::paintEvent(QPaintEvent *event)")
 }
 
-void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int row, const int column)
+void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column)
 {
     START_FREQUENT_PROFILE
 
@@ -372,11 +398,11 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 
     painter.setPen(QPen(mGridColor));
 
-    painter.fillRect(x, y, mColumnWidths.at(column), mRowHeights.at(row), *aBackgroundBrush);
-    painter.drawRect(x, y, mColumnWidths.at(column), mRowHeights.at(row));
+    painter.fillRect(x, y, width, height, *aBackgroundBrush);
+    painter.drawRect(x, y, width, height);
 
     painter.setPen(QPen(*aForegroundColor));
-    painter.drawText(x+4, y+4, mColumnWidths.at(column)-8, mRowHeights.at(row)-8, mCellTextFlags.at(row).at(column), mData.at(row).at(column));
+    painter.drawText(x+4, y+4, width-8, height-8, mCellTextFlags.at(row).at(column), mData.at(row).at(column));
 
     END_FREQUENT_PROFILE("void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int row, const int column)")
 }
@@ -505,6 +531,33 @@ void FastTableWidget::updateVisibleRange()
         while (mVisibleBottom>0 && mOffsetY.at(mVisibleBottom)>maxY && mOffsetY.at(mVisibleBottom)+mRowHeights.at(mVisibleBottom)>maxY)
         {
             mVisibleBottom--;
+        }
+
+        if (mVisibleLeft>=0 && mVisibleTop>=0)
+        {
+            int originalLeft=mVisibleLeft;
+            int originalTop=mVisibleTop;
+
+            for (int i=0; i<mRowCount; i++)
+            {
+
+                int parentColumn=mCellMergeParentColumn.at(i).at(originalLeft);
+
+                if (parentColumn>=0 &&parentColumn<mVisibleLeft)
+                {
+                    mVisibleLeft=parentColumn;
+                }
+            }
+
+            for (int i=0; i<mColumnCount; i++)
+            {
+                int parentRow=mCellMergeParentRow.at(originalTop).at(i);
+
+                if (parentRow>=0 && parentRow<mVisibleTop)
+                {
+                    mVisibleTop=parentRow;
+                }
+            }
         }
     }
 
@@ -1092,12 +1145,36 @@ void FastTableWidget::setSpan(const int row, const int column, quint16 rowSpan, 
         columnSpan=1;
     }
 
+    int parentRow;
+    int parentColumn;
+
     for (int i=0; i<rowSpan; i++)
     {
         for (int j=0; j<columnSpan; j++)
         {
-            mCellMergeParentRow[i][j]=row;
-            mCellMergeParentColumn[i][j]=column;
+            parentRow=mCellMergeParentRow.at(row+i).at(column+j);
+            parentColumn=mCellMergeParentColumn.at(row+i).at(column+j);
+
+            if (parentRow>=0 && parentColumn>=0)
+            {
+                int parentSpanX=mCellMergeX.at(parentRow).at(parentColumn);
+                int parentSpanY=mCellMergeY.at(parentRow).at(parentColumn);
+
+                for (int g=0; g<parentSpanY; g++)
+                {
+                    for (int h=0; h<parentSpanX; h++)
+                    {
+                        mCellMergeParentRow[parentRow+g][parentColumn+h]=-1;
+                        mCellMergeParentColumn[parentRow+g][parentColumn+h]=-1;
+                    }
+                }
+
+                mCellMergeX[parentRow][parentColumn]=1;
+                mCellMergeY[parentRow][parentColumn]=1;
+            }
+
+            mCellMergeParentRow[row+i][column+j]=row;
+            mCellMergeParentColumn[row+i][column+j]=column;
         }
     }
 

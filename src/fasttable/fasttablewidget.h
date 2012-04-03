@@ -171,7 +171,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void resizeEvent(QResizeEvent *event);
     void paintEvent(QPaintEvent *event);
-    void paintCell(QPainter &painter, const int x, const int y, const int row, const int column);
+    void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column);
 
     void updateBarsRanges();
     void updateVisibleRange();

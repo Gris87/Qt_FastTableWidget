@@ -110,12 +110,12 @@ QList< QList<int> >       *FastTableTest::getCellTextFlags()
     return &mCellTextFlags;
 }
 
-QList< QList<quint16> >       *FastTableTest::getCellMergeX()
+QList< QList<quint16> >   *FastTableTest::getCellMergeX()
 {
     return &mCellMergeX;
 }
 
-QList< QList<quint16> >       *FastTableTest::getCellMergeY()
+QList< QList<quint16> >   *FastTableTest::getCellMergeY()
 {
     return &mCellMergeY;
 }
