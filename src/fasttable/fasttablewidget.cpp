@@ -23,8 +23,6 @@ FastTableWidget::FastTableWidget(QWidget *parent) :
     mVisibleTop=-1;
     mVisibleBottom=-1;
 
-    mStartSelection=false;
-
     horizontalScrollBar()->setSingleStep(100);
     verticalScrollBar()->setSingleStep(100);
 
@@ -77,8 +75,6 @@ void FastTableWidget::clearTable()
     mCellMergeY.clear();
     mCellMergeParentRow.clear();
     mCellMergeParentColumn.clear();
-
-    mStartSelection=false;
 
     END_PROFILE("void FastTableWidget::clearTable()")
 }
@@ -319,6 +315,11 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
     int offsetX=-horizontalScrollBar()->value();
     int offsetY=-verticalScrollBar()->value();
 
+    if (mVisibleTop<0 || mVisibleLeft<0)
+    {
+        return;
+    }
+
     for (int i=mVisibleTop; i<=mVisibleBottom; ++i)
     {
         for (int j=mVisibleLeft; j<=mVisibleRight; ++j)
@@ -454,13 +455,13 @@ void FastTableWidget::updateVisibleRange()
     else
     {
         if (
-            mVisibleLeft==-1
+            mVisibleLeft<0
             ||
-            mVisibleRight==-1
+            mVisibleRight<0
             ||
-            mVisibleTop==-1
+            mVisibleTop<0
             ||
-            mVisibleBottom==-1
+            mVisibleBottom<0
            )
         {
             mVisibleLeft=0;
@@ -533,30 +534,27 @@ void FastTableWidget::updateVisibleRange()
             mVisibleBottom--;
         }
 
-        if (mVisibleLeft>=0 && mVisibleTop>=0)
+        int originalLeft=mVisibleLeft;
+        int originalTop=mVisibleTop;
+
+        for (int i=0; i<mRowCount; i++)
         {
-            int originalLeft=mVisibleLeft;
-            int originalTop=mVisibleTop;
 
-            for (int i=0; i<mRowCount; i++)
+            int parentColumn=mCellMergeParentColumn.at(i).at(originalLeft);
+
+            if (parentColumn>=0 &&parentColumn<mVisibleLeft)
             {
-
-                int parentColumn=mCellMergeParentColumn.at(i).at(originalLeft);
-
-                if (parentColumn>=0 &&parentColumn<mVisibleLeft)
-                {
-                    mVisibleLeft=parentColumn;
-                }
+                mVisibleLeft=parentColumn;
             }
+        }
 
-            for (int i=0; i<mColumnCount; i++)
+        for (int i=0; i<mColumnCount; i++)
+        {
+            int parentRow=mCellMergeParentRow.at(originalTop).at(i);
+
+            if (parentRow>=0 && parentRow<mVisibleTop)
             {
-                int parentRow=mCellMergeParentRow.at(originalTop).at(i);
-
-                if (parentRow>=0 && parentRow<mVisibleTop)
-                {
-                    mVisibleTop=parentRow;
-                }
+                mVisibleTop=parentRow;
             }
         }
     }

@@ -2,12 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "ui_mainwindow.h"
 
 #include <QDesktopWidget>
 #include <QDateTime>
 #include "qdebug.h"
 
 #include "src/fasttable/fasttablewidget.h"
+#include "src/main/testdialog.h"
 
 namespace Ui {
     class MainWindow;

@@ -15,7 +15,7 @@
 
 #define FASTTABLE_DEBUG
 
-#if 0
+#if 1
     #define START_PROFILE      qint64 profileStart=QDateTime::currentMSecsSinceEpoch();
     #define END_PROFILE(text)  qDebug()<<text" :"<<QDateTime::currentMSecsSinceEpoch()-profileStart;
 #else
@@ -165,8 +165,6 @@ protected:
     QList< QList<quint16> > mCellMergeY;
     QList< QList<int> > mCellMergeParentRow;
     QList< QList<int> > mCellMergeParentColumn;
-
-    bool mStartSelection;
 
     void mousePressEvent(QMouseEvent *event);
     void resizeEvent(QResizeEvent *event);
