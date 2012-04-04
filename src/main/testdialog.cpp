@@ -35,9 +35,6 @@ void TestDialog::startTests()
 
         ui->testsTabWidget->setCurrentIndex(i);
         ((TestFrame*)(ui->testsTabWidget->widget(i)))->startTest();
-
-        //  TEMP
-        ((TestFrame*)(ui->testsTabWidget->widget(i)))->repaint();
     }
 
     ui->testsTabWidget->setCurrentIndex(0);
