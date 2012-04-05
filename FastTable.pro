@@ -15,13 +15,15 @@ SOURCES += src/main.cpp\
         src/main/testdialog.cpp \
         src/fasttable/fasttablewidget.cpp \
     src/widgets/testframe.cpp \
-    src/fasttable/publictablewidget.cpp
+    src/fasttable/publictablewidget.cpp \
+    src/fasttable/customfasttablewidget.cpp
 
 HEADERS  += src/main/mainwindow.h \
         src/main/testdialog.h \
         src/fasttable/fasttablewidget.h \
     src/widgets/testframe.h \
-    src/fasttable/publictablewidget.h
+    src/fasttable/publictablewidget.h \
+    src/fasttable/customfasttablewidget.h
 
 FORMS    += src/main/mainwindow.ui \
             src/main/testdialog.ui \
