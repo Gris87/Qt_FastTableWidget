@@ -51,13 +51,13 @@ public:
     explicit CustomFastTableWidget(QWidget *parent = 0);
     ~CustomFastTableWidget();
 
-    void clearTable();
+    virtual void clearTable();
 
-    void selectRow(const int row);
-    void unselectRow(const int row);
+    virtual void selectRow(const int row);
+    virtual void unselectRow(const int row);
 
-    void selectColumn(const int column);
-    void unselectColumn(const int column);
+    virtual void selectColumn(const int column);
+    virtual void unselectColumn(const int column);
 
     void selectAll();
     void unselectAll();
@@ -100,8 +100,8 @@ public:
     quint16 columnWidth(const int column);
     void setColumnWidth(const int column, const quint16 width);
 
-    bool cellSelected(const int row, const int column);
-    void setCellSelected(const int row, const int column, const bool selected);
+    virtual bool cellSelected(const int row, const int column);
+    virtual void setCellSelected(const int row, const int column, const bool selected);
 
 protected:
     int mRowCount;
@@ -133,10 +133,10 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void resizeEvent(QResizeEvent *event);
     void paintEvent(QPaintEvent *event);
-    void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column);
+    virtual void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column);
 
     void updateBarsRanges();
-    void updateVisibleRange();
+    virtual void updateVisibleRange();
 
 protected slots:
     void horizontalScrollBarValueChanged(int value);
