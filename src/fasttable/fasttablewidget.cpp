@@ -65,12 +65,12 @@ void FastTableWidget::clearTable()
     mOffsetX.clear();
     mOffsetY.clear();
     mData.clear();
+    mSelectedCells.clear();
+    mCurSelection.clear();
     mBackgroundBrushes.clear();
     mForegroundColors.clear();
     mCellFonts.clear();
     mCellTextFlags.clear();
-    mSelectedCells.clear();
-    mCurSelection.clear();
     mCellMergeX.clear();
     mCellMergeY.clear();
     mCellMergeParentRow.clear();
@@ -593,11 +593,11 @@ void FastTableWidget::setRowCount(int count)
             mData.append(aNewRow);
             mRowHeights.append(mDefaultHeight);
             mOffsetY.append(mRowCount==0? 0 : (mOffsetY.at(mRowCount-1)+mRowHeights.at(mRowCount-1)));
+            mSelectedCells.append(aNewRowbool);
             mBackgroundBrushes.append(aNewRowBrush);
             mForegroundColors.append(aNewRowColor);
             mCellFonts.append(aNewRowFont);
             mCellTextFlags.append(aNewRowint);
-            mSelectedCells.append(aNewRowbool);
             mCellMergeX.append(aNewRowqint16);
             mCellMergeY.append(aNewRowqint16);
             mCellMergeParentRow.append(aNewRowint);
@@ -606,11 +606,11 @@ void FastTableWidget::setRowCount(int count)
             for (int i=0; i<mColumnCount; ++i)
             {
                 mData[mRowCount].append("");
+                mSelectedCells[mRowCount].append(false);
                 mBackgroundBrushes[mRowCount].append(0);
                 mForegroundColors[mRowCount].append(0);
                 mCellFonts[mRowCount].append(0);
                 mCellTextFlags[mRowCount].append(Qt::AlignTop | Qt::AlignVCenter | Qt::TextWordWrap);
-                mSelectedCells[mRowCount].append(false);
                 mCellMergeX[mRowCount].append(1);
                 mCellMergeY[mRowCount].append(1);
                 mCellMergeParentRow[mRowCount].append(-1);
@@ -625,6 +625,27 @@ void FastTableWidget::setRowCount(int count)
             mRowCount--;
 
             mTotalHeight-=mRowHeights.at(mRowCount);
+
+            mData.removeLast();
+            mRowHeights.removeLast();
+            mOffsetY.removeLast();
+
+            for (int i=0; i<mColumnCount; ++i)
+            {
+                if (mSelectedCells.last().at(i))
+                {
+                    for (int j=0; j<mCurSelection.length(); ++j)
+                    {
+                        if (mCurSelection.at(j).y()==mRowCount && mCurSelection.at(j).x()==i)
+                        {
+                            mCurSelection.removeAt(j);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            mSelectedCells.removeLast();
 
             for (int i=0; i<mColumnCount; ++i)
             {
@@ -644,9 +665,6 @@ void FastTableWidget::setRowCount(int count)
                 }
             }
 
-            mData.removeLast();
-            mRowHeights.removeLast();
-            mOffsetY.removeLast();
             mBackgroundBrushes.removeLast();
             mForegroundColors.removeLast();
             mCellFonts.removeLast();
@@ -655,23 +673,6 @@ void FastTableWidget::setRowCount(int count)
             mCellMergeY.removeLast();
             mCellMergeParentRow.removeLast();
             mCellMergeParentColumn.removeLast();
-
-            for (int i=0; i<mColumnCount; ++i)
-            {
-                if (mSelectedCells.last().at(i))
-                {
-                    for (int j=0; j<mCurSelection.length(); ++j)
-                    {
-                        if (mCurSelection.at(j).y()==mRowCount && mCurSelection.at(j).x()==i)
-                        {
-                            mCurSelection.removeAt(j);
-                            break;
-                        }
-                    }
-                }
-            }
-
-            mSelectedCells.removeLast();
         }
 
         updateBarsRanges();
@@ -712,11 +713,11 @@ void FastTableWidget::setColumnCount(int count)
                 for (int j=mColumnCount; j<count; ++j)
                 {
                     mData[i].append("");
+                    mSelectedCells[i].append(false);
                     mBackgroundBrushes[i].append(0);
                     mForegroundColors[i].append(0);
                     mCellFonts[i].append(0);
                     mCellTextFlags[i].append(Qt::AlignTop | Qt::AlignVCenter | Qt::TextWordWrap);
-                    mSelectedCells[i].append(false);
                     mCellMergeX[i].append(1);
                     mCellMergeY[i].append(1);
                     mCellMergeParentRow[i].append(-1);
@@ -737,6 +738,22 @@ void FastTableWidget::setColumnCount(int count)
             {
                 for (int j=mColumnCount-1; j>=count; --j)
                 {
+                    mData[i].removeLast();
+
+                    if (mSelectedCells.at(i).last())
+                    {
+                        for (int k=0; k<mCurSelection.length(); ++k)
+                        {
+                            if (mCurSelection.at(k).y()==i && mCurSelection.at(k).x()==j)
+                            {
+                                mCurSelection.removeAt(k);
+                                break;
+                            }
+                        }
+                    }
+
+                    mSelectedCells[i].removeLast();
+
                     if (mBackgroundBrushes.at(i).at(j))
                     {
                         delete mBackgroundBrushes.at(i).at(j);
@@ -752,7 +769,6 @@ void FastTableWidget::setColumnCount(int count)
                         delete mCellFonts.at(i).at(j);
                     }
 
-                    mData[i].removeLast();
                     mBackgroundBrushes[i].removeLast();
                     mForegroundColors[i].removeLast();
                     mCellFonts[i].removeLast();
@@ -761,20 +777,6 @@ void FastTableWidget::setColumnCount(int count)
                     mCellMergeY[i].removeLast();
                     mCellMergeParentRow[i].removeLast();
                     mCellMergeParentColumn[i].removeLast();
-
-                    if (mSelectedCells.at(i).last())
-                    {
-                        for (int k=0; k<mCurSelection.length(); ++k)
-                        {
-                            if (mCurSelection.at(k).y()==i && mCurSelection.at(k).x()==j)
-                            {
-                                mCurSelection.removeAt(k);
-                                break;
-                            }
-                        }
-                    }
-
-                    mSelectedCells[i].removeLast();
                 }
             }
         }
@@ -964,6 +966,39 @@ void FastTableWidget::setColumnWidth(const int column, const quint16 width)
     END_PROFILE("void FastTableWidget::setColumnWidth(const int column, const quint16 width)")
 }
 
+bool FastTableWidget::cellSelected(const int row, const int column)
+{
+    return mSelectedCells.at(row).at(column);
+}
+
+void FastTableWidget::setCellSelected(const int row, const int column, const bool selected)
+{
+    START_PROFILE
+
+    if (mSelectedCells.at(row).at(column)!=selected)
+    {
+        mSelectedCells[row][column]=selected;
+
+        if (selected)
+        {
+            mCurSelection.append(QPoint(column, row));
+        }
+        else
+        {
+            for (int i=0; i<mCurSelection.length(); ++i)
+            {
+                if (mCurSelection.at(i).y()==row && mCurSelection.at(i).x()==column)
+                {
+                    mCurSelection.removeAt(i);
+                    break;
+                }
+            }
+        }
+    }
+
+    END_PROFILE("void FastTableWidget::setCellSelected(const int row, const int column, const bool selected)")
+}
+
 QBrush FastTableWidget::backgroundBrush(const int row, const int column)
 {
     START_PROFILE
@@ -1066,39 +1101,6 @@ void FastTableWidget::setCellTextFlags(const int row, const int column, const in
     mCellTextFlags[row][column]=flags;
 
     END_PROFILE("void FastTableWidget::setCellTextFlags(const int row, const int column, const int flags)")
-}
-
-bool FastTableWidget::cellSelected(const int row, const int column)
-{
-    return mSelectedCells.at(row).at(column);
-}
-
-void FastTableWidget::setCellSelected(const int row, const int column, const bool selected)
-{
-    START_PROFILE
-
-    if (mSelectedCells.at(row).at(column)!=selected)
-    {
-        mSelectedCells[row][column]=selected;
-
-        if (selected)
-        {
-            mCurSelection.append(QPoint(column, row));
-        }
-        else
-        {
-            for (int i=0; i<mCurSelection.length(); ++i)
-            {
-                if (mCurSelection.at(i).y()==row && mCurSelection.at(i).x()==column)
-                {
-                    mCurSelection.removeAt(i);
-                    break;
-                }
-            }
-        }
-    }
-
-    END_PROFILE("void FastTableWidget::setCellSelected(const int row, const int column, const bool selected)")
 }
 
 void FastTableWidget::clearSpans()

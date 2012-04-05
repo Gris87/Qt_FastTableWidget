@@ -110,6 +110,9 @@ public:
     quint16 columnWidth(const int column);
     void setColumnWidth(const int column, const quint16 width);
 
+    bool cellSelected(const int row, const int column);
+    void setCellSelected(const int row, const int column, const bool selected);
+
     QBrush backgroundBrush(const int row, const int column);
     void setBackgroundBrush(const int row, const int column, const QBrush brush);
 
@@ -121,9 +124,6 @@ public:
 
     int cellTextFlags(const int row, const int column);
     void setCellTextFlags(const int row, const int column, const int flags);
-
-    bool cellSelected(const int row, const int column);
-    void setCellSelected(const int row, const int column, const bool selected);
 
     void clearSpans();
     void setSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan);
