@@ -7,7 +7,7 @@
 #include <QSplitter>
 #include "qdebug.h"
 
-#include "src/fasttable/fasttablewidget.h"
+#include "src/fasttable/customfasttablewidget.h"
 #include "src/fasttable/publictablewidget.h"
 
 namespace Ui {
@@ -19,9 +19,9 @@ class TestFrame : public QWidget
     Q_OBJECT
 
 public:
-    Ui::TestFrame   *ui;
-    FastTableWidget *mFastTable;
-    QSplitter       *mDividerSplitter;
+    Ui::TestFrame         *ui;
+    CustomFastTableWidget *mFastTable;
+    QSplitter             *mDividerSplitter;
 
     QList< QStringList >      *mData;
     QList< quint16 >          *mRowHeights;
@@ -39,7 +39,7 @@ public:
     QList< QList<int> >       *mCellMergeParentRow;
     QList< QList<int> >       *mCellMergeParentColumn;
 
-    explicit TestFrame(FastTableWidget* aFastTable, QWidget *parent = 0);
+    explicit TestFrame(CustomFastTableWidget* aFastTable, QWidget *parent = 0);
     ~TestFrame();
 
     void startTest();

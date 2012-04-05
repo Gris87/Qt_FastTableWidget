@@ -1,6 +1,6 @@
 #include "testframe.h"
 
-TestFrame::TestFrame(FastTableWidget* aFastTable, QWidget *parent) :
+TestFrame::TestFrame(CustomFastTableWidget* aFastTable, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TestFrame)
 {
@@ -292,7 +292,41 @@ void TestFrame::startTest()
         testCompleted(success, ui->setDefWidthResLabel);
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 15: totalHeight";
+    qDebug()<<"TEST 15: setRowHeight";
+    // ----------------------------------------------------------------
+    {
+        int     aTotalHeight=((PublicFastTable*)mFastTable)->getTotalHeight();
+        quint16 aRowHeight=mRowHeights->at(30);
+
+        mFastTable->setRowHeight(30, aRowHeight+100);
+
+        success =            ((PublicFastTable*)mFastTable)->getTotalHeight()==aTotalHeight+100;
+
+        mFastTable->setRowHeight(30, aRowHeight);
+
+        success = success && ((PublicFastTable*)mFastTable)->getTotalHeight()==aTotalHeight;
+
+        testCompleted(success, ui->setRowHeightResLabel);
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 16: setColumnWidth";
+    // ----------------------------------------------------------------
+    {
+        int     aTotalWidth=((PublicFastTable*)mFastTable)->getTotalWidth();
+        quint16 aColumnWidth=mColumnWidths->at(10);
+
+        mFastTable->setColumnWidth(10, aColumnWidth+100);
+
+        success =            ((PublicFastTable*)mFastTable)->getTotalWidth()==aTotalWidth+100;
+
+        mFastTable->setColumnWidth(10, aColumnWidth);
+
+        success = success && ((PublicFastTable*)mFastTable)->getTotalWidth()==aTotalWidth;
+
+        testCompleted(success, ui->setColumnWidthResLabel);
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 17: totalHeight";
     // ----------------------------------------------------------------
     {
         int     aTotalHeight=((PublicFastTable*)mFastTable)->getTotalHeight();
@@ -312,7 +346,7 @@ void TestFrame::startTest()
         testCompleted(success, ui->totalHeightResLabel);
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 16: totalWidth";
+    qDebug()<<"TEST 18: totalWidth";
     // ----------------------------------------------------------------
     {
         int     aTotalWidth=((PublicFastTable*)mFastTable)->getTotalWidth();
@@ -332,7 +366,7 @@ void TestFrame::startTest()
         testCompleted(success, ui->totalWidthResLabel);
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 17: setText";
+    qDebug()<<"TEST 19: setText";
     // ----------------------------------------------------------------
     {
         for (int i=0; i<mFastTable->rowCount(); ++i)
@@ -369,273 +403,7 @@ void TestFrame::startTest()
         testCompleted(success, ui->setTextResLabel);
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 18: setBackgroundBrush";
-    // ----------------------------------------------------------------
-    {
-        QBrush aNewBackgroundBrush(QColor(1, 2, 3));
-
-        for (int i=0; i<mFastTable->rowCount(); ++i)
-        {
-            for (int j=0; j<mFastTable->columnCount(); ++j)
-            {
-                mFastTable->setBackgroundBrush(i, j, aNewBackgroundBrush);
-            }
-        }
-
-        success=true;
-
-        for (int i=0; i<((PublicFastTable*)mFastTable)->getRowCount(); ++i)
-        {
-            for (int j=0; j<((PublicFastTable*)mFastTable)->getColumnCount(); ++j)
-            {
-                if (
-                    mBackgroundBrushes->at(i).at(j)==0
-                    ||
-                    *mBackgroundBrushes->at(i).at(j)!=aNewBackgroundBrush
-                    ||
-                    mFastTable->backgroundBrush(i, j)!=aNewBackgroundBrush
-                   )
-                {
-                    success=false;
-                    break;
-                }
-            }
-
-            if (!success)
-            {
-                break;
-            }
-        }
-
-        mFastTable->resetBackgroundBrush(10, 5);
-
-        success = success && mBackgroundBrushes->at(10).at(5)==0;
-
-        mFastTable->resetBackgroundBrushes();
-
-        if (success)
-        {
-            for (int i=0; i<((PublicFastTable*)mFastTable)->getRowCount(); ++i)
-            {
-                for (int j=0; j<((PublicFastTable*)mFastTable)->getColumnCount(); ++j)
-                {
-                    if (mBackgroundBrushes->at(i).at(j)!=0)
-                    {
-                        success=false;
-                        break;
-                    }
-                }
-
-                if (!success)
-                {
-                    break;
-                }
-            }
-        }
-
-        testCompleted(success, ui->setBackgroundResLabel);
-    }
-    // ----------------------------------------------------------------
-    qDebug()<<"TEST 19: setForegroundColor";
-    // ----------------------------------------------------------------
-    {
-        QColor aNewForegroundColor(3, 2, 1);
-
-        for (int i=0; i<mFastTable->rowCount(); ++i)
-        {
-            for (int j=0; j<mFastTable->columnCount(); ++j)
-            {
-                mFastTable->setForegroundColor(i, j, aNewForegroundColor);
-            }
-        }
-
-        success=true;
-
-        for (int i=0; i<((PublicFastTable*)mFastTable)->getRowCount(); ++i)
-        {
-            for (int j=0; j<((PublicFastTable*)mFastTable)->getColumnCount(); ++j)
-            {
-                if (
-                    mForegroundColors->at(i).at(j)==0
-                    ||
-                    *mForegroundColors->at(i).at(j)!=aNewForegroundColor
-                    ||
-                    mFastTable->foregroundColor(i, j)!=aNewForegroundColor
-                   )
-                {
-                    success=false;
-                    break;
-                }
-            }
-
-            if (!success)
-            {
-                break;
-            }
-        }
-
-        mFastTable->resetForegroundColor(10, 5);
-
-        success = success && mForegroundColors->at(10).at(5)==0;
-
-        mFastTable->resetForegroundColors();
-
-        if (success)
-        {
-            for (int i=0; i<((PublicFastTable*)mFastTable)->getRowCount(); ++i)
-            {
-                for (int j=0; j<((PublicFastTable*)mFastTable)->getColumnCount(); ++j)
-                {
-                    if (mForegroundColors->at(i).at(j)!=0)
-                    {
-                        success=false;
-                        break;
-                    }
-                }
-
-                if (!success)
-                {
-                    break;
-                }
-            }
-        }
-
-        testCompleted(success, ui->setForegroundResLabel);
-    }
-    // ----------------------------------------------------------------
-    qDebug()<<"TEST 20: setCellFont";
-    // ----------------------------------------------------------------
-    {
-        QFont aNewCellFont("Arial", 12, 1, true);
-
-        for (int i=0; i<mFastTable->rowCount(); ++i)
-        {
-            for (int j=0; j<mFastTable->columnCount(); ++j)
-            {
-                mFastTable->setCellFont(i, j, aNewCellFont);
-            }
-        }
-
-        success=true;
-
-        for (int i=0; i<((PublicFastTable*)mFastTable)->getRowCount(); ++i)
-        {
-            for (int j=0; j<((PublicFastTable*)mFastTable)->getColumnCount(); ++j)
-            {
-                if (
-                    mCellFonts->at(i).at(j)==0
-                    ||
-                    *mCellFonts->at(i).at(j)!=aNewCellFont
-                    ||
-                    mFastTable->cellFont(i, j)!=aNewCellFont
-                   )
-                {
-                    success=false;
-                    break;
-                }
-            }
-
-            if (!success)
-            {
-                break;
-            }
-        }
-
-        mFastTable->resetFont(10, 5);
-
-        success = success && mCellFonts->at(10).at(5)==0;
-
-        mFastTable->resetFonts();
-
-        if (success)
-        {
-            for (int i=0; i<((PublicFastTable*)mFastTable)->getRowCount(); ++i)
-            {
-                for (int j=0; j<((PublicFastTable*)mFastTable)->getColumnCount(); ++j)
-                {
-                    if (mCellFonts->at(i).at(j)!=0)
-                    {
-                        success=false;
-                        break;
-                    }
-                }
-
-                if (!success)
-                {
-                    break;
-                }
-            }
-        }
-
-        testCompleted(success, ui->setCellFontResLabel);
-    }
-    // ----------------------------------------------------------------
-    qDebug()<<"TEST 21: setTextFlags";
-    // ----------------------------------------------------------------
-    {
-        int aNewFlag=Qt::AlignRight | Qt::AlignTop;
-
-        for (int i=0; i<mFastTable->rowCount(); ++i)
-        {
-            for (int j=0; j<mFastTable->columnCount(); ++j)
-            {
-                mFastTable->setCellTextFlags(i, j, aNewFlag);
-            }
-        }
-
-        success=true;
-
-        for (int i=0; i<((PublicFastTable*)mFastTable)->getRowCount(); ++i)
-        {
-            for (int j=0; j<((PublicFastTable*)mFastTable)->getColumnCount(); ++j)
-            {
-                if (
-                    mCellTextFlags->at(i).at(j)!=aNewFlag
-                    ||
-                    mFastTable->cellTextFlags(i, j)!=aNewFlag
-                   )
-                {
-                    success=false;
-                    break;
-                }
-            }
-
-            if (!success)
-            {
-                break;
-            }
-        }
-
-        mFastTable->resetTextFlag(10, 5);
-
-        success = success && mFastTable->cellTextFlags(10, 5)==(Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap);
-
-        mFastTable->resetTextFlags();
-
-        if (success)
-        {
-            for (int i=0; i<((PublicFastTable*)mFastTable)->getRowCount(); ++i)
-            {
-                for (int j=0; j<((PublicFastTable*)mFastTable)->getColumnCount(); ++j)
-                {
-                    if (mFastTable->cellTextFlags(i, j)!=(Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap))
-                    {
-                        success=false;
-                        break;
-                    }
-                }
-
-                if (!success)
-                {
-                    break;
-                }
-            }
-        }
-
-        testCompleted(success, ui->setCellTextFlagsResLabel);
-    }
-    // ----------------------------------------------------------------
-    qDebug()<<"TEST 22: setCellSelected";
+    qDebug()<<"TEST 20: setCellSelected";
     // ----------------------------------------------------------------
     {
         mFastTable->selectAll();
@@ -688,38 +456,298 @@ void TestFrame::startTest()
         testCompleted(success, ui->setCellSelectedResLabel);
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 23: setRowHeight";
+    qDebug()<<"TEST 21: setBackgroundBrush";
     // ----------------------------------------------------------------
+    if (mFastTable->inherits("FastTableWidget"))
     {
-        int     aTotalHeight=((PublicFastTable*)mFastTable)->getTotalHeight();
-        quint16 aRowHeight=mRowHeights->at(30);
+        FastTableWidget* aTable=(FastTableWidget*)mFastTable;
 
-        mFastTable->setRowHeight(30, aRowHeight+100);
+        QBrush aNewBackgroundBrush(QColor(1, 2, 3));
 
-        success =            ((PublicFastTable*)mFastTable)->getTotalHeight()==aTotalHeight+100;
+        for (int i=0; i<aTable->rowCount(); ++i)
+        {
+            for (int j=0; j<aTable->columnCount(); ++j)
+            {
+                aTable->setBackgroundBrush(i, j, aNewBackgroundBrush);
+            }
+        }
 
-        mFastTable->setRowHeight(30, aRowHeight);
+        success=true;
 
-        success = success && ((PublicFastTable*)mFastTable)->getTotalHeight()==aTotalHeight;
+        for (int i=0; i<((PublicFastTable*)aTable)->getRowCount(); ++i)
+        {
+            for (int j=0; j<((PublicFastTable*)aTable)->getColumnCount(); ++j)
+            {
+                if (
+                    mBackgroundBrushes->at(i).at(j)==0
+                    ||
+                    *mBackgroundBrushes->at(i).at(j)!=aNewBackgroundBrush
+                    ||
+                    aTable->backgroundBrush(i, j)!=aNewBackgroundBrush
+                   )
+                {
+                    success=false;
+                    break;
+                }
+            }
 
-        testCompleted(success, ui->setRowHeightResLabel);
+            if (!success)
+            {
+                break;
+            }
+        }
+
+        aTable->resetBackgroundBrush(10, 5);
+
+        success = success && mBackgroundBrushes->at(10).at(5)==0;
+
+        aTable->resetBackgroundBrushes();
+
+        if (success)
+        {
+            for (int i=0; i<((PublicFastTable*)aTable)->getRowCount(); ++i)
+            {
+                for (int j=0; j<((PublicFastTable*)aTable)->getColumnCount(); ++j)
+                {
+                    if (mBackgroundBrushes->at(i).at(j)!=0)
+                    {
+                        success=false;
+                        break;
+                    }
+                }
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        testCompleted(success, ui->setBackgroundResLabel);
+    }
+    else
+    {
+        testNotSupported(ui->setBackgroundResLabel);
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 24: setColumnWidth";
+    qDebug()<<"TEST 22: setForegroundColor";
     // ----------------------------------------------------------------
+    if (mFastTable->inherits("FastTableWidget"))
     {
-        int     aTotalWidth=((PublicFastTable*)mFastTable)->getTotalWidth();
-        quint16 aColumnWidth=mColumnWidths->at(10);
+        FastTableWidget* aTable=(FastTableWidget*)mFastTable;
 
-        mFastTable->setColumnWidth(10, aColumnWidth+100);
+        QColor aNewForegroundColor(3, 2, 1);
 
-        success =            ((PublicFastTable*)mFastTable)->getTotalWidth()==aTotalWidth+100;
+        for (int i=0; i<aTable->rowCount(); ++i)
+        {
+            for (int j=0; j<aTable->columnCount(); ++j)
+            {
+                aTable->setForegroundColor(i, j, aNewForegroundColor);
+            }
+        }
 
-        mFastTable->setColumnWidth(10, aColumnWidth);
+        success=true;
 
-        success = success && ((PublicFastTable*)mFastTable)->getTotalWidth()==aTotalWidth;
+        for (int i=0; i<((PublicFastTable*)aTable)->getRowCount(); ++i)
+        {
+            for (int j=0; j<((PublicFastTable*)aTable)->getColumnCount(); ++j)
+            {
+                if (
+                    mForegroundColors->at(i).at(j)==0
+                    ||
+                    *mForegroundColors->at(i).at(j)!=aNewForegroundColor
+                    ||
+                    aTable->foregroundColor(i, j)!=aNewForegroundColor
+                   )
+                {
+                    success=false;
+                    break;
+                }
+            }
 
-        testCompleted(success, ui->setColumnWidthResLabel);
+            if (!success)
+            {
+                break;
+            }
+        }
+
+        aTable->resetForegroundColor(10, 5);
+
+        success = success && mForegroundColors->at(10).at(5)==0;
+
+        aTable->resetForegroundColors();
+
+        if (success)
+        {
+            for (int i=0; i<((PublicFastTable*)aTable)->getRowCount(); ++i)
+            {
+                for (int j=0; j<((PublicFastTable*)aTable)->getColumnCount(); ++j)
+                {
+                    if (mForegroundColors->at(i).at(j)!=0)
+                    {
+                        success=false;
+                        break;
+                    }
+                }
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        testCompleted(success, ui->setForegroundResLabel);
+    }
+    else
+    {
+        testNotSupported(ui->setForegroundResLabel);
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 23: setCellFont";
+    // ----------------------------------------------------------------
+    if (mFastTable->inherits("FastTableWidget"))
+    {
+        FastTableWidget* aTable=(FastTableWidget*)mFastTable;
+
+        QFont aNewCellFont("Arial", 12, 1, true);
+
+        for (int i=0; i<aTable->rowCount(); ++i)
+        {
+            for (int j=0; j<aTable->columnCount(); ++j)
+            {
+                aTable->setCellFont(i, j, aNewCellFont);
+            }
+        }
+
+        success=true;
+
+        for (int i=0; i<((PublicFastTable*)aTable)->getRowCount(); ++i)
+        {
+            for (int j=0; j<((PublicFastTable*)aTable)->getColumnCount(); ++j)
+            {
+                if (
+                    mCellFonts->at(i).at(j)==0
+                    ||
+                    *mCellFonts->at(i).at(j)!=aNewCellFont
+                    ||
+                    aTable->cellFont(i, j)!=aNewCellFont
+                   )
+                {
+                    success=false;
+                    break;
+                }
+            }
+
+            if (!success)
+            {
+                break;
+            }
+        }
+
+        aTable->resetFont(10, 5);
+
+        success = success && mCellFonts->at(10).at(5)==0;
+
+        aTable->resetFonts();
+
+        if (success)
+        {
+            for (int i=0; i<((PublicFastTable*)aTable)->getRowCount(); ++i)
+            {
+                for (int j=0; j<((PublicFastTable*)aTable)->getColumnCount(); ++j)
+                {
+                    if (mCellFonts->at(i).at(j)!=0)
+                    {
+                        success=false;
+                        break;
+                    }
+                }
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        testCompleted(success, ui->setCellFontResLabel);
+    }
+    else
+    {
+        testNotSupported(ui->setCellFontResLabel);
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 24: setTextFlags";
+    // ----------------------------------------------------------------
+    if (mFastTable->inherits("FastTableWidget"))
+    {
+        FastTableWidget* aTable=(FastTableWidget*)mFastTable;
+
+        int aNewFlag=Qt::AlignRight | Qt::AlignTop;
+
+        for (int i=0; i<aTable->rowCount(); ++i)
+        {
+            for (int j=0; j<aTable->columnCount(); ++j)
+            {
+                aTable->setCellTextFlags(i, j, aNewFlag);
+            }
+        }
+
+        success=true;
+
+        for (int i=0; i<((PublicFastTable*)aTable)->getRowCount(); ++i)
+        {
+            for (int j=0; j<((PublicFastTable*)aTable)->getColumnCount(); ++j)
+            {
+                if (
+                    mCellTextFlags->at(i).at(j)!=aNewFlag
+                    ||
+                    aTable->cellTextFlags(i, j)!=aNewFlag
+                   )
+                {
+                    success=false;
+                    break;
+                }
+            }
+
+            if (!success)
+            {
+                break;
+            }
+        }
+
+        aTable->resetTextFlag(10, 5);
+
+        success = success && aTable->cellTextFlags(10, 5)==(Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap);
+
+        aTable->resetTextFlags();
+
+        if (success)
+        {
+            for (int i=0; i<((PublicFastTable*)aTable)->getRowCount(); ++i)
+            {
+                for (int j=0; j<((PublicFastTable*)aTable)->getColumnCount(); ++j)
+                {
+                    if (aTable->cellTextFlags(i, j)!=(Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap))
+                    {
+                        success=false;
+                        break;
+                    }
+                }
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        testCompleted(success, ui->setCellTextFlagsResLabel);
+    }
+    else
+    {
+        testNotSupported(ui->setCellTextFlagsResLabel);
     }
 }
 
@@ -729,20 +757,20 @@ bool TestFrame::checkForSizes(int rows, int columns)
 
     success = success && ((PublicFastTable*)mFastTable)->getRowCount()==rows;
     success = success && ((PublicFastTable*)mFastTable)->getColumnCount()==columns;
-    success = success && mData                  && mData->length()==rows;
-    success = success && mRowHeights            && mRowHeights->length()==rows;
-    success = success && mColumnWidths          && mColumnWidths->length()==columns;
-    success = success && mOffsetX               && mOffsetX->length()==columns;
-    success = success && mOffsetY               && mOffsetY->length()==rows;
-    success = success && mSelectedCells         && mSelectedCells->length()==rows;
-    success = success && mBackgroundBrushes     && mBackgroundBrushes->length()==rows;
-    success = success && mForegroundColors      && mForegroundColors->length()==rows;
-    success = success && mCellFonts             && mCellFonts->length()==rows;
-    success = success && mCellTextFlags         && mCellTextFlags->length()==rows;
-    success = success && mCellMergeX            && mCellMergeX->length()==rows;
-    success = success && mCellMergeY            && mCellMergeY->length()==rows;
-    success = success && mCellMergeParentRow    && mCellMergeParentRow->length()==rows;
-    success = success && mCellMergeParentColumn && mCellMergeParentColumn->length()==rows;
+    success = success && (mData==0                  || mData->length()==rows);
+    success = success && (mRowHeights==0            || mRowHeights->length()==rows);
+    success = success && (mColumnWidths==0          || mColumnWidths->length()==columns);
+    success = success && (mOffsetX==0               || mOffsetX->length()==columns);
+    success = success && (mOffsetY==0               || mOffsetY->length()==rows);
+    success = success && (mSelectedCells==0         || mSelectedCells->length()==rows);
+    success = success && (mBackgroundBrushes==0     || mBackgroundBrushes->length()==rows);
+    success = success && (mForegroundColors==0      || mForegroundColors->length()==rows);
+    success = success && (mCellFonts==0             || mCellFonts->length()==rows);
+    success = success && (mCellTextFlags==0         || mCellTextFlags->length()==rows);
+    success = success && (mCellMergeX==0            || mCellMergeX->length()==rows);
+    success = success && (mCellMergeY==0            || mCellMergeY->length()==rows);
+    success = success && (mCellMergeParentRow==0    || mCellMergeParentRow->length()==rows);
+    success = success && (mCellMergeParentColumn==0 || mCellMergeParentColumn->length()==rows);
 
     if (success && mData)
     {
@@ -909,7 +937,7 @@ void TestFrame::testNotSupported(QLabel *aLabel)
 {
     QPalette aPalette;
 
-    aPalette.setColor(QPalette::WindowText, QColor(0, 200, 200));
+    aPalette.setColor(QPalette::WindowText, QColor(0, 128, 128));
 
     aLabel->setText("NOT SUPPORTED");
     aLabel->setPalette(aPalette);

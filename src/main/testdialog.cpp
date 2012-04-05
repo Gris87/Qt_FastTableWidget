@@ -10,6 +10,10 @@ TestDialog::TestDialog(QWidget *parent) :
 
     TestFrame *aFrame;
 
+    aFrame=new TestFrame(new CustomFastTableWidget(this), this);
+    ui->testsTabWidget->addTab(aFrame, "CustomFastTableWidget");
+    connect(aFrame, SIGNAL(testFinished()), this, SLOT(testCompleted()));
+
     aFrame=new TestFrame(new FastTableWidget(this), this);
     ui->testsTabWidget->addTab(aFrame, "FastTableWidget");
     connect(aFrame, SIGNAL(testFinished()), this, SLOT(testCompleted()));
