@@ -378,222 +378,133 @@ void FastTableWidget::updateVisibleRange()
     END_PROFILE("void FastTableWidget::updateVisibleRange()")
 }
 
-void FastTableWidget::setRowCount(int count)
+void FastTableWidget::insertRow(int row)
 {
     START_PROFILE
 
-    if (count<0)
+    CustomFastTableWidget::insertRow(row);
+
+    QList<QBrush *> aNewRowBrush;
+    QList<QColor *> aNewRowColor;
+    QList<QFont *> aNewRowFont;
+    QList<int> aNewRowint;
+    QList<quint16> aNewRowqint16;
+
+    mBackgroundBrushes.insert(row, aNewRowBrush);
+    mForegroundColors.insert(row, aNewRowColor);
+    mCellFonts.insert(row, aNewRowFont);
+    mCellTextFlags.insert(row, aNewRowint);
+    mCellMergeX.insert(row, aNewRowqint16);
+    mCellMergeY.insert(row, aNewRowqint16);
+    mCellMergeParentRow.insert(row, aNewRowint);
+    mCellMergeParentColumn.insert(row, aNewRowint);
+
+    for (int i=0; i<mColumnCount; ++i)
     {
-        count=0;
+        mBackgroundBrushes[row].append(0);
+        mForegroundColors[row].append(0);
+        mCellFonts[row].append(0);
+        mCellTextFlags[row].append(Qt::AlignTop | Qt::AlignVCenter | Qt::TextWordWrap);
+        mCellMergeX[row].append(1);
+        mCellMergeY[row].append(1);
+        mCellMergeParentRow[row].append(-1);
+        mCellMergeParentColumn[row].append(-1);
     }
 
-    if (mRowCount!=count)
-    {
-        while (mRowCount<count)
-        {
-            QStringList aNewRow;
-            QList<QBrush *> aNewRowBrush;
-            QList<QColor *> aNewRowColor;
-            QList<QFont *> aNewRowFont;
-            QList<bool> aNewRowbool;
-            QList<int> aNewRowint;
-            QList<quint16> aNewRowqint16;
-
-            mTotalHeight+=mDefaultHeight;
-
-            mData.append(aNewRow);
-            mRowHeights.append(mDefaultHeight);
-            mOffsetY.append(mRowCount==0? 0 : (mOffsetY.at(mRowCount-1)+mRowHeights.at(mRowCount-1)));
-            mSelectedCells.append(aNewRowbool);
-            mBackgroundBrushes.append(aNewRowBrush);
-            mForegroundColors.append(aNewRowColor);
-            mCellFonts.append(aNewRowFont);
-            mCellTextFlags.append(aNewRowint);
-            mCellMergeX.append(aNewRowqint16);
-            mCellMergeY.append(aNewRowqint16);
-            mCellMergeParentRow.append(aNewRowint);
-            mCellMergeParentColumn.append(aNewRowint);
-
-            for (int i=0; i<mColumnCount; ++i)
-            {
-                mData[mRowCount].append("");
-                mSelectedCells[mRowCount].append(false);
-                mBackgroundBrushes[mRowCount].append(0);
-                mForegroundColors[mRowCount].append(0);
-                mCellFonts[mRowCount].append(0);
-                mCellTextFlags[mRowCount].append(Qt::AlignTop | Qt::AlignVCenter | Qt::TextWordWrap);
-                mCellMergeX[mRowCount].append(1);
-                mCellMergeY[mRowCount].append(1);
-                mCellMergeParentRow[mRowCount].append(-1);
-                mCellMergeParentColumn[mRowCount].append(-1);
-            }
-
-            mRowCount++;
-        }
-
-        while (mRowCount>count)
-        {
-            mRowCount--;
-
-            mTotalHeight-=mRowHeights.at(mRowCount);
-
-            mData.removeLast();
-            mRowHeights.removeLast();
-            mOffsetY.removeLast();
-
-            for (int i=0; i<mColumnCount; ++i)
-            {
-                if (mSelectedCells.last().at(i))
-                {
-                    for (int j=0; j<mCurSelection.length(); ++j)
-                    {
-                        if (mCurSelection.at(j).y()==mRowCount && mCurSelection.at(j).x()==i)
-                        {
-                            mCurSelection.removeAt(j);
-                            break;
-                        }
-                    }
-                }
-            }
-
-            mSelectedCells.removeLast();
-
-            for (int i=0; i<mColumnCount; ++i)
-            {
-                if (mBackgroundBrushes.at(mRowCount).at(i))
-                {
-                    delete mBackgroundBrushes.at(mRowCount).at(i);
-                }
-
-                if (mForegroundColors.at(mRowCount).at(i))
-                {
-                    delete mForegroundColors.at(mRowCount).at(i);
-                }
-
-                if (mCellFonts.at(mRowCount).at(i))
-                {
-                    delete mCellFonts.at(mRowCount).at(i);
-                }
-            }
-
-            mBackgroundBrushes.removeLast();
-            mForegroundColors.removeLast();
-            mCellFonts.removeLast();
-            mCellTextFlags.removeLast();
-            mCellMergeX.removeLast();
-            mCellMergeY.removeLast();
-            mCellMergeParentRow.removeLast();
-            mCellMergeParentColumn.removeLast();
-        }
-
-        updateBarsRanges();
-        updateVisibleRange();
-    }
-
-    END_PROFILE("void FastTableWidget::setRowCount(int count)")
+    END_PROFILE("void FastTableWidget::insertRow(int row)")
 }
 
-void FastTableWidget::setColumnCount(int count)
+void FastTableWidget::deleteRow(int row)
 {
     START_PROFILE
 
-    if (count<0)
+    for (int i=0; i<mColumnCount; ++i)
     {
-        count=0;
-    }
-
-    if (mColumnCount!=count)
-    {
-        if (mColumnCount<count)
+        if (mBackgroundBrushes.at(row).at(i))
         {
-            for (int i=mColumnCount; i<count; ++i)
-            {
-                mColumnWidths.append(mDefaultWidth);
-                mTotalWidth+=mDefaultWidth;
-
-                mOffsetX.append(i==0? 0 : (mOffsetX.at(i-1)+mColumnWidths.at(i-1)));
-            }
-
-            for (int i=0; i<mData.length(); ++i)
-            {
-                for (int j=mColumnCount; j<count; ++j)
-                {
-                    mData[i].append("");
-                    mSelectedCells[i].append(false);
-                    mBackgroundBrushes[i].append(0);
-                    mForegroundColors[i].append(0);
-                    mCellFonts[i].append(0);
-                    mCellTextFlags[i].append(Qt::AlignTop | Qt::AlignVCenter | Qt::TextWordWrap);
-                    mCellMergeX[i].append(1);
-                    mCellMergeY[i].append(1);
-                    mCellMergeParentRow[i].append(-1);
-                    mCellMergeParentColumn[i].append(-1);
-                }
-            }
-        }
-        else
-        {
-            for (int i=mColumnCount-1; i>=count; --i)
-            {
-                mTotalWidth-=mColumnWidths.at(i);
-                mColumnWidths.removeLast();
-                mOffsetX.removeLast();
-            }
-
-            for (int i=0; i<mData.length(); ++i)
-            {
-                for (int j=mColumnCount-1; j>=count; --j)
-                {
-                    mData[i].removeLast();
-
-                    if (mSelectedCells.at(i).last())
-                    {
-                        for (int k=0; k<mCurSelection.length(); ++k)
-                        {
-                            if (mCurSelection.at(k).y()==i && mCurSelection.at(k).x()==j)
-                            {
-                                mCurSelection.removeAt(k);
-                                break;
-                            }
-                        }
-                    }
-
-                    mSelectedCells[i].removeLast();
-
-                    if (mBackgroundBrushes.at(i).at(j))
-                    {
-                        delete mBackgroundBrushes.at(i).at(j);
-                    }
-
-                    if (mForegroundColors.at(i).at(j))
-                    {
-                        delete mForegroundColors.at(i).at(j);
-                    }
-
-                    if (mCellFonts.at(i).at(j))
-                    {
-                        delete mCellFonts.at(i).at(j);
-                    }
-
-                    mBackgroundBrushes[i].removeLast();
-                    mForegroundColors[i].removeLast();
-                    mCellFonts[i].removeLast();
-                    mCellTextFlags[i].removeLast();
-                    mCellMergeX[i].removeLast();
-                    mCellMergeY[i].removeLast();
-                    mCellMergeParentRow[i].removeLast();
-                    mCellMergeParentColumn[i].removeLast();
-                }
-            }
+            delete mBackgroundBrushes.at(row).at(i);
         }
 
-        mColumnCount=count;
+        if (mForegroundColors.at(row).at(i))
+        {
+            delete mForegroundColors.at(row).at(i);
+        }
 
-        updateBarsRanges();
-        updateVisibleRange();
+        if (mCellFonts.at(row).at(i))
+        {
+            delete mCellFonts.at(row).at(i);
+        }
     }
 
-    END_PROFILE("void FastTableWidget::setColumnCount(int count)")
+    mBackgroundBrushes.removeAt(row);
+    mForegroundColors.removeAt(row);
+    mCellFonts.removeAt(row);
+    mCellTextFlags.removeAt(row);
+    mCellMergeX.removeAt(row);
+    mCellMergeY.removeAt(row);
+    mCellMergeParentRow.removeAt(row);
+    mCellMergeParentColumn.removeAt(row);
+
+    CustomFastTableWidget::deleteRow(row);
+
+    END_PROFILE("void FastTableWidget::deleteRow(int row)")
+}
+
+void FastTableWidget::insertColumn(int column)
+{
+    START_PROFILE
+
+    CustomFastTableWidget::insertColumn(column);
+
+    for (int i=0; i<mData.length(); ++i)
+    {
+        mBackgroundBrushes[i].insert(column, 0);
+        mForegroundColors[i].insert(column, 0);
+        mCellFonts[i].insert(column, 0);
+        mCellTextFlags[i].insert(column, Qt::AlignTop | Qt::AlignVCenter | Qt::TextWordWrap);
+        mCellMergeX[i].insert(column, 1);
+        mCellMergeY[i].insert(column, 1);
+        mCellMergeParentRow[i].insert(column, -1);
+        mCellMergeParentColumn[i].insert(column, -1);
+    }
+
+    END_PROFILE("void FastTableWidget::insertColumn(int column)")
+}
+
+void FastTableWidget::deleteColumn(int column)
+{
+    START_PROFILE
+
+    for (int i=0; i<mData.length(); ++i)
+    {
+        if (mBackgroundBrushes.at(i).at(column))
+        {
+            delete mBackgroundBrushes.at(i).at(column);
+        }
+
+        if (mForegroundColors.at(i).at(column))
+        {
+            delete mForegroundColors.at(i).at(column);
+        }
+
+        if (mCellFonts.at(i).at(column))
+        {
+            delete mCellFonts.at(i).at(column);
+        }
+
+        mBackgroundBrushes[i].removeAt(column);
+        mForegroundColors[i].removeAt(column);
+        mCellFonts[i].removeAt(column);
+        mCellTextFlags[i].removeAt(column);
+        mCellMergeX[i].removeAt(column);
+        mCellMergeY[i].removeAt(column);
+        mCellMergeParentRow[i].removeAt(column);
+        mCellMergeParentColumn[i].removeAt(column);
+    }
+
+    CustomFastTableWidget::deleteColumn(column);
+
+    END_PROFILE("void FastTableWidget::deleteColumn(int column)")
 }
 
 QBrush FastTableWidget::backgroundBrush(const int row, const int column)

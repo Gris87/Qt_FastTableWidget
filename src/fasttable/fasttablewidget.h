@@ -25,8 +25,11 @@ public:
     void resetFont(const int row, const int column);
     void resetTextFlag(const int row, const int column);
 
-    void setRowCount(int count);
-    void setColumnCount(int count);
+    void insertRow(int row);
+    void deleteRow(int row);
+
+    void insertColumn(int column);
+    void deleteColumn(int column);
 
     QBrush backgroundBrush(const int row, const int column);
     void setBackgroundBrush(const int row, const int column, const QBrush brush);

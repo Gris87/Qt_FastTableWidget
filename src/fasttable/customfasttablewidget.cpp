@@ -345,6 +345,156 @@ void CustomFastTableWidget::updateVisibleRange()
     END_PROFILE("void CustomFastTableWidget::updateVisibleRange()")
 }
 
+void CustomFastTableWidget::insertRow(int row)
+{
+    START_PROFILE
+
+    mRowCount++;
+
+    QStringList aNewRow;
+    QList<bool> aNewRowbool;
+
+    mTotalHeight+=mDefaultHeight;
+
+    mOffsetY.insert(row, row==0? 0 : (mOffsetY.at(row-1)+mRowHeights.at(row-1)));
+    mRowHeights.insert(row, mDefaultHeight);
+
+    for (int i=row+1; i<mRowCount; ++i)
+    {
+        mOffsetY[i]+=mDefaultHeight;
+    }
+
+    mData.insert(row, aNewRow);
+    mSelectedCells.insert(row, aNewRowbool);
+
+    for (int i=0; i<mColumnCount; ++i)
+    {
+        mData[row].append("");
+        mSelectedCells[row].append(false);
+    }
+
+    END_PROFILE("void CustomFastTableWidget::insertRow(int row)")
+}
+
+void CustomFastTableWidget::addRow()
+{
+    START_PROFILE
+
+    insertRow(mRowCount);
+
+    END_PROFILE("void CustomFastTableWidget::addRow()")
+}
+
+void CustomFastTableWidget::deleteRow(int row)
+{
+    START_PROFILE
+
+    mTotalHeight-=mRowHeights.at(row);
+
+    for (int i=row+1; i<mRowCount; ++i)
+    {
+        mOffsetY[i]-=mRowHeights.at(row);
+    }
+
+    mOffsetY.removeAt(row);
+    mRowHeights.removeAt(row);
+
+    mData.removeAt(row);
+
+    for (int i=0; i<mColumnCount; ++i)
+    {
+        if (mSelectedCells.at(row).at(i))
+        {
+            for (int j=0; j<mCurSelection.length(); ++j)
+            {
+                if (mCurSelection.at(j).y()==row && mCurSelection.at(j).x()==i)
+                {
+                    mCurSelection.removeAt(j);
+                    break;
+                }
+            }
+        }
+    }
+
+    mSelectedCells.removeAt(row);
+
+    mRowCount--;
+
+    END_PROFILE("void CustomFastTableWidget::deleteRow(int row)")
+}
+
+void CustomFastTableWidget::insertColumn(int column)
+{
+    START_PROFILE
+
+    mColumnCount++;
+
+    mTotalWidth+=mDefaultWidth;
+
+    mOffsetX.insert(column, column==0? 0 : (mOffsetX.at(column-1)+mColumnWidths.at(column-1)));
+    mColumnWidths.insert(column, mDefaultWidth);
+
+    for (int i=column+1; i<mColumnCount; ++i)
+    {
+        mOffsetX[i]+=mDefaultWidth;
+    }
+
+    for (int i=0; i<mData.length(); ++i)
+    {
+        mData[i].insert(column, "");
+        mSelectedCells[i].insert(column, false);
+    }
+
+    END_PROFILE("void CustomFastTableWidget::insertColumn(int column)")
+}
+
+void CustomFastTableWidget::addColumn()
+{
+    START_PROFILE
+
+    insertColumn(mColumnCount);
+
+    END_PROFILE("void CustomFastTableWidget::addColumn()")
+}
+
+void CustomFastTableWidget::deleteColumn(int column)
+{
+    START_PROFILE
+
+    mTotalWidth-=mColumnWidths.at(column);
+
+    for (int i=column+1; i<mColumnCount; ++i)
+    {
+        mOffsetX[i]-=mColumnWidths.at(column);
+    }
+
+    mOffsetX.removeAt(column);
+    mColumnWidths.removeAt(column);
+
+    for (int i=0; i<mData.length(); ++i)
+    {
+        mData[i].removeAt(column);
+
+        if (mSelectedCells.at(i).at(column))
+        {
+            for (int j=0; j<mCurSelection.length(); ++j)
+            {
+                if (mCurSelection.at(j).y()==i && mCurSelection.at(j).x()==column)
+                {
+                    mCurSelection.removeAt(j);
+                    break;
+                }
+            }
+        }
+
+        mSelectedCells[i].removeAt(column);
+    }
+
+    mColumnCount--;
+
+    END_PROFILE("void CustomFastTableWidget::deleteColumn(int column)")
+}
+
 int CustomFastTableWidget::rowCount()
 {
     return mRowCount;
@@ -363,56 +513,12 @@ void CustomFastTableWidget::setRowCount(int count)
     {
         while (mRowCount<count)
         {
-            QStringList aNewRow;
-            QList<QBrush *> aNewRowBrush;
-            QList<QColor *> aNewRowColor;
-            QList<QFont *> aNewRowFont;
-            QList<bool> aNewRowbool;
-            QList<int> aNewRowint;
-            QList<quint16> aNewRowqint16;
-
-            mTotalHeight+=mDefaultHeight;
-
-            mData.append(aNewRow);
-            mRowHeights.append(mDefaultHeight);
-            mOffsetY.append(mRowCount==0? 0 : (mOffsetY.at(mRowCount-1)+mRowHeights.at(mRowCount-1)));
-            mSelectedCells.append(aNewRowbool);
-
-            for (int i=0; i<mColumnCount; ++i)
-            {
-                mData[mRowCount].append("");
-                mSelectedCells[mRowCount].append(false);
-            }
-
-            mRowCount++;
+            addRow();
         }
 
         while (mRowCount>count)
         {
-            mRowCount--;
-
-            mTotalHeight-=mRowHeights.at(mRowCount);
-
-            mData.removeLast();
-            mRowHeights.removeLast();
-            mOffsetY.removeLast();
-
-            for (int i=0; i<mColumnCount; ++i)
-            {
-                if (mSelectedCells.last().at(i))
-                {
-                    for (int j=0; j<mCurSelection.length(); ++j)
-                    {
-                        if (mCurSelection.at(j).y()==mRowCount && mCurSelection.at(j).x()==i)
-                        {
-                            mCurSelection.removeAt(j);
-                            break;
-                        }
-                    }
-                }
-            }
-
-            mSelectedCells.removeLast();
+            deleteRow(mRowCount-1);
         }
 
         updateBarsRanges();
@@ -438,58 +544,15 @@ void CustomFastTableWidget::setColumnCount(int count)
 
     if (mColumnCount!=count)
     {
-        if (mColumnCount<count)
+        while (mColumnCount<count)
         {
-            for (int i=mColumnCount; i<count; ++i)
-            {
-                mColumnWidths.append(mDefaultWidth);
-                mTotalWidth+=mDefaultWidth;
-
-                mOffsetX.append(i==0? 0 : (mOffsetX.at(i-1)+mColumnWidths.at(i-1)));
-            }
-
-            for (int i=0; i<mData.length(); ++i)
-            {
-                for (int j=mColumnCount; j<count; ++j)
-                {
-                    mData[i].append("");
-                    mSelectedCells[i].append(false);
-                }
-            }
-        }
-        else
-        {
-            for (int i=mColumnCount-1; i>=count; --i)
-            {
-                mTotalWidth-=mColumnWidths.at(i);
-                mColumnWidths.removeLast();
-                mOffsetX.removeLast();
-            }
-
-            for (int i=0; i<mData.length(); ++i)
-            {
-                for (int j=mColumnCount-1; j>=count; --j)
-                {
-                    mData[i].removeLast();
-
-                    if (mSelectedCells.at(i).last())
-                    {
-                        for (int k=0; k<mCurSelection.length(); ++k)
-                        {
-                            if (mCurSelection.at(k).y()==i && mCurSelection.at(k).x()==j)
-                            {
-                                mCurSelection.removeAt(k);
-                                break;
-                            }
-                        }
-                    }
-
-                    mSelectedCells[i].removeLast();
-                }
-            }
+            addColumn();
         }
 
-        mColumnCount=count;
+        while (mColumnCount>count)
+        {
+            deleteColumn(mColumnCount-1);
+        }
 
         updateBarsRanges();
         updateVisibleRange();

@@ -62,6 +62,14 @@ public:
     void selectAll();
     void unselectAll();
 
+    virtual void insertRow(int row);
+    void addRow();
+    virtual void deleteRow(int row);
+
+    virtual void insertColumn(int column);
+    void addColumn();
+    virtual void deleteColumn(int column);
+
     int rowCount();
     void setRowCount(int count);
 
