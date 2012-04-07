@@ -178,7 +178,7 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                 int spanX=mCellMergeX.at(i).at(j);
                 int spanY=mCellMergeY.at(i).at(j);
 
-                if (spanX>1 && spanY>1)
+                if (spanX>1 || spanY>1)
                 {
                     int aWidth=0;
                     int aHeight=0;
