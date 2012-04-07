@@ -41,7 +41,6 @@ void TestDialog::startTests()
         ((TestFrame*)(ui->testsTabWidget->widget(i)))->startTest();
     }
 
-    ui->testsTabWidget->setCurrentIndex(0);
     ui->progressBar->setValue(0);
 }
 

@@ -749,6 +749,97 @@ void TestFrame::startTest()
     {
         testNotSupported(ui->setCellTextFlagsResLabel);
     }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 25: setSpan";
+    // ----------------------------------------------------------------
+    if (mFastTable->inherits("FastTableWidget"))
+    {
+        FastTableWidget* aTable=(FastTableWidget*)mFastTable;
+
+        success=true;
+
+        aTable->setSpan(1, 2, 2, 3);
+
+        for (int i=1; i<=2; i++)
+        {
+            for (int j=2; j<=4; j++)
+            {
+                success = success && mCellMergeParentRow->at(i).at(j)==1;
+                success = success && mCellMergeParentColumn->at(i).at(j)==2;
+                success = success && aTable->spanParent(i, j)==QPoint(2, 1);
+            }
+        }
+
+        success = success && mCellMergeX->at(1).at(2)==3;
+        success = success && mCellMergeY->at(1).at(2)==2;
+
+        aTable->setSpan(0, 3, 2, 1);
+
+        for (int i=1; i<=2; i++)
+        {
+            for (int j=2; j<=4; j++)
+            {
+                if (i!=1 && j!=3)
+                {
+                    success = success && mCellMergeParentRow->at(i).at(j)==-1;
+                    success = success && mCellMergeParentColumn->at(i).at(j)==-1;
+                    success = success && aTable->spanParent(i, j)==QPoint(-1, -1);
+                }
+            }
+        }
+
+        success = success && mCellMergeX->at(1).at(2)==1;
+        success = success && mCellMergeY->at(1).at(2)==1;
+
+        for (int i=0; i<=1; i++)
+        {
+            success = success && mCellMergeParentRow->at(i).at(3)==0;
+            success = success && mCellMergeParentColumn->at(i).at(3)==3;
+            success = success && aTable->spanParent(i, 3)==QPoint(3, 0);
+        }
+
+        success = success && mCellMergeX->at(0).at(3)==1;
+        success = success && mCellMergeY->at(0).at(3)==2;
+
+        aTable->clearSpans();
+
+        for (int i=0; i<((PublicFastTable*)aTable)->getRowCount(); ++i)
+        {
+            for (int j=0; j<((PublicFastTable*)aTable)->getColumnCount(); ++j)
+            {
+                if (
+                    aTable->rowSpan(i, j)!=1
+                    ||
+                    aTable->columnSpan(i, j)!=1
+                    ||
+                    aTable->spanParent(i, j)!=QPoint(-1, -1)
+                    ||
+                    mCellMergeX->at(i).at(j)!=1
+                    ||
+                    mCellMergeY->at(i).at(j)!=1
+                    ||
+                    mCellMergeParentRow->at(i).at(j)!=-1
+                    ||
+                    mCellMergeParentColumn->at(i).at(j)!=-1
+                   )
+                {
+                    success=false;
+                    break;
+                }
+            }
+
+            if (!success)
+            {
+                break;
+            }
+        }
+
+        testCompleted(success, ui->setSpanResLabel);
+    }
+    else
+    {
+        testNotSupported(ui->setSpanResLabel);
+    }
 }
 
 bool TestFrame::checkForSizes(int rows, int columns)
