@@ -495,6 +495,36 @@ void CustomFastTableWidget::deleteColumn(int column)
     END_PROFILE("void CustomFastTableWidget::deleteColumn(int column)")
 }
 
+void CustomFastTableWidget::horizontalHeaderAddRow()
+{
+
+}
+
+void CustomFastTableWidget::horizontalHeaderInsertRow(int row)
+{
+
+}
+
+void CustomFastTableWidget::horizontalHeaderDeleteRow(int row)
+{
+
+}
+
+void CustomFastTableWidget::verticalHeaderAddColumn()
+{
+
+}
+
+void CustomFastTableWidget::verticalHeaderInsertColumn(int column)
+{
+
+}
+
+void CustomFastTableWidget::verticalHeaderDeleteColumn(int column)
+{
+
+}
+
 int CustomFastTableWidget::rowCount()
 {
     return mRowCount;
@@ -805,6 +835,26 @@ void CustomFastTableWidget::setRowHeight(const int row, const quint16 height)
     END_PROFILE("void CustomFastTableWidget::setRowHeight(const int row, const quint16 height)")
 }
 
+quint16 CustomFastTableWidget::verticalHeaderColumnWidth(const int column)
+{
+
+}
+
+void CustomFastTableWidget::setVerticalHeaderColumnWidth(const int column, const quint16 width)
+{
+
+}
+
+quint16 CustomFastTableWidget::horizontalHeaderRowHeight(const int row)
+{
+
+}
+
+void CustomFastTableWidget::setHorizontalHeaderRowHeight(const int row, const quint16 height)
+{
+
+}
+
 int CustomFastTableWidget::totalWidth()
 {
     return mTotalWidth;
@@ -837,6 +887,30 @@ QRect CustomFastTableWidget::visibleRange()
     return aRect;
 }
 
+QRect CustomFastTableWidget::horizontalHeaderVisibleRange()
+{
+    START_PROFILE
+
+    QRect aRect;
+    aRect.setCoords(mHorizontalHeaderVisibleLeft, mHorizontalHeaderVisibleTop, mHorizontalHeaderVisibleRight, mHorizontalHeaderVisibleBottom);
+
+    END_PROFILE("QRect CustomFastTableWidget::horizontalHeaderVisibleRange()")
+
+    return aRect;
+}
+
+QRect CustomFastTableWidget::verticalHeaderVisibleRange()
+{
+    START_PROFILE
+
+    QRect aRect;
+    aRect.setCoords(mVerticalHeaderVisibleLeft, mVerticalHeaderVisibleTop, mVerticalHeaderVisibleRight, mVerticalHeaderVisibleBottom);
+
+    END_PROFILE("QRect CustomFastTableWidget::verticalHeaderVisibleRange()")
+
+    return aRect;
+}
+
 QString CustomFastTableWidget::text(const int row, const int column)
 {
     return mData.at(row).at(column);
@@ -849,6 +923,68 @@ void CustomFastTableWidget::setText(const int row, const int column, const QStri
     mData[row][column]=text;
 
     END_FREQUENT_PROFILE("void CustomFastTableWidget::setText(const int row, const int column, const QString text)")
+}
+
+QString CustomFastTableWidget::horizontalHeaderText(const int row, const int column)
+{
+    return mHorizontalHeaderData.at(row).at(column);
+}
+
+QString CustomFastTableWidget::horizontalHeaderText(const int column)
+{
+    return mHorizontalHeaderData.at(0).at(column);
+}
+
+void CustomFastTableWidget::setHorizontalHeaderText(const int row, const int column, const QString text)
+{
+    START_FREQUENT_PROFILE
+
+    mHorizontalHeaderData[row][column]=text;
+
+    END_FREQUENT_PROFILE("void CustomFastTableWidget::setHorizontalHeaderText(const int row, const int column, const QString text)")
+}
+
+void CustomFastTableWidget::setHorizontalHeaderText(const int column, const QString text)
+{
+    START_FREQUENT_PROFILE
+
+    for (int i=0; i<mHorizontalHeaderRowCount; i++)
+    {
+        mHorizontalHeaderData[i][column]=text;
+    }
+
+    END_FREQUENT_PROFILE("void CustomFastTableWidget::setHorizontalHeaderText(const int column, const QString text)")
+}
+
+QString CustomFastTableWidget::verticalHeaderText(const int row, const int column)
+{
+    return mVerticalHeaderData.at(row).at(column);
+}
+
+QString CustomFastTableWidget::verticalHeaderText(const int row)
+{
+    return mVerticalHeaderData.at(row).at(0);
+}
+
+void CustomFastTableWidget::setVerticalHeaderText(const int row, const int column, const QString text)
+{
+    START_FREQUENT_PROFILE
+
+    mVerticalHeaderData[row][column]=text;
+
+    END_FREQUENT_PROFILE("void CustomFastTableWidget::setVerticalHeaderText(const int row, const int column, const QString text)")
+}
+
+void CustomFastTableWidget::setVerticalHeaderText(const int row, const QString text)
+{
+    START_FREQUENT_PROFILE
+
+    for (int i=0; i<mVerticalHeaderColumnCount; i++)
+    {
+        mVerticalHeaderData[row][i]=text;
+    }
+
+    END_FREQUENT_PROFILE("void CustomFastTableWidget::setVerticalHeaderText(const int row, const QString text)")
 }
 
 bool CustomFastTableWidget::cellSelected(const int row, const int column)

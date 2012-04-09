@@ -52,9 +52,9 @@ class CustomFastTableWidget : public QAbstractScrollArea
     Q_PROPERTY(QBrush  horizontalHeaderDefaultBackgroundBrush READ horizontalHeaderDefaultBackgroundBrush WRITE setHorizontalHeaderDefaultBackgroundBrush)
     Q_PROPERTY(QColor  horizontalHeaderDefaultForegroundColor READ horizontalHeaderDefaultForegroundColor WRITE setHorizontalHeaderDefaultForegroundColor)
     Q_PROPERTY(QColor  horizontalHeaderGridColor              READ horizontalHeaderGridColor              WRITE setHorizontalHeaderGridColor)
-    Q_PROPERTY(QBrush  defaultBackgroundBrush                 READ defaultBackgroundBrush                 WRITE setDefaultBackgroundBrush)
-    Q_PROPERTY(QColor  defaultForegroundColor                 READ defaultForegroundColor                 WRITE setDefaultForegroundColor)
-    Q_PROPERTY(QColor  gridColor                              READ gridColor                              WRITE setGridColor)
+    Q_PROPERTY(QBrush  verticalHeaderDefaultBackgroundBrush   READ verticalHeaderDefaultBackgroundBrush   WRITE setVerticalHeaderDefaultBackgroundBrush)
+    Q_PROPERTY(QColor  verticalHeaderDefaultForegroundColor   READ verticalHeaderDefaultForegroundColor   WRITE setVerticalHeaderDefaultForegroundColor)
+    Q_PROPERTY(QColor  verticalHeaderGridColor                READ verticalHeaderGridColor                WRITE setVerticalHeaderGridColor)
     Q_PROPERTY(QBrush  selectionBrush                         READ selectionBrush                         WRITE setSelectionBrush)
 
 public:
@@ -79,6 +79,14 @@ public:
     void addColumn();
     virtual void insertColumn(int column);
     virtual void deleteColumn(int column);
+
+    void horizontalHeaderAddRow();
+    virtual void horizontalHeaderInsertRow(int row);
+    virtual void horizontalHeaderDeleteRow(int row);
+
+    void verticalHeaderAddColumn();
+    virtual void verticalHeaderInsertColumn(int column);
+    virtual void verticalHeaderDeleteColumn(int column);
 
     int rowCount();
     void setRowCount(int count);
@@ -134,15 +142,33 @@ public:
     quint16 rowHeight(const int row);
     void setRowHeight(const int row, const quint16 height);
 
+    quint16 verticalHeaderColumnWidth(const int column);
+    void setVerticalHeaderColumnWidth(const int column, const quint16 width);
+
+    quint16 horizontalHeaderRowHeight(const int row);
+    void setHorizontalHeaderRowHeight(const int row, const quint16 height);
+
     int totalWidth();
     int totalHeight();
     int verticalHeaderTotalWidth();
     int horizontalHeaderTotalHeight();
 
     QRect visibleRange();
+    QRect horizontalHeaderVisibleRange();
+    QRect verticalHeaderVisibleRange();
 
     QString text(const int row, const int column);
     void setText(const int row, const int column, const QString text);
+
+    QString horizontalHeaderText(const int row, const int column);
+    QString horizontalHeaderText(const int column);
+    void setHorizontalHeaderText(const int row, const int column, const QString text);
+    void setHorizontalHeaderText(const int column, const QString text);
+
+    QString verticalHeaderText(const int row, const int column);
+    QString verticalHeaderText(const int row);
+    void setVerticalHeaderText(const int row, const int column, const QString text);
+    void setVerticalHeaderText(const int row, const QString text);
 
     virtual bool cellSelected(const int row, const int column);
     virtual void setCellSelected(const int row, const int column, const bool selected);
