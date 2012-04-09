@@ -114,15 +114,28 @@ public:
 protected:
     int mRowCount;
     int mColumnCount;
+    int mHorizontalRowCount;
+    int mVerticalColumnCount;
 
-    quint16 mDefaultHeight;
     quint16 mDefaultWidth;
-    int mTotalHeight;
+    quint16 mDefaultHeight;
     int mTotalWidth;
+    int mTotalHeight;
+    int mVerticalTotalWidth;
+    int mHorizontalTotalHeight;
 
     QBrush mDefaultBackgroundBrush;
     QColor mDefaultForegroundColor;
     QColor mGridColor;
+
+    QBrush mHorizontalDefaultBackgroundBrush;
+    QColor mHorizontalDefaultForegroundColor;
+    QColor mHorizontalGridColor;
+
+    QBrush mVerticalDefaultBackgroundBrush;
+    QColor mVerticalDefaultForegroundColor;
+    QColor mVerticalGridColor;
+
     QBrush mSelectionBrush;
 
     int mVisibleLeft;
@@ -130,11 +143,34 @@ protected:
     int mVisibleTop;
     int mVisibleBottom;
 
+    int mHorizontalVisibleLeft;
+    int mHorizontalVisibleRight;
+    int mHorizontalVisibleTop;
+    int mHorizontalVisibleBottom;
+
+    int mVerticalVisibleLeft;
+    int mVerticalVisibleRight;
+    int mVerticalVisibleTop;
+    int mVerticalVisibleBottom;
+
     QList< QStringList > mData;
     QList< quint16 > mRowHeights;
     QList< quint16 > mColumnWidths;
     QList< int > mOffsetX;
     QList< int > mOffsetY;
+
+    QList< QStringList > mHorizontalData;
+    QList< quint16 > mHorizontalRowHeights;
+    QList< quint16 > mHorizontalColumnWidths;
+    QList< int > mHorizontalOffsetX;
+    QList< int > mHorizontalOffsetY;
+
+    QList< QStringList > mVerticalData;
+    QList< quint16 > mVerticalRowHeights;
+    QList< quint16 > mVerticalColumnWidths;
+    QList< int > mVerticalOffsetX;
+    QList< int > mVerticalOffsetY;
+
     QList< QList<bool> > mSelectedCells;
     QList< QPoint > mCurSelection;
 
