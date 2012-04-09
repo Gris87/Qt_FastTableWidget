@@ -13,148 +13,6 @@ FastTableWidget::~FastTableWidget()
     END_PROFILE("FastTableWidget::~FastTableWidget()")
 }
 
-void FastTableWidget::clearTable()
-{
-    START_PROFILE
-
-    resetBackgroundBrushes();
-    resetForegroundColors();
-    resetFonts();
-
-    mBackgroundBrushes.clear();
-    mForegroundColors.clear();
-    mCellFonts.clear();
-    mCellTextFlags.clear();
-    mCellMergeX.clear();
-    mCellMergeY.clear();
-    mCellMergeParentRow.clear();
-    mCellMergeParentColumn.clear();
-
-    CustomFastTableWidget::clearTable();
-
-    END_PROFILE("void FastTableWidget::clearTable()")
-}
-
-void FastTableWidget::resetBackgroundBrushes()
-{
-    START_PROFILE
-
-    for (int i=0; i<mRowCount; ++i)
-    {
-        for (int j=0; j<mColumnCount; ++j)
-        {
-            if (mBackgroundBrushes.at(i).at(j))
-            {
-                delete mBackgroundBrushes.at(i).at(j);
-                mBackgroundBrushes[i][j]=0;
-            }
-        }
-    }
-
-    END_PROFILE("void FastTableWidget::resetBackgroundBrushes()")
-}
-
-void FastTableWidget::resetForegroundColors()
-{
-    START_PROFILE
-
-    for (int i=0; i<mRowCount; ++i)
-    {
-        for (int j=0; j<mColumnCount; ++j)
-        {
-            if (mForegroundColors.at(i).at(j))
-            {
-                delete mForegroundColors.at(i).at(j);
-                mForegroundColors[i][j]=0;
-            }
-        }
-    }
-
-    END_PROFILE("void FastTableWidget::resetForegroundColors()")
-}
-
-void FastTableWidget::resetFonts()
-{
-    START_PROFILE
-
-    for (int i=0; i<mRowCount; ++i)
-    {
-        for (int j=0; j<mColumnCount; ++j)
-        {
-            if (mCellFonts.at(i).at(j))
-            {
-                delete mCellFonts.at(i).at(j);
-                mCellFonts[i][j]=0;
-            }
-        }
-    }
-
-    END_PROFILE("void FastTableWidget::resetFonts()")
-}
-
-void FastTableWidget::resetTextFlags()
-{
-    START_PROFILE
-
-    for (int i=0; i<mRowCount; ++i)
-    {
-        for (int j=0; j<mColumnCount; ++j)
-        {
-            mCellTextFlags[i][j]=Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
-        }
-    }
-
-    END_PROFILE("void FastTableWidget::resetTextFlags()")
-}
-
-void FastTableWidget::resetBackgroundBrush(const int row, const int column)
-{
-    START_PROFILE
-
-    if (mBackgroundBrushes.at(row).at(column))
-    {
-        delete mBackgroundBrushes.at(row).at(column);
-        mBackgroundBrushes[row][column]=0;
-    }
-
-    END_PROFILE("void FastTableWidget::resetBackgroundBrush(const int row, const int column)")
-}
-
-void FastTableWidget::resetForegroundColor(const int row, const int column)
-{
-    START_PROFILE
-
-    if (mForegroundColors.at(row).at(column))
-    {
-        delete mForegroundColors.at(row).at(column);
-        mForegroundColors[row][column]=0;
-    }
-
-    END_PROFILE("void FastTableWidget::resetForegroundColor(const int row, const int column)")
-}
-
-void FastTableWidget::resetFont(const int row, const int column)
-{
-    START_PROFILE
-
-    if (mCellFonts.at(row).at(column))
-    {
-        delete mCellFonts.at(row).at(column);
-        mCellFonts[row][column]=0;
-    }
-
-    END_PROFILE("void FastTableWidget::resetFont(const int row, const int column)")
-}
-
-void FastTableWidget::resetTextFlag(const int row, const int column)
-{
-    START_PROFILE
-
-    mCellTextFlags[row][column]=Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
-
-    END_PROFILE("void FastTableWidget::resetTextFlag(const int row, const int column)")
-}
-
 void FastTableWidget::paintEvent(QPaintEvent *event)
 {
     START_FREQUENT_PROFILE
@@ -376,6 +234,148 @@ void FastTableWidget::updateVisibleRange()
     }
 
     END_PROFILE("void FastTableWidget::updateVisibleRange()")
+}
+
+void FastTableWidget::clearTable()
+{
+    START_PROFILE
+
+    resetBackgroundBrushes();
+    resetForegroundColors();
+    resetFonts();
+
+    mBackgroundBrushes.clear();
+    mForegroundColors.clear();
+    mCellFonts.clear();
+    mCellTextFlags.clear();
+    mCellMergeX.clear();
+    mCellMergeY.clear();
+    mCellMergeParentRow.clear();
+    mCellMergeParentColumn.clear();
+
+    CustomFastTableWidget::clearTable();
+
+    END_PROFILE("void FastTableWidget::clearTable()")
+}
+
+void FastTableWidget::resetBackgroundBrushes()
+{
+    START_PROFILE
+
+    for (int i=0; i<mRowCount; ++i)
+    {
+        for (int j=0; j<mColumnCount; ++j)
+        {
+            if (mBackgroundBrushes.at(i).at(j))
+            {
+                delete mBackgroundBrushes.at(i).at(j);
+                mBackgroundBrushes[i][j]=0;
+            }
+        }
+    }
+
+    END_PROFILE("void FastTableWidget::resetBackgroundBrushes()")
+}
+
+void FastTableWidget::resetForegroundColors()
+{
+    START_PROFILE
+
+    for (int i=0; i<mRowCount; ++i)
+    {
+        for (int j=0; j<mColumnCount; ++j)
+        {
+            if (mForegroundColors.at(i).at(j))
+            {
+                delete mForegroundColors.at(i).at(j);
+                mForegroundColors[i][j]=0;
+            }
+        }
+    }
+
+    END_PROFILE("void FastTableWidget::resetForegroundColors()")
+}
+
+void FastTableWidget::resetFonts()
+{
+    START_PROFILE
+
+    for (int i=0; i<mRowCount; ++i)
+    {
+        for (int j=0; j<mColumnCount; ++j)
+        {
+            if (mCellFonts.at(i).at(j))
+            {
+                delete mCellFonts.at(i).at(j);
+                mCellFonts[i][j]=0;
+            }
+        }
+    }
+
+    END_PROFILE("void FastTableWidget::resetFonts()")
+}
+
+void FastTableWidget::resetTextFlags()
+{
+    START_PROFILE
+
+    for (int i=0; i<mRowCount; ++i)
+    {
+        for (int j=0; j<mColumnCount; ++j)
+        {
+            mCellTextFlags[i][j]=Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
+        }
+    }
+
+    END_PROFILE("void FastTableWidget::resetTextFlags()")
+}
+
+void FastTableWidget::resetBackgroundBrush(const int row, const int column)
+{
+    START_PROFILE
+
+    if (mBackgroundBrushes.at(row).at(column))
+    {
+        delete mBackgroundBrushes.at(row).at(column);
+        mBackgroundBrushes[row][column]=0;
+    }
+
+    END_PROFILE("void FastTableWidget::resetBackgroundBrush(const int row, const int column)")
+}
+
+void FastTableWidget::resetForegroundColor(const int row, const int column)
+{
+    START_PROFILE
+
+    if (mForegroundColors.at(row).at(column))
+    {
+        delete mForegroundColors.at(row).at(column);
+        mForegroundColors[row][column]=0;
+    }
+
+    END_PROFILE("void FastTableWidget::resetForegroundColor(const int row, const int column)")
+}
+
+void FastTableWidget::resetFont(const int row, const int column)
+{
+    START_PROFILE
+
+    if (mCellFonts.at(row).at(column))
+    {
+        delete mCellFonts.at(row).at(column);
+        mCellFonts[row][column]=0;
+    }
+
+    END_PROFILE("void FastTableWidget::resetFont(const int row, const int column)")
+}
+
+void FastTableWidget::resetTextFlag(const int row, const int column)
+{
+    START_PROFILE
+
+    mCellTextFlags[row][column]=Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
+
+    END_PROFILE("void FastTableWidget::resetTextFlag(const int row, const int column)")
 }
 
 void FastTableWidget::insertRow(int row)
