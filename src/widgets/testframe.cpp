@@ -324,7 +324,7 @@ void TestFrame::startTest()
         TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aDefaultHeight*50+aNewDefaultHeight);
         TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*20);
         TEST_STEP(mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19);
-        TEST_STEP(mOffsetY->at(50)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50);
+        TEST_STEP(mOffsetY->at(50)==aDefaultHeight*50);
         TEST_STEP(checkForSizes(51, 20));
 
         mFastTable->setDefaultHeight(aDefaultHeight);
@@ -354,8 +354,8 @@ void TestFrame::startTest()
         TEST_STEP(((PublicCustomFastTable*)mFastTable)->getDefaultWidth()==aNewDefaultWidth);
         TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50);
         TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aDefaultWidth*20+aNewDefaultWidth);
-        TEST_STEP(mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19);
-        TEST_STEP(mOffsetY->at(50)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50);
+        TEST_STEP(mOffsetX->at(20)==aDefaultWidth*20);
+        TEST_STEP(mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49);
         TEST_STEP(checkForSizes(50, 21));
 
         mFastTable->setDefaultWidth(aDefaultWidth);
