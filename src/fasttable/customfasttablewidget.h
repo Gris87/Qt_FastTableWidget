@@ -109,15 +109,6 @@ public:
     QColor gridColor();
     void setGridColor(QColor color);
 
-    QBrush verticalHeaderDefaultBackgroundBrush();
-    void setVerticalHeaderDefaultBackgroundBrush(QBrush brush);
-
-    QColor verticalHeaderDefaultForegroundColor();
-    void setVerticalHeaderDefaultForegroundColor(QColor color);
-
-    QColor verticalHeaderGridColor();
-    void setVerticalHeaderGridColor(QColor color);
-
     QBrush horizontalHeaderDefaultBackgroundBrush();
     void setHorizontalHeaderDefaultBackgroundBrush(QBrush brush);
 
@@ -126,6 +117,15 @@ public:
 
     QColor horizontalHeaderGridColor();
     void setHorizontalHeaderGridColor(QColor color);
+
+    QBrush verticalHeaderDefaultBackgroundBrush();
+    void setVerticalHeaderDefaultBackgroundBrush(QBrush brush);
+
+    QColor verticalHeaderDefaultForegroundColor();
+    void setVerticalHeaderDefaultForegroundColor(QColor color);
+
+    QColor verticalHeaderGridColor();
+    void setVerticalHeaderGridColor(QColor color);
 
     QBrush selectionBrush();
     void setSelectionBrush(QBrush brush);

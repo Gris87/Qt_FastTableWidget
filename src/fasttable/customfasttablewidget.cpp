@@ -7,21 +7,44 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
 
     mRowCount=0;
     mColumnCount=0;
-
-    mDefaultHeight=30;
-    mDefaultWidth=100;
-    mTotalHeight=0;
-    mTotalWidth=0;
+    mHorizontalHeaderRowCount=0;
+    mVerticalHeaderColumnCount=0;
 
     mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
     mDefaultForegroundColor.setRgb(0, 0, 0);
     mGridColor.setRgb(0, 0, 0);
+
+    mHorizontalHeaderDefaultBackgroundBrush.setColor(QColor(180, 180, 180));
+    mHorizontalHeaderDefaultForegroundColor.setRgb(0, 0, 0);
+    mHorizontalHeaderGridColor.setRgb(0, 0, 0);
+
+    mVerticalHeaderDefaultBackgroundBrush.setColor(QColor(180, 180, 180));
+    mVerticalHeaderDefaultForegroundColor.setRgb(0, 0, 0);
+    mVerticalHeaderGridColor.setRgb(0, 0, 0);
+
     mSelectionBrush.setColor(QColor(0, 0, 255));
+
+    mDefaultWidth=100;
+    mDefaultHeight=30;
+    mTotalWidth=0;
+    mTotalHeight=0;
+    mVerticalHeaderTotalWidth=0;
+    mHorizontalHeaderTotalHeight=0;
 
     mVisibleLeft=-1;
     mVisibleRight=-1;
     mVisibleTop=-1;
     mVisibleBottom=-1;
+
+    mHorizontalHeaderVisibleLeft=-1;
+    mHorizontalHeaderVisibleRight=-1;
+    mHorizontalHeaderVisibleTop=-1;
+    mHorizontalHeaderVisibleBottom=-1;
+
+    mVerticalHeaderVisibleLeft=-1;
+    mVerticalHeaderVisibleRight=-1;
+    mVerticalHeaderVisibleTop=-1;
+    mVerticalHeaderVisibleBottom=-1;
 
     horizontalScrollBar()->setSingleStep(100);
     verticalScrollBar()->setSingleStep(100);
@@ -239,20 +262,47 @@ void CustomFastTableWidget::clearTable()
 
     mRowCount=0;
     mColumnCount=0;
+    mHorizontalHeaderRowCount=0;
+    mVerticalHeaderColumnCount=0;
 
-    mTotalHeight=0;
     mTotalWidth=0;
+    mTotalHeight=0;
+    mVerticalHeaderTotalWidth=0;
+    mHorizontalHeaderTotalHeight=0;
 
     mVisibleLeft=-1;
     mVisibleRight=-1;
     mVisibleTop=-1;
     mVisibleBottom=-1;
 
+    mHorizontalHeaderVisibleLeft=-1;
+    mHorizontalHeaderVisibleRight=-1;
+    mHorizontalHeaderVisibleTop=-1;
+    mHorizontalHeaderVisibleBottom=-1;
+
+    mVerticalHeaderVisibleLeft=-1;
+    mVerticalHeaderVisibleRight=-1;
+    mVerticalHeaderVisibleTop=-1;
+    mVerticalHeaderVisibleBottom=-1;
+
+    mData.clear();
     mRowHeights.clear();
     mColumnWidths.clear();
     mOffsetX.clear();
     mOffsetY.clear();
-    mData.clear();
+
+    mHorizontalHeaderData.clear();
+    mHorizontalHeaderRowHeights.clear();
+    mHorizontalHeaderColumnWidths.clear();
+    mHorizontalHeaderOffsetX.clear();
+    mHorizontalHeaderOffsetY.clear();
+
+    mVerticalHeaderData.clear();
+    mVerticalHeaderRowHeights.clear();
+    mVerticalHeaderColumnWidths.clear();
+    mVerticalHeaderOffsetX.clear();
+    mVerticalHeaderOffsetY.clear();
+
     mSelectedCells.clear();
     mCurSelection.clear();
 
@@ -653,48 +703,6 @@ void CustomFastTableWidget::setGridColor(QColor color)
     END_PROFILE("void CustomFastTableWidget::setGridColor(QColor color)")
 }
 
-QBrush CustomFastTableWidget::verticalHeaderDefaultBackgroundBrush()
-{
-    return mVerticalHeaderDefaultBackgroundBrush;
-}
-
-void CustomFastTableWidget::setVerticalHeaderDefaultBackgroundBrush(QBrush brush)
-{
-    START_PROFILE
-
-    mVerticalHeaderDefaultBackgroundBrush=brush;
-
-    END_PROFILE("void CustomFastTableWidget::setVerticalHeaderDefaultBackgroundBrush(QBrush brush)")
-}
-
-QColor CustomFastTableWidget::verticalHeaderDefaultForegroundColor()
-{
-    return mVerticalHeaderDefaultForegroundColor;
-}
-
-void CustomFastTableWidget::setVerticalHeaderDefaultForegroundColor(QColor color)
-{
-    START_PROFILE
-
-    mVerticalHeaderDefaultForegroundColor=color;
-
-    END_PROFILE("void CustomFastTableWidget::setVerticalHeaderDefaultForegroundColor(QColor color)")
-}
-
-QColor CustomFastTableWidget::verticalHeaderGridColor()
-{
-    return mVerticalHeaderGridColor;
-}
-
-void CustomFastTableWidget::setVerticalHeaderGridColor(QColor color)
-{
-    START_PROFILE
-
-    mVerticalHeaderGridColor=color;
-
-    END_PROFILE("void CustomFastTableWidget::setVerticalHeaderGridColor(QColor color)")
-}
-
 QBrush CustomFastTableWidget::horizontalHeaderDefaultBackgroundBrush()
 {
     return mHorizontalHeaderDefaultBackgroundBrush;
@@ -735,6 +743,48 @@ void CustomFastTableWidget::setHorizontalHeaderGridColor(QColor color)
     mHorizontalHeaderGridColor=color;
 
     END_PROFILE("void CustomFastTableWidget::setHorizontalHeaderGridColor(QColor color)")
+}
+
+QBrush CustomFastTableWidget::verticalHeaderDefaultBackgroundBrush()
+{
+    return mVerticalHeaderDefaultBackgroundBrush;
+}
+
+void CustomFastTableWidget::setVerticalHeaderDefaultBackgroundBrush(QBrush brush)
+{
+    START_PROFILE
+
+    mVerticalHeaderDefaultBackgroundBrush=brush;
+
+    END_PROFILE("void CustomFastTableWidget::setVerticalHeaderDefaultBackgroundBrush(QBrush brush)")
+}
+
+QColor CustomFastTableWidget::verticalHeaderDefaultForegroundColor()
+{
+    return mVerticalHeaderDefaultForegroundColor;
+}
+
+void CustomFastTableWidget::setVerticalHeaderDefaultForegroundColor(QColor color)
+{
+    START_PROFILE
+
+    mVerticalHeaderDefaultForegroundColor=color;
+
+    END_PROFILE("void CustomFastTableWidget::setVerticalHeaderDefaultForegroundColor(QColor color)")
+}
+
+QColor CustomFastTableWidget::verticalHeaderGridColor()
+{
+    return mVerticalHeaderGridColor;
+}
+
+void CustomFastTableWidget::setVerticalHeaderGridColor(QColor color)
+{
+    START_PROFILE
+
+    mVerticalHeaderGridColor=color;
+
+    END_PROFILE("void CustomFastTableWidget::setVerticalHeaderGridColor(QColor color)")
 }
 
 QBrush CustomFastTableWidget::selectionBrush()
