@@ -432,6 +432,16 @@ void CustomFastTableWidget::selectAll()
         }
     }
 
+    for (int i=0; i<mRowCount; ++i)
+    {
+        mVerticalHeaderSelectedRows[i]=true;
+    }
+
+    for (int i=0; i<mColumnCount; ++i)
+    {
+        mHorizontalHeaderSelectedColumns[i]=true;
+    }
+
     END_PROFILE("void CustomFastTableWidget::selectAll()")
 }
 
@@ -445,6 +455,16 @@ void CustomFastTableWidget::unselectAll()
     }
 
     mCurSelection.clear();
+
+    for (int i=0; i<mRowCount; ++i)
+    {
+        mVerticalHeaderSelectedRows[i]=false;
+    }
+
+    for (int i=0; i<mColumnCount; ++i)
+    {
+        mHorizontalHeaderSelectedColumns[i]=false;
+    }
 
     END_PROFILE("void CustomFastTableWidget::unselectAll()")
 }

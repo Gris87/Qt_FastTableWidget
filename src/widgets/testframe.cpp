@@ -63,10 +63,10 @@ void TestFrame::startTest()
     // ----------------------------------------------------------------
     {
         success =            mCurSelection->length()==0;
-        success = success && ((PublicFastTable*)mFastTable)->getTotalHeight()==0;
-        success = success && ((PublicFastTable*)mFastTable)->getTotalWidth()==0;
-        success = success && ((PublicFastTable*)mFastTable)->getRowCount()==0;
-        success = success && ((PublicFastTable*)mFastTable)->getColumnCount()==0;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalHeight()==0;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalWidth()==0;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getRowCount()==0;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getColumnCount()==0;
         success = success && checkForSizes(0, 0);
 
         testCompleted(success, ui->initialResLabel);
@@ -77,9 +77,9 @@ void TestFrame::startTest()
     {
         mFastTable->setRowCount(50);
 
-        success =            ((PublicFastTable*)mFastTable)->getTotalHeight()==((PublicFastTable*)mFastTable)->getDefaultHeight()*50;
-        success = success && ((PublicFastTable*)mFastTable)->getTotalWidth()==0;
-        success = success && mOffsetY->at(49)==((PublicFastTable*)mFastTable)->getDefaultHeight()*49;
+        success =            ((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalWidth()==0;
+        success = success && mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49;
         success = success && checkForSizes(50, 0);
 
         testCompleted(success, ui->setRow50ResLabel);
@@ -90,10 +90,10 @@ void TestFrame::startTest()
     {
         mFastTable->setColumnCount(20);
 
-        success =            ((PublicFastTable*)mFastTable)->getTotalHeight()==((PublicFastTable*)mFastTable)->getDefaultHeight()*50;
-        success = success && ((PublicFastTable*)mFastTable)->getTotalWidth()==((PublicFastTable*)mFastTable)->getDefaultWidth()*20;
-        success = success && mOffsetX->at(19)==((PublicFastTable*)mFastTable)->getDefaultWidth()*19;
-        success = success && mOffsetY->at(49)==((PublicFastTable*)mFastTable)->getDefaultHeight()*49;
+        success =            ((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalWidth()==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*20;
+        success = success && mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19;
+        success = success && mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49;
         success = success && checkForSizes(50, 20);
 
         testCompleted(success, ui->setCol20ResLabel);
@@ -104,10 +104,10 @@ void TestFrame::startTest()
     {
         mFastTable->setColumnCount(1);
 
-        success =            ((PublicFastTable*)mFastTable)->getTotalHeight()==((PublicFastTable*)mFastTable)->getDefaultHeight()*50;
-        success = success && ((PublicFastTable*)mFastTable)->getTotalWidth()==((PublicFastTable*)mFastTable)->getDefaultWidth();
+        success =            ((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalWidth()==((PublicCustomFastTable*)mFastTable)->getDefaultWidth();
         success = success && mOffsetX->at(0)==0;
-        success = success && mOffsetY->at(49)==((PublicFastTable*)mFastTable)->getDefaultHeight()*49;
+        success = success && mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49;
         success = success && checkForSizes(50, 1);
 
         testCompleted(success, ui->setCol1ResLabel);
@@ -118,10 +118,10 @@ void TestFrame::startTest()
     {
         mFastTable->setRowCount(2);
 
-        success =            ((PublicFastTable*)mFastTable)->getTotalHeight()==((PublicFastTable*)mFastTable)->getDefaultHeight()*2;
-        success = success && ((PublicFastTable*)mFastTable)->getTotalWidth()==((PublicFastTable*)mFastTable)->getDefaultWidth();
+        success =            ((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*2;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalWidth()==((PublicCustomFastTable*)mFastTable)->getDefaultWidth();
         success = success && mOffsetX->at(0)==0;
-        success = success && mOffsetY->at(1)==((PublicFastTable*)mFastTable)->getDefaultHeight();
+        success = success && mOffsetY->at(1)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight();
         success = success && checkForSizes(2, 1);
 
         testCompleted(success, ui->setRow2ResLabel);
@@ -132,8 +132,8 @@ void TestFrame::startTest()
     {
         mFastTable->clearTable();
 
-        success =            ((PublicFastTable*)mFastTable)->getTotalHeight()==0;
-        success = success && ((PublicFastTable*)mFastTable)->getTotalWidth()==0;
+        success =            ((PublicCustomFastTable*)mFastTable)->getTotalHeight()==0;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalWidth()==0;
         success = success && checkForSizes(0, 0);
 
         testCompleted(success, ui->clearTableResLabel);
@@ -144,9 +144,9 @@ void TestFrame::startTest()
     {
         mFastTable->setRowCount(50);
 
-        success =            ((PublicFastTable*)mFastTable)->getTotalHeight()==((PublicFastTable*)mFastTable)->getDefaultHeight()*50;
-        success = success && ((PublicFastTable*)mFastTable)->getTotalWidth()==0;
-        success = success && mOffsetY->at(49)==((PublicFastTable*)mFastTable)->getDefaultHeight()*49;
+        success =            ((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalWidth()==0;
+        success = success && mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49;
         success = success && checkForSizes(50, 0);
 
         testCompleted(success, ui->setRow50ResLabel2);
@@ -157,10 +157,10 @@ void TestFrame::startTest()
     {
         mFastTable->setColumnCount(20);
 
-        success =            ((PublicFastTable*)mFastTable)->getTotalHeight()==((PublicFastTable*)mFastTable)->getDefaultHeight()*50;
-        success = success && ((PublicFastTable*)mFastTable)->getTotalWidth()==((PublicFastTable*)mFastTable)->getDefaultWidth()*20;
-        success = success && mOffsetX->at(19)==((PublicFastTable*)mFastTable)->getDefaultWidth()*19;
-        success = success && mOffsetY->at(49)==((PublicFastTable*)mFastTable)->getDefaultHeight()*49;
+        success =            ((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalWidth()==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*20;
+        success = success && mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19;
+        success = success && mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49;
         success = success && checkForSizes(50, 20);
 
         testCompleted(success, ui->setCol20ResLabel2);
@@ -169,16 +169,16 @@ void TestFrame::startTest()
     qDebug()<<"TEST 9: setDefaultBackgroundBrush";
     // ----------------------------------------------------------------
     {
-        QBrush aDefaultBackgroundBrush=((PublicFastTable*)mFastTable)->getDefaultBackgroundBrush();
+        QBrush aDefaultBackgroundBrush=((PublicCustomFastTable*)mFastTable)->getDefaultBackgroundBrush();
         QBrush aNewDefaultBackgroundBrush=QBrush(QColor(1, 2, 3));
 
         mFastTable->setDefaultBackgroundBrush(aNewDefaultBackgroundBrush);
 
-        success =            ((PublicFastTable*)mFastTable)->getDefaultBackgroundBrush()==aNewDefaultBackgroundBrush;
+        success =            ((PublicCustomFastTable*)mFastTable)->getDefaultBackgroundBrush()==aNewDefaultBackgroundBrush;
 
         mFastTable->setDefaultBackgroundBrush(aDefaultBackgroundBrush);
 
-        success = success && ((PublicFastTable*)mFastTable)->getDefaultBackgroundBrush()==aDefaultBackgroundBrush;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getDefaultBackgroundBrush()==aDefaultBackgroundBrush;
 
         testCompleted(success, ui->setDefBackgroundResLabel);
     }
@@ -186,16 +186,16 @@ void TestFrame::startTest()
     qDebug()<<"TEST 10: setDefaultForegroundColor";
     // ----------------------------------------------------------------
     {
-        QColor aDefaultForegroundColor=((PublicFastTable*)mFastTable)->getDefaultForegroundColor();
+        QColor aDefaultForegroundColor=((PublicCustomFastTable*)mFastTable)->getDefaultForegroundColor();
         QColor aNewDefaultForegroundColor=QColor(1, 2, 3);
 
         mFastTable->setDefaultForegroundColor(aNewDefaultForegroundColor);
 
-        success =            ((PublicFastTable*)mFastTable)->getDefaultForegroundColor()==aNewDefaultForegroundColor;
+        success =            ((PublicCustomFastTable*)mFastTable)->getDefaultForegroundColor()==aNewDefaultForegroundColor;
 
         mFastTable->setDefaultForegroundColor(aDefaultForegroundColor);
 
-        success = success && ((PublicFastTable*)mFastTable)->getDefaultForegroundColor()==aDefaultForegroundColor;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getDefaultForegroundColor()==aDefaultForegroundColor;
 
         testCompleted(success, ui->setDefForegroundResLabel);
     }
@@ -203,16 +203,16 @@ void TestFrame::startTest()
     qDebug()<<"TEST 11: setGridColor";
     // ----------------------------------------------------------------
     {
-        QColor aGridColor=((PublicFastTable*)mFastTable)->getGridColor();
+        QColor aGridColor=((PublicCustomFastTable*)mFastTable)->getGridColor();
         QColor aNewGridColor=QColor(1, 2, 3);
 
         mFastTable->setGridColor(aNewGridColor);
 
-        success =            ((PublicFastTable*)mFastTable)->getGridColor()==aNewGridColor;
+        success =            ((PublicCustomFastTable*)mFastTable)->getGridColor()==aNewGridColor;
 
         mFastTable->setGridColor(aGridColor);
 
-        success = success && ((PublicFastTable*)mFastTable)->getGridColor()==aGridColor;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getGridColor()==aGridColor;
 
         testCompleted(success, ui->setGridColorResLabel);
     }
@@ -220,16 +220,16 @@ void TestFrame::startTest()
     qDebug()<<"TEST 12: setSelectionBrush";
     // ----------------------------------------------------------------
     {
-        QBrush aSelectionBrush=((PublicFastTable*)mFastTable)->getSelectionBrush();
+        QBrush aSelectionBrush=((PublicCustomFastTable*)mFastTable)->getSelectionBrush();
         QBrush aNewSelectionBrush=QBrush(QColor(1, 2, 3));
 
         mFastTable->setSelectionBrush(aNewSelectionBrush);
 
-        success =            ((PublicFastTable*)mFastTable)->getSelectionBrush()==aNewSelectionBrush;
+        success =            ((PublicCustomFastTable*)mFastTable)->getSelectionBrush()==aNewSelectionBrush;
 
         mFastTable->setSelectionBrush(aSelectionBrush);
 
-        success = success && ((PublicFastTable*)mFastTable)->getSelectionBrush()==aSelectionBrush;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getSelectionBrush()==aSelectionBrush;
 
         testCompleted(success, ui->setSelectionColorResLabel);
     }
@@ -237,27 +237,27 @@ void TestFrame::startTest()
     qDebug()<<"TEST 13: setDefaultHeight";
     // ----------------------------------------------------------------
     {
-        quint16 aDefaultHeight=((PublicFastTable*)mFastTable)->getDefaultHeight();
+        quint16 aDefaultHeight=((PublicCustomFastTable*)mFastTable)->getDefaultHeight();
         quint16 aNewDefaultHeight=10;
 
         mFastTable->setDefaultHeight(aNewDefaultHeight);
         mFastTable->setRowCount(51);
 
-        success =            ((PublicFastTable*)mFastTable)->getDefaultHeight()==aNewDefaultHeight;
-        success = success && ((PublicFastTable*)mFastTable)->getTotalHeight()==aDefaultHeight*50+aNewDefaultHeight;
-        success = success && ((PublicFastTable*)mFastTable)->getTotalWidth()==((PublicFastTable*)mFastTable)->getDefaultWidth()*20;
-        success = success && mOffsetX->at(19)==((PublicFastTable*)mFastTable)->getDefaultWidth()*19;
-        success = success && mOffsetY->at(50)==((PublicFastTable*)mFastTable)->getDefaultHeight()*50;
+        success =            ((PublicCustomFastTable*)mFastTable)->getDefaultHeight()==aNewDefaultHeight;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aDefaultHeight*50+aNewDefaultHeight;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalWidth()==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*20;
+        success = success && mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19;
+        success = success && mOffsetY->at(50)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50;
         success = success && checkForSizes(51, 20);
 
         mFastTable->setDefaultHeight(aDefaultHeight);
         mFastTable->setRowCount(50);
 
-        success =            ((PublicFastTable*)mFastTable)->getDefaultHeight()==aDefaultHeight;
-        success = success && ((PublicFastTable*)mFastTable)->getTotalHeight()==aDefaultHeight*50;
-        success = success && ((PublicFastTable*)mFastTable)->getTotalWidth()==((PublicFastTable*)mFastTable)->getDefaultWidth()*20;
-        success = success && mOffsetX->at(19)==((PublicFastTable*)mFastTable)->getDefaultWidth()*19;
-        success = success && mOffsetY->at(49)==((PublicFastTable*)mFastTable)->getDefaultHeight()*49;
+        success =            ((PublicCustomFastTable*)mFastTable)->getDefaultHeight()==aDefaultHeight;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aDefaultHeight*50;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalWidth()==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*20;
+        success = success && mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19;
+        success = success && mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49;
         success = success && checkForSizes(50, 20);
 
         testCompleted(success, ui->setDefHeightResLabel);
@@ -266,27 +266,27 @@ void TestFrame::startTest()
     qDebug()<<"TEST 14: setDefaultWidth";
     // ----------------------------------------------------------------
     {
-        quint16 aDefaultWidth=((PublicFastTable*)mFastTable)->getDefaultWidth();
+        quint16 aDefaultWidth=((PublicCustomFastTable*)mFastTable)->getDefaultWidth();
         quint16 aNewDefaultWidth=10;
 
         mFastTable->setDefaultWidth(aNewDefaultWidth);
         mFastTable->setColumnCount(21);
 
-        success =            ((PublicFastTable*)mFastTable)->getDefaultWidth()==aNewDefaultWidth;
-        success = success && ((PublicFastTable*)mFastTable)->getTotalHeight()==((PublicFastTable*)mFastTable)->getDefaultHeight()*50;
-        success = success && ((PublicFastTable*)mFastTable)->getTotalWidth()==aDefaultWidth*20+aNewDefaultWidth;
-        success = success && mOffsetX->at(19)==((PublicFastTable*)mFastTable)->getDefaultWidth()*19;
-        success = success && mOffsetY->at(50)==((PublicFastTable*)mFastTable)->getDefaultHeight()*50;
+        success =            ((PublicCustomFastTable*)mFastTable)->getDefaultWidth()==aNewDefaultWidth;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aDefaultWidth*20+aNewDefaultWidth;
+        success = success && mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19;
+        success = success && mOffsetY->at(50)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50;
         success = success && checkForSizes(50, 21);
 
         mFastTable->setDefaultWidth(aDefaultWidth);
         mFastTable->setColumnCount(20);
 
-        success =            ((PublicFastTable*)mFastTable)->getDefaultWidth()==aDefaultWidth;
-        success = success && ((PublicFastTable*)mFastTable)->getTotalHeight()==((PublicFastTable*)mFastTable)->getDefaultHeight()*50;
-        success = success && ((PublicFastTable*)mFastTable)->getTotalWidth()==aDefaultWidth*20;
-        success = success && mOffsetX->at(19)==((PublicFastTable*)mFastTable)->getDefaultWidth()*19;
-        success = success && mOffsetY->at(49)==((PublicFastTable*)mFastTable)->getDefaultHeight()*49;
+        success =            ((PublicCustomFastTable*)mFastTable)->getDefaultWidth()==aDefaultWidth;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aDefaultWidth*20;
+        success = success && mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19;
+        success = success && mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49;
         success = success && checkForSizes(50, 20);
 
         testCompleted(success, ui->setDefWidthResLabel);
@@ -295,16 +295,16 @@ void TestFrame::startTest()
     qDebug()<<"TEST 15: setRowHeight";
     // ----------------------------------------------------------------
     {
-        int     aTotalHeight=((PublicFastTable*)mFastTable)->getTotalHeight();
+        int     aTotalHeight=((PublicCustomFastTable*)mFastTable)->getTotalHeight();
         quint16 aRowHeight=mRowHeights->at(30);
 
         mFastTable->setRowHeight(30, aRowHeight+100);
 
-        success =            ((PublicFastTable*)mFastTable)->getTotalHeight()==aTotalHeight+100;
+        success =            ((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight+100;
 
         mFastTable->setRowHeight(30, aRowHeight);
 
-        success = success && ((PublicFastTable*)mFastTable)->getTotalHeight()==aTotalHeight;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight;
 
         testCompleted(success, ui->setRowHeightResLabel);
     }
@@ -312,16 +312,16 @@ void TestFrame::startTest()
     qDebug()<<"TEST 16: setColumnWidth";
     // ----------------------------------------------------------------
     {
-        int     aTotalWidth=((PublicFastTable*)mFastTable)->getTotalWidth();
+        int     aTotalWidth=((PublicCustomFastTable*)mFastTable)->getTotalWidth();
         quint16 aColumnWidth=mColumnWidths->at(10);
 
         mFastTable->setColumnWidth(10, aColumnWidth+100);
 
-        success =            ((PublicFastTable*)mFastTable)->getTotalWidth()==aTotalWidth+100;
+        success =            ((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth+100;
 
         mFastTable->setColumnWidth(10, aColumnWidth);
 
-        success = success && ((PublicFastTable*)mFastTable)->getTotalWidth()==aTotalWidth;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth;
 
         testCompleted(success, ui->setColumnWidthResLabel);
     }
@@ -329,19 +329,19 @@ void TestFrame::startTest()
     qDebug()<<"TEST 17: totalHeight";
     // ----------------------------------------------------------------
     {
-        int     aTotalHeight=((PublicFastTable*)mFastTable)->getTotalHeight();
+        int     aTotalHeight=((PublicCustomFastTable*)mFastTable)->getTotalHeight();
         quint16 aRowHeight=mRowHeights->at(49);
 
         mFastTable->setRowHeight(49, aRowHeight+100);
         mFastTable->setRowCount(51);
 
-        success =            ((PublicFastTable*)mFastTable)->getTotalHeight()==aTotalHeight+((PublicFastTable*)mFastTable)->getDefaultHeight()+100;
+        success =            ((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight+((PublicCustomFastTable*)mFastTable)->getDefaultHeight()+100;
         success = success && mOffsetY->at(50)==aTotalHeight+100;
 
         mFastTable->setRowHeight(49, aRowHeight);
         mFastTable->setRowCount(50);
 
-        success = success && ((PublicFastTable*)mFastTable)->getTotalHeight()==aTotalHeight;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight;
 
         testCompleted(success, ui->totalHeightResLabel);
     }
@@ -349,19 +349,19 @@ void TestFrame::startTest()
     qDebug()<<"TEST 18: totalWidth";
     // ----------------------------------------------------------------
     {
-        int     aTotalWidth=((PublicFastTable*)mFastTable)->getTotalWidth();
+        int     aTotalWidth=((PublicCustomFastTable*)mFastTable)->getTotalWidth();
         quint16 aColumnWidth=mColumnWidths->at(19);
 
         mFastTable->setColumnWidth(19, aColumnWidth+100);
         mFastTable->setColumnCount(21);
 
-        success =            ((PublicFastTable*)mFastTable)->getTotalWidth()==aTotalWidth+((PublicFastTable*)mFastTable)->getDefaultWidth()+100;
+        success =            ((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth+((PublicCustomFastTable*)mFastTable)->getDefaultWidth()+100;
         success = success && mOffsetX->at(20)==aTotalWidth+100;
 
         mFastTable->setColumnWidth(19, aColumnWidth);
         mFastTable->setColumnCount(20);
 
-        success = success && ((PublicFastTable*)mFastTable)->getTotalWidth()==aTotalWidth;
+        success = success && ((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth;
 
         testCompleted(success, ui->totalWidthResLabel);
     }
@@ -379,14 +379,14 @@ void TestFrame::startTest()
 
         success=true;
 
-        for (int i=0; i<((PublicFastTable*)mFastTable)->getRowCount(); ++i)
+        for (int i=0; i<((PublicCustomFastTable*)mFastTable)->getRowCount(); ++i)
         {
-            for (int j=0; j<((PublicFastTable*)mFastTable)->getColumnCount(); ++j)
+            for (int j=0; j<((PublicCustomFastTable*)mFastTable)->getColumnCount(); ++j)
             {
                 if (
-                    mData->at(i).at(j)!=QString::number(i*((PublicFastTable*)mFastTable)->getColumnCount()+j)
+                    mData->at(i).at(j)!=QString::number(i*((PublicCustomFastTable*)mFastTable)->getColumnCount()+j)
                     ||
-                    mFastTable->text(i, j)!=QString::number(i*((PublicFastTable*)mFastTable)->getColumnCount()+j)
+                    mFastTable->text(i, j)!=QString::number(i*((PublicCustomFastTable*)mFastTable)->getColumnCount()+j)
                    )
                 {
                     success=false;
@@ -410,9 +410,9 @@ void TestFrame::startTest()
 
         success=true;
 
-        for (int i=0; i<((PublicFastTable*)mFastTable)->getRowCount(); ++i)
+        for (int i=0; i<((PublicCustomFastTable*)mFastTable)->getRowCount(); ++i)
         {
-            for (int j=0; j<((PublicFastTable*)mFastTable)->getColumnCount(); ++j)
+            for (int j=0; j<((PublicCustomFastTable*)mFastTable)->getColumnCount(); ++j)
             {
                 if (!mSelectedCells->at(i).at(j))
                 {
@@ -435,9 +435,9 @@ void TestFrame::startTest()
 
         if (success)
         {
-            for (int i=0; i<((PublicFastTable*)mFastTable)->getRowCount(); ++i)
+            for (int i=0; i<((PublicCustomFastTable*)mFastTable)->getRowCount(); ++i)
             {
-                for (int j=0; j<((PublicFastTable*)mFastTable)->getColumnCount(); ++j)
+                for (int j=0; j<((PublicCustomFastTable*)mFastTable)->getColumnCount(); ++j)
                 {
                     if (mSelectedCells->at(i).at(j))
                     {
@@ -474,9 +474,9 @@ void TestFrame::startTest()
 
         success=true;
 
-        for (int i=0; i<((PublicFastTable*)aTable)->getRowCount(); ++i)
+        for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
         {
-            for (int j=0; j<((PublicFastTable*)aTable)->getColumnCount(); ++j)
+            for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
             {
                 if (
                     mBackgroundBrushes->at(i).at(j)==0
@@ -505,9 +505,9 @@ void TestFrame::startTest()
 
         if (success)
         {
-            for (int i=0; i<((PublicFastTable*)aTable)->getRowCount(); ++i)
+            for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
             {
-                for (int j=0; j<((PublicFastTable*)aTable)->getColumnCount(); ++j)
+                for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
                 {
                     if (mBackgroundBrushes->at(i).at(j)!=0)
                     {
@@ -548,9 +548,9 @@ void TestFrame::startTest()
 
         success=true;
 
-        for (int i=0; i<((PublicFastTable*)aTable)->getRowCount(); ++i)
+        for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
         {
-            for (int j=0; j<((PublicFastTable*)aTable)->getColumnCount(); ++j)
+            for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
             {
                 if (
                     mForegroundColors->at(i).at(j)==0
@@ -579,9 +579,9 @@ void TestFrame::startTest()
 
         if (success)
         {
-            for (int i=0; i<((PublicFastTable*)aTable)->getRowCount(); ++i)
+            for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
             {
-                for (int j=0; j<((PublicFastTable*)aTable)->getColumnCount(); ++j)
+                for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
                 {
                     if (mForegroundColors->at(i).at(j)!=0)
                     {
@@ -622,9 +622,9 @@ void TestFrame::startTest()
 
         success=true;
 
-        for (int i=0; i<((PublicFastTable*)aTable)->getRowCount(); ++i)
+        for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
         {
-            for (int j=0; j<((PublicFastTable*)aTable)->getColumnCount(); ++j)
+            for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
             {
                 if (
                     mCellFonts->at(i).at(j)==0
@@ -653,9 +653,9 @@ void TestFrame::startTest()
 
         if (success)
         {
-            for (int i=0; i<((PublicFastTable*)aTable)->getRowCount(); ++i)
+            for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
             {
-                for (int j=0; j<((PublicFastTable*)aTable)->getColumnCount(); ++j)
+                for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
                 {
                     if (mCellFonts->at(i).at(j)!=0)
                     {
@@ -696,9 +696,9 @@ void TestFrame::startTest()
 
         success=true;
 
-        for (int i=0; i<((PublicFastTable*)aTable)->getRowCount(); ++i)
+        for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
         {
-            for (int j=0; j<((PublicFastTable*)aTable)->getColumnCount(); ++j)
+            for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
             {
                 if (
                     mCellTextFlags->at(i).at(j)!=aNewFlag
@@ -725,9 +725,9 @@ void TestFrame::startTest()
 
         if (success)
         {
-            for (int i=0; i<((PublicFastTable*)aTable)->getRowCount(); ++i)
+            for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
             {
-                for (int j=0; j<((PublicFastTable*)aTable)->getColumnCount(); ++j)
+                for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
                 {
                     if (aTable->cellTextFlags(i, j)!=(Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap))
                     {
@@ -803,9 +803,9 @@ void TestFrame::startTest()
 
         aTable->clearSpans();
 
-        for (int i=0; i<((PublicFastTable*)aTable)->getRowCount(); ++i)
+        for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
         {
-            for (int j=0; j<((PublicFastTable*)aTable)->getColumnCount(); ++j)
+            for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
             {
                 if (
                     aTable->rowSpan(i, j)!=1
@@ -846,8 +846,8 @@ bool TestFrame::checkForSizes(int rows, int columns)
 {
     bool success=true;
 
-    success = success && ((PublicFastTable*)mFastTable)->getRowCount()==rows;
-    success = success && ((PublicFastTable*)mFastTable)->getColumnCount()==columns;
+    success = success && ((PublicCustomFastTable*)mFastTable)->getRowCount()==rows;
+    success = success && ((PublicCustomFastTable*)mFastTable)->getColumnCount()==columns;
     success = success && (mData==0                  || mData->length()==rows);
     success = success && (mRowHeights==0            || mRowHeights->length()==rows);
     success = success && (mColumnWidths==0          || mColumnWidths->length()==columns);
