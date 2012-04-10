@@ -4,13 +4,13 @@ FastTableWidget::FastTableWidget(QWidget *parent) :
     CustomFastTableWidget(parent)
 {
     START_PROFILE;
-    END_PROFILE("FastTableWidget::FastTableWidget(QWidget *parent)")
+    END_PROFILE("FastTableWidget::FastTableWidget(QWidget *parent)");
 }
 
 FastTableWidget::~FastTableWidget()
 {
     START_PROFILE;
-    END_PROFILE("FastTableWidget::~FastTableWidget()")
+    END_PROFILE("FastTableWidget::~FastTableWidget()");
 }
 
 void FastTableWidget::paintEvent(QPaintEvent *event)
@@ -233,7 +233,7 @@ void FastTableWidget::updateVisibleRange()
         }
     }
 
-    END_PROFILE("void FastTableWidget::updateVisibleRange()")
+    END_PROFILE("void FastTableWidget::updateVisibleRange()");
 }
 
 void FastTableWidget::clearTable()
@@ -255,7 +255,7 @@ void FastTableWidget::clearTable()
 
     CustomFastTableWidget::clearTable();
 
-    END_PROFILE("void FastTableWidget::clearTable()")
+    END_PROFILE("void FastTableWidget::clearTable()");
 }
 
 void FastTableWidget::resetBackgroundBrushes()
@@ -274,7 +274,7 @@ void FastTableWidget::resetBackgroundBrushes()
         }
     }
 
-    END_PROFILE("void FastTableWidget::resetBackgroundBrushes()")
+    END_PROFILE("void FastTableWidget::resetBackgroundBrushes()");
 }
 
 void FastTableWidget::resetForegroundColors()
@@ -293,7 +293,7 @@ void FastTableWidget::resetForegroundColors()
         }
     }
 
-    END_PROFILE("void FastTableWidget::resetForegroundColors()")
+    END_PROFILE("void FastTableWidget::resetForegroundColors()");
 }
 
 void FastTableWidget::resetFonts()
@@ -312,7 +312,7 @@ void FastTableWidget::resetFonts()
         }
     }
 
-    END_PROFILE("void FastTableWidget::resetFonts()")
+    END_PROFILE("void FastTableWidget::resetFonts()");
 }
 
 void FastTableWidget::resetTextFlags()
@@ -327,7 +327,7 @@ void FastTableWidget::resetTextFlags()
         }
     }
 
-    END_PROFILE("void FastTableWidget::resetTextFlags()")
+    END_PROFILE("void FastTableWidget::resetTextFlags()");
 }
 
 void FastTableWidget::resetBackgroundBrush(const int row, const int column)
@@ -340,7 +340,7 @@ void FastTableWidget::resetBackgroundBrush(const int row, const int column)
         mBackgroundBrushes[row][column]=0;
     }
 
-    END_PROFILE("void FastTableWidget::resetBackgroundBrush(const int row, const int column)")
+    END_PROFILE("void FastTableWidget::resetBackgroundBrush(const int row, const int column)");
 }
 
 void FastTableWidget::resetForegroundColor(const int row, const int column)
@@ -353,7 +353,7 @@ void FastTableWidget::resetForegroundColor(const int row, const int column)
         mForegroundColors[row][column]=0;
     }
 
-    END_PROFILE("void FastTableWidget::resetForegroundColor(const int row, const int column)")
+    END_PROFILE("void FastTableWidget::resetForegroundColor(const int row, const int column)");
 }
 
 void FastTableWidget::resetFont(const int row, const int column)
@@ -366,7 +366,7 @@ void FastTableWidget::resetFont(const int row, const int column)
         mCellFonts[row][column]=0;
     }
 
-    END_PROFILE("void FastTableWidget::resetFont(const int row, const int column)")
+    END_PROFILE("void FastTableWidget::resetFont(const int row, const int column)");
 }
 
 void FastTableWidget::resetTextFlag(const int row, const int column)
@@ -375,7 +375,7 @@ void FastTableWidget::resetTextFlag(const int row, const int column)
 
     mCellTextFlags[row][column]=Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
 
-    END_PROFILE("void FastTableWidget::resetTextFlag(const int row, const int column)")
+    END_PROFILE("void FastTableWidget::resetTextFlag(const int row, const int column)");
 }
 
 void FastTableWidget::insertRow(int row)
@@ -411,7 +411,7 @@ void FastTableWidget::insertRow(int row)
         mCellMergeParentColumn[row].append(-1);
     }
 
-    END_PROFILE("void FastTableWidget::insertRow(int row)")
+    END_PROFILE("void FastTableWidget::insertRow(int row)");
 }
 
 void FastTableWidget::deleteRow(int row)
@@ -447,7 +447,7 @@ void FastTableWidget::deleteRow(int row)
 
     CustomFastTableWidget::deleteRow(row);
 
-    END_PROFILE("void FastTableWidget::deleteRow(int row)")
+    END_PROFILE("void FastTableWidget::deleteRow(int row)");
 }
 
 void FastTableWidget::insertColumn(int column)
@@ -468,7 +468,7 @@ void FastTableWidget::insertColumn(int column)
         mCellMergeParentColumn[i].insert(column, -1);
     }
 
-    END_PROFILE("void FastTableWidget::insertColumn(int column)")
+    END_PROFILE("void FastTableWidget::insertColumn(int column)");
 }
 
 void FastTableWidget::deleteColumn(int column)
@@ -504,7 +504,7 @@ void FastTableWidget::deleteColumn(int column)
 
     CustomFastTableWidget::deleteColumn(column);
 
-    END_PROFILE("void FastTableWidget::deleteColumn(int column)")
+    END_PROFILE("void FastTableWidget::deleteColumn(int column)");
 }
 
 QBrush FastTableWidget::backgroundBrush(const int row, const int column)
@@ -518,7 +518,7 @@ QBrush FastTableWidget::backgroundBrush(const int row, const int column)
         aBrush=&mDefaultBackgroundBrush;
     }
 
-    END_PROFILE("QBrush FastTableWidget::backgroundBrush(const int row, const int column)")
+    END_PROFILE("QBrush FastTableWidget::backgroundBrush(const int row, const int column)");
 
     return *aBrush;
 }
@@ -536,7 +536,7 @@ void FastTableWidget::setBackgroundBrush(const int row, const int column, const 
         mBackgroundBrushes[row][column]=new QBrush(brush);
     }
 
-    END_PROFILE("void FastTableWidget::setBackgroundBrush(const int row, const int column, const QBrush brush)")
+    END_PROFILE("void FastTableWidget::setBackgroundBrush(const int row, const int column, const QBrush brush)");
 }
 
 QColor FastTableWidget::foregroundColor(const int row, const int column)
@@ -550,7 +550,7 @@ QColor FastTableWidget::foregroundColor(const int row, const int column)
         aColor=&mDefaultForegroundColor;
     }
 
-    END_PROFILE("QColor FastTableWidget::foregroundColor(const int row, const int column)")
+    END_PROFILE("QColor FastTableWidget::foregroundColor(const int row, const int column)");
 
     return *aColor;
 }
@@ -568,7 +568,7 @@ void FastTableWidget::setForegroundColor(const int row, const int column, const 
         mForegroundColors[row][column]=new QColor(color);
     }
 
-    END_PROFILE("void FastTableWidget::setForegroundColor(const int row, const int column, const QColor color)")
+    END_PROFILE("void FastTableWidget::setForegroundColor(const int row, const int column, const QColor color)");
 }
 
 QFont FastTableWidget::cellFont(const int row, const int column)
@@ -594,7 +594,7 @@ void FastTableWidget::setCellFont(const int row, const int column, const QFont f
         mCellFonts[row][column]=new QFont(font);
     }
 
-    END_PROFILE("void FastTableWidget::setCellFont(const int row, const int column, const QFont font)")
+    END_PROFILE("void FastTableWidget::setCellFont(const int row, const int column, const QFont font)");
 }
 
 int FastTableWidget::cellTextFlags(const int row, const int column)
@@ -608,7 +608,7 @@ void FastTableWidget::setCellTextFlags(const int row, const int column, const in
 
     mCellTextFlags[row][column]=flags;
 
-    END_PROFILE("void FastTableWidget::setCellTextFlags(const int row, const int column, const int flags)")
+    END_PROFILE("void FastTableWidget::setCellTextFlags(const int row, const int column, const int flags)");
 }
 
 void FastTableWidget::clearSpans()
@@ -626,7 +626,7 @@ void FastTableWidget::clearSpans()
         }
     }
 
-    END_PROFILE("void FastTableWidget::clearSpans()")
+    END_PROFILE("void FastTableWidget::clearSpans()");
 }
 
 void FastTableWidget::setSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan)
@@ -695,7 +695,7 @@ void FastTableWidget::setSpan(const int row, const int column, quint16 rowSpan, 
         mCellMergeParentColumn[row][column]=-1;
     }
 
-    END_PROFILE("void FastTableWidget::setSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan)")
+    END_PROFILE("void FastTableWidget::setSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan)");
 }
 
 quint16 FastTableWidget::rowSpan(const int row, const int column)
@@ -704,7 +704,7 @@ quint16 FastTableWidget::rowSpan(const int row, const int column)
 
     return mCellMergeY.at(row).at(column);
 
-    END_PROFILE("quint16 FastTableWidget::rowSpan(const int row, const int column)")
+    END_PROFILE("quint16 FastTableWidget::rowSpan(const int row, const int column)");
 }
 
 quint16 FastTableWidget::columnSpan(const int row, const int column)
@@ -713,7 +713,7 @@ quint16 FastTableWidget::columnSpan(const int row, const int column)
 
     return mCellMergeX.at(row).at(column);
 
-    END_PROFILE("quint16 FastTableWidget::columnSpan(const int row, const int column)")
+    END_PROFILE("quint16 FastTableWidget::columnSpan(const int row, const int column)");
 }
 
 QPoint FastTableWidget::spanParent(const int row, const int column)
@@ -722,5 +722,5 @@ QPoint FastTableWidget::spanParent(const int row, const int column)
 
     return QPoint(mCellMergeParentColumn.at(row).at(column), mCellMergeParentRow.at(row).at(column));
 
-    END_PROFILE("QPoint FastTableWidget::spanParent(const int row, const int column)")
+    END_PROFILE("QPoint FastTableWidget::spanParent(const int row, const int column)");
 }

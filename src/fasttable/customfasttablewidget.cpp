@@ -52,7 +52,7 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(horizontalScrollBarValueChanged(int)));
     connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(verticalScrollBarValueChanged(int)));
 
-    END_PROFILE("CustomFastTableWidget::CustomFastTableWidget(QWidget *parent)")
+    END_PROFILE("CustomFastTableWidget::CustomFastTableWidget(QWidget *parent)");
 }
 
 CustomFastTableWidget::~CustomFastTableWidget()
@@ -61,7 +61,7 @@ CustomFastTableWidget::~CustomFastTableWidget()
 
     clearTable();
 
-    END_PROFILE("CustomFastTableWidget::~CustomFastTableWidget()")
+    END_PROFILE("CustomFastTableWidget::~CustomFastTableWidget()");
 }
 
 void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
@@ -70,7 +70,7 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
 
     QAbstractScrollArea::mousePressEvent(event);
 
-    END_PROFILE("void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)")
+    END_PROFILE("void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)");
 }
 
 void CustomFastTableWidget::resizeEvent(QResizeEvent *event)
@@ -82,7 +82,7 @@ void CustomFastTableWidget::resizeEvent(QResizeEvent *event)
 
     QAbstractScrollArea::resizeEvent(event);
 
-    END_PROFILE("void CustomFastTableWidget::resizeEvent(QResizeEvent *event)")
+    END_PROFILE("void CustomFastTableWidget::resizeEvent(QResizeEvent *event)");
 }
 
 void CustomFastTableWidget::paintEvent(QPaintEvent *event)
@@ -184,7 +184,7 @@ void CustomFastTableWidget::horizontalScrollBarValueChanged(int value)
 
     updateVisibleRange();
 
-    END_FREQUENT_PROFILE("void CustomFastTableWidget::horizontalScrollBarValueChanged(int value)")
+    END_FREQUENT_PROFILE("void CustomFastTableWidget::horizontalScrollBarValueChanged(int value)");
 }
 
 void CustomFastTableWidget::verticalScrollBarValueChanged(int value)
@@ -193,7 +193,7 @@ void CustomFastTableWidget::verticalScrollBarValueChanged(int value)
 
     updateVisibleRange();
 
-    END_FREQUENT_PROFILE("void CustomFastTableWidget::verticalScrollBarValueChanged(int value)")
+    END_FREQUENT_PROFILE("void CustomFastTableWidget::verticalScrollBarValueChanged(int value)");
 }
 
 void CustomFastTableWidget::updateBarsRanges()
@@ -208,7 +208,7 @@ void CustomFastTableWidget::updateBarsRanges()
     horizontalScrollBar()->setRange(0, mTotalWidth - areaSize.width());
     verticalScrollBar()->setRange(0, mTotalHeight - areaSize.height());
 
-    END_PROFILE("void CustomFastTableWidget::updateBarsRanges()")
+    END_PROFILE("void CustomFastTableWidget::updateBarsRanges()");
 }
 
 void CustomFastTableWidget::updateVisibleRange()
@@ -305,7 +305,7 @@ void CustomFastTableWidget::updateVisibleRange()
         }
     }
 
-    END_PROFILE("void CustomFastTableWidget::updateVisibleRange()")
+    END_PROFILE("void CustomFastTableWidget::updateVisibleRange()");
 }
 
 void CustomFastTableWidget::clearTable()
@@ -360,7 +360,7 @@ void CustomFastTableWidget::clearTable()
     mHorizontalHeader_SelectedColumns.clear();
     mVerticalHeader_SelectedRows.clear();
 
-    END_PROFILE("void CustomFastTableWidget::clearTable()")
+    END_PROFILE("void CustomFastTableWidget::clearTable()");
 }
 
 void CustomFastTableWidget::selectRow(const int row)
@@ -372,7 +372,7 @@ void CustomFastTableWidget::selectRow(const int row)
         setCellSelected(row, i, true);
     }
 
-    END_PROFILE("void CustomFastTableWidget::selectRow(const int row)")
+    END_PROFILE("void CustomFastTableWidget::selectRow(const int row)");
 }
 
 void CustomFastTableWidget::unselectRow(const int row)
@@ -384,7 +384,7 @@ void CustomFastTableWidget::unselectRow(const int row)
         setCellSelected(row, i, false);
     }
 
-    END_PROFILE("void CustomFastTableWidget::unselectRow(const int row)")
+    END_PROFILE("void CustomFastTableWidget::unselectRow(const int row)");
 }
 
 void CustomFastTableWidget::selectColumn(const int column)
@@ -396,7 +396,7 @@ void CustomFastTableWidget::selectColumn(const int column)
         setCellSelected(i, column, true);
     }
 
-    END_PROFILE("void CustomFastTableWidget::selectColumn(const int column)")
+    END_PROFILE("void CustomFastTableWidget::selectColumn(const int column)");
 }
 
 void CustomFastTableWidget::unselectColumn(const int column)
@@ -408,7 +408,7 @@ void CustomFastTableWidget::unselectColumn(const int column)
         setCellSelected(i, column, false);
     }
 
-    END_PROFILE("void CustomFastTableWidget::unselectColumn(const int column)")
+    END_PROFILE("void CustomFastTableWidget::unselectColumn(const int column)");
 }
 
 void CustomFastTableWidget::selectAll()
@@ -442,7 +442,7 @@ void CustomFastTableWidget::selectAll()
         mHorizontalHeader_SelectedColumns[i]=true;
     }
 
-    END_PROFILE("void CustomFastTableWidget::selectAll()")
+    END_PROFILE("void CustomFastTableWidget::selectAll()");
 }
 
 void CustomFastTableWidget::unselectAll()
@@ -466,7 +466,7 @@ void CustomFastTableWidget::unselectAll()
         mHorizontalHeader_SelectedColumns[i]=false;
     }
 
-    END_PROFILE("void CustomFastTableWidget::unselectAll()")
+    END_PROFILE("void CustomFastTableWidget::unselectAll()");
 }
 
 void CustomFastTableWidget::addRow()
@@ -475,7 +475,7 @@ void CustomFastTableWidget::addRow()
 
     insertRow(mRowCount);
 
-    END_PROFILE("void CustomFastTableWidget::addRow()")
+    END_PROFILE("void CustomFastTableWidget::addRow()");
 }
 
 void CustomFastTableWidget::insertRow(int row)
@@ -507,7 +507,7 @@ void CustomFastTableWidget::insertRow(int row)
         mSelectedCells[row].append(false);
     }
 
-    END_PROFILE("void CustomFastTableWidget::insertRow(int row)")
+    END_PROFILE("void CustomFastTableWidget::insertRow(int row)");
 }
 
 void CustomFastTableWidget::deleteRow(int row)
@@ -546,7 +546,7 @@ void CustomFastTableWidget::deleteRow(int row)
 
     mRowCount--;
 
-    END_PROFILE("void CustomFastTableWidget::deleteRow(int row)")
+    END_PROFILE("void CustomFastTableWidget::deleteRow(int row)");
 }
 
 void CustomFastTableWidget::addColumn()
@@ -555,7 +555,7 @@ void CustomFastTableWidget::addColumn()
 
     insertColumn(mColumnCount);
 
-    END_PROFILE("void CustomFastTableWidget::addColumn()")
+    END_PROFILE("void CustomFastTableWidget::addColumn()");
 }
 
 void CustomFastTableWidget::insertColumn(int column)
@@ -582,7 +582,7 @@ void CustomFastTableWidget::insertColumn(int column)
 
     mHorizontalHeader_SelectedColumns.insert(column, false);
 
-    END_PROFILE("void CustomFastTableWidget::insertColumn(int column)")
+    END_PROFILE("void CustomFastTableWidget::insertColumn(int column)");
 }
 
 void CustomFastTableWidget::deleteColumn(int column)
@@ -622,7 +622,7 @@ void CustomFastTableWidget::deleteColumn(int column)
 
     mColumnCount--;
 
-    END_PROFILE("void CustomFastTableWidget::deleteColumn(int column)")
+    END_PROFILE("void CustomFastTableWidget::deleteColumn(int column)");
 }
 
 void CustomFastTableWidget::horizontalHeader_AddRow()
@@ -685,7 +685,7 @@ void CustomFastTableWidget::setRowCount(int count)
         updateVisibleRange();
     }
 
-    END_PROFILE("void CustomFastTableWidget::setRowCount(int count)")
+    END_PROFILE("void CustomFastTableWidget::setRowCount(int count)");
 }
 
 int CustomFastTableWidget::columnCount()
@@ -718,7 +718,7 @@ void CustomFastTableWidget::setColumnCount(int count)
         updateVisibleRange();
     }
 
-    END_PROFILE("void CustomFastTableWidget::setColumnCount(int count)")
+    END_PROFILE("void CustomFastTableWidget::setColumnCount(int count)");
 }
 
 qint16 CustomFastTableWidget::horizontalHeader_RowCount()
@@ -752,7 +752,7 @@ void CustomFastTableWidget::setDefaultBackgroundBrush(QBrush brush)
 
     mDefaultBackgroundBrush=brush;
 
-    END_PROFILE("void CustomFastTableWidget::setDefaultBackgroundBrush(QBrush brush)")
+    END_PROFILE("void CustomFastTableWidget::setDefaultBackgroundBrush(QBrush brush)");
 }
 
 QColor CustomFastTableWidget::defaultForegroundColor()
@@ -766,7 +766,7 @@ void CustomFastTableWidget::setDefaultForegroundColor(QColor color)
 
     mDefaultForegroundColor=color;
 
-    END_PROFILE("void CustomFastTableWidget::setDefaultForegroundColor(QColor color)")
+    END_PROFILE("void CustomFastTableWidget::setDefaultForegroundColor(QColor color)");
 }
 
 QColor CustomFastTableWidget::gridColor()
@@ -780,7 +780,7 @@ void CustomFastTableWidget::setGridColor(QColor color)
 
     mGridColor=color;
 
-    END_PROFILE("void CustomFastTableWidget::setGridColor(QColor color)")
+    END_PROFILE("void CustomFastTableWidget::setGridColor(QColor color)");
 }
 
 QBrush CustomFastTableWidget::horizontalHeader_DefaultBackgroundBrush()
@@ -794,7 +794,7 @@ void CustomFastTableWidget::horizontalHeader_SetDefaultBackgroundBrush(QBrush br
 
     mHorizontalHeader_DefaultBackgroundBrush=brush;
 
-    END_PROFILE("void CustomFastTableWidget::horizontalHeader_SetDefaultBackgroundBrush(QBrush brush)")
+    END_PROFILE("void CustomFastTableWidget::horizontalHeader_SetDefaultBackgroundBrush(QBrush brush)");
 }
 
 QColor CustomFastTableWidget::horizontalHeader_DefaultForegroundColor()
@@ -808,7 +808,7 @@ void CustomFastTableWidget::horizontalHeader_SetDefaultForegroundColor(QColor co
 
     mHorizontalHeader_DefaultForegroundColor=color;
 
-    END_PROFILE("void CustomFastTableWidget::horizontalHeader_SetDefaultForegroundColor(QColor color)")
+    END_PROFILE("void CustomFastTableWidget::horizontalHeader_SetDefaultForegroundColor(QColor color)");
 }
 
 QColor CustomFastTableWidget::horizontalHeader_GridColor()
@@ -822,7 +822,7 @@ void CustomFastTableWidget::horizontalHeader_SetGridColor(QColor color)
 
     mHorizontalHeader_GridColor=color;
 
-    END_PROFILE("void CustomFastTableWidget::horizontalHeader_SetGridColor(QColor color)")
+    END_PROFILE("void CustomFastTableWidget::horizontalHeader_SetGridColor(QColor color)");
 }
 
 QBrush CustomFastTableWidget::verticalHeader_DefaultBackgroundBrush()
@@ -836,7 +836,7 @@ void CustomFastTableWidget::verticalHeader_SetDefaultBackgroundBrush(QBrush brus
 
     mVerticalHeader_DefaultBackgroundBrush=brush;
 
-    END_PROFILE("void CustomFastTableWidget::verticalHeader_SetDefaultBackgroundBrush(QBrush brush)")
+    END_PROFILE("void CustomFastTableWidget::verticalHeader_SetDefaultBackgroundBrush(QBrush brush)");
 }
 
 QColor CustomFastTableWidget::verticalHeader_DefaultForegroundColor()
@@ -850,7 +850,7 @@ void CustomFastTableWidget::verticalHeader_SetDefaultForegroundColor(QColor colo
 
     mVerticalHeader_DefaultForegroundColor=color;
 
-    END_PROFILE("void CustomFastTableWidget::verticalHeader_SetDefaultForegroundColor(QColor color)")
+    END_PROFILE("void CustomFastTableWidget::verticalHeader_SetDefaultForegroundColor(QColor color)");
 }
 
 QColor CustomFastTableWidget::verticalHeader_GridColor()
@@ -864,7 +864,7 @@ void CustomFastTableWidget::verticalHeader_SetGridColor(QColor color)
 
     mVerticalHeader_GridColor=color;
 
-    END_PROFILE("void CustomFastTableWidget::verticalHeader_SetGridColor(QColor color)")
+    END_PROFILE("void CustomFastTableWidget::verticalHeader_SetGridColor(QColor color)");
 }
 
 QBrush CustomFastTableWidget::selectionBrush()
@@ -878,7 +878,7 @@ void CustomFastTableWidget::setSelectionBrush(QBrush brush)
 
     mSelectionBrush=brush;
 
-    END_PROFILE("void CustomFastTableWidget::setSelectionBrush(QBrush brush)")
+    END_PROFILE("void CustomFastTableWidget::setSelectionBrush(QBrush brush)");
 }
 
 quint16 CustomFastTableWidget::defaultWidth()
@@ -892,7 +892,7 @@ void CustomFastTableWidget::setDefaultWidth(quint16 width)
 
     mDefaultWidth=width;
 
-    END_PROFILE("void CustomFastTableWidget::setDefaultWidth(quint16 width)")
+    END_PROFILE("void CustomFastTableWidget::setDefaultWidth(quint16 width)");
 }
 
 quint16 CustomFastTableWidget::defaultHeight()
@@ -906,7 +906,7 @@ void CustomFastTableWidget::setDefaultHeight(quint16 height)
 
     mDefaultHeight=height;
 
-    END_PROFILE("void CustomFastTableWidget::setDefaultHeight(quint16 height)")
+    END_PROFILE("void CustomFastTableWidget::setDefaultHeight(quint16 height)");
 }
 
 quint16 CustomFastTableWidget::columnWidth(const int column)
@@ -934,7 +934,7 @@ void CustomFastTableWidget::setColumnWidth(const int column, const quint16 width
         updateVisibleRange();
     }
 
-    END_PROFILE("void CustomFastTableWidget::setColumnWidth(const int column, const quint16 width)")
+    END_PROFILE("void CustomFastTableWidget::setColumnWidth(const int column, const quint16 width)");
 }
 
 quint16 CustomFastTableWidget::rowHeight(const int row)
@@ -962,7 +962,7 @@ void CustomFastTableWidget::setRowHeight(const int row, const quint16 height)
         updateVisibleRange();
     }
 
-    END_PROFILE("void CustomFastTableWidget::setRowHeight(const int row, const quint16 height)")
+    END_PROFILE("void CustomFastTableWidget::setRowHeight(const int row, const quint16 height)");
 }
 
 quint16 CustomFastTableWidget::verticalHeader_ColumnWidth(const int column)
@@ -1012,7 +1012,7 @@ QRect CustomFastTableWidget::visibleRange()
     QRect aRect;
     aRect.setCoords(mVisibleLeft, mVisibleTop, mVisibleRight, mVisibleBottom);
 
-    END_PROFILE("QRect CustomFastTableWidget::visibleRange()")
+    END_PROFILE("QRect CustomFastTableWidget::visibleRange()");
 
     return aRect;
 }
@@ -1024,7 +1024,7 @@ QRect CustomFastTableWidget::horizontalHeader_VisibleRange()
     QRect aRect;
     aRect.setCoords(mHorizontalHeader_VisibleLeft, mHorizontalHeader_VisibleTop, mHorizontalHeader_VisibleRight, mHorizontalHeader_VisibleBottom);
 
-    END_PROFILE("QRect CustomFastTableWidget::horizontalHeader_VisibleRange()")
+    END_PROFILE("QRect CustomFastTableWidget::horizontalHeader_VisibleRange()");
 
     return aRect;
 }
@@ -1036,7 +1036,7 @@ QRect CustomFastTableWidget::verticalHeader_VisibleRange()
     QRect aRect;
     aRect.setCoords(mVerticalHeader_VisibleLeft, mVerticalHeader_VisibleTop, mVerticalHeader_VisibleRight, mVerticalHeader_VisibleBottom);
 
-    END_PROFILE("QRect CustomFastTableWidget::verticalHeader_VisibleRange()")
+    END_PROFILE("QRect CustomFastTableWidget::verticalHeader_VisibleRange()");
 
     return aRect;
 }
@@ -1147,5 +1147,5 @@ void CustomFastTableWidget::setCellSelected(const int row, const int column, con
         }
     }
 
-    END_PROFILE("void CustomFastTableWidget::setCellSelected(const int row, const int column, const bool selected)")
+    END_PROFILE("void CustomFastTableWidget::setCellSelected(const int row, const int column, const bool selected)");
 }
