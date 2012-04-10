@@ -7,20 +7,20 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
 
     mRowCount=0;
     mColumnCount=0;
-    mHorizontalHeaderRowCount=1;
-    mVerticalHeaderColumnCount=1;
+    mHorizontalHeader_RowCount=1;
+    mVerticalHeader_ColumnCount=1;
 
     mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
     mDefaultForegroundColor.setRgb(0, 0, 0);
     mGridColor.setRgb(0, 0, 0);
 
-    mHorizontalHeaderDefaultBackgroundBrush.setColor(QColor(180, 180, 180));
-    mHorizontalHeaderDefaultForegroundColor.setRgb(0, 0, 0);
-    mHorizontalHeaderGridColor.setRgb(0, 0, 0);
+    mHorizontalHeader_DefaultBackgroundBrush.setColor(QColor(180, 180, 180));
+    mHorizontalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
+    mHorizontalHeader_GridColor.setRgb(0, 0, 0);
 
-    mVerticalHeaderDefaultBackgroundBrush.setColor(QColor(180, 180, 180));
-    mVerticalHeaderDefaultForegroundColor.setRgb(0, 0, 0);
-    mVerticalHeaderGridColor.setRgb(0, 0, 0);
+    mVerticalHeader_DefaultBackgroundBrush.setColor(QColor(180, 180, 180));
+    mVerticalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
+    mVerticalHeader_GridColor.setRgb(0, 0, 0);
 
     mSelectionBrush.setColor(QColor(0, 0, 255));
 
@@ -28,23 +28,23 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     mDefaultHeight=30;
     mTotalWidth=0;
     mTotalHeight=0;
-    mVerticalHeaderTotalWidth=0;
-    mHorizontalHeaderTotalHeight=0;
+    mVerticalHeader_TotalWidth=0;
+    mHorizontalHeader_TotalHeight=0;
 
     mVisibleLeft=-1;
     mVisibleRight=-1;
     mVisibleTop=-1;
     mVisibleBottom=-1;
 
-    mHorizontalHeaderVisibleLeft=-1;
-    mHorizontalHeaderVisibleRight=-1;
-    mHorizontalHeaderVisibleTop=-1;
-    mHorizontalHeaderVisibleBottom=-1;
+    mHorizontalHeader_VisibleLeft=-1;
+    mHorizontalHeader_VisibleRight=-1;
+    mHorizontalHeader_VisibleTop=-1;
+    mHorizontalHeader_VisibleBottom=-1;
 
-    mVerticalHeaderVisibleLeft=-1;
-    mVerticalHeaderVisibleRight=-1;
-    mVerticalHeaderVisibleTop=-1;
-    mVerticalHeaderVisibleBottom=-1;
+    mVerticalHeader_VisibleLeft=-1;
+    mVerticalHeader_VisibleRight=-1;
+    mVerticalHeader_VisibleTop=-1;
+    mVerticalHeader_VisibleBottom=-1;
 
     horizontalScrollBar()->setSingleStep(100);
     verticalScrollBar()->setSingleStep(100);
@@ -131,24 +131,24 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
         break;
         case DrawHorizontalHeaderCell:
         {
-            aGridColor=&mHorizontalHeaderGridColor;
-            aBackgroundBrush=&mHorizontalHeaderDefaultBackgroundBrush;
-            aTextColor=&mHorizontalHeaderDefaultForegroundColor;
-            aText=&mHorizontalHeaderData[row][column];
+            aGridColor=&mHorizontalHeader_GridColor;
+            aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
+            aTextColor=&mHorizontalHeader_DefaultForegroundColor;
+            aText=&mHorizontalHeader_Data[row][column];
         }
         break;
         case DrawVerticalHeaderCell:
         {
-            aGridColor=&mVerticalHeaderGridColor;
-            aBackgroundBrush=&mVerticalHeaderDefaultBackgroundBrush;
-            aTextColor=&mVerticalHeaderDefaultForegroundColor;
-            aText=&mVerticalHeaderData[row][column];
+            aGridColor=&mVerticalHeader_GridColor;
+            aBackgroundBrush=&mVerticalHeader_DefaultBackgroundBrush;
+            aTextColor=&mVerticalHeader_DefaultForegroundColor;
+            aText=&mVerticalHeader_Data[row][column];
         }
         break;
         case DrawTopLeftCorner:
         {
-            aGridColor=&mHorizontalHeaderGridColor;
-            aBackgroundBrush=&mHorizontalHeaderDefaultBackgroundBrush;
+            aGridColor=&mHorizontalHeader_GridColor;
+            aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
             aTextColor=0;
             aText=0;
         }
@@ -314,28 +314,28 @@ void CustomFastTableWidget::clearTable()
 
     mRowCount=0;
     mColumnCount=0;
-    mHorizontalHeaderRowCount=1;
-    mVerticalHeaderColumnCount=1;
+    mHorizontalHeader_RowCount=1;
+    mVerticalHeader_ColumnCount=1;
 
     mTotalWidth=0;
     mTotalHeight=0;
-    mVerticalHeaderTotalWidth=0;
-    mHorizontalHeaderTotalHeight=0;
+    mVerticalHeader_TotalWidth=0;
+    mHorizontalHeader_TotalHeight=0;
 
     mVisibleLeft=-1;
     mVisibleRight=-1;
     mVisibleTop=-1;
     mVisibleBottom=-1;
 
-    mHorizontalHeaderVisibleLeft=-1;
-    mHorizontalHeaderVisibleRight=-1;
-    mHorizontalHeaderVisibleTop=-1;
-    mHorizontalHeaderVisibleBottom=-1;
+    mHorizontalHeader_VisibleLeft=-1;
+    mHorizontalHeader_VisibleRight=-1;
+    mHorizontalHeader_VisibleTop=-1;
+    mHorizontalHeader_VisibleBottom=-1;
 
-    mVerticalHeaderVisibleLeft=-1;
-    mVerticalHeaderVisibleRight=-1;
-    mVerticalHeaderVisibleTop=-1;
-    mVerticalHeaderVisibleBottom=-1;
+    mVerticalHeader_VisibleLeft=-1;
+    mVerticalHeader_VisibleRight=-1;
+    mVerticalHeader_VisibleTop=-1;
+    mVerticalHeader_VisibleBottom=-1;
 
     mData.clear();
     mRowHeights.clear();
@@ -343,22 +343,22 @@ void CustomFastTableWidget::clearTable()
     mOffsetX.clear();
     mOffsetY.clear();
 
-    mHorizontalHeaderData.clear();
-    mHorizontalHeaderRowHeights.clear();
-    mHorizontalHeaderColumnWidths.clear();
-    mHorizontalHeaderOffsetX.clear();
-    mHorizontalHeaderOffsetY.clear();
+    mHorizontalHeader_Data.clear();
+    mHorizontalHeader_RowHeights.clear();
+    mHorizontalHeader_ColumnWidths.clear();
+    mHorizontalHeader_OffsetX.clear();
+    mHorizontalHeader_OffsetY.clear();
 
-    mVerticalHeaderData.clear();
-    mVerticalHeaderRowHeights.clear();
-    mVerticalHeaderColumnWidths.clear();
-    mVerticalHeaderOffsetX.clear();
-    mVerticalHeaderOffsetY.clear();
+    mVerticalHeader_Data.clear();
+    mVerticalHeader_RowHeights.clear();
+    mVerticalHeader_ColumnWidths.clear();
+    mVerticalHeader_OffsetX.clear();
+    mVerticalHeader_OffsetY.clear();
 
     mSelectedCells.clear();
     mCurSelection.clear();
-    mHorizontalHeaderSelectedColumns.clear();
-    mVerticalHeaderSelectedRows.clear();
+    mHorizontalHeader_SelectedColumns.clear();
+    mVerticalHeader_SelectedRows.clear();
 
     END_PROFILE("void CustomFastTableWidget::clearTable()")
 }
@@ -434,12 +434,12 @@ void CustomFastTableWidget::selectAll()
 
     for (int i=0; i<mRowCount; ++i)
     {
-        mVerticalHeaderSelectedRows[i]=true;
+        mVerticalHeader_SelectedRows[i]=true;
     }
 
     for (int i=0; i<mColumnCount; ++i)
     {
-        mHorizontalHeaderSelectedColumns[i]=true;
+        mHorizontalHeader_SelectedColumns[i]=true;
     }
 
     END_PROFILE("void CustomFastTableWidget::selectAll()")
@@ -458,12 +458,12 @@ void CustomFastTableWidget::unselectAll()
 
     for (int i=0; i<mRowCount; ++i)
     {
-        mVerticalHeaderSelectedRows[i]=false;
+        mVerticalHeader_SelectedRows[i]=false;
     }
 
     for (int i=0; i<mColumnCount; ++i)
     {
-        mHorizontalHeaderSelectedColumns[i]=false;
+        mHorizontalHeader_SelectedColumns[i]=false;
     }
 
     END_PROFILE("void CustomFastTableWidget::unselectAll()")
@@ -619,32 +619,32 @@ void CustomFastTableWidget::deleteColumn(int column)
     END_PROFILE("void CustomFastTableWidget::deleteColumn(int column)")
 }
 
-void CustomFastTableWidget::horizontalHeaderAddRow()
+void CustomFastTableWidget::horizontalHeader_AddRow()
 {
 
 }
 
-void CustomFastTableWidget::horizontalHeaderInsertRow(int row)
+void CustomFastTableWidget::horizontalHeader_InsertRow(int row)
 {
 
 }
 
-void CustomFastTableWidget::horizontalHeaderDeleteRow(int row)
+void CustomFastTableWidget::horizontalHeader_DeleteRow(int row)
 {
 
 }
 
-void CustomFastTableWidget::verticalHeaderAddColumn()
+void CustomFastTableWidget::verticalHeader_AddColumn()
 {
 
 }
 
-void CustomFastTableWidget::verticalHeaderInsertColumn(int column)
+void CustomFastTableWidget::verticalHeader_InsertColumn(int column)
 {
 
 }
 
-void CustomFastTableWidget::verticalHeaderDeleteColumn(int column)
+void CustomFastTableWidget::verticalHeader_DeleteColumn(int column)
 {
 
 }
@@ -715,22 +715,22 @@ void CustomFastTableWidget::setColumnCount(int count)
     END_PROFILE("void CustomFastTableWidget::setColumnCount(int count)")
 }
 
-qint16 CustomFastTableWidget::horizontalHeaderRowCount()
+qint16 CustomFastTableWidget::horizontalHeader_RowCount()
 {
 
 }
 
-void CustomFastTableWidget::setHorizontalHeaderRowCount(qint16 count)
+void CustomFastTableWidget::horizontalHeader_SetRowCount(qint16 count)
 {
 
 }
 
-qint16 CustomFastTableWidget::verticalHeaderColumnCount()
+qint16 CustomFastTableWidget::verticalHeader_ColumnCount()
 {
 
 }
 
-void CustomFastTableWidget::setVerticalHeaderColumnCount(qint16 count)
+void CustomFastTableWidget::verticalHeader_SetColumnCount(qint16 count)
 {
 
 }
@@ -777,88 +777,88 @@ void CustomFastTableWidget::setGridColor(QColor color)
     END_PROFILE("void CustomFastTableWidget::setGridColor(QColor color)")
 }
 
-QBrush CustomFastTableWidget::horizontalHeaderDefaultBackgroundBrush()
+QBrush CustomFastTableWidget::horizontalHeader_DefaultBackgroundBrush()
 {
-    return mHorizontalHeaderDefaultBackgroundBrush;
+    return mHorizontalHeader_DefaultBackgroundBrush;
 }
 
-void CustomFastTableWidget::setHorizontalHeaderDefaultBackgroundBrush(QBrush brush)
+void CustomFastTableWidget::horizontalHeader_SetDefaultBackgroundBrush(QBrush brush)
 {
     START_PROFILE
 
-    mHorizontalHeaderDefaultBackgroundBrush=brush;
+    mHorizontalHeader_DefaultBackgroundBrush=brush;
 
-    END_PROFILE("void CustomFastTableWidget::setHorizontalHeaderDefaultBackgroundBrush(QBrush brush)")
+    END_PROFILE("void CustomFastTableWidget::horizontalHeader_SetDefaultBackgroundBrush(QBrush brush)")
 }
 
-QColor CustomFastTableWidget::horizontalHeaderDefaultForegroundColor()
+QColor CustomFastTableWidget::horizontalHeader_DefaultForegroundColor()
 {
-    return mHorizontalHeaderDefaultForegroundColor;
+    return mHorizontalHeader_DefaultForegroundColor;
 }
 
-void CustomFastTableWidget::setHorizontalHeaderDefaultForegroundColor(QColor color)
-{
-    START_PROFILE
-
-    mHorizontalHeaderDefaultForegroundColor=color;
-
-    END_PROFILE("void CustomFastTableWidget::setHorizontalHeaderDefaultForegroundColor(QColor color)")
-}
-
-QColor CustomFastTableWidget::horizontalHeaderGridColor()
-{
-    return mHorizontalHeaderGridColor;
-}
-
-void CustomFastTableWidget::setHorizontalHeaderGridColor(QColor color)
+void CustomFastTableWidget::horizontalHeader_SetDefaultForegroundColor(QColor color)
 {
     START_PROFILE
 
-    mHorizontalHeaderGridColor=color;
+    mHorizontalHeader_DefaultForegroundColor=color;
 
-    END_PROFILE("void CustomFastTableWidget::setHorizontalHeaderGridColor(QColor color)")
+    END_PROFILE("void CustomFastTableWidget::horizontalHeader_SetDefaultForegroundColor(QColor color)")
 }
 
-QBrush CustomFastTableWidget::verticalHeaderDefaultBackgroundBrush()
+QColor CustomFastTableWidget::horizontalHeader_GridColor()
 {
-    return mVerticalHeaderDefaultBackgroundBrush;
+    return mHorizontalHeader_GridColor;
 }
 
-void CustomFastTableWidget::setVerticalHeaderDefaultBackgroundBrush(QBrush brush)
-{
-    START_PROFILE
-
-    mVerticalHeaderDefaultBackgroundBrush=brush;
-
-    END_PROFILE("void CustomFastTableWidget::setVerticalHeaderDefaultBackgroundBrush(QBrush brush)")
-}
-
-QColor CustomFastTableWidget::verticalHeaderDefaultForegroundColor()
-{
-    return mVerticalHeaderDefaultForegroundColor;
-}
-
-void CustomFastTableWidget::setVerticalHeaderDefaultForegroundColor(QColor color)
+void CustomFastTableWidget::horizontalHeader_SetGridColor(QColor color)
 {
     START_PROFILE
 
-    mVerticalHeaderDefaultForegroundColor=color;
+    mHorizontalHeader_GridColor=color;
 
-    END_PROFILE("void CustomFastTableWidget::setVerticalHeaderDefaultForegroundColor(QColor color)")
+    END_PROFILE("void CustomFastTableWidget::horizontalHeader_SetGridColor(QColor color)")
 }
 
-QColor CustomFastTableWidget::verticalHeaderGridColor()
+QBrush CustomFastTableWidget::verticalHeader_DefaultBackgroundBrush()
 {
-    return mVerticalHeaderGridColor;
+    return mVerticalHeader_DefaultBackgroundBrush;
 }
 
-void CustomFastTableWidget::setVerticalHeaderGridColor(QColor color)
+void CustomFastTableWidget::verticalHeader_SetDefaultBackgroundBrush(QBrush brush)
 {
     START_PROFILE
 
-    mVerticalHeaderGridColor=color;
+    mVerticalHeader_DefaultBackgroundBrush=brush;
 
-    END_PROFILE("void CustomFastTableWidget::setVerticalHeaderGridColor(QColor color)")
+    END_PROFILE("void CustomFastTableWidget::verticalHeader_SetDefaultBackgroundBrush(QBrush brush)")
+}
+
+QColor CustomFastTableWidget::verticalHeader_DefaultForegroundColor()
+{
+    return mVerticalHeader_DefaultForegroundColor;
+}
+
+void CustomFastTableWidget::verticalHeader_SetDefaultForegroundColor(QColor color)
+{
+    START_PROFILE
+
+    mVerticalHeader_DefaultForegroundColor=color;
+
+    END_PROFILE("void CustomFastTableWidget::verticalHeader_SetDefaultForegroundColor(QColor color)")
+}
+
+QColor CustomFastTableWidget::verticalHeader_GridColor()
+{
+    return mVerticalHeader_GridColor;
+}
+
+void CustomFastTableWidget::verticalHeader_SetGridColor(QColor color)
+{
+    START_PROFILE
+
+    mVerticalHeader_GridColor=color;
+
+    END_PROFILE("void CustomFastTableWidget::verticalHeader_SetGridColor(QColor color)")
 }
 
 QBrush CustomFastTableWidget::selectionBrush()
@@ -959,22 +959,22 @@ void CustomFastTableWidget::setRowHeight(const int row, const quint16 height)
     END_PROFILE("void CustomFastTableWidget::setRowHeight(const int row, const quint16 height)")
 }
 
-quint16 CustomFastTableWidget::verticalHeaderColumnWidth(const int column)
+quint16 CustomFastTableWidget::verticalHeader_ColumnWidth(const int column)
 {
 
 }
 
-void CustomFastTableWidget::setVerticalHeaderColumnWidth(const int column, const quint16 width)
+void CustomFastTableWidget::verticalHeader_SetColumnWidth(const int column, const quint16 width)
 {
 
 }
 
-quint16 CustomFastTableWidget::horizontalHeaderRowHeight(const int row)
+quint16 CustomFastTableWidget::horizontalHeader_RowHeight(const int row)
 {
 
 }
 
-void CustomFastTableWidget::setHorizontalHeaderRowHeight(const int row, const quint16 height)
+void CustomFastTableWidget::horizontalHeader_SetRowHeight(const int row, const quint16 height)
 {
 
 }
@@ -989,14 +989,14 @@ int CustomFastTableWidget::totalHeight()
     return mTotalHeight;
 }
 
-int CustomFastTableWidget::verticalHeaderTotalWidth()
+int CustomFastTableWidget::verticalHeader_TotalWidth()
 {
-    return mVerticalHeaderTotalWidth;
+    return mVerticalHeader_TotalWidth;
 }
 
-int CustomFastTableWidget::horizontalHeaderTotalHeight()
+int CustomFastTableWidget::horizontalHeader_TotalHeight()
 {
-    return mHorizontalHeaderTotalHeight;
+    return mHorizontalHeader_TotalHeight;
 }
 
 QRect CustomFastTableWidget::visibleRange()
@@ -1011,26 +1011,26 @@ QRect CustomFastTableWidget::visibleRange()
     return aRect;
 }
 
-QRect CustomFastTableWidget::horizontalHeaderVisibleRange()
+QRect CustomFastTableWidget::horizontalHeader_VisibleRange()
 {
     START_PROFILE
 
     QRect aRect;
-    aRect.setCoords(mHorizontalHeaderVisibleLeft, mHorizontalHeaderVisibleTop, mHorizontalHeaderVisibleRight, mHorizontalHeaderVisibleBottom);
+    aRect.setCoords(mHorizontalHeader_VisibleLeft, mHorizontalHeader_VisibleTop, mHorizontalHeader_VisibleRight, mHorizontalHeader_VisibleBottom);
 
-    END_PROFILE("QRect CustomFastTableWidget::horizontalHeaderVisibleRange()")
+    END_PROFILE("QRect CustomFastTableWidget::horizontalHeader_VisibleRange()")
 
     return aRect;
 }
 
-QRect CustomFastTableWidget::verticalHeaderVisibleRange()
+QRect CustomFastTableWidget::verticalHeader_VisibleRange()
 {
     START_PROFILE
 
     QRect aRect;
-    aRect.setCoords(mVerticalHeaderVisibleLeft, mVerticalHeaderVisibleTop, mVerticalHeaderVisibleRight, mVerticalHeaderVisibleBottom);
+    aRect.setCoords(mVerticalHeader_VisibleLeft, mVerticalHeader_VisibleTop, mVerticalHeader_VisibleRight, mVerticalHeader_VisibleBottom);
 
-    END_PROFILE("QRect CustomFastTableWidget::verticalHeaderVisibleRange()")
+    END_PROFILE("QRect CustomFastTableWidget::verticalHeader_VisibleRange()")
 
     return aRect;
 }
@@ -1049,66 +1049,66 @@ void CustomFastTableWidget::setText(const int row, const int column, const QStri
     END_FREQUENT_PROFILE("void CustomFastTableWidget::setText(const int row, const int column, const QString text)")
 }
 
-QString CustomFastTableWidget::horizontalHeaderText(const int row, const int column)
+QString CustomFastTableWidget::horizontalHeader_Text(const int row, const int column)
 {
-    return mHorizontalHeaderData.at(row).at(column);
+    return mHorizontalHeader_Data.at(row).at(column);
 }
 
-QString CustomFastTableWidget::horizontalHeaderText(const int column)
+QString CustomFastTableWidget::horizontalHeader_Text(const int column)
 {
-    return mHorizontalHeaderData.at(0).at(column);
+    return mHorizontalHeader_Data.at(0).at(column);
 }
 
-void CustomFastTableWidget::setHorizontalHeaderText(const int row, const int column, const QString text)
+void CustomFastTableWidget::horizontalHeader_SetText(const int row, const int column, const QString text)
 {
     START_FREQUENT_PROFILE
 
-    mHorizontalHeaderData[row][column]=text;
+    mHorizontalHeader_Data[row][column]=text;
 
-    END_FREQUENT_PROFILE("void CustomFastTableWidget::setHorizontalHeaderText(const int row, const int column, const QString text)")
+    END_FREQUENT_PROFILE("void CustomFastTableWidget::horizontalHeader_SetText(const int row, const int column, const QString text)")
 }
 
-void CustomFastTableWidget::setHorizontalHeaderText(const int column, const QString text)
+void CustomFastTableWidget::horizontalHeader_SetText(const int column, const QString text)
 {
     START_FREQUENT_PROFILE
 
-    for (int i=0; i<mHorizontalHeaderRowCount; i++)
+    for (int i=0; i<mHorizontalHeader_RowCount; i++)
     {
-        mHorizontalHeaderData[i][column]=text;
+        mHorizontalHeader_Data[i][column]=text;
     }
 
-    END_FREQUENT_PROFILE("void CustomFastTableWidget::setHorizontalHeaderText(const int column, const QString text)")
+    END_FREQUENT_PROFILE("void CustomFastTableWidget::horizontalHeader_SetText(const int column, const QString text)")
 }
 
-QString CustomFastTableWidget::verticalHeaderText(const int row, const int column)
+QString CustomFastTableWidget::verticalHeader_Text(const int row, const int column)
 {
-    return mVerticalHeaderData.at(row).at(column);
+    return mVerticalHeader_Data.at(row).at(column);
 }
 
-QString CustomFastTableWidget::verticalHeaderText(const int row)
+QString CustomFastTableWidget::verticalHeader_Text(const int row)
 {
-    return mVerticalHeaderData.at(row).at(0);
+    return mVerticalHeader_Data.at(row).at(0);
 }
 
-void CustomFastTableWidget::setVerticalHeaderText(const int row, const int column, const QString text)
-{
-    START_FREQUENT_PROFILE
-
-    mVerticalHeaderData[row][column]=text;
-
-    END_FREQUENT_PROFILE("void CustomFastTableWidget::setVerticalHeaderText(const int row, const int column, const QString text)")
-}
-
-void CustomFastTableWidget::setVerticalHeaderText(const int row, const QString text)
+void CustomFastTableWidget::verticalHeader_SetText(const int row, const int column, const QString text)
 {
     START_FREQUENT_PROFILE
 
-    for (int i=0; i<mVerticalHeaderColumnCount; i++)
+    mVerticalHeader_Data[row][column]=text;
+
+    END_FREQUENT_PROFILE("void CustomFastTableWidget::verticalHeader_SetText(const int row, const int column, const QString text)")
+}
+
+void CustomFastTableWidget::verticalHeader_SetText(const int row, const QString text)
+{
+    START_FREQUENT_PROFILE
+
+    for (int i=0; i<mVerticalHeader_ColumnCount; i++)
     {
-        mVerticalHeaderData[row][i]=text;
+        mVerticalHeader_Data[row][i]=text;
     }
 
-    END_FREQUENT_PROFILE("void CustomFastTableWidget::setVerticalHeaderText(const int row, const QString text)")
+    END_FREQUENT_PROFILE("void CustomFastTableWidget::verticalHeader_SetText(const int row, const QString text)")
 }
 
 bool CustomFastTableWidget::cellSelected(const int row, const int column)

@@ -17,86 +17,86 @@ TestFrame::TestFrame(CustomFastTableWidget* aFastTable, QWidget *parent) :
 
     ui->dividerLayout->addWidget(mDividerSplitter);
 
-    mData                                  = (((PublicCustomFastTable*)mFastTable)->getData());
-    mRowHeights                            = (((PublicCustomFastTable*)mFastTable)->getRowHeights());
-    mColumnWidths                          = (((PublicCustomFastTable*)mFastTable)->getColumnWidths());
-    mOffsetX                               = (((PublicCustomFastTable*)mFastTable)->getOffsetX());
-    mOffsetY                               = (((PublicCustomFastTable*)mFastTable)->getOffsetY());
+    mData                                   = (((PublicCustomFastTable*)mFastTable)->getData());
+    mRowHeights                             = (((PublicCustomFastTable*)mFastTable)->getRowHeights());
+    mColumnWidths                           = (((PublicCustomFastTable*)mFastTable)->getColumnWidths());
+    mOffsetX                                = (((PublicCustomFastTable*)mFastTable)->getOffsetX());
+    mOffsetY                                = (((PublicCustomFastTable*)mFastTable)->getOffsetY());
 
-    mHorizontalHeaderData                  = (((PublicCustomFastTable*)mFastTable)->getHorizontalHeaderData());
-    mHorizontalHeaderRowHeights            = (((PublicCustomFastTable*)mFastTable)->getHorizontalHeaderRowHeights());
-    mHorizontalHeaderColumnWidths          = (((PublicCustomFastTable*)mFastTable)->getHorizontalHeaderColumnWidths());
-    mHorizontalHeaderOffsetX               = (((PublicCustomFastTable*)mFastTable)->getHorizontalHeaderOffsetX());
-    mHorizontalHeaderOffsetY               = (((PublicCustomFastTable*)mFastTable)->getHorizontalHeaderOffsetY());
+    mHorizontalHeader_Data                  = (((PublicCustomFastTable*)mFastTable)->horizontalHeader_GetData());
+    mHorizontalHeader_RowHeights            = (((PublicCustomFastTable*)mFastTable)->horizontalHeader_GetRowHeights());
+    mHorizontalHeader_ColumnWidths          = (((PublicCustomFastTable*)mFastTable)->horizontalHeader_GetColumnWidths());
+    mHorizontalHeader_OffsetX               = (((PublicCustomFastTable*)mFastTable)->horizontalHeader_GetOffsetX());
+    mHorizontalHeader_OffsetY               = (((PublicCustomFastTable*)mFastTable)->horizontalHeader_GetOffsetY());
 
-    mVerticalHeaderData                    = (((PublicCustomFastTable*)mFastTable)->getVerticalHeaderData());
-    mVerticalHeaderRowHeights              = (((PublicCustomFastTable*)mFastTable)->getVerticalHeaderRowHeights());
-    mVerticalHeaderColumnWidths            = (((PublicCustomFastTable*)mFastTable)->getVerticalHeaderColumnWidths());
-    mVerticalHeaderOffsetX                 = (((PublicCustomFastTable*)mFastTable)->getVerticalHeaderOffsetX());
-    mVerticalHeaderOffsetY                 = (((PublicCustomFastTable*)mFastTable)->getVerticalHeaderOffsetY());
+    mVerticalHeader_Data                    = (((PublicCustomFastTable*)mFastTable)->verticalHeader_GetData());
+    mVerticalHeader_RowHeights              = (((PublicCustomFastTable*)mFastTable)->verticalHeader_GetRowHeights());
+    mVerticalHeader_ColumnWidths            = (((PublicCustomFastTable*)mFastTable)->verticalHeader_GetColumnWidths());
+    mVerticalHeader_OffsetX                 = (((PublicCustomFastTable*)mFastTable)->verticalHeader_GetOffsetX());
+    mVerticalHeader_OffsetY                 = (((PublicCustomFastTable*)mFastTable)->verticalHeader_GetOffsetY());
 
-    mSelectedCells                         = (((PublicCustomFastTable*)mFastTable)->getSelectedCells());
-    mCurSelection                          = (((PublicCustomFastTable*)mFastTable)->getCurSelection());
-    mHorizontalHeaderSelectedColumns       = (((PublicCustomFastTable*)mFastTable)->getHorizontalHeaderSelectedColumns());
-    mVerticalHeaderSelectedRows            = (((PublicCustomFastTable*)mFastTable)->getVerticalHeaderSelectedRows());
+    mSelectedCells                          = (((PublicCustomFastTable*)mFastTable)->getSelectedCells());
+    mCurSelection                           = (((PublicCustomFastTable*)mFastTable)->getCurSelection());
+    mHorizontalHeader_SelectedColumns       = (((PublicCustomFastTable*)mFastTable)->horizontalHeader_GetSelectedColumns());
+    mVerticalHeader_SelectedRows            = (((PublicCustomFastTable*)mFastTable)->verticalHeader_GetSelectedRows());
 
     if (mFastTable->inherits("FastTableWidget"))
     {
-        mBackgroundBrushes                     = (((PublicFastTable*)mFastTable)->getBackgroundBrushes());
-        mForegroundColors                      = (((PublicFastTable*)mFastTable)->getForegroundColors());
-        mCellFonts                             = (((PublicFastTable*)mFastTable)->getCellFonts());
-        mCellTextFlags                         = (((PublicFastTable*)mFastTable)->getCellTextFlags());
-        mCellMergeX                            = (((PublicFastTable*)mFastTable)->getCellMergeX());
-        mCellMergeY                            = (((PublicFastTable*)mFastTable)->getCellMergeY());
-        mCellMergeParentRow                    = (((PublicFastTable*)mFastTable)->getCellMergeParentRow());
-        mCellMergeParentColumn                 = (((PublicFastTable*)mFastTable)->getCellMergeParentColumn());
+        mBackgroundBrushes                      = (((PublicFastTable*)mFastTable)->getBackgroundBrushes());
+        mForegroundColors                       = (((PublicFastTable*)mFastTable)->getForegroundColors());
+        mCellFonts                              = (((PublicFastTable*)mFastTable)->getCellFonts());
+        mCellTextFlags                          = (((PublicFastTable*)mFastTable)->getCellTextFlags());
+        mCellMergeX                             = (((PublicFastTable*)mFastTable)->getCellMergeX());
+        mCellMergeY                             = (((PublicFastTable*)mFastTable)->getCellMergeY());
+        mCellMergeParentRow                     = (((PublicFastTable*)mFastTable)->getCellMergeParentRow());
+        mCellMergeParentColumn                  = (((PublicFastTable*)mFastTable)->getCellMergeParentColumn());
 
-        mHorizontalHeaderBackgroundBrushes     = (((PublicFastTable*)mFastTable)->getHorizontalHeaderBackgroundBrushes());
-        mHorizontalHeaderForegroundColors      = (((PublicFastTable*)mFastTable)->getHorizontalHeaderForegroundColors());
-        mHorizontalHeaderCellFonts             = (((PublicFastTable*)mFastTable)->getHorizontalHeaderCellFonts());
-        mHorizontalHeaderCellTextFlags         = (((PublicFastTable*)mFastTable)->getHorizontalHeaderCellTextFlags());
-        mHorizontalHeaderCellMergeX            = (((PublicFastTable*)mFastTable)->getHorizontalHeaderCellMergeX());
-        mHorizontalHeaderCellMergeY            = (((PublicFastTable*)mFastTable)->getHorizontalHeaderCellMergeY());
-        mHorizontalHeaderCellMergeParentRow    = (((PublicFastTable*)mFastTable)->getHorizontalHeaderCellMergeParentRow());
-        mHorizontalHeaderCellMergeParentColumn = (((PublicFastTable*)mFastTable)->getHorizontalHeaderCellMergeParentColumn());
+        mHorizontalHeader_BackgroundBrushes     = (((PublicFastTable*)mFastTable)->horizontalHeader_GetBackgroundBrushes());
+        mHorizontalHeader_ForegroundColors      = (((PublicFastTable*)mFastTable)->horizontalHeader_GetForegroundColors());
+        mHorizontalHeader_CellFonts             = (((PublicFastTable*)mFastTable)->horizontalHeader_GetCellFonts());
+        mHorizontalHeader_CellTextFlags         = (((PublicFastTable*)mFastTable)->horizontalHeader_GetCellTextFlags());
+        mHorizontalHeader_CellMergeX            = (((PublicFastTable*)mFastTable)->horizontalHeader_GetCellMergeX());
+        mHorizontalHeader_CellMergeY            = (((PublicFastTable*)mFastTable)->horizontalHeader_GetCellMergeY());
+        mHorizontalHeader_CellMergeParentRow    = (((PublicFastTable*)mFastTable)->horizontalHeader_GetCellMergeParentRow());
+        mHorizontalHeader_CellMergeParentColumn = (((PublicFastTable*)mFastTable)->horizontalHeader_GetCellMergeParentColumn());
 
-        mVerticalHeaderBackgroundBrushes       = (((PublicFastTable*)mFastTable)->getVerticalHeaderBackgroundBrushes());
-        mVerticalHeaderForegroundColors        = (((PublicFastTable*)mFastTable)->getVerticalHeaderForegroundColors());
-        mVerticalHeaderCellFonts               = (((PublicFastTable*)mFastTable)->getVerticalHeaderCellFonts());
-        mVerticalHeaderCellTextFlags           = (((PublicFastTable*)mFastTable)->getVerticalHeaderCellTextFlags());
-        mVerticalHeaderCellMergeX              = (((PublicFastTable*)mFastTable)->getVerticalHeaderCellMergeX());
-        mVerticalHeaderCellMergeY              = (((PublicFastTable*)mFastTable)->getVerticalHeaderCellMergeY());
-        mVerticalHeaderCellMergeParentRow      = (((PublicFastTable*)mFastTable)->getVerticalHeaderCellMergeParentRow());
-        mVerticalHeaderCellMergeParentColumn   = (((PublicFastTable*)mFastTable)->getVerticalHeaderCellMergeParentColumn());
+        mVerticalHeader_BackgroundBrushes       = (((PublicFastTable*)mFastTable)->verticalHeader_GetBackgroundBrushes());
+        mVerticalHeader_ForegroundColors        = (((PublicFastTable*)mFastTable)->verticalHeader_GetForegroundColors());
+        mVerticalHeader_CellFonts               = (((PublicFastTable*)mFastTable)->verticalHeader_GetCellFonts());
+        mVerticalHeader_CellTextFlags           = (((PublicFastTable*)mFastTable)->verticalHeader_GetCellTextFlags());
+        mVerticalHeader_CellMergeX              = (((PublicFastTable*)mFastTable)->verticalHeader_GetCellMergeX());
+        mVerticalHeader_CellMergeY              = (((PublicFastTable*)mFastTable)->verticalHeader_GetCellMergeY());
+        mVerticalHeader_CellMergeParentRow      = (((PublicFastTable*)mFastTable)->verticalHeader_GetCellMergeParentRow());
+        mVerticalHeader_CellMergeParentColumn   = (((PublicFastTable*)mFastTable)->verticalHeader_GetCellMergeParentColumn());
     }
     else
     {
-        mBackgroundBrushes                     = 0;
-        mForegroundColors                      = 0;
-        mCellFonts                             = 0;
-        mCellTextFlags                         = 0;
-        mCellMergeX                            = 0;
-        mCellMergeY                            = 0;
-        mCellMergeParentRow                    = 0;
-        mCellMergeParentColumn                 = 0;
+        mBackgroundBrushes                      = 0;
+        mForegroundColors                       = 0;
+        mCellFonts                              = 0;
+        mCellTextFlags                          = 0;
+        mCellMergeX                             = 0;
+        mCellMergeY                             = 0;
+        mCellMergeParentRow                     = 0;
+        mCellMergeParentColumn                  = 0;
 
-        mHorizontalHeaderBackgroundBrushes     = 0;
-        mHorizontalHeaderForegroundColors      = 0;
-        mHorizontalHeaderCellFonts             = 0;
-        mHorizontalHeaderCellTextFlags         = 0;
-        mHorizontalHeaderCellMergeX            = 0;
-        mHorizontalHeaderCellMergeY            = 0;
-        mHorizontalHeaderCellMergeParentRow    = 0;
-        mHorizontalHeaderCellMergeParentColumn = 0;
+        mHorizontalHeader_BackgroundBrushes     = 0;
+        mHorizontalHeader_ForegroundColors      = 0;
+        mHorizontalHeader_CellFonts             = 0;
+        mHorizontalHeader_CellTextFlags         = 0;
+        mHorizontalHeader_CellMergeX            = 0;
+        mHorizontalHeader_CellMergeY            = 0;
+        mHorizontalHeader_CellMergeParentRow    = 0;
+        mHorizontalHeader_CellMergeParentColumn = 0;
 
-        mVerticalHeaderBackgroundBrushes       = 0;
-        mVerticalHeaderForegroundColors        = 0;
-        mVerticalHeaderCellFonts               = 0;
-        mVerticalHeaderCellTextFlags           = 0;
-        mVerticalHeaderCellMergeX              = 0;
-        mVerticalHeaderCellMergeY              = 0;
-        mVerticalHeaderCellMergeParentRow      = 0;
-        mVerticalHeaderCellMergeParentColumn   = 0;
+        mVerticalHeader_BackgroundBrushes       = 0;
+        mVerticalHeader_ForegroundColors        = 0;
+        mVerticalHeader_CellFonts               = 0;
+        mVerticalHeader_CellTextFlags           = 0;
+        mVerticalHeader_CellMergeX              = 0;
+        mVerticalHeader_CellMergeY              = 0;
+        mVerticalHeader_CellMergeParentRow      = 0;
+        mVerticalHeader_CellMergeParentColumn   = 0;
     }
 }
 
@@ -934,8 +934,8 @@ bool TestFrame::checkForSizes(int rows, int columns)
     TEST_STEP((mCellMergeParentColumn==0 || mCellMergeParentColumn->length()==rows))
 
     CHECK_COLUMN_COUNT(mData);
-    CHECK_COLUMN_COUNT(mHorizontalHeaderData);
-    CHECK_COLUMN_COUNT(mVerticalHeaderData);
+    CHECK_COLUMN_COUNT(mHorizontalHeader_Data);
+    CHECK_COLUMN_COUNT(mVerticalHeader_Data);
     CHECK_COLUMN_COUNT(mSelectedCells);
     CHECK_COLUMN_COUNT(mBackgroundBrushes);
     CHECK_COLUMN_COUNT(mForegroundColors);
@@ -945,22 +945,22 @@ bool TestFrame::checkForSizes(int rows, int columns)
     CHECK_COLUMN_COUNT(mCellMergeY);
     CHECK_COLUMN_COUNT(mCellMergeParentRow);
     CHECK_COLUMN_COUNT(mCellMergeParentColumn);
-    CHECK_COLUMN_COUNT(mHorizontalHeaderBackgroundBrushes);
-    CHECK_COLUMN_COUNT(mHorizontalHeaderForegroundColors);
-    CHECK_COLUMN_COUNT(mHorizontalHeaderCellFonts);
-    CHECK_COLUMN_COUNT(mHorizontalHeaderCellTextFlags);
-    CHECK_COLUMN_COUNT(mHorizontalHeaderCellMergeX);
-    CHECK_COLUMN_COUNT(mHorizontalHeaderCellMergeY);
-    CHECK_COLUMN_COUNT(mHorizontalHeaderCellMergeParentRow);
-    CHECK_COLUMN_COUNT(mHorizontalHeaderCellMergeParentColumn);
-    CHECK_COLUMN_COUNT(mVerticalHeaderBackgroundBrushes);
-    CHECK_COLUMN_COUNT(mVerticalHeaderForegroundColors);
-    CHECK_COLUMN_COUNT(mVerticalHeaderCellFonts);
-    CHECK_COLUMN_COUNT(mVerticalHeaderCellTextFlags);
-    CHECK_COLUMN_COUNT(mVerticalHeaderCellMergeX);
-    CHECK_COLUMN_COUNT(mVerticalHeaderCellMergeY);
-    CHECK_COLUMN_COUNT(mVerticalHeaderCellMergeParentRow);
-    CHECK_COLUMN_COUNT(mVerticalHeaderCellMergeParentColumn);
+    CHECK_COLUMN_COUNT(mHorizontalHeader_BackgroundBrushes);
+    CHECK_COLUMN_COUNT(mHorizontalHeader_ForegroundColors);
+    CHECK_COLUMN_COUNT(mHorizontalHeader_CellFonts);
+    CHECK_COLUMN_COUNT(mHorizontalHeader_CellTextFlags);
+    CHECK_COLUMN_COUNT(mHorizontalHeader_CellMergeX);
+    CHECK_COLUMN_COUNT(mHorizontalHeader_CellMergeY);
+    CHECK_COLUMN_COUNT(mHorizontalHeader_CellMergeParentRow);
+    CHECK_COLUMN_COUNT(mHorizontalHeader_CellMergeParentColumn);
+    CHECK_COLUMN_COUNT(mVerticalHeader_BackgroundBrushes);
+    CHECK_COLUMN_COUNT(mVerticalHeader_ForegroundColors);
+    CHECK_COLUMN_COUNT(mVerticalHeader_CellFonts);
+    CHECK_COLUMN_COUNT(mVerticalHeader_CellTextFlags);
+    CHECK_COLUMN_COUNT(mVerticalHeader_CellMergeX);
+    CHECK_COLUMN_COUNT(mVerticalHeader_CellMergeY);
+    CHECK_COLUMN_COUNT(mVerticalHeader_CellMergeParentRow);
+    CHECK_COLUMN_COUNT(mVerticalHeader_CellMergeParentColumn);
 
     return success;
 }

@@ -40,82 +40,82 @@ QList< QList<int> >       *PublicFastTable::getCellMergeParentColumn()
     return &mCellMergeParentColumn;
 }
 
-QList< QList<QBrush *> >  *PublicFastTable::getHorizontalHeaderBackgroundBrushes()
+QList< QList<QBrush *> >  *PublicFastTable::horizontalHeader_GetBackgroundBrushes()
 {
     return &mBackgroundBrushes;
 }
 
-QList< QList<QColor *> >  *PublicFastTable::getHorizontalHeaderForegroundColors()
+QList< QList<QColor *> >  *PublicFastTable::horizontalHeader_GetForegroundColors()
 {
     return &mForegroundColors;
 }
 
-QList< QList<QFont *> >   *PublicFastTable::getHorizontalHeaderCellFonts()
+QList< QList<QFont *> >   *PublicFastTable::horizontalHeader_GetCellFonts()
 {
     return &mCellFonts;
 }
 
-QList< QList<int> >       *PublicFastTable::getHorizontalHeaderCellTextFlags()
+QList< QList<int> >       *PublicFastTable::horizontalHeader_GetCellTextFlags()
 {
     return &mCellTextFlags;
 }
 
-QList< QList<quint16> >   *PublicFastTable::getHorizontalHeaderCellMergeX()
+QList< QList<quint16> >   *PublicFastTable::horizontalHeader_GetCellMergeX()
 {
     return &mCellMergeX;
 }
 
-QList< QList<quint16> >   *PublicFastTable::getHorizontalHeaderCellMergeY()
+QList< QList<quint16> >   *PublicFastTable::horizontalHeader_GetCellMergeY()
 {
     return &mCellMergeY;
 }
 
-QList< QList<int> >       *PublicFastTable::getHorizontalHeaderCellMergeParentRow()
+QList< QList<int> >       *PublicFastTable::horizontalHeader_GetCellMergeParentRow()
 {
     return &mCellMergeParentRow;
 }
 
-QList< QList<int> >       *PublicFastTable::getHorizontalHeaderCellMergeParentColumn()
+QList< QList<int> >       *PublicFastTable::horizontalHeader_GetCellMergeParentColumn()
 {
     return &mCellMergeParentColumn;
 }
 
-QList< QList<QBrush *> >  *PublicFastTable::getVerticalHeaderBackgroundBrushes()
+QList< QList<QBrush *> >  *PublicFastTable::verticalHeader_GetBackgroundBrushes()
 {
     return &mBackgroundBrushes;
 }
 
-QList< QList<QColor *> >  *PublicFastTable::getVerticalHeaderForegroundColors()
+QList< QList<QColor *> >  *PublicFastTable::verticalHeader_GetForegroundColors()
 {
     return &mForegroundColors;
 }
 
-QList< QList<QFont *> >   *PublicFastTable::getVerticalHeaderCellFonts()
+QList< QList<QFont *> >   *PublicFastTable::verticalHeader_GetCellFonts()
 {
     return &mCellFonts;
 }
 
-QList< QList<int> >       *PublicFastTable::getVerticalHeaderCellTextFlags()
+QList< QList<int> >       *PublicFastTable::verticalHeader_GetCellTextFlags()
 {
     return &mCellTextFlags;
 }
 
-QList< QList<quint16> >   *PublicFastTable::getVerticalHeaderCellMergeX()
+QList< QList<quint16> >   *PublicFastTable::verticalHeader_GetCellMergeX()
 {
     return &mCellMergeX;
 }
 
-QList< QList<quint16> >   *PublicFastTable::getVerticalHeaderCellMergeY()
+QList< QList<quint16> >   *PublicFastTable::verticalHeader_GetCellMergeY()
 {
     return &mCellMergeY;
 }
 
-QList< QList<int> >       *PublicFastTable::getVerticalHeaderCellMergeParentRow()
+QList< QList<int> >       *PublicFastTable::verticalHeader_GetCellMergeParentRow()
 {
     return &mCellMergeParentRow;
 }
 
-QList< QList<int> >       *PublicFastTable::getVerticalHeaderCellMergeParentColumn()
+QList< QList<int> >       *PublicFastTable::verticalHeader_GetCellMergeParentColumn()
 {
     return &mCellMergeParentColumn;
 }
@@ -132,14 +132,14 @@ int PublicCustomFastTable::getColumnCount()
     return mColumnCount;
 }
 
-qint16 PublicCustomFastTable::getHorizontalHeaderRowCount()
+qint16 PublicCustomFastTable::horizontalHeader_GetRowCount()
 {
-    return mHorizontalHeaderRowCount;
+    return mHorizontalHeader_RowCount;
 }
 
-qint16 PublicCustomFastTable::getVerticalHeaderColumnCount()
+qint16 PublicCustomFastTable::verticalHeader_GetColumnCount()
 {
-    return mVerticalHeaderColumnCount;
+    return mVerticalHeader_ColumnCount;
 }
 
 QBrush PublicCustomFastTable::getDefaultBackgroundBrush()
@@ -157,34 +157,34 @@ QColor PublicCustomFastTable::getGridColor()
     return mGridColor;
 }
 
-QBrush PublicCustomFastTable::getHorizontalHeaderDefaultBackgroundBrush()
+QBrush PublicCustomFastTable::horizontalHeader_GetDefaultBackgroundBrush()
 {
-    return mHorizontalHeaderDefaultBackgroundBrush;
+    return mHorizontalHeader_DefaultBackgroundBrush;
 }
 
-QColor PublicCustomFastTable::getHorizontalHeaderDefaultForegroundColor()
+QColor PublicCustomFastTable::horizontalHeader_GetDefaultForegroundColor()
 {
-    return mHorizontalHeaderDefaultForegroundColor;
+    return mHorizontalHeader_DefaultForegroundColor;
 }
 
-QColor PublicCustomFastTable::getHorizontalHeaderGridColor()
+QColor PublicCustomFastTable::horizontalHeader_GetGridColor()
 {
-    return mHorizontalHeaderGridColor;
+    return mHorizontalHeader_GridColor;
 }
 
-QBrush PublicCustomFastTable::getVerticalHeaderDefaultBackgroundBrush()
+QBrush PublicCustomFastTable::verticalHeader_GetDefaultBackgroundBrush()
 {
-    return mVerticalHeaderDefaultBackgroundBrush;
+    return mVerticalHeader_DefaultBackgroundBrush;
 }
 
-QColor PublicCustomFastTable::getVerticalHeaderDefaultForegroundColor()
+QColor PublicCustomFastTable::verticalHeader_GetDefaultForegroundColor()
 {
-    return mVerticalHeaderDefaultForegroundColor;
+    return mVerticalHeader_DefaultForegroundColor;
 }
 
-QColor PublicCustomFastTable::getVerticalHeaderGridColor()
+QColor PublicCustomFastTable::verticalHeader_GetGridColor()
 {
-    return mVerticalHeaderGridColor;
+    return mVerticalHeader_GridColor;
 }
 
 QBrush PublicCustomFastTable::getSelectionBrush()
@@ -212,14 +212,14 @@ int PublicCustomFastTable::getTotalHeight()
     return mTotalHeight;
 }
 
-int PublicCustomFastTable::getVerticalHeaderTotalWidth()
+int PublicCustomFastTable::verticalHeader_GetTotalWidth()
 {
-    return mVerticalHeaderTotalWidth;
+    return mVerticalHeader_TotalWidth;
 }
 
-int PublicCustomFastTable::getHorizontalHeaderTotalHeight()
+int PublicCustomFastTable::horizontalHeader_GetTotalHeight()
 {
-    return mHorizontalHeaderTotalHeight;
+    return mHorizontalHeader_TotalHeight;
 }
 
 int PublicCustomFastTable::getVisibleLeft()
@@ -242,44 +242,44 @@ int PublicCustomFastTable::getVisibleBottom()
     return mVisibleBottom;
 }
 
-int PublicCustomFastTable::getHorizontalHeaderVisibleLeft()
+int PublicCustomFastTable::horizontalHeader_GetVisibleLeft()
 {
-    return mHorizontalHeaderVisibleLeft;
+    return mHorizontalHeader_VisibleLeft;
 }
 
-int PublicCustomFastTable::getHorizontalHeaderVisibleRight()
+int PublicCustomFastTable::horizontalHeader_GetVisibleRight()
 {
-    return mHorizontalHeaderVisibleRight;
+    return mHorizontalHeader_VisibleRight;
 }
 
-int PublicCustomFastTable::getHorizontalHeaderVisibleTop()
+int PublicCustomFastTable::horizontalHeader_GetVisibleTop()
 {
-    return mHorizontalHeaderVisibleTop;
+    return mHorizontalHeader_VisibleTop;
 }
 
-int PublicCustomFastTable::getHorizontalHeaderVisibleBottom()
+int PublicCustomFastTable::horizontalHeader_GetVisibleBottom()
 {
-    return mHorizontalHeaderVisibleBottom;
+    return mHorizontalHeader_VisibleBottom;
 }
 
-int PublicCustomFastTable::getVerticalHeaderVisibleLeft()
+int PublicCustomFastTable::verticalHeader_GetVisibleLeft()
 {
-    return mVerticalHeaderVisibleLeft;
+    return mVerticalHeader_VisibleLeft;
 }
 
-int PublicCustomFastTable::getVerticalHeaderVisibleRight()
+int PublicCustomFastTable::verticalHeader_GetVisibleRight()
 {
-    return mVerticalHeaderVisibleRight;
+    return mVerticalHeader_VisibleRight;
 }
 
-int PublicCustomFastTable::getVerticalHeaderVisibleTop()
+int PublicCustomFastTable::verticalHeader_GetVisibleTop()
 {
-    return mVerticalHeaderVisibleTop;
+    return mVerticalHeader_VisibleTop;
 }
 
-int PublicCustomFastTable::getVerticalHeaderVisibleBottom()
+int PublicCustomFastTable::verticalHeader_GetVisibleBottom()
 {
-    return mVerticalHeaderVisibleBottom;
+    return mVerticalHeader_VisibleBottom;
 }
 
 QList< QStringList > *PublicCustomFastTable::getData()
@@ -307,54 +307,54 @@ QList< int >         *PublicCustomFastTable::getOffsetY()
     return &mOffsetY;
 }
 
-QList< QStringList > *PublicCustomFastTable::getHorizontalHeaderData()
+QList< QStringList > *PublicCustomFastTable::horizontalHeader_GetData()
 {
-    return &mHorizontalHeaderData;
+    return &mHorizontalHeader_Data;
 }
 
-QList< quint16 >     *PublicCustomFastTable::getHorizontalHeaderRowHeights()
+QList< quint16 >     *PublicCustomFastTable::horizontalHeader_GetRowHeights()
 {
-    return &mHorizontalHeaderRowHeights;
+    return &mHorizontalHeader_RowHeights;
 }
 
-QList< quint16 >     *PublicCustomFastTable::getHorizontalHeaderColumnWidths()
+QList< quint16 >     *PublicCustomFastTable::horizontalHeader_GetColumnWidths()
 {
-    return &mHorizontalHeaderColumnWidths;
+    return &mHorizontalHeader_ColumnWidths;
 }
 
-QList< int >         *PublicCustomFastTable::getHorizontalHeaderOffsetX()
+QList< int >         *PublicCustomFastTable::horizontalHeader_GetOffsetX()
 {
-    return &mHorizontalHeaderOffsetX;
+    return &mHorizontalHeader_OffsetX;
 }
 
-QList< int >         *PublicCustomFastTable::getHorizontalHeaderOffsetY()
+QList< int >         *PublicCustomFastTable::horizontalHeader_GetOffsetY()
 {
-    return &mHorizontalHeaderOffsetY;
+    return &mHorizontalHeader_OffsetY;
 }
 
-QList< QStringList > *PublicCustomFastTable::getVerticalHeaderData()
+QList< QStringList > *PublicCustomFastTable::verticalHeader_GetData()
 {
-    return &mVerticalHeaderData;
+    return &mVerticalHeader_Data;
 }
 
-QList< quint16 >     *PublicCustomFastTable::getVerticalHeaderRowHeights()
+QList< quint16 >     *PublicCustomFastTable::verticalHeader_GetRowHeights()
 {
-    return &mVerticalHeaderRowHeights;
+    return &mVerticalHeader_RowHeights;
 }
 
-QList< quint16 >     *PublicCustomFastTable::getVerticalHeaderColumnWidths()
+QList< quint16 >     *PublicCustomFastTable::verticalHeader_GetColumnWidths()
 {
-    return &mVerticalHeaderColumnWidths;
+    return &mVerticalHeader_ColumnWidths;
 }
 
-QList< int >         *PublicCustomFastTable::getVerticalHeaderOffsetX()
+QList< int >         *PublicCustomFastTable::verticalHeader_GetOffsetX()
 {
-    return &mVerticalHeaderOffsetX;
+    return &mVerticalHeader_OffsetX;
 }
 
-QList< int >         *PublicCustomFastTable::getVerticalHeaderOffsetY()
+QList< int >         *PublicCustomFastTable::verticalHeader_GetOffsetY()
 {
-    return &mVerticalHeaderOffsetY;
+    return &mVerticalHeader_OffsetY;
 }
 
 QList< QList<bool> > *PublicCustomFastTable::getSelectedCells()
@@ -367,12 +367,12 @@ QList< QPoint >      *PublicCustomFastTable::getCurSelection()
     return &mCurSelection;
 }
 
-QList< bool >        *PublicCustomFastTable::getHorizontalHeaderSelectedColumns()
+QList< bool >        *PublicCustomFastTable::horizontalHeader_GetSelectedColumns()
 {
-    return &mHorizontalHeaderSelectedColumns;
+    return &mHorizontalHeader_SelectedColumns;
 }
 
-QList< bool >        *PublicCustomFastTable::getVerticalHeaderSelectedRows()
+QList< bool >        *PublicCustomFastTable::verticalHeader_GetSelectedRows()
 {
-    return &mVerticalHeaderSelectedRows;
+    return &mVerticalHeader_SelectedRows;
 }

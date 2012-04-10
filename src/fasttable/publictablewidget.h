@@ -15,23 +15,23 @@ public:
     QList< QList<int> >      *getCellMergeParentRow();
     QList< QList<int> >      *getCellMergeParentColumn();
 
-    QList< QList<QBrush *> > *getHorizontalHeaderBackgroundBrushes();
-    QList< QList<QColor *> > *getHorizontalHeaderForegroundColors();
-    QList< QList<QFont *> >  *getHorizontalHeaderCellFonts();
-    QList< QList<int> >      *getHorizontalHeaderCellTextFlags();
-    QList< QList<quint16> >  *getHorizontalHeaderCellMergeX();
-    QList< QList<quint16> >  *getHorizontalHeaderCellMergeY();
-    QList< QList<int> >      *getHorizontalHeaderCellMergeParentRow();
-    QList< QList<int> >      *getHorizontalHeaderCellMergeParentColumn();
+    QList< QList<QBrush *> > *horizontalHeader_GetBackgroundBrushes();
+    QList< QList<QColor *> > *horizontalHeader_GetForegroundColors();
+    QList< QList<QFont *> >  *horizontalHeader_GetCellFonts();
+    QList< QList<int> >      *horizontalHeader_GetCellTextFlags();
+    QList< QList<quint16> >  *horizontalHeader_GetCellMergeX();
+    QList< QList<quint16> >  *horizontalHeader_GetCellMergeY();
+    QList< QList<int> >      *horizontalHeader_GetCellMergeParentRow();
+    QList< QList<int> >      *horizontalHeader_GetCellMergeParentColumn();
 
-    QList< QList<QBrush *> > *getVerticalHeaderBackgroundBrushes();
-    QList< QList<QColor *> > *getVerticalHeaderForegroundColors();
-    QList< QList<QFont *> >  *getVerticalHeaderCellFonts();
-    QList< QList<int> >      *getVerticalHeaderCellTextFlags();
-    QList< QList<quint16> >  *getVerticalHeaderCellMergeX();
-    QList< QList<quint16> >  *getVerticalHeaderCellMergeY();
-    QList< QList<int> >      *getVerticalHeaderCellMergeParentRow();
-    QList< QList<int> >      *getVerticalHeaderCellMergeParentColumn();
+    QList< QList<QBrush *> > *verticalHeader_GetBackgroundBrushes();
+    QList< QList<QColor *> > *verticalHeader_GetForegroundColors();
+    QList< QList<QFont *> >  *verticalHeader_GetCellFonts();
+    QList< QList<int> >      *verticalHeader_GetCellTextFlags();
+    QList< QList<quint16> >  *verticalHeader_GetCellMergeX();
+    QList< QList<quint16> >  *verticalHeader_GetCellMergeY();
+    QList< QList<int> >      *verticalHeader_GetCellMergeParentRow();
+    QList< QList<int> >      *verticalHeader_GetCellMergeParentColumn();
 };
 
 class PublicCustomFastTable : public CustomFastTableWidget
@@ -39,20 +39,20 @@ class PublicCustomFastTable : public CustomFastTableWidget
 public:
     int getRowCount();
     int getColumnCount();
-    qint16 getHorizontalHeaderRowCount();
-    qint16 getVerticalHeaderColumnCount();
+    qint16 horizontalHeader_GetRowCount();
+    qint16 verticalHeader_GetColumnCount();
 
     QBrush getDefaultBackgroundBrush();
     QColor getDefaultForegroundColor();
     QColor getGridColor();
 
-    QBrush getHorizontalHeaderDefaultBackgroundBrush();
-    QColor getHorizontalHeaderDefaultForegroundColor();
-    QColor getHorizontalHeaderGridColor();
+    QBrush horizontalHeader_GetDefaultBackgroundBrush();
+    QColor horizontalHeader_GetDefaultForegroundColor();
+    QColor horizontalHeader_GetGridColor();
 
-    QBrush getVerticalHeaderDefaultBackgroundBrush();
-    QColor getVerticalHeaderDefaultForegroundColor();
-    QColor getVerticalHeaderGridColor();
+    QBrush verticalHeader_GetDefaultBackgroundBrush();
+    QColor verticalHeader_GetDefaultForegroundColor();
+    QColor verticalHeader_GetGridColor();
 
     QBrush getSelectionBrush();
 
@@ -60,23 +60,23 @@ public:
     quint16 getDefaultHeight();
     int getTotalWidth();
     int getTotalHeight();
-    int getVerticalHeaderTotalWidth();
-    int getHorizontalHeaderTotalHeight();
+    int verticalHeader_GetTotalWidth();
+    int horizontalHeader_GetTotalHeight();
 
     int getVisibleLeft();
     int getVisibleRight();
     int getVisibleTop();
     int getVisibleBottom();
 
-    int getHorizontalHeaderVisibleLeft();
-    int getHorizontalHeaderVisibleRight();
-    int getHorizontalHeaderVisibleTop();
-    int getHorizontalHeaderVisibleBottom();
+    int horizontalHeader_GetVisibleLeft();
+    int horizontalHeader_GetVisibleRight();
+    int horizontalHeader_GetVisibleTop();
+    int horizontalHeader_GetVisibleBottom();
 
-    int getVerticalHeaderVisibleLeft();
-    int getVerticalHeaderVisibleRight();
-    int getVerticalHeaderVisibleTop();
-    int getVerticalHeaderVisibleBottom();
+    int verticalHeader_GetVisibleLeft();
+    int verticalHeader_GetVisibleRight();
+    int verticalHeader_GetVisibleTop();
+    int verticalHeader_GetVisibleBottom();
 
     QList< QStringList > *getData();
     QList< quint16 >     *getRowHeights();
@@ -84,22 +84,22 @@ public:
     QList< int >         *getOffsetX();
     QList< int >         *getOffsetY();
 
-    QList< QStringList > *getHorizontalHeaderData();
-    QList< quint16 >     *getHorizontalHeaderRowHeights();
-    QList< quint16 >     *getHorizontalHeaderColumnWidths();
-    QList< int >         *getHorizontalHeaderOffsetX();
-    QList< int >         *getHorizontalHeaderOffsetY();
+    QList< QStringList > *horizontalHeader_GetData();
+    QList< quint16 >     *horizontalHeader_GetRowHeights();
+    QList< quint16 >     *horizontalHeader_GetColumnWidths();
+    QList< int >         *horizontalHeader_GetOffsetX();
+    QList< int >         *horizontalHeader_GetOffsetY();
 
-    QList< QStringList > *getVerticalHeaderData();
-    QList< quint16 >     *getVerticalHeaderRowHeights();
-    QList< quint16 >     *getVerticalHeaderColumnWidths();
-    QList< int >         *getVerticalHeaderOffsetX();
-    QList< int >         *getVerticalHeaderOffsetY();
+    QList< QStringList > *verticalHeader_GetData();
+    QList< quint16 >     *verticalHeader_GetRowHeights();
+    QList< quint16 >     *verticalHeader_GetColumnWidths();
+    QList< int >         *verticalHeader_GetOffsetX();
+    QList< int >         *verticalHeader_GetOffsetY();
 
     QList< QList<bool> > *getSelectedCells();
     QList< QPoint >      *getCurSelection();
-    QList< bool >        *getHorizontalHeaderSelectedColumns();
-    QList< bool >        *getVerticalHeaderSelectedRows();
+    QList< bool >        *horizontalHeader_GetSelectedColumns();
+    QList< bool >        *verticalHeader_GetSelectedRows();
 };
 
 #endif // PUBLICTABLEWIDGET_H

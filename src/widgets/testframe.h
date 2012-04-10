@@ -48,22 +48,22 @@ public:
     QList< int >             *mOffsetX;
     QList< int >             *mOffsetY;
 
-    QList< QStringList >     *mHorizontalHeaderData;
-    QList< quint16 >         *mHorizontalHeaderRowHeights;
-    QList< quint16 >         *mHorizontalHeaderColumnWidths;
-    QList< int >             *mHorizontalHeaderOffsetX;
-    QList< int >             *mHorizontalHeaderOffsetY;
+    QList< QStringList >     *mHorizontalHeader_Data;
+    QList< quint16 >         *mHorizontalHeader_RowHeights;
+    QList< quint16 >         *mHorizontalHeader_ColumnWidths;
+    QList< int >             *mHorizontalHeader_OffsetX;
+    QList< int >             *mHorizontalHeader_OffsetY;
 
-    QList< QStringList >     *mVerticalHeaderData;
-    QList< quint16 >         *mVerticalHeaderRowHeights;
-    QList< quint16 >         *mVerticalHeaderColumnWidths;
-    QList< int >             *mVerticalHeaderOffsetX;
-    QList< int >             *mVerticalHeaderOffsetY;
+    QList< QStringList >     *mVerticalHeader_Data;
+    QList< quint16 >         *mVerticalHeader_RowHeights;
+    QList< quint16 >         *mVerticalHeader_ColumnWidths;
+    QList< int >             *mVerticalHeader_OffsetX;
+    QList< int >             *mVerticalHeader_OffsetY;
 
     QList< QList<bool> >     *mSelectedCells;
     QList< QPoint >          *mCurSelection;
-    QList< bool >            *mHorizontalHeaderSelectedColumns;
-    QList< bool >            *mVerticalHeaderSelectedRows;
+    QList< bool >            *mHorizontalHeader_SelectedColumns;
+    QList< bool >            *mVerticalHeader_SelectedRows;
 
     QList< QList<QBrush *> > *mBackgroundBrushes;
     QList< QList<QColor *> > *mForegroundColors;
@@ -74,23 +74,23 @@ public:
     QList< QList<int> >      *mCellMergeParentRow;
     QList< QList<int> >      *mCellMergeParentColumn;
 
-    QList< QList<QBrush *> > *mHorizontalHeaderBackgroundBrushes;
-    QList< QList<QColor *> > *mHorizontalHeaderForegroundColors;
-    QList< QList<QFont *> >  *mHorizontalHeaderCellFonts;
-    QList< QList<int> >      *mHorizontalHeaderCellTextFlags;
-    QList< QList<quint16> >  *mHorizontalHeaderCellMergeX;
-    QList< QList<quint16> >  *mHorizontalHeaderCellMergeY;
-    QList< QList<int> >      *mHorizontalHeaderCellMergeParentRow;
-    QList< QList<int> >      *mHorizontalHeaderCellMergeParentColumn;
+    QList< QList<QBrush *> > *mHorizontalHeader_BackgroundBrushes;
+    QList< QList<QColor *> > *mHorizontalHeader_ForegroundColors;
+    QList< QList<QFont *> >  *mHorizontalHeader_CellFonts;
+    QList< QList<int> >      *mHorizontalHeader_CellTextFlags;
+    QList< QList<quint16> >  *mHorizontalHeader_CellMergeX;
+    QList< QList<quint16> >  *mHorizontalHeader_CellMergeY;
+    QList< QList<int> >      *mHorizontalHeader_CellMergeParentRow;
+    QList< QList<int> >      *mHorizontalHeader_CellMergeParentColumn;
 
-    QList< QList<QBrush *> > *mVerticalHeaderBackgroundBrushes;
-    QList< QList<QColor *> > *mVerticalHeaderForegroundColors;
-    QList< QList<QFont *> >  *mVerticalHeaderCellFonts;
-    QList< QList<int> >      *mVerticalHeaderCellTextFlags;
-    QList< QList<quint16> >  *mVerticalHeaderCellMergeX;
-    QList< QList<quint16> >  *mVerticalHeaderCellMergeY;
-    QList< QList<int> >      *mVerticalHeaderCellMergeParentRow;
-    QList< QList<int> >      *mVerticalHeaderCellMergeParentColumn;
+    QList< QList<QBrush *> > *mVerticalHeader_BackgroundBrushes;
+    QList< QList<QColor *> > *mVerticalHeader_ForegroundColors;
+    QList< QList<QFont *> >  *mVerticalHeader_CellFonts;
+    QList< QList<int> >      *mVerticalHeader_CellTextFlags;
+    QList< QList<quint16> >  *mVerticalHeader_CellMergeX;
+    QList< QList<quint16> >  *mVerticalHeader_CellMergeY;
+    QList< QList<int> >      *mVerticalHeader_CellMergeParentRow;
+    QList< QList<int> >      *mVerticalHeader_CellMergeParentColumn;
 
     //---------------------------------------------------------------------------
 

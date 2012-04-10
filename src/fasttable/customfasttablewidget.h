@@ -36,26 +36,26 @@
 class CustomFastTableWidget : public QAbstractScrollArea
 {
     Q_OBJECT
-    Q_PROPERTY(int     rowCount                               READ rowCount                               WRITE setRowCount)
-    Q_PROPERTY(int     columnCount                            READ columnCount                            WRITE setColumnCount)
-    Q_PROPERTY(qint16  horizontalHeaderRowCount               READ horizontalHeaderRowCount               WRITE setHorizontalHeaderRowCount)
-    Q_PROPERTY(qint16  verticalHeaderColumnCount              READ verticalHeaderColumnCount              WRITE setVerticalHeaderColumnCount)
-    Q_PROPERTY(quint16 defaultWidth                           READ defaultWidth                           WRITE setDefaultWidth)
-    Q_PROPERTY(quint16 defaultHeight                          READ defaultHeight                          WRITE setDefaultHeight)
-    Q_PROPERTY(int     totalWidth                             READ totalWidth)
-    Q_PROPERTY(int     totalHeight                            READ totalHeight)
-    Q_PROPERTY(int     verticalHeaderTotalWidth               READ verticalHeaderTotalWidth)
-    Q_PROPERTY(int     horizontalHeaderTotalHeight            READ horizontalHeaderTotalHeight)
-    Q_PROPERTY(QBrush  defaultBackgroundBrush                 READ defaultBackgroundBrush                 WRITE setDefaultBackgroundBrush)
-    Q_PROPERTY(QColor  defaultForegroundColor                 READ defaultForegroundColor                 WRITE setDefaultForegroundColor)
-    Q_PROPERTY(QColor  gridColor                              READ gridColor                              WRITE setGridColor)
-    Q_PROPERTY(QBrush  horizontalHeaderDefaultBackgroundBrush READ horizontalHeaderDefaultBackgroundBrush WRITE setHorizontalHeaderDefaultBackgroundBrush)
-    Q_PROPERTY(QColor  horizontalHeaderDefaultForegroundColor READ horizontalHeaderDefaultForegroundColor WRITE setHorizontalHeaderDefaultForegroundColor)
-    Q_PROPERTY(QColor  horizontalHeaderGridColor              READ horizontalHeaderGridColor              WRITE setHorizontalHeaderGridColor)
-    Q_PROPERTY(QBrush  verticalHeaderDefaultBackgroundBrush   READ verticalHeaderDefaultBackgroundBrush   WRITE setVerticalHeaderDefaultBackgroundBrush)
-    Q_PROPERTY(QColor  verticalHeaderDefaultForegroundColor   READ verticalHeaderDefaultForegroundColor   WRITE setVerticalHeaderDefaultForegroundColor)
-    Q_PROPERTY(QColor  verticalHeaderGridColor                READ verticalHeaderGridColor                WRITE setVerticalHeaderGridColor)
-    Q_PROPERTY(QBrush  selectionBrush                         READ selectionBrush                         WRITE setSelectionBrush)
+    Q_PROPERTY(int     rowCount                                READ rowCount                                WRITE setRowCount)
+    Q_PROPERTY(int     columnCount                             READ columnCount                             WRITE setColumnCount)
+    Q_PROPERTY(qint16  horizontalHeader_RowCount               READ horizontalHeader_RowCount               WRITE horizontalHeader_SetRowCount)
+    Q_PROPERTY(qint16  verticalHeader_ColumnCount              READ verticalHeader_ColumnCount              WRITE verticalHeader_SetColumnCount)
+    Q_PROPERTY(quint16 defaultWidth                            READ defaultWidth                            WRITE setDefaultWidth)
+    Q_PROPERTY(quint16 defaultHeight                           READ defaultHeight                           WRITE setDefaultHeight)
+    Q_PROPERTY(int     totalWidth                              READ totalWidth)
+    Q_PROPERTY(int     totalHeight                             READ totalHeight)
+    Q_PROPERTY(int     verticalHeader_TotalWidth               READ verticalHeader_TotalWidth)
+    Q_PROPERTY(int     horizontalHeader_TotalHeight            READ horizontalHeader_TotalHeight)
+    Q_PROPERTY(QBrush  defaultBackgroundBrush                  READ defaultBackgroundBrush                  WRITE setDefaultBackgroundBrush)
+    Q_PROPERTY(QColor  defaultForegroundColor                  READ defaultForegroundColor                  WRITE setDefaultForegroundColor)
+    Q_PROPERTY(QColor  gridColor                               READ gridColor                               WRITE setGridColor)
+    Q_PROPERTY(QBrush  horizontalHeader_DefaultBackgroundBrush READ horizontalHeader_DefaultBackgroundBrush WRITE horizontalHeader_SetDefaultBackgroundBrush)
+    Q_PROPERTY(QColor  horizontalHeader_DefaultForegroundColor READ horizontalHeader_DefaultForegroundColor WRITE horizontalHeader_SetDefaultForegroundColor)
+    Q_PROPERTY(QColor  horizontalHeader_GridColor              READ horizontalHeader_GridColor              WRITE horizontalHeader_SetGridColor)
+    Q_PROPERTY(QBrush  verticalHeader_DefaultBackgroundBrush   READ verticalHeader_DefaultBackgroundBrush   WRITE verticalHeader_SetDefaultBackgroundBrush)
+    Q_PROPERTY(QColor  verticalHeader_DefaultForegroundColor   READ verticalHeader_DefaultForegroundColor   WRITE verticalHeader_SetDefaultForegroundColor)
+    Q_PROPERTY(QColor  verticalHeader_GridColor                READ verticalHeader_GridColor                WRITE verticalHeader_SetGridColor)
+    Q_PROPERTY(QBrush  selectionBrush                          READ selectionBrush                          WRITE setSelectionBrush)
 
 public:
 
@@ -83,13 +83,13 @@ public:
     virtual void insertColumn(int column);
     virtual void deleteColumn(int column);
 
-    void horizontalHeaderAddRow();
-    virtual void horizontalHeaderInsertRow(int row);
-    virtual void horizontalHeaderDeleteRow(int row);
+    void horizontalHeader_AddRow();
+    virtual void horizontalHeader_InsertRow(int row);
+    virtual void horizontalHeader_DeleteRow(int row);
 
-    void verticalHeaderAddColumn();
-    virtual void verticalHeaderInsertColumn(int column);
-    virtual void verticalHeaderDeleteColumn(int column);
+    void verticalHeader_AddColumn();
+    virtual void verticalHeader_InsertColumn(int column);
+    virtual void verticalHeader_DeleteColumn(int column);
 
     int rowCount();
     void setRowCount(int count);
@@ -97,11 +97,11 @@ public:
     int columnCount();
     void setColumnCount(int count);
 
-    qint16 horizontalHeaderRowCount();
-    void setHorizontalHeaderRowCount(qint16 count);
+    qint16 horizontalHeader_RowCount();
+    void horizontalHeader_SetRowCount(qint16 count);
 
-    qint16 verticalHeaderColumnCount();
-    void setVerticalHeaderColumnCount(qint16 count);
+    qint16 verticalHeader_ColumnCount();
+    void verticalHeader_SetColumnCount(qint16 count);
 
     QBrush defaultBackgroundBrush();
     void setDefaultBackgroundBrush(QBrush brush);
@@ -112,23 +112,23 @@ public:
     QColor gridColor();
     void setGridColor(QColor color);
 
-    QBrush horizontalHeaderDefaultBackgroundBrush();
-    void setHorizontalHeaderDefaultBackgroundBrush(QBrush brush);
+    QBrush horizontalHeader_DefaultBackgroundBrush();
+    void horizontalHeader_SetDefaultBackgroundBrush(QBrush brush);
 
-    QColor horizontalHeaderDefaultForegroundColor();
-    void setHorizontalHeaderDefaultForegroundColor(QColor color);
+    QColor horizontalHeader_DefaultForegroundColor();
+    void horizontalHeader_SetDefaultForegroundColor(QColor color);
 
-    QColor horizontalHeaderGridColor();
-    void setHorizontalHeaderGridColor(QColor color);
+    QColor horizontalHeader_GridColor();
+    void horizontalHeader_SetGridColor(QColor color);
 
-    QBrush verticalHeaderDefaultBackgroundBrush();
-    void setVerticalHeaderDefaultBackgroundBrush(QBrush brush);
+    QBrush verticalHeader_DefaultBackgroundBrush();
+    void verticalHeader_SetDefaultBackgroundBrush(QBrush brush);
 
-    QColor verticalHeaderDefaultForegroundColor();
-    void setVerticalHeaderDefaultForegroundColor(QColor color);
+    QColor verticalHeader_DefaultForegroundColor();
+    void verticalHeader_SetDefaultForegroundColor(QColor color);
 
-    QColor verticalHeaderGridColor();
-    void setVerticalHeaderGridColor(QColor color);
+    QColor verticalHeader_GridColor();
+    void verticalHeader_SetGridColor(QColor color);
 
     QBrush selectionBrush();
     void setSelectionBrush(QBrush brush);
@@ -145,33 +145,33 @@ public:
     quint16 rowHeight(const int row);
     void setRowHeight(const int row, const quint16 height);
 
-    quint16 verticalHeaderColumnWidth(const int column);
-    void setVerticalHeaderColumnWidth(const int column, const quint16 width);
+    quint16 verticalHeader_ColumnWidth(const int column);
+    void verticalHeader_SetColumnWidth(const int column, const quint16 width);
 
-    quint16 horizontalHeaderRowHeight(const int row);
-    void setHorizontalHeaderRowHeight(const int row, const quint16 height);
+    quint16 horizontalHeader_RowHeight(const int row);
+    void horizontalHeader_SetRowHeight(const int row, const quint16 height);
 
     int totalWidth();
     int totalHeight();
-    int verticalHeaderTotalWidth();
-    int horizontalHeaderTotalHeight();
+    int verticalHeader_TotalWidth();
+    int horizontalHeader_TotalHeight();
 
     QRect visibleRange();
-    QRect horizontalHeaderVisibleRange();
-    QRect verticalHeaderVisibleRange();
+    QRect horizontalHeader_VisibleRange();
+    QRect verticalHeader_VisibleRange();
 
     QString text(const int row, const int column);
     void setText(const int row, const int column, const QString text);
 
-    QString horizontalHeaderText(const int row, const int column);
-    QString horizontalHeaderText(const int column);
-    void setHorizontalHeaderText(const int row, const int column, const QString text);
-    void setHorizontalHeaderText(const int column, const QString text);
+    QString horizontalHeader_Text(const int row, const int column);
+    QString horizontalHeader_Text(const int column);
+    void horizontalHeader_SetText(const int row, const int column, const QString text);
+    void horizontalHeader_SetText(const int column, const QString text);
 
-    QString verticalHeaderText(const int row, const int column);
-    QString verticalHeaderText(const int row);
-    void setVerticalHeaderText(const int row, const int column, const QString text);
-    void setVerticalHeaderText(const int row, const QString text);
+    QString verticalHeader_Text(const int row, const int column);
+    QString verticalHeader_Text(const int row);
+    void verticalHeader_SetText(const int row, const int column, const QString text);
+    void verticalHeader_SetText(const int row, const QString text);
 
     virtual bool cellSelected(const int row, const int column);
     virtual void setCellSelected(const int row, const int column, const bool selected);
@@ -179,20 +179,20 @@ public:
 protected:
     int mRowCount;
     int mColumnCount;
-    qint16 mHorizontalHeaderRowCount;
-    qint16 mVerticalHeaderColumnCount;
+    qint16 mHorizontalHeader_RowCount;
+    qint16 mVerticalHeader_ColumnCount;
 
     QBrush mDefaultBackgroundBrush;
     QColor mDefaultForegroundColor;
     QColor mGridColor;
 
-    QBrush mHorizontalHeaderDefaultBackgroundBrush;
-    QColor mHorizontalHeaderDefaultForegroundColor;
-    QColor mHorizontalHeaderGridColor;
+    QBrush mHorizontalHeader_DefaultBackgroundBrush;
+    QColor mHorizontalHeader_DefaultForegroundColor;
+    QColor mHorizontalHeader_GridColor;
 
-    QBrush mVerticalHeaderDefaultBackgroundBrush;
-    QColor mVerticalHeaderDefaultForegroundColor;
-    QColor mVerticalHeaderGridColor;
+    QBrush mVerticalHeader_DefaultBackgroundBrush;
+    QColor mVerticalHeader_DefaultForegroundColor;
+    QColor mVerticalHeader_GridColor;
 
     QBrush mSelectionBrush;
 
@@ -200,23 +200,23 @@ protected:
     quint16 mDefaultHeight;
     int mTotalWidth;
     int mTotalHeight;
-    int mVerticalHeaderTotalWidth;
-    int mHorizontalHeaderTotalHeight;
+    int mVerticalHeader_TotalWidth;
+    int mHorizontalHeader_TotalHeight;
 
     int mVisibleLeft;
     int mVisibleRight;
     int mVisibleTop;
     int mVisibleBottom;
 
-    int mHorizontalHeaderVisibleLeft;
-    int mHorizontalHeaderVisibleRight;
-    int mHorizontalHeaderVisibleTop;
-    int mHorizontalHeaderVisibleBottom;
+    int mHorizontalHeader_VisibleLeft;
+    int mHorizontalHeader_VisibleRight;
+    int mHorizontalHeader_VisibleTop;
+    int mHorizontalHeader_VisibleBottom;
 
-    int mVerticalHeaderVisibleLeft;
-    int mVerticalHeaderVisibleRight;
-    int mVerticalHeaderVisibleTop;
-    int mVerticalHeaderVisibleBottom;
+    int mVerticalHeader_VisibleLeft;
+    int mVerticalHeader_VisibleRight;
+    int mVerticalHeader_VisibleTop;
+    int mVerticalHeader_VisibleBottom;
 
     QList< QStringList > mData;
     QList< quint16 >     mRowHeights;
@@ -224,22 +224,22 @@ protected:
     QList< int >         mOffsetX;
     QList< int >         mOffsetY;
 
-    QList< QStringList > mHorizontalHeaderData;
-    QList< quint16 >     mHorizontalHeaderRowHeights;
-    QList< quint16 >     mHorizontalHeaderColumnWidths;
-    QList< int >         mHorizontalHeaderOffsetX;
-    QList< int >         mHorizontalHeaderOffsetY;
+    QList< QStringList > mHorizontalHeader_Data;
+    QList< quint16 >     mHorizontalHeader_RowHeights;
+    QList< quint16 >     mHorizontalHeader_ColumnWidths;
+    QList< int >         mHorizontalHeader_OffsetX;
+    QList< int >         mHorizontalHeader_OffsetY;
 
-    QList< QStringList > mVerticalHeaderData;
-    QList< quint16 >     mVerticalHeaderRowHeights;
-    QList< quint16 >     mVerticalHeaderColumnWidths;
-    QList< int >         mVerticalHeaderOffsetX;
-    QList< int >         mVerticalHeaderOffsetY;
+    QList< QStringList > mVerticalHeader_Data;
+    QList< quint16 >     mVerticalHeader_RowHeights;
+    QList< quint16 >     mVerticalHeader_ColumnWidths;
+    QList< int >         mVerticalHeader_OffsetX;
+    QList< int >         mVerticalHeader_OffsetY;
 
     QList< QList<bool> > mSelectedCells;
     QList< QPoint >      mCurSelection;
-    QList< bool >        mHorizontalHeaderSelectedColumns;
-    QList< bool >        mVerticalHeaderSelectedRows;
+    QList< bool >        mHorizontalHeader_SelectedColumns;
+    QList< bool >        mVerticalHeader_SelectedRows;
 
     void mousePressEvent(QMouseEvent *event);
     void resizeEvent(QResizeEvent *event);
