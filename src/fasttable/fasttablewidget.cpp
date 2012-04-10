@@ -3,19 +3,19 @@
 FastTableWidget::FastTableWidget(QWidget *parent) :
     CustomFastTableWidget(parent)
 {
-    START_PROFILE
+    START_PROFILE;
     END_PROFILE("FastTableWidget::FastTableWidget(QWidget *parent)")
 }
 
 FastTableWidget::~FastTableWidget()
 {
-    START_PROFILE
+    START_PROFILE;
     END_PROFILE("FastTableWidget::~FastTableWidget()")
 }
 
 void FastTableWidget::paintEvent(QPaintEvent *event)
 {
-    START_FREQUENT_PROFILE
+    START_FREQUENT_PROFILE;
 
     QPainter painter(viewport());
 
@@ -61,12 +61,12 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
         }
     }
 
-    END_FREQUENT_PROFILE("void FastTableWidget::paintEvent(QPaintEvent *event)")
+    END_FREQUENT_PROFILE("void FastTableWidget::paintEvent(QPaintEvent *event)");
 }
 
 void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent)
 {
-    START_FREQUENT_PROFILE
+    START_FREQUENT_PROFILE;
 
     QBrush *aBackgroundBrush;
 
@@ -112,12 +112,12 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
     painter.setPen(QPen(*aForegroundColor));
     painter.drawText(x+4, y+4, width-8, height-8, mCellTextFlags.at(row).at(column), mData.at(row).at(column));
 
-    END_FREQUENT_PROFILE("void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int row, const int column)")
+    END_FREQUENT_PROFILE("void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int row, const int column)");
 }
 
 void FastTableWidget::updateVisibleRange()
 {
-    START_PROFILE
+    START_PROFILE;
 
     if (mRowCount==0 || mColumnCount==0)
     {
@@ -238,7 +238,7 @@ void FastTableWidget::updateVisibleRange()
 
 void FastTableWidget::clearTable()
 {
-    START_PROFILE
+    START_PROFILE;
 
     resetBackgroundBrushes();
     resetForegroundColors();
@@ -260,7 +260,7 @@ void FastTableWidget::clearTable()
 
 void FastTableWidget::resetBackgroundBrushes()
 {
-    START_PROFILE
+    START_PROFILE;
 
     for (int i=0; i<mRowCount; ++i)
     {
@@ -279,7 +279,7 @@ void FastTableWidget::resetBackgroundBrushes()
 
 void FastTableWidget::resetForegroundColors()
 {
-    START_PROFILE
+    START_PROFILE;
 
     for (int i=0; i<mRowCount; ++i)
     {
@@ -298,7 +298,7 @@ void FastTableWidget::resetForegroundColors()
 
 void FastTableWidget::resetFonts()
 {
-    START_PROFILE
+    START_PROFILE;
 
     for (int i=0; i<mRowCount; ++i)
     {
@@ -317,7 +317,7 @@ void FastTableWidget::resetFonts()
 
 void FastTableWidget::resetTextFlags()
 {
-    START_PROFILE
+    START_PROFILE;
 
     for (int i=0; i<mRowCount; ++i)
     {
@@ -332,7 +332,7 @@ void FastTableWidget::resetTextFlags()
 
 void FastTableWidget::resetBackgroundBrush(const int row, const int column)
 {
-    START_PROFILE
+    START_PROFILE;
 
     if (mBackgroundBrushes.at(row).at(column))
     {
@@ -345,7 +345,7 @@ void FastTableWidget::resetBackgroundBrush(const int row, const int column)
 
 void FastTableWidget::resetForegroundColor(const int row, const int column)
 {
-    START_PROFILE
+    START_PROFILE;
 
     if (mForegroundColors.at(row).at(column))
     {
@@ -358,7 +358,7 @@ void FastTableWidget::resetForegroundColor(const int row, const int column)
 
 void FastTableWidget::resetFont(const int row, const int column)
 {
-    START_PROFILE
+    START_PROFILE;
 
     if (mCellFonts.at(row).at(column))
     {
@@ -371,7 +371,7 @@ void FastTableWidget::resetFont(const int row, const int column)
 
 void FastTableWidget::resetTextFlag(const int row, const int column)
 {
-    START_PROFILE
+    START_PROFILE;
 
     mCellTextFlags[row][column]=Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
 
@@ -380,7 +380,7 @@ void FastTableWidget::resetTextFlag(const int row, const int column)
 
 void FastTableWidget::insertRow(int row)
 {
-    START_PROFILE
+    START_PROFILE;
 
     CustomFastTableWidget::insertRow(row);
 
@@ -416,7 +416,7 @@ void FastTableWidget::insertRow(int row)
 
 void FastTableWidget::deleteRow(int row)
 {
-    START_PROFILE
+    START_PROFILE;
 
     for (int i=0; i<mColumnCount; ++i)
     {
@@ -452,7 +452,7 @@ void FastTableWidget::deleteRow(int row)
 
 void FastTableWidget::insertColumn(int column)
 {
-    START_PROFILE
+    START_PROFILE;
 
     CustomFastTableWidget::insertColumn(column);
 
@@ -473,7 +473,7 @@ void FastTableWidget::insertColumn(int column)
 
 void FastTableWidget::deleteColumn(int column)
 {
-    START_PROFILE
+    START_PROFILE;
 
     for (int i=0; i<mData.length(); ++i)
     {
@@ -509,7 +509,7 @@ void FastTableWidget::deleteColumn(int column)
 
 QBrush FastTableWidget::backgroundBrush(const int row, const int column)
 {
-    START_PROFILE
+    START_PROFILE;
 
     QBrush *aBrush=mBackgroundBrushes.at(row).at(column);
 
@@ -525,7 +525,7 @@ QBrush FastTableWidget::backgroundBrush(const int row, const int column)
 
 void FastTableWidget::setBackgroundBrush(const int row, const int column, const QBrush brush)
 {
-    START_PROFILE
+    START_PROFILE;
 
     if (mBackgroundBrushes.at(row).at(column))
     {
@@ -541,7 +541,7 @@ void FastTableWidget::setBackgroundBrush(const int row, const int column, const 
 
 QColor FastTableWidget::foregroundColor(const int row, const int column)
 {
-    START_PROFILE
+    START_PROFILE;
 
     QColor *aColor=mForegroundColors.at(row).at(column);
 
@@ -557,7 +557,7 @@ QColor FastTableWidget::foregroundColor(const int row, const int column)
 
 void FastTableWidget::setForegroundColor(const int row, const int column, const QColor color)
 {
-    START_PROFILE
+    START_PROFILE;
 
     if (mForegroundColors.at(row).at(column))
     {
@@ -583,7 +583,7 @@ QFont FastTableWidget::cellFont(const int row, const int column)
 
 void FastTableWidget::setCellFont(const int row, const int column, const QFont font)
 {
-    START_PROFILE
+    START_PROFILE;
 
     if (mCellFonts.at(row).at(column))
     {
@@ -604,7 +604,7 @@ int FastTableWidget::cellTextFlags(const int row, const int column)
 
 void FastTableWidget::setCellTextFlags(const int row, const int column, const int flags)
 {
-    START_PROFILE
+    START_PROFILE;
 
     mCellTextFlags[row][column]=flags;
 
@@ -613,7 +613,7 @@ void FastTableWidget::setCellTextFlags(const int row, const int column, const in
 
 void FastTableWidget::clearSpans()
 {
-    START_PROFILE
+    START_PROFILE;
 
     for (int i=0; i<mRowCount; ++i)
     {
@@ -631,7 +631,7 @@ void FastTableWidget::clearSpans()
 
 void FastTableWidget::setSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan)
 {
-    START_PROFILE
+    START_PROFILE;
 
     if (row+rowSpan>mRowCount)
     {
@@ -700,7 +700,7 @@ void FastTableWidget::setSpan(const int row, const int column, quint16 rowSpan, 
 
 quint16 FastTableWidget::rowSpan(const int row, const int column)
 {
-    START_PROFILE
+    START_PROFILE;
 
     return mCellMergeY.at(row).at(column);
 
@@ -709,7 +709,7 @@ quint16 FastTableWidget::rowSpan(const int row, const int column)
 
 quint16 FastTableWidget::columnSpan(const int row, const int column)
 {
-    START_PROFILE
+    START_PROFILE;
 
     return mCellMergeX.at(row).at(column);
 
@@ -718,7 +718,7 @@ quint16 FastTableWidget::columnSpan(const int row, const int column)
 
 QPoint FastTableWidget::spanParent(const int row, const int column)
 {
-    START_PROFILE
+    START_PROFILE;
 
     return QPoint(mCellMergeParentColumn.at(row).at(column), mCellMergeParentRow.at(row).at(column));
 

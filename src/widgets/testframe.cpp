@@ -115,12 +115,12 @@ void TestFrame::startTest()
     {
         success=true;
 
-        TEST_STEP(mCurSelection->length()==0)
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==0)
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==0)
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getRowCount()==0)
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getColumnCount()==0)
-        TEST_STEP(checkForSizes(0, 0))
+        TEST_STEP(mCurSelection->length()==0);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==0);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==0);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getRowCount()==0);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getColumnCount()==0);
+        TEST_STEP(checkForSizes(0, 0));
 
         testCompleted(success, ui->initialResLabel);
     }
@@ -132,10 +132,10 @@ void TestFrame::startTest()
 
         mFastTable->setRowCount(50);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50)
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==0)
-        TEST_STEP(mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49)
-        TEST_STEP(checkForSizes(50, 0))
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==0);
+        TEST_STEP(mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49);
+        TEST_STEP(checkForSizes(50, 0));
 
         testCompleted(success, ui->setRow50ResLabel);
     }
@@ -147,11 +147,11 @@ void TestFrame::startTest()
 
         mFastTable->setColumnCount(20);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50)
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*20)
-        TEST_STEP(mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19)
-        TEST_STEP(mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49)
-        TEST_STEP(checkForSizes(50, 20))
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*20);
+        TEST_STEP(mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19);
+        TEST_STEP(mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49);
+        TEST_STEP(checkForSizes(50, 20));
 
         testCompleted(success, ui->setCol20ResLabel);
     }
@@ -163,11 +163,11 @@ void TestFrame::startTest()
 
         mFastTable->setColumnCount(1);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50)
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==((PublicCustomFastTable*)mFastTable)->getDefaultWidth())
-        TEST_STEP(mOffsetX->at(0)==0)
-        TEST_STEP(mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49)
-        TEST_STEP(checkForSizes(50, 1))
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==((PublicCustomFastTable*)mFastTable)->getDefaultWidth());
+        TEST_STEP(mOffsetX->at(0)==0);
+        TEST_STEP(mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49);
+        TEST_STEP(checkForSizes(50, 1));
 
         testCompleted(success, ui->setCol1ResLabel);
     }
@@ -179,11 +179,11 @@ void TestFrame::startTest()
 
         mFastTable->setRowCount(2);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*2)
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==((PublicCustomFastTable*)mFastTable)->getDefaultWidth())
-        TEST_STEP(mOffsetX->at(0)==0)
-        TEST_STEP(mOffsetY->at(1)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight())
-        TEST_STEP(checkForSizes(2, 1))
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*2);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==((PublicCustomFastTable*)mFastTable)->getDefaultWidth());
+        TEST_STEP(mOffsetX->at(0)==0);
+        TEST_STEP(mOffsetY->at(1)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight());
+        TEST_STEP(checkForSizes(2, 1));
 
         testCompleted(success, ui->setRow2ResLabel);
     }
@@ -195,9 +195,9 @@ void TestFrame::startTest()
 
         mFastTable->clearTable();
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==0)
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==0)
-        TEST_STEP(checkForSizes(0, 0))
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==0);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==0);
+        TEST_STEP(checkForSizes(0, 0));
 
         testCompleted(success, ui->clearTableResLabel);
     }
@@ -209,10 +209,10 @@ void TestFrame::startTest()
 
         mFastTable->setRowCount(50);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50)
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==0)
-        TEST_STEP(mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49)
-        TEST_STEP(checkForSizes(50, 0))
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==0);
+        TEST_STEP(mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49);
+        TEST_STEP(checkForSizes(50, 0));
 
         testCompleted(success, ui->setRow50ResLabel2);
     }
@@ -224,11 +224,11 @@ void TestFrame::startTest()
 
         mFastTable->setColumnCount(20);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50)
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*20)
-        TEST_STEP(mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19)
-        TEST_STEP(mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49)
-        TEST_STEP(checkForSizes(50, 20))
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*20);
+        TEST_STEP(mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19);
+        TEST_STEP(mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49);
+        TEST_STEP(checkForSizes(50, 20));
 
         testCompleted(success, ui->setCol20ResLabel2);
     }
@@ -243,11 +243,11 @@ void TestFrame::startTest()
 
         mFastTable->setDefaultBackgroundBrush(aNewDefaultBackgroundBrush);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getDefaultBackgroundBrush()==aNewDefaultBackgroundBrush)
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getDefaultBackgroundBrush()==aNewDefaultBackgroundBrush);
 
         mFastTable->setDefaultBackgroundBrush(aDefaultBackgroundBrush);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getDefaultBackgroundBrush()==aDefaultBackgroundBrush)
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getDefaultBackgroundBrush()==aDefaultBackgroundBrush);
 
         testCompleted(success, ui->setDefBackgroundResLabel);
     }
@@ -262,11 +262,11 @@ void TestFrame::startTest()
 
         mFastTable->setDefaultForegroundColor(aNewDefaultForegroundColor);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getDefaultForegroundColor()==aNewDefaultForegroundColor)
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getDefaultForegroundColor()==aNewDefaultForegroundColor);
 
         mFastTable->setDefaultForegroundColor(aDefaultForegroundColor);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getDefaultForegroundColor()==aDefaultForegroundColor)
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getDefaultForegroundColor()==aDefaultForegroundColor);
 
         testCompleted(success, ui->setDefForegroundResLabel);
     }
@@ -281,11 +281,11 @@ void TestFrame::startTest()
 
         mFastTable->setGridColor(aNewGridColor);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getGridColor()==aNewGridColor)
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getGridColor()==aNewGridColor);
 
         mFastTable->setGridColor(aGridColor);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getGridColor()==aGridColor)
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getGridColor()==aGridColor);
 
         testCompleted(success, ui->setGridColorResLabel);
     }
@@ -300,11 +300,11 @@ void TestFrame::startTest()
 
         mFastTable->setSelectionBrush(aNewSelectionBrush);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getSelectionBrush()==aNewSelectionBrush)
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getSelectionBrush()==aNewSelectionBrush);
 
         mFastTable->setSelectionBrush(aSelectionBrush);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getSelectionBrush()==aSelectionBrush)
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getSelectionBrush()==aSelectionBrush);
 
         testCompleted(success, ui->setSelectionColorResLabel);
     }
@@ -320,22 +320,22 @@ void TestFrame::startTest()
         mFastTable->setDefaultHeight(aNewDefaultHeight);
         mFastTable->setRowCount(51);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getDefaultHeight()==aNewDefaultHeight)
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aDefaultHeight*50+aNewDefaultHeight)
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*20)
-        TEST_STEP(mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19)
-        TEST_STEP(mOffsetY->at(50)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50)
-        TEST_STEP(checkForSizes(51, 20))
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getDefaultHeight()==aNewDefaultHeight);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aDefaultHeight*50+aNewDefaultHeight);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*20);
+        TEST_STEP(mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19);
+        TEST_STEP(mOffsetY->at(50)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50);
+        TEST_STEP(checkForSizes(51, 20));
 
         mFastTable->setDefaultHeight(aDefaultHeight);
         mFastTable->setRowCount(50);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getDefaultHeight()==aDefaultHeight)
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aDefaultHeight*50)
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*20)
-        TEST_STEP(mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19)
-        TEST_STEP(mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49)
-        TEST_STEP(checkForSizes(50, 20))
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getDefaultHeight()==aDefaultHeight);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aDefaultHeight*50);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*20);
+        TEST_STEP(mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19);
+        TEST_STEP(mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49);
+        TEST_STEP(checkForSizes(50, 20));
 
         testCompleted(success, ui->setDefHeightResLabel);
     }
@@ -351,22 +351,22 @@ void TestFrame::startTest()
         mFastTable->setDefaultWidth(aNewDefaultWidth);
         mFastTable->setColumnCount(21);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getDefaultWidth()==aNewDefaultWidth)
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50)
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aDefaultWidth*20+aNewDefaultWidth)
-        TEST_STEP(mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19)
-        TEST_STEP(mOffsetY->at(50)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50)
-        TEST_STEP(checkForSizes(50, 21))
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getDefaultWidth()==aNewDefaultWidth);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aDefaultWidth*20+aNewDefaultWidth);
+        TEST_STEP(mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19);
+        TEST_STEP(mOffsetY->at(50)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50);
+        TEST_STEP(checkForSizes(50, 21));
 
         mFastTable->setDefaultWidth(aDefaultWidth);
         mFastTable->setColumnCount(20);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getDefaultWidth()==aDefaultWidth)
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50)
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aDefaultWidth*20)
-        TEST_STEP(mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19)
-        TEST_STEP(mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49)
-        TEST_STEP(checkForSizes(50, 20))
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getDefaultWidth()==aDefaultWidth);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*50);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aDefaultWidth*20);
+        TEST_STEP(mOffsetX->at(19)==((PublicCustomFastTable*)mFastTable)->getDefaultWidth()*19);
+        TEST_STEP(mOffsetY->at(49)==((PublicCustomFastTable*)mFastTable)->getDefaultHeight()*49);
+        TEST_STEP(checkForSizes(50, 20));
 
         testCompleted(success, ui->setDefWidthResLabel);
     }
@@ -381,11 +381,11 @@ void TestFrame::startTest()
 
         mFastTable->setRowHeight(30, aRowHeight+100);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight+100)
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight+100);
 
         mFastTable->setRowHeight(30, aRowHeight);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight)
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight);
 
         testCompleted(success, ui->setRowHeightResLabel);
     }
@@ -400,11 +400,11 @@ void TestFrame::startTest()
 
         mFastTable->setColumnWidth(10, aColumnWidth+100);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth+100)
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth+100);
 
         mFastTable->setColumnWidth(10, aColumnWidth);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth)
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth);
 
         testCompleted(success, ui->setColumnWidthResLabel);
     }
@@ -420,13 +420,13 @@ void TestFrame::startTest()
         mFastTable->setRowHeight(49, aRowHeight+100);
         mFastTable->setRowCount(51);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight+((PublicCustomFastTable*)mFastTable)->getDefaultHeight()+100)
-        TEST_STEP(mOffsetY->at(50)==aTotalHeight+100)
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight+((PublicCustomFastTable*)mFastTable)->getDefaultHeight()+100);
+        TEST_STEP(mOffsetY->at(50)==aTotalHeight+100);
 
         mFastTable->setRowHeight(49, aRowHeight);
         mFastTable->setRowCount(50);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight)
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight);
 
         testCompleted(success, ui->totalHeightResLabel);
     }
@@ -442,13 +442,13 @@ void TestFrame::startTest()
         mFastTable->setColumnWidth(19, aColumnWidth+100);
         mFastTable->setColumnCount(21);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth+((PublicCustomFastTable*)mFastTable)->getDefaultWidth()+100)
-        TEST_STEP(mOffsetX->at(20)==aTotalWidth+100)
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth+((PublicCustomFastTable*)mFastTable)->getDefaultWidth()+100);
+        TEST_STEP(mOffsetX->at(20)==aTotalWidth+100);
 
         mFastTable->setColumnWidth(19, aColumnWidth);
         mFastTable->setColumnCount(20);
 
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth)
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth);
 
         testCompleted(success, ui->totalWidthResLabel);
     }
@@ -470,8 +470,8 @@ void TestFrame::startTest()
         {
             for (int j=0; j<((PublicCustomFastTable*)mFastTable)->getColumnCount(); ++j)
             {
-                TEST_STEP(mData->at(i).at(j)==QString::number(i*((PublicCustomFastTable*)mFastTable)->getColumnCount()+j))
-                TEST_STEP(mFastTable->text(i, j)==QString::number(i*((PublicCustomFastTable*)mFastTable)->getColumnCount()+j))
+                TEST_STEP(mData->at(i).at(j)==QString::number(i*((PublicCustomFastTable*)mFastTable)->getColumnCount()+j));
+                TEST_STEP(mFastTable->text(i, j)==QString::number(i*((PublicCustomFastTable*)mFastTable)->getColumnCount()+j));
 
                 if (!success)
                 {
@@ -499,7 +499,7 @@ void TestFrame::startTest()
         {
             for (int j=0; j<((PublicCustomFastTable*)mFastTable)->getColumnCount(); ++j)
             {
-                TEST_STEP(mSelectedCells->at(i).at(j))
+                TEST_STEP(mSelectedCells->at(i).at(j));
 
                 if (!success)
                 {
@@ -515,7 +515,7 @@ void TestFrame::startTest()
 
         mFastTable->setCellSelected(10, 5, false);
 
-        TEST_STEP(!mSelectedCells->at(10).at(5))
+        TEST_STEP(!mSelectedCells->at(10).at(5));
 
         mFastTable->unselectAll();
 
@@ -525,7 +525,7 @@ void TestFrame::startTest()
             {
                 for (int j=0; j<((PublicCustomFastTable*)mFastTable)->getColumnCount(); ++j)
                 {
-                    TEST_STEP(!mSelectedCells->at(i).at(j))
+                    TEST_STEP(!mSelectedCells->at(i).at(j));
 
                     if (!success)
                     {
@@ -565,8 +565,8 @@ void TestFrame::startTest()
         {
             for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
             {
-                TEST_STEP(mBackgroundBrushes->at(i).at(j) && *mBackgroundBrushes->at(i).at(j)==aNewBackgroundBrush)
-                TEST_STEP(aTable->backgroundBrush(i, j)==aNewBackgroundBrush)
+                TEST_STEP(mBackgroundBrushes->at(i).at(j) && *mBackgroundBrushes->at(i).at(j)==aNewBackgroundBrush);
+                TEST_STEP(aTable->backgroundBrush(i, j)==aNewBackgroundBrush);
 
                 if (!success)
                 {
@@ -582,7 +582,7 @@ void TestFrame::startTest()
 
         aTable->resetBackgroundBrush(10, 5);
 
-        TEST_STEP(mBackgroundBrushes->at(10).at(5)==0)
+        TEST_STEP(mBackgroundBrushes->at(10).at(5)==0);
 
         aTable->resetBackgroundBrushes();
 
@@ -592,7 +592,7 @@ void TestFrame::startTest()
             {
                 for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
                 {
-                    TEST_STEP(mBackgroundBrushes->at(i).at(j)==0)
+                    TEST_STEP(mBackgroundBrushes->at(i).at(j)==0);
 
                     if (!success)
                     {
@@ -636,8 +636,8 @@ void TestFrame::startTest()
         {
             for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
             {
-                TEST_STEP(mForegroundColors->at(i).at(j) && *mForegroundColors->at(i).at(j)==aNewForegroundColor)
-                TEST_STEP(aTable->foregroundColor(i, j)==aNewForegroundColor)
+                TEST_STEP(mForegroundColors->at(i).at(j) && *mForegroundColors->at(i).at(j)==aNewForegroundColor);
+                TEST_STEP(aTable->foregroundColor(i, j)==aNewForegroundColor);
 
                 if (!success)
                 {
@@ -653,7 +653,7 @@ void TestFrame::startTest()
 
         aTable->resetForegroundColor(10, 5);
 
-        TEST_STEP(mForegroundColors->at(10).at(5)==0)
+        TEST_STEP(mForegroundColors->at(10).at(5)==0);
 
         aTable->resetForegroundColors();
 
@@ -663,7 +663,7 @@ void TestFrame::startTest()
             {
                 for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
                 {
-                    TEST_STEP(mForegroundColors->at(i).at(j)==0)
+                    TEST_STEP(mForegroundColors->at(i).at(j)==0);
 
                     if (!success)
                     {
@@ -707,8 +707,8 @@ void TestFrame::startTest()
         {
             for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
             {
-                TEST_STEP(mCellFonts->at(i).at(j) && *mCellFonts->at(i).at(j)==aNewCellFont)
-                TEST_STEP(aTable->cellFont(i, j)==aNewCellFont)
+                TEST_STEP(mCellFonts->at(i).at(j) && *mCellFonts->at(i).at(j)==aNewCellFont);
+                TEST_STEP(aTable->cellFont(i, j)==aNewCellFont);
 
                 if (!success)
                 {
@@ -724,7 +724,7 @@ void TestFrame::startTest()
 
         aTable->resetFont(10, 5);
 
-        TEST_STEP(mCellFonts->at(10).at(5)==0)
+        TEST_STEP(mCellFonts->at(10).at(5)==0);
 
         aTable->resetFonts();
 
@@ -734,7 +734,7 @@ void TestFrame::startTest()
             {
                 for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
                 {
-                    TEST_STEP(mCellFonts->at(i).at(j)==0)
+                    TEST_STEP(mCellFonts->at(i).at(j)==0);
 
                     if (!success)
                     {
@@ -778,8 +778,8 @@ void TestFrame::startTest()
         {
             for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
             {
-                TEST_STEP(mCellTextFlags->at(i).at(j)==aNewFlag)
-                TEST_STEP(aTable->cellTextFlags(i, j)==aNewFlag)
+                TEST_STEP(mCellTextFlags->at(i).at(j)==aNewFlag);
+                TEST_STEP(aTable->cellTextFlags(i, j)==aNewFlag);
 
                 if (!success)
                 {
@@ -795,7 +795,7 @@ void TestFrame::startTest()
 
         aTable->resetTextFlag(10, 5);
 
-        TEST_STEP(aTable->cellTextFlags(10, 5)==(Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap))
+        TEST_STEP(aTable->cellTextFlags(10, 5)==(Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap));
 
         aTable->resetTextFlags();
 
@@ -805,7 +805,7 @@ void TestFrame::startTest()
             {
                 for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
                 {
-                    TEST_STEP(aTable->cellTextFlags(i, j)==(Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap))
+                    TEST_STEP(aTable->cellTextFlags(i, j)==(Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap));
 
                     if (!success)
                     {
@@ -841,14 +841,14 @@ void TestFrame::startTest()
         {
             for (int j=2; j<=4; j++)
             {
-                TEST_STEP(mCellMergeParentRow->at(i).at(j)==1)
-                TEST_STEP(mCellMergeParentColumn->at(i).at(j)==2)
-                TEST_STEP(aTable->spanParent(i, j)==QPoint(2, 1))
+                TEST_STEP(mCellMergeParentRow->at(i).at(j)==1);
+                TEST_STEP(mCellMergeParentColumn->at(i).at(j)==2);
+                TEST_STEP(aTable->spanParent(i, j)==QPoint(2, 1));
             }
         }
 
-        TEST_STEP(mCellMergeX->at(1).at(2)==3)
-        TEST_STEP(mCellMergeY->at(1).at(2)==2)
+        TEST_STEP(mCellMergeX->at(1).at(2)==3);
+        TEST_STEP(mCellMergeY->at(1).at(2)==2);
 
         aTable->setSpan(0, 3, 2, 1);
 
@@ -858,25 +858,25 @@ void TestFrame::startTest()
             {
                 if (i!=1 && j!=3)
                 {
-                    TEST_STEP(mCellMergeParentRow->at(i).at(j)==-1)
-                    TEST_STEP(mCellMergeParentColumn->at(i).at(j)==-1)
-                    TEST_STEP(aTable->spanParent(i, j)==QPoint(-1, -1))
+                    TEST_STEP(mCellMergeParentRow->at(i).at(j)==-1);
+                    TEST_STEP(mCellMergeParentColumn->at(i).at(j)==-1);
+                    TEST_STEP(aTable->spanParent(i, j)==QPoint(-1, -1));
                 }
             }
         }
 
-        TEST_STEP(mCellMergeX->at(1).at(2)==1)
-        TEST_STEP(mCellMergeY->at(1).at(2)==1)
+        TEST_STEP(mCellMergeX->at(1).at(2)==1);
+        TEST_STEP(mCellMergeY->at(1).at(2)==1);
 
         for (int i=0; i<=1; i++)
         {
-            TEST_STEP(mCellMergeParentRow->at(i).at(3)==0)
-            TEST_STEP(mCellMergeParentColumn->at(i).at(3)==3)
-            TEST_STEP(aTable->spanParent(i, 3)==QPoint(3, 0))
+            TEST_STEP(mCellMergeParentRow->at(i).at(3)==0);
+            TEST_STEP(mCellMergeParentColumn->at(i).at(3)==3);
+            TEST_STEP(aTable->spanParent(i, 3)==QPoint(3, 0));
         }
 
-        TEST_STEP(mCellMergeX->at(0).at(3)==1)
-        TEST_STEP(mCellMergeY->at(0).at(3)==2)
+        TEST_STEP(mCellMergeX->at(0).at(3)==1);
+        TEST_STEP(mCellMergeY->at(0).at(3)==2);
 
         aTable->clearSpans();
 
@@ -884,13 +884,13 @@ void TestFrame::startTest()
         {
             for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
             {
-                TEST_STEP(aTable->rowSpan(i, j)==1)
-                TEST_STEP(aTable->columnSpan(i, j)==1)
-                TEST_STEP(aTable->spanParent(i, j)==QPoint(-1, -1))
-                TEST_STEP(mCellMergeX->at(i).at(j)==1)
-                TEST_STEP(mCellMergeY->at(i).at(j)==1)
-                TEST_STEP(mCellMergeParentRow->at(i).at(j)==-1)
-                TEST_STEP(mCellMergeParentColumn->at(i).at(j)==-1)
+                TEST_STEP(aTable->rowSpan(i, j)==1);
+                TEST_STEP(aTable->columnSpan(i, j)==1);
+                TEST_STEP(aTable->spanParent(i, j)==QPoint(-1, -1));
+                TEST_STEP(mCellMergeX->at(i).at(j)==1);
+                TEST_STEP(mCellMergeY->at(i).at(j)==1);
+                TEST_STEP(mCellMergeParentRow->at(i).at(j)==-1);
+                TEST_STEP(mCellMergeParentColumn->at(i).at(j)==-1);
 
                 if (!success)
                 {
@@ -916,22 +916,22 @@ bool TestFrame::checkForSizes(int rows, int columns)
 {
     bool success=true;
 
-    TEST_STEP(((PublicCustomFastTable*)mFastTable)->getRowCount()==rows)
-    TEST_STEP(((PublicCustomFastTable*)mFastTable)->getColumnCount()==columns)
-    TEST_STEP((mData==0                  || mData->length()==rows))
-    TEST_STEP((mRowHeights==0            || mRowHeights->length()==rows))
-    TEST_STEP((mColumnWidths==0          || mColumnWidths->length()==columns))
-    TEST_STEP((mOffsetX==0               || mOffsetX->length()==columns))
-    TEST_STEP((mOffsetY==0               || mOffsetY->length()==rows))
-    TEST_STEP((mSelectedCells==0         || mSelectedCells->length()==rows))
-    TEST_STEP((mBackgroundBrushes==0     || mBackgroundBrushes->length()==rows))
-    TEST_STEP((mForegroundColors==0      || mForegroundColors->length()==rows))
-    TEST_STEP((mCellFonts==0             || mCellFonts->length()==rows))
-    TEST_STEP((mCellTextFlags==0         || mCellTextFlags->length()==rows))
-    TEST_STEP((mCellMergeX==0            || mCellMergeX->length()==rows))
-    TEST_STEP((mCellMergeY==0            || mCellMergeY->length()==rows))
-    TEST_STEP((mCellMergeParentRow==0    || mCellMergeParentRow->length()==rows))
-    TEST_STEP((mCellMergeParentColumn==0 || mCellMergeParentColumn->length()==rows))
+    TEST_STEP(((PublicCustomFastTable*)mFastTable)->getRowCount()==rows);
+    TEST_STEP(((PublicCustomFastTable*)mFastTable)->getColumnCount()==columns);
+    TEST_STEP((mData==0                  || mData->length()==rows));
+    TEST_STEP((mRowHeights==0            || mRowHeights->length()==rows));
+    TEST_STEP((mColumnWidths==0          || mColumnWidths->length()==columns));
+    TEST_STEP((mOffsetX==0               || mOffsetX->length()==columns));
+    TEST_STEP((mOffsetY==0               || mOffsetY->length()==rows));
+    TEST_STEP((mSelectedCells==0         || mSelectedCells->length()==rows));
+    TEST_STEP((mBackgroundBrushes==0     || mBackgroundBrushes->length()==rows));
+    TEST_STEP((mForegroundColors==0      || mForegroundColors->length()==rows));
+    TEST_STEP((mCellFonts==0             || mCellFonts->length()==rows));
+    TEST_STEP((mCellTextFlags==0         || mCellTextFlags->length()==rows));
+    TEST_STEP((mCellMergeX==0            || mCellMergeX->length()==rows));
+    TEST_STEP((mCellMergeY==0            || mCellMergeY->length()==rows));
+    TEST_STEP((mCellMergeParentRow==0    || mCellMergeParentRow->length()==rows));
+    TEST_STEP((mCellMergeParentColumn==0 || mCellMergeParentColumn->length()==rows));
 
     CHECK_COLUMN_COUNT(mData);
     CHECK_COLUMN_COUNT(mHorizontalHeader_Data);
