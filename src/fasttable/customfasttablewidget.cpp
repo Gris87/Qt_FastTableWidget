@@ -7,8 +7,8 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
 
     mRowCount=0;
     mColumnCount=0;
-    mHorizontalHeaderRowCount=0;
-    mVerticalHeaderColumnCount=0;
+    mHorizontalHeaderRowCount=1;
+    mVerticalHeaderColumnCount=1;
 
     mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
     mDefaultForegroundColor.setRgb(0, 0, 0);
@@ -262,8 +262,8 @@ void CustomFastTableWidget::clearTable()
 
     mRowCount=0;
     mColumnCount=0;
-    mHorizontalHeaderRowCount=0;
-    mVerticalHeaderColumnCount=0;
+    mHorizontalHeaderRowCount=1;
+    mVerticalHeaderColumnCount=1;
 
     mTotalWidth=0;
     mTotalHeight=0;
