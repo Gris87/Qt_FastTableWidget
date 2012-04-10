@@ -60,7 +60,7 @@ protected:
     QList< QList<int> > mCellMergeParentColumn;
 
     void paintEvent(QPaintEvent *event);
-    void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column);
+    void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent);
 
     void updateVisibleRange();
 };

@@ -58,6 +58,9 @@ class CustomFastTableWidget : public QAbstractScrollArea
     Q_PROPERTY(QBrush  selectionBrush                         READ selectionBrush                         WRITE setSelectionBrush)
 
 public:
+
+    enum DrawComponent {DrawCell, DrawHorizontalHeaderCell, DrawVerticalHeaderCell, DrawTopLeftCorner};
+
     explicit CustomFastTableWidget(QWidget *parent = 0);
     ~CustomFastTableWidget();
 
@@ -239,7 +242,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void resizeEvent(QResizeEvent *event);
     void paintEvent(QPaintEvent *event);
-    virtual void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column);
+    virtual void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent);
 
     void updateBarsRanges();
     virtual void updateVisibleRange();

@@ -103,25 +103,77 @@ void CustomFastTableWidget::paintEvent(QPaintEvent *event)
     {
         for (int j=mVisibleLeft; j<=mVisibleRight; ++j)
         {
-            paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), mColumnWidths.at(j), mRowHeights.at(i), i, j);
+            paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), mColumnWidths.at(j), mRowHeights.at(i), i, j, DrawCell);
         }
     }
 
     END_FREQUENT_PROFILE("void CustomFastTableWidget::paintEvent(QPaintEvent *event)")
 }
 
-void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column)
+void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent)
 {
     START_FREQUENT_PROFILE
 
-    painter.setPen(QPen(mGridColor));
+    QColor  *aGridColor;
+    QBrush  *aBackgroundBrush;
+    QColor  *aTextColor;
+    QString *aText;
+
+    switch (drawComponent)
+    {
+        case DrawCell:
+        {
+            aGridColor=&mGridColor;
+            aBackgroundBrush=&mDefaultBackgroundBrush;
+            aTextColor=&mDefaultForegroundColor;
+            aText=&mData[row][column];
+        }
+        break;
+        case DrawHorizontalHeaderCell:
+        {
+            aGridColor=&mHorizontalHeaderGridColor;
+            aBackgroundBrush=&mHorizontalHeaderDefaultBackgroundBrush;
+            aTextColor=&mHorizontalHeaderDefaultForegroundColor;
+            aText=&mHorizontalHeaderData[row][column];
+        }
+        break;
+        case DrawVerticalHeaderCell:
+        {
+            aGridColor=&mVerticalHeaderGridColor;
+            aBackgroundBrush=&mVerticalHeaderDefaultBackgroundBrush;
+            aTextColor=&mVerticalHeaderDefaultForegroundColor;
+            aText=&mVerticalHeaderData[row][column];
+        }
+        break;
+        case DrawTopLeftCorner:
+        {
+            aGridColor=&mHorizontalHeaderGridColor;
+            aBackgroundBrush=&mHorizontalHeaderDefaultBackgroundBrush;
+            aTextColor=0;
+            aText=0;
+        }
+        break;
+        default:
+        {
+            aGridColor=0;
+            aBackgroundBrush=0;
+            aTextColor=0;
+            aText=0;
+        }
+        break;
+    }
+
+    painter.setPen(QPen(*aGridColor));
     painter.setFont(font());
 
-    painter.fillRect(x, y, width, height, mDefaultBackgroundBrush);
+    painter.fillRect(x, y, width, height, *aBackgroundBrush);
     painter.drawRect(x, y, width, height);
 
-    painter.setPen(QPen(mDefaultForegroundColor));
-    painter.drawText(x+4, y+4, width-8, height-8, Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap , mData.at(row).at(column));
+    if (aText)
+    {
+        painter.setPen(QPen(*aTextColor));
+        painter.drawText(x+4, y+4, width-8, height-8, Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap, *aText);
+    }
 
     END_FREQUENT_PROFILE("void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int row, const int column)")
 }

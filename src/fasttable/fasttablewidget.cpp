@@ -51,12 +51,12 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                         aHeight+=mRowHeights.at(i+g);
                     }
 
-                    paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), aWidth, aHeight, i, j);
+                    paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), aWidth, aHeight, i, j, DrawCell);
                 }
             }
             else
             {
-                paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), mColumnWidths.at(j), mRowHeights.at(i), i, j);
+                paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), mColumnWidths.at(j), mRowHeights.at(i), i, j, DrawCell);
             }
         }
     }
@@ -64,7 +64,7 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
     END_FREQUENT_PROFILE("void FastTableWidget::paintEvent(QPaintEvent *event)")
 }
 
-void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column)
+void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent)
 {
     START_FREQUENT_PROFILE
 
