@@ -10,6 +10,29 @@
 #include "src/fasttable/customfasttablewidget.h"
 #include "src/fasttable/publictablewidget.h"
 
+#define TEST_STEP(condition) if (success)\
+                             {\
+                                 success = success && condition;\
+                                 \
+                                 if (!success)\
+                                 {\
+                                     qWarning()<<"Error at: "#condition;\
+                                 }\
+                             }
+
+#define CHECK_COLUMN_COUNT(list) if (success && list)\
+                                 {\
+                                     for (int i=0; i<list->length(); ++i)\
+                                     {\
+                                         TEST_STEP(list->at(i).length()==columns)\
+                                         \
+                                         if (!success)\
+                                         {\
+                                             break;\
+                                         }\
+                                     }\
+                                 }
+
 namespace Ui {
     class TestFrame;
 }
