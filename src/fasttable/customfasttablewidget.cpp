@@ -357,6 +357,8 @@ void CustomFastTableWidget::clearTable()
 
     mSelectedCells.clear();
     mCurSelection.clear();
+    mHorizontalHeaderSelectedColumns.clear();
+    mVerticalHeaderSelectedRows.clear();
 
     END_PROFILE("void CustomFastTableWidget::clearTable()")
 }

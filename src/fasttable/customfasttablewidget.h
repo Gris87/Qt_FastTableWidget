@@ -238,6 +238,8 @@ protected:
 
     QList< QList<bool> > mSelectedCells;
     QList< QPoint > mCurSelection;
+    QList< bool > mHorizontalHeaderSelectedColumns;
+    QList< bool > mVerticalHeaderSelectedRows;
 
     void mousePressEvent(QMouseEvent *event);
     void resizeEvent(QResizeEvent *event);
