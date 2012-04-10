@@ -42,25 +42,61 @@ class TestFrame : public QWidget
     Q_OBJECT
 
 public:
+    QList< QStringList >     *mData;
+    QList< quint16 >         *mRowHeights;
+    QList< quint16 >         *mColumnWidths;
+    QList< int >             *mOffsetX;
+    QList< int >             *mOffsetY;
+
+    QList< QStringList >     *mHorizontalHeaderData;
+    QList< quint16 >         *mHorizontalHeaderRowHeights;
+    QList< quint16 >         *mHorizontalHeaderColumnWidths;
+    QList< int >             *mHorizontalHeaderOffsetX;
+    QList< int >             *mHorizontalHeaderOffsetY;
+
+    QList< QStringList >     *mVerticalHeaderData;
+    QList< quint16 >         *mVerticalHeaderRowHeights;
+    QList< quint16 >         *mVerticalHeaderColumnWidths;
+    QList< int >             *mVerticalHeaderOffsetX;
+    QList< int >             *mVerticalHeaderOffsetY;
+
+    QList< QList<bool> >     *mSelectedCells;
+    QList< QPoint >          *mCurSelection;
+    QList< bool >            *mHorizontalHeaderSelectedColumns;
+    QList< bool >            *mVerticalHeaderSelectedRows;
+
+    QList< QList<QBrush *> > *mBackgroundBrushes;
+    QList< QList<QColor *> > *mForegroundColors;
+    QList< QList<QFont *> >  *mCellFonts;
+    QList< QList<int> >      *mCellTextFlags;
+    QList< QList<quint16> >  *mCellMergeX;
+    QList< QList<quint16> >  *mCellMergeY;
+    QList< QList<int> >      *mCellMergeParentRow;
+    QList< QList<int> >      *mCellMergeParentColumn;
+
+    QList< QList<QBrush *> > *mHorizontalHeaderBackgroundBrushes;
+    QList< QList<QColor *> > *mHorizontalHeaderForegroundColors;
+    QList< QList<QFont *> >  *mHorizontalHeaderCellFonts;
+    QList< QList<int> >      *mHorizontalHeaderCellTextFlags;
+    QList< QList<quint16> >  *mHorizontalHeaderCellMergeX;
+    QList< QList<quint16> >  *mHorizontalHeaderCellMergeY;
+    QList< QList<int> >      *mHorizontalHeaderCellMergeParentRow;
+    QList< QList<int> >      *mHorizontalHeaderCellMergeParentColumn;
+
+    QList< QList<QBrush *> > *mVerticalHeaderBackgroundBrushes;
+    QList< QList<QColor *> > *mVerticalHeaderForegroundColors;
+    QList< QList<QFont *> >  *mVerticalHeaderCellFonts;
+    QList< QList<int> >      *mVerticalHeaderCellTextFlags;
+    QList< QList<quint16> >  *mVerticalHeaderCellMergeX;
+    QList< QList<quint16> >  *mVerticalHeaderCellMergeY;
+    QList< QList<int> >      *mVerticalHeaderCellMergeParentRow;
+    QList< QList<int> >      *mVerticalHeaderCellMergeParentColumn;
+
+    //---------------------------------------------------------------------------
+
     Ui::TestFrame         *ui;
     CustomFastTableWidget *mFastTable;
     QSplitter             *mDividerSplitter;
-
-    QList< QStringList >      *mData;
-    QList< quint16 >          *mRowHeights;
-    QList< quint16 >          *mColumnWidths;
-    QList< int >              *mOffsetX;
-    QList< int >              *mOffsetY;
-    QList< QList<bool> >      *mSelectedCells;
-    QList< QPoint >           *mCurSelection;
-    QList< QList<QBrush *> >  *mBackgroundBrushes;
-    QList< QList<QColor *> >  *mForegroundColors;
-    QList< QList<QFont *> >   *mCellFonts;
-    QList< QList<int> >       *mCellTextFlags;
-    QList< QList<quint16> >   *mCellMergeX;
-    QList< QList<quint16> >   *mCellMergeY;
-    QList< QList<int> >       *mCellMergeParentRow;
-    QList< QList<int> >       *mCellMergeParentColumn;
 
     explicit TestFrame(CustomFastTableWidget* aFastTable, QWidget *parent = 0);
     ~TestFrame();

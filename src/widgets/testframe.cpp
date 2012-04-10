@@ -17,35 +17,86 @@ TestFrame::TestFrame(CustomFastTableWidget* aFastTable, QWidget *parent) :
 
     ui->dividerLayout->addWidget(mDividerSplitter);
 
-    mData                  = (((PublicCustomFastTable*)mFastTable)->getData());
-    mRowHeights            = (((PublicCustomFastTable*)mFastTable)->getRowHeights());
-    mColumnWidths          = (((PublicCustomFastTable*)mFastTable)->getColumnWidths());
-    mOffsetX               = (((PublicCustomFastTable*)mFastTable)->getOffsetX());
-    mOffsetY               = (((PublicCustomFastTable*)mFastTable)->getOffsetY());
-    mSelectedCells         = (((PublicCustomFastTable*)mFastTable)->getSelectedCells());
-    mCurSelection          = (((PublicCustomFastTable*)mFastTable)->getCurSelection());
+    mData                                  = (((PublicCustomFastTable*)mFastTable)->getData());
+    mRowHeights                            = (((PublicCustomFastTable*)mFastTable)->getRowHeights());
+    mColumnWidths                          = (((PublicCustomFastTable*)mFastTable)->getColumnWidths());
+    mOffsetX                               = (((PublicCustomFastTable*)mFastTable)->getOffsetX());
+    mOffsetY                               = (((PublicCustomFastTable*)mFastTable)->getOffsetY());
+
+    mHorizontalHeaderData                  = (((PublicCustomFastTable*)mFastTable)->getHorizontalHeaderData());
+    mHorizontalHeaderRowHeights            = (((PublicCustomFastTable*)mFastTable)->getHorizontalHeaderRowHeights());
+    mHorizontalHeaderColumnWidths          = (((PublicCustomFastTable*)mFastTable)->getHorizontalHeaderColumnWidths());
+    mHorizontalHeaderOffsetX               = (((PublicCustomFastTable*)mFastTable)->getHorizontalHeaderOffsetX());
+    mHorizontalHeaderOffsetY               = (((PublicCustomFastTable*)mFastTable)->getHorizontalHeaderOffsetY());
+
+    mVerticalHeaderData                    = (((PublicCustomFastTable*)mFastTable)->getVerticalHeaderData());
+    mVerticalHeaderRowHeights              = (((PublicCustomFastTable*)mFastTable)->getVerticalHeaderRowHeights());
+    mVerticalHeaderColumnWidths            = (((PublicCustomFastTable*)mFastTable)->getVerticalHeaderColumnWidths());
+    mVerticalHeaderOffsetX                 = (((PublicCustomFastTable*)mFastTable)->getVerticalHeaderOffsetX());
+    mVerticalHeaderOffsetY                 = (((PublicCustomFastTable*)mFastTable)->getVerticalHeaderOffsetY());
+
+    mSelectedCells                         = (((PublicCustomFastTable*)mFastTable)->getSelectedCells());
+    mCurSelection                          = (((PublicCustomFastTable*)mFastTable)->getCurSelection());
+    mHorizontalHeaderSelectedColumns       = (((PublicCustomFastTable*)mFastTable)->getHorizontalHeaderSelectedColumns());
+    mVerticalHeaderSelectedRows            = (((PublicCustomFastTable*)mFastTable)->getVerticalHeaderSelectedRows());
 
     if (mFastTable->inherits("FastTableWidget"))
     {
-        mBackgroundBrushes     = (((PublicFastTable*)mFastTable)->getBackgroundBrushes());
-        mForegroundColors      = (((PublicFastTable*)mFastTable)->getForegroundColors());
-        mCellFonts             = (((PublicFastTable*)mFastTable)->getCellFonts());
-        mCellTextFlags         = (((PublicFastTable*)mFastTable)->getCellTextFlags());
-        mCellMergeX            = (((PublicFastTable*)mFastTable)->getCellMergeX());
-        mCellMergeY            = (((PublicFastTable*)mFastTable)->getCellMergeY());
-        mCellMergeParentRow    = (((PublicFastTable*)mFastTable)->getCellMergeParentRow());
-        mCellMergeParentColumn = (((PublicFastTable*)mFastTable)->getCellMergeParentColumn());
+        mBackgroundBrushes                     = (((PublicFastTable*)mFastTable)->getBackgroundBrushes());
+        mForegroundColors                      = (((PublicFastTable*)mFastTable)->getForegroundColors());
+        mCellFonts                             = (((PublicFastTable*)mFastTable)->getCellFonts());
+        mCellTextFlags                         = (((PublicFastTable*)mFastTable)->getCellTextFlags());
+        mCellMergeX                            = (((PublicFastTable*)mFastTable)->getCellMergeX());
+        mCellMergeY                            = (((PublicFastTable*)mFastTable)->getCellMergeY());
+        mCellMergeParentRow                    = (((PublicFastTable*)mFastTable)->getCellMergeParentRow());
+        mCellMergeParentColumn                 = (((PublicFastTable*)mFastTable)->getCellMergeParentColumn());
+
+        mHorizontalHeaderBackgroundBrushes     = (((PublicFastTable*)mFastTable)->getHorizontalHeaderBackgroundBrushes());
+        mHorizontalHeaderForegroundColors      = (((PublicFastTable*)mFastTable)->getHorizontalHeaderForegroundColors());
+        mHorizontalHeaderCellFonts             = (((PublicFastTable*)mFastTable)->getHorizontalHeaderCellFonts());
+        mHorizontalHeaderCellTextFlags         = (((PublicFastTable*)mFastTable)->getHorizontalHeaderCellTextFlags());
+        mHorizontalHeaderCellMergeX            = (((PublicFastTable*)mFastTable)->getHorizontalHeaderCellMergeX());
+        mHorizontalHeaderCellMergeY            = (((PublicFastTable*)mFastTable)->getHorizontalHeaderCellMergeY());
+        mHorizontalHeaderCellMergeParentRow    = (((PublicFastTable*)mFastTable)->getHorizontalHeaderCellMergeParentRow());
+        mHorizontalHeaderCellMergeParentColumn = (((PublicFastTable*)mFastTable)->getHorizontalHeaderCellMergeParentColumn());
+
+        mVerticalHeaderBackgroundBrushes       = (((PublicFastTable*)mFastTable)->getVerticalHeaderBackgroundBrushes());
+        mVerticalHeaderForegroundColors        = (((PublicFastTable*)mFastTable)->getVerticalHeaderForegroundColors());
+        mVerticalHeaderCellFonts               = (((PublicFastTable*)mFastTable)->getVerticalHeaderCellFonts());
+        mVerticalHeaderCellTextFlags           = (((PublicFastTable*)mFastTable)->getVerticalHeaderCellTextFlags());
+        mVerticalHeaderCellMergeX              = (((PublicFastTable*)mFastTable)->getVerticalHeaderCellMergeX());
+        mVerticalHeaderCellMergeY              = (((PublicFastTable*)mFastTable)->getVerticalHeaderCellMergeY());
+        mVerticalHeaderCellMergeParentRow      = (((PublicFastTable*)mFastTable)->getVerticalHeaderCellMergeParentRow());
+        mVerticalHeaderCellMergeParentColumn   = (((PublicFastTable*)mFastTable)->getVerticalHeaderCellMergeParentColumn());
     }
     else
     {
-        mBackgroundBrushes     = 0;
-        mForegroundColors      = 0;
-        mCellFonts             = 0;
-        mCellTextFlags         = 0;
-        mCellMergeX            = 0;
-        mCellMergeY            = 0;
-        mCellMergeParentRow    = 0;
-        mCellMergeParentColumn = 0;
+        mBackgroundBrushes                     = 0;
+        mForegroundColors                      = 0;
+        mCellFonts                             = 0;
+        mCellTextFlags                         = 0;
+        mCellMergeX                            = 0;
+        mCellMergeY                            = 0;
+        mCellMergeParentRow                    = 0;
+        mCellMergeParentColumn                 = 0;
+
+        mHorizontalHeaderBackgroundBrushes     = 0;
+        mHorizontalHeaderForegroundColors      = 0;
+        mHorizontalHeaderCellFonts             = 0;
+        mHorizontalHeaderCellTextFlags         = 0;
+        mHorizontalHeaderCellMergeX            = 0;
+        mHorizontalHeaderCellMergeY            = 0;
+        mHorizontalHeaderCellMergeParentRow    = 0;
+        mHorizontalHeaderCellMergeParentColumn = 0;
+
+        mVerticalHeaderBackgroundBrushes       = 0;
+        mVerticalHeaderForegroundColors        = 0;
+        mVerticalHeaderCellFonts               = 0;
+        mVerticalHeaderCellTextFlags           = 0;
+        mVerticalHeaderCellMergeX              = 0;
+        mVerticalHeaderCellMergeY              = 0;
+        mVerticalHeaderCellMergeParentRow      = 0;
+        mVerticalHeaderCellMergeParentColumn   = 0;
     }
 }
 
@@ -420,7 +471,7 @@ void TestFrame::startTest()
             for (int j=0; j<((PublicCustomFastTable*)mFastTable)->getColumnCount(); ++j)
             {
                 TEST_STEP(mData->at(i).at(j)==QString::number(i*((PublicCustomFastTable*)mFastTable)->getColumnCount()+j))
-                TEST_STEP(mFastTable->text(i, j)!=QString::number(i*((PublicCustomFastTable*)mFastTable)->getColumnCount()+j))
+                TEST_STEP(mFastTable->text(i, j)==QString::number(i*((PublicCustomFastTable*)mFastTable)->getColumnCount()+j))
 
                 if (!success)
                 {

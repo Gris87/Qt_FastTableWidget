@@ -219,27 +219,27 @@ protected:
     int mVerticalHeaderVisibleBottom;
 
     QList< QStringList > mData;
-    QList< quint16 > mRowHeights;
-    QList< quint16 > mColumnWidths;
-    QList< int > mOffsetX;
-    QList< int > mOffsetY;
+    QList< quint16 >     mRowHeights;
+    QList< quint16 >     mColumnWidths;
+    QList< int >         mOffsetX;
+    QList< int >         mOffsetY;
 
     QList< QStringList > mHorizontalHeaderData;
-    QList< quint16 > mHorizontalHeaderRowHeights;
-    QList< quint16 > mHorizontalHeaderColumnWidths;
-    QList< int > mHorizontalHeaderOffsetX;
-    QList< int > mHorizontalHeaderOffsetY;
+    QList< quint16 >     mHorizontalHeaderRowHeights;
+    QList< quint16 >     mHorizontalHeaderColumnWidths;
+    QList< int >         mHorizontalHeaderOffsetX;
+    QList< int >         mHorizontalHeaderOffsetY;
 
     QList< QStringList > mVerticalHeaderData;
-    QList< quint16 > mVerticalHeaderRowHeights;
-    QList< quint16 > mVerticalHeaderColumnWidths;
-    QList< int > mVerticalHeaderOffsetX;
-    QList< int > mVerticalHeaderOffsetY;
+    QList< quint16 >     mVerticalHeaderRowHeights;
+    QList< quint16 >     mVerticalHeaderColumnWidths;
+    QList< int >         mVerticalHeaderOffsetX;
+    QList< int >         mVerticalHeaderOffsetY;
 
     QList< QList<bool> > mSelectedCells;
-    QList< QPoint > mCurSelection;
-    QList< bool > mHorizontalHeaderSelectedColumns;
-    QList< bool > mVerticalHeaderSelectedRows;
+    QList< QPoint >      mCurSelection;
+    QList< bool >        mHorizontalHeaderSelectedColumns;
+    QList< bool >        mVerticalHeaderSelectedRows;
 
     void mousePressEvent(QMouseEvent *event);
     void resizeEvent(QResizeEvent *event);

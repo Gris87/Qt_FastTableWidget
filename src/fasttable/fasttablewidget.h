@@ -52,30 +52,30 @@ public:
 protected:
     QList< QList<QBrush *> > mBackgroundBrushes;
     QList< QList<QColor *> > mForegroundColors;
-    QList< QList<QFont *> > mCellFonts;
-    QList< QList<int> > mCellTextFlags;
-    QList< QList<quint16> > mCellMergeX;
-    QList< QList<quint16> > mCellMergeY;
-    QList< QList<int> > mCellMergeParentRow;
-    QList< QList<int> > mCellMergeParentColumn;
+    QList< QList<QFont *> >  mCellFonts;
+    QList< QList<int> >      mCellTextFlags;
+    QList< QList<quint16> >  mCellMergeX;
+    QList< QList<quint16> >  mCellMergeY;
+    QList< QList<int> >      mCellMergeParentRow;
+    QList< QList<int> >      mCellMergeParentColumn;
 
     QList< QList<QBrush *> > mHorizontalHeaderBackgroundBrushes;
     QList< QList<QColor *> > mHorizontalHeaderForegroundColors;
-    QList< QList<QFont *> > mHorizontalHeaderCellFonts;
-    QList< QList<int> > mHorizontalHeaderCellTextFlags;
-    QList< QList<quint16> > mHorizontalHeaderCellMergeX;
-    QList< QList<quint16> > mHorizontalHeaderCellMergeY;
-    QList< QList<int> > mHorizontalHeaderCellMergeParentRow;
-    QList< QList<int> > mHorizontalHeaderCellMergeParentColumn;
+    QList< QList<QFont *> >  mHorizontalHeaderCellFonts;
+    QList< QList<int> >      mHorizontalHeaderCellTextFlags;
+    QList< QList<quint16> >  mHorizontalHeaderCellMergeX;
+    QList< QList<quint16> >  mHorizontalHeaderCellMergeY;
+    QList< QList<int> >      mHorizontalHeaderCellMergeParentRow;
+    QList< QList<int> >      mHorizontalHeaderCellMergeParentColumn;
 
     QList< QList<QBrush *> > mVerticalHeaderBackgroundBrushes;
     QList< QList<QColor *> > mVerticalHeaderForegroundColors;
-    QList< QList<QFont *> > mVerticalHeaderCellFonts;
-    QList< QList<int> > mVerticalHeaderCellTextFlags;
-    QList< QList<quint16> > mVerticalHeaderCellMergeX;
-    QList< QList<quint16> > mVerticalHeaderCellMergeY;
-    QList< QList<int> > mVerticalHeaderCellMergeParentRow;
-    QList< QList<int> > mVerticalHeaderCellMergeParentColumn;
+    QList< QList<QFont *> >  mVerticalHeaderCellFonts;
+    QList< QList<int> >      mVerticalHeaderCellTextFlags;
+    QList< QList<quint16> >  mVerticalHeaderCellMergeX;
+    QList< QList<quint16> >  mVerticalHeaderCellMergeY;
+    QList< QList<int> >      mVerticalHeaderCellMergeParentRow;
+    QList< QList<int> >      mVerticalHeaderCellMergeParentColumn;
 
     void paintEvent(QPaintEvent *event);
     void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent);
