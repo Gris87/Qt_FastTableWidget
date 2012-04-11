@@ -205,8 +205,8 @@ void CustomFastTableWidget::updateBarsRanges()
     horizontalScrollBar()->setPageStep(mTotalWidth);
     verticalScrollBar()->setPageStep(mTotalHeight);
 
-    horizontalScrollBar()->setRange(0, mTotalWidth - areaSize.width());
-    verticalScrollBar()->setRange(0, mTotalHeight - areaSize.height());
+    horizontalScrollBar()->setRange(0, mTotalWidth  - areaSize.width()  + 1);
+    verticalScrollBar()->setRange(0,   mTotalHeight - areaSize.height() + 1);
 
     END_PROFILE("void CustomFastTableWidget::updateBarsRanges()");
 }

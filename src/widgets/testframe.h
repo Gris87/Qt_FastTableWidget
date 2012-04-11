@@ -5,6 +5,7 @@
 #include "ui_testframe.h"
 
 #include <QSplitter>
+#include <QLabel>
 #include "qdebug.h"
 
 #include "src/fasttable/customfasttablewidget.h"
@@ -114,10 +115,13 @@ public:
 
     bool checkForSizes(int rows, int columns, int headerRows, int headerColumns);
 
-    inline void testCompleted(bool success, QLabel *aLabel);
-    inline void testSuccess(QLabel *aLabel);
-    inline void testFail(QLabel *aLabel);
-    inline void testNotSupported(QLabel *aLabel);
+    inline void addTestLabel(QString aTestName);
+    QLabel* getLabel(QString aTestName);
+
+    inline void testCompleted(bool success, QString aTestName);
+    inline void testSuccess(QString aTestName);
+    inline void testFail(QString aTestName);
+    inline void testNotSupported(QString aTestName);
 
 signals:
     void testFinished();

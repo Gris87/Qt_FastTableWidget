@@ -18,7 +18,7 @@ TestDialog::TestDialog(QWidget *parent) :
     ui->testsTabWidget->addTab(aFrame, "FastTableWidget");
     connect(aFrame, SIGNAL(testFinished()), this, SLOT(testCompleted()));
 */
-    ui->progressBar->setMaximum((((TestFrame*)(ui->testsTabWidget->widget(0)))->ui->testGridLayout->count() >> 1)*ui->testsTabWidget->count());
+    ui->progressBar->setMaximum((((TestFrame*)(ui->testsTabWidget->widget(0)))->ui->testGridLayout->count()/3)*ui->testsTabWidget->count());
     ui->progressBar->setValue(0);
 
     QTimer::singleShot(0, this, SLOT(startTests()));
