@@ -11,14 +11,17 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     mVerticalHeader_ColumnCount=0;
 
     mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
+    mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
     mDefaultForegroundColor.setRgb(0, 0, 0);
     mGridColor.setRgb(0, 0, 0);
 
-    mHorizontalHeader_DefaultBackgroundBrush.setColor(QColor(180, 180, 180));
+    mHorizontalHeader_DefaultBackgroundBrush.setColor(QColor(220, 220, 220));
+    mHorizontalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
     mHorizontalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
     mHorizontalHeader_GridColor.setRgb(0, 0, 0);
 
-    mVerticalHeader_DefaultBackgroundBrush.setColor(QColor(180, 180, 180));
+    mVerticalHeader_DefaultBackgroundBrush.setColor(QColor(220, 220, 220));
+    mVerticalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
     mVerticalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
     mVerticalHeader_GridColor.setRgb(0, 0, 0);
 
@@ -88,17 +91,42 @@ void CustomFastTableWidget::paintEvent(QPaintEvent *event)
     int offsetX=-horizontalScrollBar()->value();
     int offsetY=-verticalScrollBar()->value();
 
-    if (mVisibleTop<0 || mVisibleLeft<0)
+    if (mVisibleLeft>=0 && mVisibleTop>=0)
     {
-        return;
+        for (int i=mVisibleTop; i<=mVisibleBottom; ++i)
+        {
+            for (int j=mVisibleLeft; j<=mVisibleRight; ++j)
+            {
+                paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), mColumnWidths.at(j), mRowHeights.at(i), i, j, DrawCell);
+            }
+        }
     }
 
-    for (int i=mVisibleTop; i<=mVisibleBottom; ++i)
+    if (mHorizontalHeader_VisibleBottom>=0 && mVisibleLeft>=0)
     {
-        for (int j=mVisibleLeft; j<=mVisibleRight; ++j)
+        for (int i=0; i<=mHorizontalHeader_VisibleBottom; ++i)
         {
-            paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), mColumnWidths.at(j), mRowHeights.at(i), i, j, DrawCell);
+            for (int j=mVisibleLeft; j<=mVisibleRight; ++j)
+            {
+                paintCell(painter, offsetX+mOffsetX.at(j), mHorizontalHeader_OffsetY.at(i), mColumnWidths.at(j), mHorizontalHeader_RowHeights.at(i), i, j, DrawHorizontalHeaderCell);
+            }
         }
+    }
+
+    if (mVerticalHeader_VisibleRight>=0 && mVisibleTop>=0)
+    {
+        for (int i=mVisibleTop; i<=mVisibleBottom; ++i)
+        {
+            for (int j=0; j<=mVerticalHeader_VisibleRight; ++j)
+            {
+                paintCell(painter, mVerticalHeader_OffsetX.at(j), offsetY+mOffsetY.at(i), mVerticalHeader_ColumnWidths.at(j), mRowHeights.at(i), i, j, DrawVerticalHeaderCell);
+            }
+        }
+    }
+
+    if (mVerticalHeader_VisibleRight>=0 && mHorizontalHeader_VisibleBottom>=0)
+    {
+        paintCell(painter, 0, 0, mVerticalHeader_TotalWidth, mHorizontalHeader_TotalHeight, 0, 0, DrawTopLeftCorner);
     }
 
     END_FREQUENT_PROFILE("void CustomFastTableWidget::paintEvent(QPaintEvent *event)");
@@ -112,6 +140,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
     QBrush  *aBackgroundBrush;
     QColor  *aTextColor;
     QString *aText;
+    QString aVerticalText;
 
     switch (drawComponent)
     {
@@ -137,6 +166,12 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
             aBackgroundBrush=&mVerticalHeader_DefaultBackgroundBrush;
             aTextColor=&mVerticalHeader_DefaultForegroundColor;
             aText=&mVerticalHeader_Data[row][column];
+
+            if (*aText=="")
+            {
+                aVerticalText=QString::number(row+1);
+                aText=&aVerticalText;
+            }
         }
         break;
         case DrawTopLeftCorner:
@@ -215,9 +250,51 @@ void CustomFastTableWidget::updateVisibleRange()
         mVisibleRight=-1;
         mVisibleTop=-1;
         mVisibleBottom=-1;
+        mVerticalHeader_VisibleRight=-1;
+        mHorizontalHeader_VisibleBottom=-1;
     }
     else
     {
+        int minX=horizontalScrollBar()->value();
+        int minY=verticalScrollBar()->value();
+        int maxX=minX+viewport()->width();
+        int maxY=minY+viewport()->height();
+
+        if (mVerticalHeader_ColumnCount==0)
+        {
+            mVerticalHeader_VisibleRight=-1;
+        }
+        else
+        {
+            if (mVerticalHeader_VisibleRight<0)
+            {
+                mVerticalHeader_VisibleRight=0;
+            }
+            else
+            if (mVerticalHeader_VisibleRight>=mVerticalHeader_ColumnCount)
+            {
+                mVerticalHeader_VisibleRight=mVerticalHeader_ColumnCount-1;
+            }
+        }
+
+
+        if (mHorizontalHeader_RowCount==0)
+        {
+            mHorizontalHeader_VisibleBottom=-1;
+        }
+        else
+        {
+            if (mHorizontalHeader_VisibleBottom<0)
+            {
+                mHorizontalHeader_VisibleBottom=0;
+            }
+            else
+            if (mHorizontalHeader_VisibleBottom>=mHorizontalHeader_RowCount)
+            {
+                mHorizontalHeader_VisibleBottom=mHorizontalHeader_RowCount-1;
+            }
+        }
+
         if (
             mVisibleLeft<0
             ||
@@ -253,10 +330,8 @@ void CustomFastTableWidget::updateVisibleRange()
             }
         }
 
-        int minX=horizontalScrollBar()->value();
-        int minY=verticalScrollBar()->value();
-        int maxX=minX+viewport()->width();
-        int maxY=minY+viewport()->height();
+        minX+=mVerticalHeader_TotalWidth;
+        minY+=mHorizontalHeader_TotalHeight;
 
         while (mVisibleLeft<mColumnCount-1 && mOffsetX.at(mVisibleLeft)<minX && mOffsetX.at(mVisibleLeft)+mColumnWidths.at(mVisibleLeft)<minX)
         {

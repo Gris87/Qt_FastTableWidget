@@ -24,12 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     for (int i=0; i<aFastTableWidget->rowCount(); i++)
     {
-        aFastTableWidget->setText(i, 0, QString::number(i+1));
-    }
-
-    for (int i=0; i<aFastTableWidget->rowCount(); i++)
-    {
-        for (int j=1; j<aFastTableWidget->columnCount(); j++)
+        for (int j=0; j<aFastTableWidget->columnCount(); j++)
         {
             aFastTableWidget->setText(i, j, "Hello, World");
         }
