@@ -226,13 +226,11 @@ protected:
 
     QList< QStringList > mHorizontalHeader_Data;
     QList< quint16 >     mHorizontalHeader_RowHeights;
-    QList< int >         mHorizontalHeader_OffsetX;
     QList< int >         mHorizontalHeader_OffsetY;
 
     QList< QStringList > mVerticalHeader_Data;
     QList< quint16 >     mVerticalHeader_ColumnWidths;
     QList< int >         mVerticalHeader_OffsetX;
-    QList< int >         mVerticalHeader_OffsetY;
 
     QList< QList<bool> > mSelectedCells;
     QList< QPoint >      mCurSelection;

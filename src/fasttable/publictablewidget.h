@@ -86,13 +86,11 @@ public:
 
     QList< QStringList > *horizontalHeader_GetData();
     QList< quint16 >     *horizontalHeader_GetRowHeights();
-    QList< int >         *horizontalHeader_GetOffsetX();
     QList< int >         *horizontalHeader_GetOffsetY();
 
     QList< QStringList > *verticalHeader_GetData();
     QList< quint16 >     *verticalHeader_GetColumnWidths();
     QList< int >         *verticalHeader_GetOffsetX();
-    QList< int >         *verticalHeader_GetOffsetY();
 
     QList< QList<bool> > *getSelectedCells();
     QList< QPoint >      *getCurSelection();

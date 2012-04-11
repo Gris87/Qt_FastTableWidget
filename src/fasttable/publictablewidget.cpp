@@ -317,11 +317,6 @@ QList< quint16 >     *PublicCustomFastTable::horizontalHeader_GetRowHeights()
     return &mHorizontalHeader_RowHeights;
 }
 
-QList< int >         *PublicCustomFastTable::horizontalHeader_GetOffsetX()
-{
-    return &mHorizontalHeader_OffsetX;
-}
-
 QList< int >         *PublicCustomFastTable::horizontalHeader_GetOffsetY()
 {
     return &mHorizontalHeader_OffsetY;
@@ -340,11 +335,6 @@ QList< quint16 >     *PublicCustomFastTable::verticalHeader_GetColumnWidths()
 QList< int >         *PublicCustomFastTable::verticalHeader_GetOffsetX()
 {
     return &mVerticalHeader_OffsetX;
-}
-
-QList< int >         *PublicCustomFastTable::verticalHeader_GetOffsetY()
-{
-    return &mVerticalHeader_OffsetY;
 }
 
 QList< QList<bool> > *PublicCustomFastTable::getSelectedCells()
