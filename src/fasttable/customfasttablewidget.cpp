@@ -7,8 +7,8 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
 
     mRowCount=0;
     mColumnCount=0;
-    mHorizontalHeader_RowCount=1;
-    mVerticalHeader_ColumnCount=1;
+    mHorizontalHeader_RowCount=0;
+    mVerticalHeader_ColumnCount=0;
 
     mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
     mDefaultForegroundColor.setRgb(0, 0, 0);
@@ -314,8 +314,8 @@ void CustomFastTableWidget::clearTable()
 
     mRowCount=0;
     mColumnCount=0;
-    mHorizontalHeader_RowCount=1;
-    mVerticalHeader_ColumnCount=1;
+    mHorizontalHeader_RowCount=0;
+    mVerticalHeader_ColumnCount=0;
 
     mTotalWidth=0;
     mTotalHeight=0;
@@ -485,7 +485,7 @@ void CustomFastTableWidget::insertRow(int row)
 
     mTotalHeight+=mDefaultHeight;
 
-    mOffsetY.insert(row, row==0? 0 : (mOffsetY.at(row-1)+mRowHeights.at(row-1)));
+    mOffsetY.insert(row, row==0? mHorizontalHeader_TotalHeight : (mOffsetY.at(row-1)+mRowHeights.at(row-1)));
     mRowHeights.insert(row, mDefaultHeight);
 
     for (int i=row+1; i<mRowCount; ++i)
@@ -494,24 +494,19 @@ void CustomFastTableWidget::insertRow(int row)
     }
 
     mData.insert(row, aNewRow);
+    mVerticalHeader_Data.insert(row, aNewRow);
     mSelectedCells.insert(row, aNewRowbool);
     mVerticalHeader_SelectedRows.insert(row, false);
+
+    for (int i=0; i<mVerticalHeader_ColumnCount; ++i)
+    {
+        mVerticalHeader_Data[row].append("");
+    }
 
     for (int i=0; i<mColumnCount; ++i)
     {
         mData[row].append("");
         mSelectedCells[row].append(false);
-    }
-
-    if (mRowCount==1)
-    {
-        qint16 aColumnCount=mVerticalHeader_ColumnCount;
-        mVerticalHeader_ColumnCount=0;
-
-        for (int i=0; i<aColumnCount; i++)
-        {
-            verticalHeader_AddColumn();
-        }
     }
 
     END_PROFILE("void CustomFastTableWidget::insertRow(int row)");
@@ -521,17 +516,20 @@ void CustomFastTableWidget::deleteRow(int row)
 {
     START_PROFILE;
 
-    mTotalHeight-=mRowHeights.at(row);
+    int diff=mRowHeights.at(row);
+
+    mTotalHeight-=diff;
 
     for (int i=row+1; i<mRowCount; ++i)
     {
-        mOffsetY[i]-=mRowHeights.at(row);
+        mOffsetY[i]-=diff;
     }
 
     mOffsetY.removeAt(row);
     mRowHeights.removeAt(row);
 
     mData.removeAt(row);
+    mVerticalHeader_Data.removeAt(row);
 
     for (int i=0; i<mColumnCount; ++i)
     {
@@ -573,12 +571,17 @@ void CustomFastTableWidget::insertColumn(int column)
 
     mTotalWidth+=mDefaultWidth;
 
-    mOffsetX.insert(column, column==0? 0 : (mOffsetX.at(column-1)+mColumnWidths.at(column-1)));
+    mOffsetX.insert(column, column==0? mVerticalHeader_TotalWidth : (mOffsetX.at(column-1)+mColumnWidths.at(column-1)));
     mColumnWidths.insert(column, mDefaultWidth);
 
     for (int i=column+1; i<mColumnCount; ++i)
     {
         mOffsetX[i]+=mDefaultWidth;
+    }
+
+    for (int i=0; i<mHorizontalHeader_Data.length(); ++i)
+    {
+        mHorizontalHeader_Data[i].insert(column, "");
     }
 
     for (int i=0; i<mData.length(); ++i)
@@ -589,17 +592,6 @@ void CustomFastTableWidget::insertColumn(int column)
 
     mHorizontalHeader_SelectedColumns.insert(column, false);
 
-    if (mColumnCount==1)
-    {
-        qint16 aRowCount=mHorizontalHeader_RowCount;
-        mHorizontalHeader_RowCount=0;
-
-        for (int i=0; i<aRowCount; i++)
-        {
-            horizontalHeader_AddRow();
-        }
-    }
-
     END_PROFILE("void CustomFastTableWidget::insertColumn(int column)");
 }
 
@@ -607,15 +599,22 @@ void CustomFastTableWidget::deleteColumn(int column)
 {
     START_PROFILE;
 
-    mTotalWidth-=mColumnWidths.at(column);
+    int diff=mColumnWidths.at(column);
+
+    mTotalWidth-=diff;
 
     for (int i=column+1; i<mColumnCount; ++i)
     {
-        mOffsetX[i]-=mColumnWidths.at(column);
+        mOffsetX[i]-=diff;
     }
 
     mOffsetX.removeAt(column);
     mColumnWidths.removeAt(column);
+
+    for (int i=0; i<mHorizontalHeader_Data.length(); ++i)
+    {
+        mHorizontalHeader_Data[i].removeAt(column);
+    }
 
     for (int i=0; i<mData.length(); ++i)
     {
@@ -654,12 +653,64 @@ void CustomFastTableWidget::horizontalHeader_AddRow()
 
 void CustomFastTableWidget::horizontalHeader_InsertRow(int row)
 {
+    START_PROFILE;
 
+    mHorizontalHeader_RowCount++;
+
+    QStringList aNewRow;
+
+    mHorizontalHeader_TotalHeight+=mDefaultHeight;
+    mTotalHeight+=mDefaultHeight;
+
+    mHorizontalHeader_OffsetY.insert(row, row==0? 0 : (mHorizontalHeader_OffsetY.at(row-1)+mHorizontalHeader_RowHeights.at(row-1)));
+    mHorizontalHeader_RowHeights.insert(row, mDefaultHeight);
+
+    for (int i=row+1; i<mHorizontalHeader_RowCount; ++i)
+    {
+        mHorizontalHeader_OffsetY[i]+=mDefaultHeight;
+    }
+
+    for (int i=0; i<mRowCount; ++i)
+    {
+        mOffsetY[i]+=mDefaultHeight;
+    }
+
+    mHorizontalHeader_Data.insert(row, aNewRow);
+
+    for (int i=0; i<mColumnCount; ++i)
+    {
+        mHorizontalHeader_Data[row].append("");
+    }
+
+    END_PROFILE("void CustomFastTableWidget::horizontalHeader_InsertRow(int row)");
 }
 
 void CustomFastTableWidget::horizontalHeader_DeleteRow(int row)
 {
+    START_PROFILE;
 
+    int diff=mHorizontalHeader_RowHeights.at(row);
+
+    mHorizontalHeader_TotalHeight-=diff;
+    mTotalHeight-=diff;
+
+    for (int i=row+1; i<mHorizontalHeader_RowCount; ++i)
+    {
+        mHorizontalHeader_OffsetY[i]-=diff;
+    }
+
+    for (int i=0; i<mRowCount; ++i)
+    {
+        mOffsetY[i]-=diff;
+    }
+
+    mHorizontalHeader_OffsetY.removeAt(row);
+    mHorizontalHeader_RowHeights.removeAt(row);
+    mHorizontalHeader_Data.removeAt(row);
+
+    mRowCount--;
+
+    END_PROFILE("void CustomFastTableWidget::horizontalHeader_DeleteRow(int row)");
 }
 
 void CustomFastTableWidget::verticalHeader_AddColumn()
@@ -673,12 +724,64 @@ void CustomFastTableWidget::verticalHeader_AddColumn()
 
 void CustomFastTableWidget::verticalHeader_InsertColumn(int column)
 {
+    START_PROFILE;
 
+    mVerticalHeader_ColumnCount++;
+
+    mVerticalHeader_TotalWidth+=mDefaultWidth;
+    mTotalWidth+=mDefaultWidth;
+
+    mVerticalHeader_OffsetX.insert(column, column==0? 0 : (mVerticalHeader_OffsetX.at(column-1)+mVerticalHeader_ColumnWidths.at(column-1)));
+    mVerticalHeader_ColumnWidths.insert(column, mDefaultWidth);
+
+    for (int i=column+1; i<mVerticalHeader_ColumnCount; ++i)
+    {
+        mVerticalHeader_OffsetX[i]+=mDefaultWidth;
+    }
+
+    for (int i=0; i<mColumnCount; ++i)
+    {
+        mOffsetX[i]+=mDefaultWidth;
+    }
+
+    for (int i=0; i<mVerticalHeader_Data.length(); ++i)
+    {
+        mVerticalHeader_Data[i].insert(column, "");
+    }
+
+    END_PROFILE("void CustomFastTableWidget::verticalHeader_InsertColumn(int column)");
 }
 
 void CustomFastTableWidget::verticalHeader_DeleteColumn(int column)
 {
+    START_PROFILE;
 
+    int diff=mVerticalHeader_ColumnWidths.at(column);
+
+    mVerticalHeader_TotalWidth-=diff;
+    mTotalWidth-=diff;
+
+    for (int i=column+1; i<mVerticalHeader_ColumnCount; ++i)
+    {
+        mVerticalHeader_OffsetX[i]-=diff;
+    }
+
+    for (int i=0; i<mColumnCount; ++i)
+    {
+        mOffsetX[i]-=diff;
+    }
+
+    mVerticalHeader_OffsetX.removeAt(column);
+    mVerticalHeader_ColumnWidths.removeAt(column);
+
+    for (int i=0; i<mVerticalHeader_Data.length(); ++i)
+    {
+        mVerticalHeader_Data[i].removeAt(column);
+    }
+
+    mColumnCount--;
+
+    END_PROFILE("void CustomFastTableWidget::verticalHeader_DeleteColumn(int column)");
 }
 
 int CustomFastTableWidget::rowCount()

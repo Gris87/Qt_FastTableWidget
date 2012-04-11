@@ -10,13 +10,15 @@ MainWindow::MainWindow(QWidget *parent) :
     frect.moveCenter(QDesktopWidget().availableGeometry().center());
     move(frect.topLeft());
 
-    FastTableWidget* aFastTableWidget=new FastTableWidget(this);
+    CustomFastTableWidget* aFastTableWidget=new CustomFastTableWidget(this);
     ui->fastTableLayout->addWidget(aFastTableWidget);
 
     qint64 aStart=QDateTime::currentMSecsSinceEpoch();
 
     aFastTableWidget->setRowCount(50);
     aFastTableWidget->setColumnCount(20);
+    aFastTableWidget->horizontalHeader_SetRowCount(3);
+    aFastTableWidget->verticalHeader_SetColumnCount(1);
     //aFastTableWidget->setRowCount(30000);
     //aFastTableWidget->setColumnCount(250);
 
