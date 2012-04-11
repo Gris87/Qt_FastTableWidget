@@ -13,17 +13,17 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
     mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
     mDefaultForegroundColor.setRgb(0, 0, 0);
-    mGridColor.setRgb(0, 0, 0);
+    mGridColor.setRgb(216, 216, 216);
 
-    mHorizontalHeader_DefaultBackgroundBrush.setColor(QColor(220, 220, 220));
+    mHorizontalHeader_DefaultBackgroundBrush.setColor(QColor(240, 240, 240));
     mHorizontalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
     mHorizontalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
-    mHorizontalHeader_GridColor.setRgb(0, 0, 0);
+    mHorizontalHeader_GridColor.setRgb(213, 213, 213);
 
-    mVerticalHeader_DefaultBackgroundBrush.setColor(QColor(220, 220, 220));
+    mVerticalHeader_DefaultBackgroundBrush.setColor(QColor(240, 240, 240));
     mVerticalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
     mVerticalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
-    mVerticalHeader_GridColor.setRgb(0, 0, 0);
+    mVerticalHeader_GridColor.setRgb(213, 213, 213);
 
     mSelectionBrush.setColor(QColor(0, 0, 255));
 
@@ -126,7 +126,7 @@ void CustomFastTableWidget::paintEvent(QPaintEvent *event)
 
     if (mVerticalHeader_VisibleRight>=0 && mHorizontalHeader_VisibleBottom>=0)
     {
-        paintCell(painter, 0, 0, mVerticalHeader_TotalWidth, mHorizontalHeader_TotalHeight, 0, 0, DrawTopLeftCorner);
+        paintCell(painter, 0, 0, mVerticalHeader_TotalWidth, mHorizontalHeader_TotalHeight, -1, -1, DrawTopLeftCorner);
     }
 
     END_FREQUENT_PROFILE("void CustomFastTableWidget::paintEvent(QPaintEvent *event)");
