@@ -275,6 +275,16 @@ void CustomFastTableWidget::updateVisibleRange()
             {
                 mVerticalHeader_VisibleRight=mVerticalHeader_ColumnCount-1;
             }
+
+            while (mVerticalHeader_VisibleRight<mVerticalHeader_ColumnCount-1 && mVerticalHeader_OffsetX.at(mVerticalHeader_VisibleRight)<maxX && mVerticalHeader_OffsetX.at(mVerticalHeader_VisibleRight)+mVerticalHeader_ColumnWidths.at(mVerticalHeader_VisibleRight)<maxX)
+            {
+                mVerticalHeader_VisibleRight++;
+            }
+
+            while (mVerticalHeader_VisibleRight>0 && mVerticalHeader_OffsetX.at(mVerticalHeader_VisibleRight)>maxX && mVerticalHeader_OffsetX.at(mVerticalHeader_VisibleRight)+mVerticalHeader_ColumnWidths.at(mVerticalHeader_VisibleRight)>maxX)
+            {
+                mVerticalHeader_VisibleRight--;
+            }
         }
 
 
@@ -293,84 +303,126 @@ void CustomFastTableWidget::updateVisibleRange()
             {
                 mHorizontalHeader_VisibleBottom=mHorizontalHeader_RowCount-1;
             }
+
+            while (mHorizontalHeader_VisibleBottom<mHorizontalHeader_RowCount-1 && mHorizontalHeader_OffsetY.at(mHorizontalHeader_VisibleBottom)<maxY && mHorizontalHeader_OffsetY.at(mHorizontalHeader_VisibleBottom)+mHorizontalHeader_RowHeights.at(mHorizontalHeader_VisibleBottom)<maxY)
+            {
+                mHorizontalHeader_VisibleBottom++;
+            }
+
+            while (mHorizontalHeader_VisibleBottom>0 && mHorizontalHeader_OffsetY.at(mHorizontalHeader_VisibleBottom)>maxY && mHorizontalHeader_OffsetY.at(mHorizontalHeader_VisibleBottom)+mHorizontalHeader_RowHeights.at(mHorizontalHeader_VisibleBottom)>maxY)
+            {
+                mHorizontalHeader_VisibleBottom--;
+            }
         }
 
         if (
-            mVisibleLeft<0
+            mHorizontalHeader_VisibleBottom<0
             ||
-            mVisibleRight<0
-            ||
-            mVisibleTop<0
-            ||
-            mVisibleBottom<0
+            mHorizontalHeader_OffsetY.at(mHorizontalHeader_VisibleBottom)+mHorizontalHeader_RowHeights.at(mHorizontalHeader_VisibleBottom)<maxY
            )
         {
-            mVisibleLeft=0;
-            mVisibleRight=0;
-            mVisibleTop=0;
-            mVisibleBottom=0;
+            if (
+                mVisibleTop<0
+                ||
+                mVisibleBottom<0
+               )
+            {
+                mVisibleTop=0;
+                mVisibleBottom=0;
+            }
+            else
+            {
+                if (mVisibleTop>=mRowCount)
+                {
+                    mVisibleTop=mRowCount-1;
+                }
+                if (mVisibleBottom>=mRowCount)
+                {
+                    mVisibleBottom=mRowCount-1;
+                }
+            }
+
+            minY+=mHorizontalHeader_TotalHeight;
+
+            while (mVisibleTop<mRowCount-1 && mOffsetY.at(mVisibleTop)<minY && mOffsetY.at(mVisibleTop)+mRowHeights.at(mVisibleTop)<minY)
+            {
+                mVisibleTop++;
+            }
+
+            while (mVisibleTop>0 && mOffsetY.at(mVisibleTop)>minY && mOffsetY.at(mVisibleTop)+mRowHeights.at(mVisibleTop)>minY)
+            {
+                mVisibleTop--;
+            }
+
+            while (mVisibleBottom<mRowCount-1 && mOffsetY.at(mVisibleBottom)<maxY && mOffsetY.at(mVisibleBottom)+mRowHeights.at(mVisibleBottom)<maxY)
+            {
+                mVisibleBottom++;
+            }
+
+            while (mVisibleBottom>0 && mOffsetY.at(mVisibleBottom)>maxY && mOffsetY.at(mVisibleBottom)+mRowHeights.at(mVisibleBottom)>maxY)
+            {
+                mVisibleBottom--;
+            }
         }
         else
         {
-            if (mVisibleLeft>=mColumnCount)
+            mVisibleTop=-1;
+            mVisibleBottom=-1;
+        }
+
+        if (
+            mVerticalHeader_VisibleRight<0
+            ||
+            mVerticalHeader_OffsetX.at(mVerticalHeader_VisibleRight)+mVerticalHeader_ColumnWidths.at(mVerticalHeader_VisibleRight)<maxX
+           )
+        {
+            if (
+                mVisibleLeft<0
+                ||
+                mVisibleRight<0
+               )
             {
-                mVisibleLeft=mColumnCount-1;
+                mVisibleLeft=0;
+                mVisibleRight=0;
             }
-            if (mVisibleRight>=mColumnCount)
+            else
             {
-                mVisibleRight=mColumnCount-1;
+                if (mVisibleLeft>=mColumnCount)
+                {
+                    mVisibleLeft=mColumnCount-1;
+                }
+                if (mVisibleRight>=mColumnCount)
+                {
+                    mVisibleRight=mColumnCount-1;
+                }
             }
-            if (mVisibleTop>=mRowCount)
+
+            minX+=mVerticalHeader_TotalWidth;
+
+            while (mVisibleLeft<mColumnCount-1 && mOffsetX.at(mVisibleLeft)<minX && mOffsetX.at(mVisibleLeft)+mColumnWidths.at(mVisibleLeft)<minX)
             {
-                mVisibleTop=mRowCount-1;
+                mVisibleLeft++;
             }
-            if (mVisibleBottom>=mRowCount)
+
+            while (mVisibleLeft>0 && mOffsetX.at(mVisibleLeft)>minX && mOffsetX.at(mVisibleLeft)+mColumnWidths.at(mVisibleLeft)>minX)
             {
-                mVisibleBottom=mRowCount-1;
+                mVisibleLeft--;
+            }
+
+            while (mVisibleRight<mColumnCount-1 && mOffsetX.at(mVisibleRight)<maxX && mOffsetX.at(mVisibleRight)+mColumnWidths.at(mVisibleRight)<maxX)
+            {
+                mVisibleRight++;
+            }
+
+            while (mVisibleRight>0 && mOffsetX.at(mVisibleRight)>maxX && mOffsetX.at(mVisibleRight)+mColumnWidths.at(mVisibleRight)>maxX)
+            {
+                mVisibleRight--;
             }
         }
-
-        minX+=mVerticalHeader_TotalWidth;
-        minY+=mHorizontalHeader_TotalHeight;
-
-        while (mVisibleLeft<mColumnCount-1 && mOffsetX.at(mVisibleLeft)<minX && mOffsetX.at(mVisibleLeft)+mColumnWidths.at(mVisibleLeft)<minX)
+        else
         {
-            mVisibleLeft++;
-        }
-
-        while (mVisibleLeft>0 && mOffsetX.at(mVisibleLeft)>minX && mOffsetX.at(mVisibleLeft)+mColumnWidths.at(mVisibleLeft)>minX)
-        {
-            mVisibleLeft--;
-        }
-
-        while (mVisibleRight<mColumnCount-1 && mOffsetX.at(mVisibleRight)<maxX && mOffsetX.at(mVisibleRight)+mColumnWidths.at(mVisibleRight)<maxX)
-        {
-            mVisibleRight++;
-        }
-
-        while (mVisibleRight>0 && mOffsetX.at(mVisibleRight)>maxX && mOffsetX.at(mVisibleRight)+mColumnWidths.at(mVisibleRight)>maxX)
-        {
-            mVisibleRight--;
-        }
-
-        while (mVisibleTop<mRowCount-1 && mOffsetY.at(mVisibleTop)<minY && mOffsetY.at(mVisibleTop)+mRowHeights.at(mVisibleTop)<minY)
-        {
-            mVisibleTop++;
-        }
-
-        while (mVisibleTop>0 && mOffsetY.at(mVisibleTop)>minY && mOffsetY.at(mVisibleTop)+mRowHeights.at(mVisibleTop)>minY)
-        {
-            mVisibleTop--;
-        }
-
-        while (mVisibleBottom<mRowCount-1 && mOffsetY.at(mVisibleBottom)<maxY && mOffsetY.at(mVisibleBottom)+mRowHeights.at(mVisibleBottom)<maxY)
-        {
-            mVisibleBottom++;
-        }
-
-        while (mVisibleBottom>0 && mOffsetY.at(mVisibleBottom)>maxY && mOffsetY.at(mVisibleBottom)+mRowHeights.at(mVisibleBottom)>maxY)
-        {
-            mVisibleBottom--;
+            mVisibleLeft=-1;
+            mVisibleRight=-1;
         }
     }
 
