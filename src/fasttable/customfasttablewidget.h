@@ -15,7 +15,7 @@
 
 #define FASTTABLE_DEBUG
 
-#if 1
+#if 0
     #define START_PROFILE      qint64 profileStart=QDateTime::currentMSecsSinceEpoch();
     #define END_PROFILE(text)  qDebug()<<text" :"<<QDateTime::currentMSecsSinceEpoch()-profileStart;
 #else

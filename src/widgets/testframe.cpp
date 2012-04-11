@@ -925,15 +925,15 @@ bool TestFrame::checkForSizes(int rows, int columns, int headerRows, int headerC
     TEST_STEP((mOffsetX==0                                || mOffsetX->length()==columns));
     TEST_STEP((mOffsetY==0                                || mOffsetY->length()==rows));
 
-    TEST_STEP((mHorizontalHeader_Data==0                  || mHorizontalHeader_Data->length()==headerRows));
-    TEST_STEP((mHorizontalHeader_RowHeights==0            || mHorizontalHeader_RowHeights->length()==headerRows));
-    TEST_STEP((mHorizontalHeader_OffsetX==0               || mHorizontalHeader_OffsetX->length()==columns));
-    TEST_STEP((mHorizontalHeader_OffsetY==0               || mHorizontalHeader_OffsetY->length()==headerRows));
+    TEST_STEP((mHorizontalHeader_Data==0                  || mHorizontalHeader_Data->length()==headerRows                  || rows<=0 || columns<=0));
+    TEST_STEP((mHorizontalHeader_RowHeights==0            || mHorizontalHeader_RowHeights->length()==headerRows            || rows<=0 || columns<=0));
+    TEST_STEP((mHorizontalHeader_OffsetX==0               || mHorizontalHeader_OffsetX->length()==columns                  || rows<=0 || columns<=0));
+    TEST_STEP((mHorizontalHeader_OffsetY==0               || mHorizontalHeader_OffsetY->length()==headerRows               || rows<=0 || columns<=0));
 
-    TEST_STEP((mVerticalHeader_Data==0                    || mVerticalHeader_Data->length()==rows));
-    TEST_STEP((mVerticalHeader_ColumnWidths==0            || mVerticalHeader_ColumnWidths->length()==headerColumns));
-    TEST_STEP((mVerticalHeader_OffsetX==0                 || mVerticalHeader_OffsetX->length()==headerColumns));
-    TEST_STEP((mVerticalHeader_OffsetY==0                 || mVerticalHeader_OffsetY->length()==rows));
+    TEST_STEP((mVerticalHeader_Data==0                    || mVerticalHeader_Data->length()==rows                          || rows<=0 || columns<=0));
+    TEST_STEP((mVerticalHeader_ColumnWidths==0            || mVerticalHeader_ColumnWidths->length()==headerColumns         || rows<=0 || columns<=0));
+    TEST_STEP((mVerticalHeader_OffsetX==0                 || mVerticalHeader_OffsetX->length()==headerColumns              || rows<=0 || columns<=0));
+    TEST_STEP((mVerticalHeader_OffsetY==0                 || mVerticalHeader_OffsetY->length()==rows                       || rows<=0 || columns<=0));
 
     TEST_STEP((mSelectedCells==0                          || mSelectedCells->length()==rows));
     TEST_STEP((mHorizontalHeader_SelectedColumns==0       || mHorizontalHeader_SelectedColumns->length()==columns));
@@ -948,23 +948,23 @@ bool TestFrame::checkForSizes(int rows, int columns, int headerRows, int headerC
     TEST_STEP((mCellMergeParentRow==0                     || mCellMergeParentRow->length()==rows));
     TEST_STEP((mCellMergeParentColumn==0                  || mCellMergeParentColumn->length()==rows));
 
-    TEST_STEP((mHorizontalHeader_BackgroundBrushes==0     || mHorizontalHeader_BackgroundBrushes->length()==headerRows));
-    TEST_STEP((mHorizontalHeader_ForegroundColors==0      || mHorizontalHeader_ForegroundColors->length()==headerRows));
-    TEST_STEP((mHorizontalHeader_CellFonts==0             || mHorizontalHeader_CellFonts->length()==headerRows));
-    TEST_STEP((mHorizontalHeader_CellTextFlags==0         || mHorizontalHeader_CellTextFlags->length()==headerRows));
-    TEST_STEP((mHorizontalHeader_CellMergeX==0            || mHorizontalHeader_CellMergeX->length()==headerRows));
-    TEST_STEP((mHorizontalHeader_CellMergeY==0            || mHorizontalHeader_CellMergeY->length()==headerRows));
-    TEST_STEP((mHorizontalHeader_CellMergeParentRow==0    || mHorizontalHeader_CellMergeParentRow->length()==headerRows));
-    TEST_STEP((mHorizontalHeader_CellMergeParentColumn==0 || mHorizontalHeader_CellMergeParentColumn->length()==headerRows));
+    TEST_STEP((mHorizontalHeader_BackgroundBrushes==0     || mHorizontalHeader_BackgroundBrushes->length()==headerRows     || rows<=0 || columns<=0));
+    TEST_STEP((mHorizontalHeader_ForegroundColors==0      || mHorizontalHeader_ForegroundColors->length()==headerRows      || rows<=0 || columns<=0));
+    TEST_STEP((mHorizontalHeader_CellFonts==0             || mHorizontalHeader_CellFonts->length()==headerRows             || rows<=0 || columns<=0));
+    TEST_STEP((mHorizontalHeader_CellTextFlags==0         || mHorizontalHeader_CellTextFlags->length()==headerRows         || rows<=0 || columns<=0));
+    TEST_STEP((mHorizontalHeader_CellMergeX==0            || mHorizontalHeader_CellMergeX->length()==headerRows            || rows<=0 || columns<=0));
+    TEST_STEP((mHorizontalHeader_CellMergeY==0            || mHorizontalHeader_CellMergeY->length()==headerRows            || rows<=0 || columns<=0));
+    TEST_STEP((mHorizontalHeader_CellMergeParentRow==0    || mHorizontalHeader_CellMergeParentRow->length()==headerRows    || rows<=0 || columns<=0));
+    TEST_STEP((mHorizontalHeader_CellMergeParentColumn==0 || mHorizontalHeader_CellMergeParentColumn->length()==headerRows || rows<=0 || columns<=0));
 
-    TEST_STEP((mVerticalHeader_BackgroundBrushes==0       || mVerticalHeader_BackgroundBrushes->length()==rows));
-    TEST_STEP((mVerticalHeader_ForegroundColors==0        || mVerticalHeader_ForegroundColors->length()==rows));
-    TEST_STEP((mVerticalHeader_CellFonts==0               || mVerticalHeader_CellFonts->length()==rows));
-    TEST_STEP((mVerticalHeader_CellTextFlags==0           || mVerticalHeader_CellTextFlags->length()==rows));
-    TEST_STEP((mVerticalHeader_CellMergeX==0              || mVerticalHeader_CellMergeX->length()==rows));
-    TEST_STEP((mVerticalHeader_CellMergeY==0              || mVerticalHeader_CellMergeY->length()==rows));
-    TEST_STEP((mVerticalHeader_CellMergeParentRow==0      || mVerticalHeader_CellMergeParentRow->length()==rows));
-    TEST_STEP((mVerticalHeader_CellMergeParentColumn==0   || mVerticalHeader_CellMergeParentColumn->length()==rows));
+    TEST_STEP((mVerticalHeader_BackgroundBrushes==0       || mVerticalHeader_BackgroundBrushes->length()==rows             || rows<=0 || columns<=0));
+    TEST_STEP((mVerticalHeader_ForegroundColors==0        || mVerticalHeader_ForegroundColors->length()==rows              || rows<=0 || columns<=0));
+    TEST_STEP((mVerticalHeader_CellFonts==0               || mVerticalHeader_CellFonts->length()==rows                     || rows<=0 || columns<=0));
+    TEST_STEP((mVerticalHeader_CellTextFlags==0           || mVerticalHeader_CellTextFlags->length()==rows                 || rows<=0 || columns<=0));
+    TEST_STEP((mVerticalHeader_CellMergeX==0              || mVerticalHeader_CellMergeX->length()==rows                    || rows<=0 || columns<=0));
+    TEST_STEP((mVerticalHeader_CellMergeY==0              || mVerticalHeader_CellMergeY->length()==rows                    || rows<=0 || columns<=0));
+    TEST_STEP((mVerticalHeader_CellMergeParentRow==0      || mVerticalHeader_CellMergeParentRow->length()==rows            || rows<=0 || columns<=0));
+    TEST_STEP((mVerticalHeader_CellMergeParentColumn==0   || mVerticalHeader_CellMergeParentColumn->length()==rows         || rows<=0 || columns<=0));
 
 
     CHECK_COLUMN_COUNT(mData);
