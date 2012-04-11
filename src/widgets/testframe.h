@@ -33,6 +33,19 @@
                                      }\
                                  }
 
+#define CHECK_VERTICAL_COLUMN_COUNT(list) if (success && list)\
+                                          {\
+                                              for (int i=0; i<list->length(); ++i)\
+                                              {\
+                                                  TEST_STEP(list->at(i).length()==headerColumns)\
+                                                  \
+                                                  if (!success)\
+                                                  {\
+                                                      break;\
+                                                  }\
+                                              }\
+                                          }
+
 namespace Ui {
     class TestFrame;
 }
@@ -50,12 +63,10 @@ public:
 
     QList< QStringList >     *mHorizontalHeader_Data;
     QList< quint16 >         *mHorizontalHeader_RowHeights;
-    QList< quint16 >         *mHorizontalHeader_ColumnWidths;
     QList< int >             *mHorizontalHeader_OffsetX;
     QList< int >             *mHorizontalHeader_OffsetY;
 
     QList< QStringList >     *mVerticalHeader_Data;
-    QList< quint16 >         *mVerticalHeader_RowHeights;
     QList< quint16 >         *mVerticalHeader_ColumnWidths;
     QList< int >             *mVerticalHeader_OffsetX;
     QList< int >             *mVerticalHeader_OffsetY;
@@ -103,7 +114,7 @@ public:
 
     void startTest();
 
-    bool checkForSizes(int rows, int columns);
+    bool checkForSizes(int rows, int columns, int headerRows, int headerColumns);
 
     inline void testCompleted(bool success, QLabel *aLabel);
     inline void testSuccess(QLabel *aLabel);

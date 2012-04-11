@@ -345,12 +345,10 @@ void CustomFastTableWidget::clearTable()
 
     mHorizontalHeader_Data.clear();
     mHorizontalHeader_RowHeights.clear();
-    mHorizontalHeader_ColumnWidths.clear();
     mHorizontalHeader_OffsetX.clear();
     mHorizontalHeader_OffsetY.clear();
 
     mVerticalHeader_Data.clear();
-    mVerticalHeader_RowHeights.clear();
     mVerticalHeader_ColumnWidths.clear();
     mVerticalHeader_OffsetX.clear();
     mVerticalHeader_OffsetY.clear();

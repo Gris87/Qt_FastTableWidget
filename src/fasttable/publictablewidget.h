@@ -86,12 +86,10 @@ public:
 
     QList< QStringList > *horizontalHeader_GetData();
     QList< quint16 >     *horizontalHeader_GetRowHeights();
-    QList< quint16 >     *horizontalHeader_GetColumnWidths();
     QList< int >         *horizontalHeader_GetOffsetX();
     QList< int >         *horizontalHeader_GetOffsetY();
 
     QList< QStringList > *verticalHeader_GetData();
-    QList< quint16 >     *verticalHeader_GetRowHeights();
     QList< quint16 >     *verticalHeader_GetColumnWidths();
     QList< int >         *verticalHeader_GetOffsetX();
     QList< int >         *verticalHeader_GetOffsetY();
