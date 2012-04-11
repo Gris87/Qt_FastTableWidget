@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         for (int j=1; j<aFastTableWidget->columnCount(); j++)
         {
-            aFastTableWidget->setText(i, j, "Hello, Wolrd");
+            aFastTableWidget->setText(i, j, "Hello, World");
         }
     }
 
