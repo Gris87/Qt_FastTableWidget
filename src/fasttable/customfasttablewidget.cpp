@@ -505,6 +505,17 @@ void CustomFastTableWidget::insertRow(int row)
         mSelectedCells[row].append(false);
     }
 
+    if (mRowCount==1)
+    {
+        qint16 aColumnCount=mVerticalHeader_ColumnCount;
+        mVerticalHeader_ColumnCount=0;
+
+        for (int i=0; i<aColumnCount; i++)
+        {
+            verticalHeader_AddColumn();
+        }
+    }
+
     END_PROFILE("void CustomFastTableWidget::insertRow(int row)");
 }
 
@@ -580,6 +591,17 @@ void CustomFastTableWidget::insertColumn(int column)
 
     mHorizontalHeader_SelectedColumns.insert(column, false);
 
+    if (mColumnCount==1)
+    {
+        qint16 aRowCount=mHorizontalHeader_RowCount;
+        mHorizontalHeader_RowCount=0;
+
+        for (int i=0; i<aRowCount; i++)
+        {
+            horizontalHeader_AddRow();
+        }
+    }
+
     END_PROFILE("void CustomFastTableWidget::insertColumn(int column)");
 }
 
@@ -625,7 +647,11 @@ void CustomFastTableWidget::deleteColumn(int column)
 
 void CustomFastTableWidget::horizontalHeader_AddRow()
 {
+    START_PROFILE;
 
+    horizontalHeader_InsertRow(mHorizontalHeader_RowCount);
+
+    END_PROFILE("void CustomFastTableWidget::horizontalHeader_AddRow()");
 }
 
 void CustomFastTableWidget::horizontalHeader_InsertRow(int row)
@@ -640,7 +666,11 @@ void CustomFastTableWidget::horizontalHeader_DeleteRow(int row)
 
 void CustomFastTableWidget::verticalHeader_AddColumn()
 {
+    START_PROFILE;
 
+    verticalHeader_InsertColumn(mVerticalHeader_ColumnCount);
+
+    END_PROFILE("void CustomFastTableWidget::verticalHeader_AddColumn()");
 }
 
 void CustomFastTableWidget::verticalHeader_InsertColumn(int column)
@@ -721,22 +751,68 @@ void CustomFastTableWidget::setColumnCount(int count)
 
 qint16 CustomFastTableWidget::horizontalHeader_RowCount()
 {
-
+    return mHorizontalHeader_RowCount;
 }
 
 void CustomFastTableWidget::horizontalHeader_SetRowCount(qint16 count)
 {
+    START_PROFILE;
 
+    if (count<0)
+    {
+        count=0;
+    }
+
+    if (mHorizontalHeader_RowCount!=count)
+    {
+        while (mHorizontalHeader_RowCount<count)
+        {
+            horizontalHeader_AddRow();
+        }
+
+        while (mHorizontalHeader_RowCount>count)
+        {
+            horizontalHeader_DeleteRow(mHorizontalHeader_RowCount-1);
+        }
+
+        updateBarsRanges();
+        updateVisibleRange();
+    }
+
+    END_PROFILE("void CustomFastTableWidget::horizontalHeader_SetRowCount(int count)");
 }
 
 qint16 CustomFastTableWidget::verticalHeader_ColumnCount()
 {
-
+    return mVerticalHeader_ColumnCount;
 }
 
 void CustomFastTableWidget::verticalHeader_SetColumnCount(qint16 count)
 {
+    START_PROFILE;
 
+    if (count<0)
+    {
+        count=0;
+    }
+
+    if (mVerticalHeader_ColumnCount!=count)
+    {
+        while (mVerticalHeader_ColumnCount<count)
+        {
+            verticalHeader_AddColumn();
+        }
+
+        while (mVerticalHeader_ColumnCount>count)
+        {
+            verticalHeader_DeleteColumn(mVerticalHeader_ColumnCount-1);
+        }
+
+        updateBarsRanges();
+        updateVisibleRange();
+    }
+
+    END_PROFILE("void CustomFastTableWidget::verticalHeader_SetColumnCount(int count)");
 }
 
 QBrush CustomFastTableWidget::defaultBackgroundBrush()
@@ -920,12 +996,13 @@ void CustomFastTableWidget::setColumnWidth(const int column, const quint16 width
     {
         int aDiff=width-mColumnWidths.at(column);
 
-        mTotalWidth+=aDiff;
         mColumnWidths[column]=width;
+
+        mTotalWidth+=aDiff;
 
         for (int i=column+1; i<mColumnCount; ++i)
         {
-            mOffsetX[i]=mOffsetX.at(i)+aDiff;
+            mOffsetX[i]+=aDiff;
         }
 
         updateBarsRanges();
@@ -948,12 +1025,13 @@ void CustomFastTableWidget::setRowHeight(const int row, const quint16 height)
     {
         int aDiff=height-mRowHeights.at(row);
 
-        mTotalHeight+=aDiff;
         mRowHeights[row]=height;
+
+        mTotalHeight+=aDiff;
 
         for (int i=row+1; i<mRowCount; ++i)
         {
-            mOffsetY[i]=mOffsetY.at(i)+aDiff;
+            mOffsetY[i]+=aDiff;
         }
 
         updateBarsRanges();
@@ -965,22 +1043,72 @@ void CustomFastTableWidget::setRowHeight(const int row, const quint16 height)
 
 quint16 CustomFastTableWidget::verticalHeader_ColumnWidth(const int column)
 {
-
+    return mVerticalHeader_ColumnWidths.at(column);
 }
 
 void CustomFastTableWidget::verticalHeader_SetColumnWidth(const int column, const quint16 width)
 {
+    START_PROFILE;
 
+    if (mVerticalHeader_ColumnWidths.at(column)!=width)
+    {
+        int aDiff=width-mVerticalHeader_ColumnWidths.at(column);
+
+        mVerticalHeader_ColumnWidths[column]=width;
+
+        mVerticalHeader_TotalWidth+=aDiff;
+        mTotalWidth+=aDiff;
+
+        for (int i=column+1; i<mVerticalHeader_ColumnCount; ++i)
+        {
+            mVerticalHeader_OffsetX[i]+=aDiff;
+        }
+
+        for (int i=0; i<mColumnCount; ++i)
+        {
+            mOffsetX[i]+=aDiff;
+        }
+
+        updateBarsRanges();
+        updateVisibleRange();
+    }
+
+    END_PROFILE("void CustomFastTableWidget::setColumnWidth(const int column, const quint16 width)");
 }
 
 quint16 CustomFastTableWidget::horizontalHeader_RowHeight(const int row)
 {
-
+    return mHorizontalHeader_RowHeights.at(row);
 }
 
 void CustomFastTableWidget::horizontalHeader_SetRowHeight(const int row, const quint16 height)
 {
+    START_PROFILE;
 
+    if (mHorizontalHeader_RowHeights.at(row)!=height)
+    {
+        int aDiff=height-mHorizontalHeader_RowHeights.at(row);
+
+        mHorizontalHeader_RowHeights[row]=height;
+
+        mHorizontalHeader_TotalHeight+=aDiff;
+        mTotalHeight+=aDiff;
+
+        for (int i=row+1; i<mHorizontalHeader_RowCount; ++i)
+        {
+            mHorizontalHeader_OffsetY[i]+=aDiff;
+        }
+
+        for (int i=0; i<mRowCount; ++i)
+        {
+            mOffsetY[i]+=aDiff;
+        }
+
+        updateBarsRanges();
+        updateVisibleRange();
+    }
+
+    END_PROFILE("void CustomFastTableWidget::horizontalHeader_SetRowHeight(const int row, const quint16 height)");
 }
 
 int CustomFastTableWidget::totalWidth()
