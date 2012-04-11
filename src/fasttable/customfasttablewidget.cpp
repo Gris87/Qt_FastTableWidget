@@ -708,7 +708,7 @@ void CustomFastTableWidget::horizontalHeader_DeleteRow(int row)
     mHorizontalHeader_RowHeights.removeAt(row);
     mHorizontalHeader_Data.removeAt(row);
 
-    mRowCount--;
+    mHorizontalHeader_RowCount--;
 
     END_PROFILE("void CustomFastTableWidget::horizontalHeader_DeleteRow(int row)");
 }
@@ -779,7 +779,7 @@ void CustomFastTableWidget::verticalHeader_DeleteColumn(int column)
         mVerticalHeader_Data[i].removeAt(column);
     }
 
-    mColumnCount--;
+    mVerticalHeader_ColumnCount--;
 
     END_PROFILE("void CustomFastTableWidget::verticalHeader_DeleteColumn(int column)");
 }
