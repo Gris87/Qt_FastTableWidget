@@ -36,15 +36,9 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     mVisibleTop=-1;
     mVisibleBottom=-1;
 
-    mHorizontalHeader_VisibleLeft=-1;
-    mHorizontalHeader_VisibleRight=-1;
-    mHorizontalHeader_VisibleTop=-1;
     mHorizontalHeader_VisibleBottom=-1;
 
-    mVerticalHeader_VisibleLeft=-1;
     mVerticalHeader_VisibleRight=-1;
-    mVerticalHeader_VisibleTop=-1;
-    mVerticalHeader_VisibleBottom=-1;
 
     horizontalScrollBar()->setSingleStep(100);
     verticalScrollBar()->setSingleStep(100);
@@ -327,15 +321,9 @@ void CustomFastTableWidget::clearTable()
     mVisibleTop=-1;
     mVisibleBottom=-1;
 
-    mHorizontalHeader_VisibleLeft=-1;
-    mHorizontalHeader_VisibleRight=-1;
-    mHorizontalHeader_VisibleTop=-1;
     mHorizontalHeader_VisibleBottom=-1;
 
-    mVerticalHeader_VisibleLeft=-1;
     mVerticalHeader_VisibleRight=-1;
-    mVerticalHeader_VisibleTop=-1;
-    mVerticalHeader_VisibleBottom=-1;
 
     mData.clear();
     mRowHeights.clear();
@@ -1249,7 +1237,15 @@ QRect CustomFastTableWidget::horizontalHeader_VisibleRange()
     START_PROFILE;
 
     QRect aRect;
-    aRect.setCoords(mHorizontalHeader_VisibleLeft, mHorizontalHeader_VisibleTop, mHorizontalHeader_VisibleRight, mHorizontalHeader_VisibleBottom);
+
+    if (mHorizontalHeader_VisibleBottom>=0)
+    {
+        aRect.setCoords(mVisibleLeft, 0, mVisibleRight, mHorizontalHeader_VisibleBottom);
+    }
+    else
+    {
+        aRect.setCoords(-1, -1, -1, -1);
+    }
 
     END_PROFILE("QRect CustomFastTableWidget::horizontalHeader_VisibleRange()");
 
@@ -1261,7 +1257,15 @@ QRect CustomFastTableWidget::verticalHeader_VisibleRange()
     START_PROFILE;
 
     QRect aRect;
-    aRect.setCoords(mVerticalHeader_VisibleLeft, mVerticalHeader_VisibleTop, mVerticalHeader_VisibleRight, mVerticalHeader_VisibleBottom);
+
+    if (mVerticalHeader_VisibleRight>=0)
+    {
+        aRect.setCoords(0, mVisibleTop, mVerticalHeader_VisibleRight, mVisibleBottom);
+    }
+    else
+    {
+        aRect.setCoords(-1, -1, -1, -1);
+    }
 
     END_PROFILE("QRect CustomFastTableWidget::verticalHeader_VisibleRange()");
 

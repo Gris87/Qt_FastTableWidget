@@ -68,15 +68,9 @@ public:
     int getVisibleTop();
     int getVisibleBottom();
 
-    int horizontalHeader_GetVisibleLeft();
-    int horizontalHeader_GetVisibleRight();
-    int horizontalHeader_GetVisibleTop();
     int horizontalHeader_GetVisibleBottom();
 
-    int verticalHeader_GetVisibleLeft();
     int verticalHeader_GetVisibleRight();
-    int verticalHeader_GetVisibleTop();
-    int verticalHeader_GetVisibleBottom();
 
     QList< QStringList > *getData();
     QList< quint16 >     *getRowHeights();

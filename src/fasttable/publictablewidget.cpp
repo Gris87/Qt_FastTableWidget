@@ -242,44 +242,14 @@ int PublicCustomFastTable::getVisibleBottom()
     return mVisibleBottom;
 }
 
-int PublicCustomFastTable::horizontalHeader_GetVisibleLeft()
-{
-    return mHorizontalHeader_VisibleLeft;
-}
-
-int PublicCustomFastTable::horizontalHeader_GetVisibleRight()
-{
-    return mHorizontalHeader_VisibleRight;
-}
-
-int PublicCustomFastTable::horizontalHeader_GetVisibleTop()
-{
-    return mHorizontalHeader_VisibleTop;
-}
-
 int PublicCustomFastTable::horizontalHeader_GetVisibleBottom()
 {
     return mHorizontalHeader_VisibleBottom;
 }
 
-int PublicCustomFastTable::verticalHeader_GetVisibleLeft()
-{
-    return mVerticalHeader_VisibleLeft;
-}
-
 int PublicCustomFastTable::verticalHeader_GetVisibleRight()
 {
     return mVerticalHeader_VisibleRight;
-}
-
-int PublicCustomFastTable::verticalHeader_GetVisibleTop()
-{
-    return mVerticalHeader_VisibleTop;
-}
-
-int PublicCustomFastTable::verticalHeader_GetVisibleBottom()
-{
-    return mVerticalHeader_VisibleBottom;
 }
 
 QList< QStringList > *PublicCustomFastTable::getData()

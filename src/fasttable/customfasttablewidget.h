@@ -208,15 +208,9 @@ protected:
     int mVisibleTop;
     int mVisibleBottom;
 
-    int mHorizontalHeader_VisibleLeft;
-    int mHorizontalHeader_VisibleRight;
-    int mHorizontalHeader_VisibleTop;
     int mHorizontalHeader_VisibleBottom;
 
-    int mVerticalHeader_VisibleLeft;
     int mVerticalHeader_VisibleRight;
-    int mVerticalHeader_VisibleTop;
-    int mVerticalHeader_VisibleBottom;
 
     QList< QStringList > mData;
     QList< quint16 >     mRowHeights;
