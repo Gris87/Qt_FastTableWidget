@@ -1610,8 +1610,6 @@ void CustomFastTableWidget::setCellSelected(const int row, const int column, con
             {
                 if (mCurSelection.at(i).y()==row)
                 {
-                    rowFound=true;
-
                     if (mCurSelection.at(i).x()==column)
                     {
                         mCurSelection.removeAt(i);
@@ -1619,6 +1617,8 @@ void CustomFastTableWidget::setCellSelected(const int row, const int column, con
 
                         continue;
                     }
+
+                    rowFound=true;
                 }
                 else
                 {

@@ -593,7 +593,7 @@ void FastTableWidget::resetFonts()
     END_PROFILE("void FastTableWidget::resetFonts()");
 }
 
-void FastTableWidget::resetTextFlags()
+void FastTableWidget::resetCellTextFlags()
 {
     START_PROFILE;
 
@@ -605,7 +605,7 @@ void FastTableWidget::resetTextFlags()
         }
     }
 
-    END_PROFILE("void FastTableWidget::resetTextFlags()");
+    END_PROFILE("void FastTableWidget::resetCellTextFlags()");
 }
 
 void FastTableWidget::horizontalHeader_ResetBackgroundBrushes()
@@ -665,7 +665,7 @@ void FastTableWidget::horizontalHeader_ResetFonts()
     END_PROFILE("void FastTableWidget::horizontalHeader_ResetFonts()");
 }
 
-void FastTableWidget::horizontalHeader_ResetTextFlags()
+void FastTableWidget::horizontalHeader_ResetCellTextFlags()
 {
     START_PROFILE;
 
@@ -677,7 +677,7 @@ void FastTableWidget::horizontalHeader_ResetTextFlags()
         }
     }
 
-    END_PROFILE("void FastTableWidget::horizontalHeader_ResetTextFlags()");
+    END_PROFILE("void FastTableWidget::horizontalHeader_ResetCellTextFlags()");
 }
 
 void FastTableWidget::verticalHeader_ResetBackgroundBrushes()
@@ -737,7 +737,7 @@ void FastTableWidget::verticalHeader_ResetFonts()
     END_PROFILE("void FastTableWidget::verticalHeader_ResetFonts()");
 }
 
-void FastTableWidget::verticalHeader_ResetTextFlags()
+void FastTableWidget::verticalHeader_ResetCellTextFlags()
 {
     START_PROFILE;
 
@@ -749,7 +749,7 @@ void FastTableWidget::verticalHeader_ResetTextFlags()
         }
     }
 
-    END_PROFILE("void FastTableWidget::verticalHeader_ResetTextFlags()");
+    END_PROFILE("void FastTableWidget::verticalHeader_ResetCellTextFlags()");
 }
 
 void FastTableWidget::resetBackgroundBrush(const int row, const int column)
@@ -791,13 +791,13 @@ void FastTableWidget::resetFont(const int row, const int column)
     END_PROFILE("void FastTableWidget::resetFont(const int row, const int column)");
 }
 
-void FastTableWidget::resetTextFlag(const int row, const int column)
+void FastTableWidget::resetCellTextFlag(const int row, const int column)
 {
     START_PROFILE;
 
     mCellTextFlags[row][column]=FASTTABLE_DEFAULT_TEXT_FLAG;
 
-    END_PROFILE("void FastTableWidget::resetTextFlag(const int row, const int column)");
+    END_PROFILE("void FastTableWidget::resetCellTextFlag(const int row, const int column)");
 }
 
 void FastTableWidget::horizontalHeader_ResetBackgroundBrush(const int row, const int column)
@@ -839,13 +839,13 @@ void FastTableWidget::horizontalHeader_ResetFont(const int row, const int column
     END_PROFILE("void FastTableWidget::horizontalHeader_ResetFont(const int row, const int column)");
 }
 
-void FastTableWidget::horizontalHeader_ResetTextFlag(const int row, const int column)
+void FastTableWidget::horizontalHeader_ResetCellTextFlag(const int row, const int column)
 {
     START_PROFILE;
 
     mHorizontalHeader_CellTextFlags[row][column]=FASTTABLE_HEADER_DEFAULT_TEXT_FLAG;
 
-    END_PROFILE("void FastTableWidget::horizontalHeader_ResetTextFlag(const int row, const int column)");
+    END_PROFILE("void FastTableWidget::horizontalHeader_ResetCellTextFlag(const int row, const int column)");
 }
 
 void FastTableWidget::verticalHeader_ResetBackgroundBrush(const int row, const int column)
@@ -887,13 +887,13 @@ void FastTableWidget::verticalHeader_ResetFont(const int row, const int column)
     END_PROFILE("void FastTableWidget::verticalHeader_ResetFont(const int row, const int column)");
 }
 
-void FastTableWidget::verticalHeader_ResetTextFlag(const int row, const int column)
+void FastTableWidget::verticalHeader_ResetCellTextFlag(const int row, const int column)
 {
     START_PROFILE;
 
     mVerticalHeader_CellTextFlags[row][column]=FASTTABLE_DEFAULT_TEXT_FLAG;
 
-    END_PROFILE("void FastTableWidget::verticalHeader_ResetTextFlag(const int row, const int column)");
+    END_PROFILE("void FastTableWidget::verticalHeader_ResetCellTextFlag(const int row, const int column)");
 }
 
 void FastTableWidget::insertRow(int row)

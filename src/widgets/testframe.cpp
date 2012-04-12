@@ -63,10 +63,20 @@ TestFrame::TestFrame(CustomFastTableWidget* aFastTable, QWidget *parent) :
     addTestLabel("verticalHeader_SetText");
     addTestLabel("setCellSelected");
     addTestLabel("setBackgroundBrush");
+    addTestLabel("horizontalHeader_SetBackgroundBrush");
+    addTestLabel("verticalHeader_SetBackgroundBrush");
     addTestLabel("setForegroundColor");
+    addTestLabel("horizontalHeader_SetForegroundColor");
+    addTestLabel("verticalHeader_SetForegroundColor");
     addTestLabel("setCellFont");
-    addTestLabel("setTextFlags");
+    addTestLabel("horizontalHeader_SetCellFont");
+    addTestLabel("verticalHeader_SetCellFont");
+    addTestLabel("setCellTextFlags");
+    addTestLabel("horizontalHeader_SetCellTextFlags");
+    addTestLabel("verticalHeader_SetCellTextFlags");
     addTestLabel("setSpan");
+    addTestLabel("horizontalHeader_SetSpan");
+    addTestLabel("verticalHeader_SetSpan");
 
     //-------------------------------------------------------------------------------------------------------------
 
@@ -714,7 +724,7 @@ void TestFrame::startTest()
         testCompleted(success, "setSelectionTextColor");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 30: setDefaultWidth";
+    qDebug()<<"TEST 31: setDefaultWidth";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -753,7 +763,7 @@ void TestFrame::startTest()
         testCompleted(success, "setDefaultWidth");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 31: setDefaultHeight";
+    qDebug()<<"TEST 32: setDefaultHeight";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -792,7 +802,7 @@ void TestFrame::startTest()
         testCompleted(success, "setDefaultHeight");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 32: setColumnWidth";
+    qDebug()<<"TEST 33: setColumnWidth";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -815,7 +825,7 @@ void TestFrame::startTest()
         testCompleted(success, "setColumnWidth");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 33: setRowHeight";
+    qDebug()<<"TEST 34: setRowHeight";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -838,7 +848,7 @@ void TestFrame::startTest()
         testCompleted(success, "setRowHeight");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 34: verticalHeader_SetColumnWidth";
+    qDebug()<<"TEST 35: verticalHeader_SetColumnWidth";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -864,7 +874,7 @@ void TestFrame::startTest()
         testCompleted(success, "verticalHeader_SetColumnWidth");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 35: horizontalHeader_SetRowHeight";
+    qDebug()<<"TEST 36: horizontalHeader_SetRowHeight";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -890,7 +900,7 @@ void TestFrame::startTest()
         testCompleted(success, "horizontalHeader_SetRowHeight");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 36: horizontalHeader_SetText";
+    qDebug()<<"TEST 37: horizontalHeader_SetText";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -925,7 +935,7 @@ void TestFrame::startTest()
         testCompleted(success, "horizontalHeader_SetText");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 37: verticalHeader_SetText";
+    qDebug()<<"TEST 38: verticalHeader_SetText";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -965,7 +975,7 @@ void TestFrame::startTest()
         testCompleted(success, "verticalHeader_SetText");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 38: setText";
+    qDebug()<<"TEST 39: setText";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -1000,7 +1010,7 @@ void TestFrame::startTest()
         testCompleted(success, "setText");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 39: setCellSelected";
+    qDebug()<<"TEST 40: setCellSelected";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -1025,9 +1035,74 @@ void TestFrame::startTest()
             }
         }
 
+        if (success)
+        {
+            for (int i=0; i<((PublicCustomFastTable*)mFastTable)->getRowCount(); ++i)
+            {
+                TEST_STEP(mVerticalHeader_SelectedRows->at(i));
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        if (success)
+        {
+            for (int i=0; i<((PublicCustomFastTable*)mFastTable)->getColumnCount(); ++i)
+            {
+                TEST_STEP(mHorizontalHeader_SelectedColumns->at(i));
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        TEST_STEP(mCurSelection->length()==50*20);
+
         mFastTable->setCellSelected(10, 5, false);
 
         TEST_STEP(!mSelectedCells->at(10).at(5));
+        TEST_STEP(mCurSelection->length()==50*20-1);
+
+        mFastTable->unselectRow(10);
+
+        if (success)
+        {
+            for (int i=0; i<((PublicCustomFastTable*)mFastTable)->getColumnCount(); ++i)
+            {
+                TEST_STEP(!mSelectedCells->at(10).at(i));
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        TEST_STEP(!mVerticalHeader_SelectedRows->at(10));
+        TEST_STEP(mCurSelection->length()==49*20);
+
+        mFastTable->unselectColumn(5);
+
+        if (success)
+        {
+            for (int i=0; i<((PublicCustomFastTable*)mFastTable)->getRowCount(); ++i)
+            {
+                TEST_STEP(!mSelectedCells->at(i).at(5));
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        TEST_STEP(!mHorizontalHeader_SelectedColumns->at(5));
+        TEST_STEP(mCurSelection->length()==49*19);
 
         mFastTable->unselectAll();
 
@@ -1052,10 +1127,38 @@ void TestFrame::startTest()
             }
         }
 
+        if (success)
+        {
+            for (int i=0; i<((PublicCustomFastTable*)mFastTable)->getRowCount(); ++i)
+            {
+                TEST_STEP(!mVerticalHeader_SelectedRows->at(i));
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        if (success)
+        {
+            for (int i=0; i<((PublicCustomFastTable*)mFastTable)->getColumnCount(); ++i)
+            {
+                TEST_STEP(!mHorizontalHeader_SelectedColumns->at(i));
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        TEST_STEP(mCurSelection->length()==0);
+
         testCompleted(success, "setCellSelected");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 40: setBackgroundBrush";
+    qDebug()<<"TEST 41: setBackgroundBrush";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1126,7 +1229,149 @@ void TestFrame::startTest()
         testNotSupported("setBackgroundBrush");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 41: setForegroundColor";
+    qDebug()<<"TEST 42: horizontalHeader_SetBackgroundBrush";
+    // ----------------------------------------------------------------
+    if (mFastTable->inherits("FastTableWidget"))
+    {
+        success=true;
+
+        FastTableWidget* aTable=(FastTableWidget*)mFastTable;
+
+        QBrush aNewBackgroundBrush(QColor(1, 2, 3));
+
+        for (int i=0; i<aTable->horizontalHeader_RowCount(); ++i)
+        {
+            for (int j=0; j<aTable->columnCount(); ++j)
+            {
+                aTable->horizontalHeader_SetBackgroundBrush(i, j, aNewBackgroundBrush);
+            }
+        }
+
+        for (int i=0; i<((PublicCustomFastTable*)aTable)->horizontalHeader_GetRowCount(); ++i)
+        {
+            for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
+            {
+                TEST_STEP(mHorizontalHeader_BackgroundBrushes->at(i).at(j) && *mHorizontalHeader_BackgroundBrushes->at(i).at(j)==aNewBackgroundBrush);
+                TEST_STEP(aTable->horizontalHeader_BackgroundBrush(i, j)==aNewBackgroundBrush);
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+
+            if (!success)
+            {
+                break;
+            }
+        }
+
+        aTable->horizontalHeader_ResetBackgroundBrush(1, 0);
+
+        TEST_STEP(mHorizontalHeader_BackgroundBrushes->at(1).at(0)==0);
+
+        aTable->horizontalHeader_ResetBackgroundBrushes();
+
+        if (success)
+        {
+            for (int i=0; i<((PublicCustomFastTable*)aTable)->horizontalHeader_GetRowCount(); ++i)
+            {
+                for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
+                {
+                    TEST_STEP(mHorizontalHeader_BackgroundBrushes->at(i).at(j)==0);
+
+                    if (!success)
+                    {
+                        break;
+                    }
+                }
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        testCompleted(success, "horizontalHeader_SetBackgroundBrush");
+    }
+    else
+    {
+        testNotSupported("horizontalHeader_SetBackgroundBrush");
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 43: verticalHeader_SetBackgroundBrush";
+    // ----------------------------------------------------------------
+    if (mFastTable->inherits("FastTableWidget"))
+    {
+        success=true;
+
+        FastTableWidget* aTable=(FastTableWidget*)mFastTable;
+
+        QBrush aNewBackgroundBrush(QColor(1, 2, 3));
+
+        for (int i=0; i<aTable->rowCount(); ++i)
+        {
+            for (int j=0; j<aTable->verticalHeader_ColumnCount(); ++j)
+            {
+                aTable->verticalHeader_SetBackgroundBrush(i, j, aNewBackgroundBrush);
+            }
+        }
+
+        for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
+        {
+            for (int j=0; j<((PublicCustomFastTable*)aTable)->verticalHeader_GetColumnCount(); ++j)
+            {
+                TEST_STEP(mVerticalHeader_BackgroundBrushes->at(i).at(j) && *mVerticalHeader_BackgroundBrushes->at(i).at(j)==aNewBackgroundBrush);
+                TEST_STEP(aTable->verticalHeader_BackgroundBrush(i, j)==aNewBackgroundBrush);
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+
+            if (!success)
+            {
+                break;
+            }
+        }
+
+        aTable->verticalHeader_ResetBackgroundBrush(1, 0);
+
+        TEST_STEP(mVerticalHeader_BackgroundBrushes->at(1).at(0)==0);
+
+        aTable->verticalHeader_ResetBackgroundBrushes();
+
+        if (success)
+        {
+            for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
+            {
+                for (int j=0; j<((PublicCustomFastTable*)aTable)->verticalHeader_GetColumnCount(); ++j)
+                {
+                    TEST_STEP(mVerticalHeader_BackgroundBrushes->at(i).at(j)==0);
+
+                    if (!success)
+                    {
+                        break;
+                    }
+                }
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        testCompleted(success, "verticalHeader_SetBackgroundBrush");
+    }
+    else
+    {
+        testNotSupported("verticalHeader_SetBackgroundBrush");
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 44: setForegroundColor";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1197,7 +1442,149 @@ void TestFrame::startTest()
         testNotSupported("setForegroundColor");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 42: setCellFont";
+    qDebug()<<"TEST 45: horizontalHeader_SetForegroundColor";
+    // ----------------------------------------------------------------
+    if (mFastTable->inherits("FastTableWidget"))
+    {
+        success=true;
+
+        FastTableWidget* aTable=(FastTableWidget*)mFastTable;
+
+        QColor aNewForegroundColor(3, 2, 1);
+
+        for (int i=0; i<aTable->horizontalHeader_RowCount(); ++i)
+        {
+            for (int j=0; j<aTable->columnCount(); ++j)
+            {
+                aTable->horizontalHeader_SetForegroundColor(i, j, aNewForegroundColor);
+            }
+        }
+
+        for (int i=0; i<((PublicCustomFastTable*)aTable)->horizontalHeader_GetRowCount(); ++i)
+        {
+            for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
+            {
+                TEST_STEP(mHorizontalHeader_ForegroundColors->at(i).at(j) && *mHorizontalHeader_ForegroundColors->at(i).at(j)==aNewForegroundColor);
+                TEST_STEP(aTable->horizontalHeader_ForegroundColor(i, j)==aNewForegroundColor);
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+
+            if (!success)
+            {
+                break;
+            }
+        }
+
+        aTable->horizontalHeader_ResetForegroundColor(1, 0);
+
+        TEST_STEP(mHorizontalHeader_ForegroundColors->at(1).at(0)==0);
+
+        aTable->horizontalHeader_ResetForegroundColors();
+
+        if (success)
+        {
+            for (int i=0; i<((PublicCustomFastTable*)aTable)->horizontalHeader_GetRowCount(); ++i)
+            {
+                for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
+                {
+                    TEST_STEP(mHorizontalHeader_ForegroundColors->at(i).at(j)==0);
+
+                    if (!success)
+                    {
+                        break;
+                    }
+                }
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        testCompleted(success, "horizontalHeader_SetForegroundColor");
+    }
+    else
+    {
+        testNotSupported("horizontalHeader_SetForegroundColor");
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 46: verticalHeader_SetForegroundColor";
+    // ----------------------------------------------------------------
+    if (mFastTable->inherits("FastTableWidget"))
+    {
+        success=true;
+
+        FastTableWidget* aTable=(FastTableWidget*)mFastTable;
+
+        QColor aNewForegroundColor(3, 2, 1);
+
+        for (int i=0; i<aTable->rowCount(); ++i)
+        {
+            for (int j=0; j<aTable->verticalHeader_ColumnCount(); ++j)
+            {
+                aTable->verticalHeader_SetForegroundColor(i, j, aNewForegroundColor);
+            }
+        }
+
+        for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
+        {
+            for (int j=0; j<((PublicCustomFastTable*)aTable)->verticalHeader_GetColumnCount(); ++j)
+            {
+                TEST_STEP(mVerticalHeader_ForegroundColors->at(i).at(j) && *mVerticalHeader_ForegroundColors->at(i).at(j)==aNewForegroundColor);
+                TEST_STEP(aTable->verticalHeader_ForegroundColor(i, j)==aNewForegroundColor);
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+
+            if (!success)
+            {
+                break;
+            }
+        }
+
+        aTable->verticalHeader_ResetForegroundColor(1, 0);
+
+        TEST_STEP(mVerticalHeader_ForegroundColors->at(1).at(0)==0);
+
+        aTable->verticalHeader_ResetForegroundColors();
+
+        if (success)
+        {
+            for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
+            {
+                for (int j=0; j<((PublicCustomFastTable*)aTable)->verticalHeader_GetColumnCount(); ++j)
+                {
+                    TEST_STEP(mVerticalHeader_ForegroundColors->at(i).at(j)==0);
+
+                    if (!success)
+                    {
+                        break;
+                    }
+                }
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        testCompleted(success, "verticalHeader_SetForegroundColor");
+    }
+    else
+    {
+        testNotSupported("verticalHeader_SetForegroundColor");
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 47: setCellFont";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1268,7 +1655,149 @@ void TestFrame::startTest()
         testNotSupported("setCellFont");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 43: setTextFlags";
+    qDebug()<<"TEST 48: horizontalHeader_SetCellFont";
+    // ----------------------------------------------------------------
+    if (mFastTable->inherits("FastTableWidget"))
+    {
+        success=true;
+
+        FastTableWidget* aTable=(FastTableWidget*)mFastTable;
+
+        QFont aNewCellFont("Arial", 12, 1, true);
+
+        for (int i=0; i<aTable->horizontalHeader_RowCount(); ++i)
+        {
+            for (int j=0; j<aTable->columnCount(); ++j)
+            {
+                aTable->horizontalHeader_SetCellFont(i, j, aNewCellFont);
+            }
+        }
+
+        for (int i=0; i<((PublicCustomFastTable*)aTable)->horizontalHeader_GetRowCount(); ++i)
+        {
+            for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
+            {
+                TEST_STEP(mHorizontalHeader_CellFonts->at(i).at(j) && *mHorizontalHeader_CellFonts->at(i).at(j)==aNewCellFont);
+                TEST_STEP(aTable->horizontalHeader_CellFont(i, j)==aNewCellFont);
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+
+            if (!success)
+            {
+                break;
+            }
+        }
+
+        aTable->horizontalHeader_ResetFont(1, 0);
+
+        TEST_STEP(mHorizontalHeader_CellFonts->at(1).at(0)==0);
+
+        aTable->horizontalHeader_ResetFonts();
+
+        if (success)
+        {
+            for (int i=0; i<((PublicCustomFastTable*)aTable)->horizontalHeader_GetRowCount(); ++i)
+            {
+                for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
+                {
+                    TEST_STEP(mHorizontalHeader_CellFonts->at(i).at(j)==0);
+
+                    if (!success)
+                    {
+                        break;
+                    }
+                }
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        testCompleted(success, "horizontalHeader_SetCellFont");
+    }
+    else
+    {
+        testNotSupported("horizontalHeader_SetCellFont");
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 49: verticalHeader_SetCellFont";
+    // ----------------------------------------------------------------
+    if (mFastTable->inherits("FastTableWidget"))
+    {
+        success=true;
+
+        FastTableWidget* aTable=(FastTableWidget*)mFastTable;
+
+        QFont aNewCellFont("Arial", 12, 1, true);
+
+        for (int i=0; i<aTable->rowCount(); ++i)
+        {
+            for (int j=0; j<aTable->verticalHeader_ColumnCount(); ++j)
+            {
+                aTable->verticalHeader_SetCellFont(i, j, aNewCellFont);
+            }
+        }
+
+        for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
+        {
+            for (int j=0; j<((PublicCustomFastTable*)aTable)->verticalHeader_GetColumnCount(); ++j)
+            {
+                TEST_STEP(mVerticalHeader_CellFonts->at(i).at(j) && *mVerticalHeader_CellFonts->at(i).at(j)==aNewCellFont);
+                TEST_STEP(aTable->verticalHeader_CellFont(i, j)==aNewCellFont);
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+
+            if (!success)
+            {
+                break;
+            }
+        }
+
+        aTable->verticalHeader_ResetFont(1, 0);
+
+        TEST_STEP(mVerticalHeader_CellFonts->at(1).at(0)==0);
+
+        aTable->verticalHeader_ResetFonts();
+
+        if (success)
+        {
+            for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
+            {
+                for (int j=0; j<((PublicCustomFastTable*)aTable)->verticalHeader_GetColumnCount(); ++j)
+                {
+                    TEST_STEP(mVerticalHeader_CellFonts->at(i).at(j)==0);
+
+                    if (!success)
+                    {
+                        break;
+                    }
+                }
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        testCompleted(success, "verticalHeader_SetCellFont");
+    }
+    else
+    {
+        testNotSupported("verticalHeader_SetCellFont");
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 50: setCellTextFlags";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1305,11 +1834,11 @@ void TestFrame::startTest()
             }
         }
 
-        aTable->resetTextFlag(10, 5);
+        aTable->resetCellTextFlag(10, 5);
 
         TEST_STEP(aTable->cellTextFlags(10, 5)==(FASTTABLE_DEFAULT_TEXT_FLAG));
 
-        aTable->resetTextFlags();
+        aTable->resetCellTextFlags();
 
         if (success)
         {
@@ -1317,6 +1846,7 @@ void TestFrame::startTest()
             {
                 for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
                 {
+                    TEST_STEP(mCellTextFlags->at(i).at(j)==(FASTTABLE_DEFAULT_TEXT_FLAG));
                     TEST_STEP(aTable->cellTextFlags(i, j)==(FASTTABLE_DEFAULT_TEXT_FLAG));
 
                     if (!success)
@@ -1332,14 +1862,158 @@ void TestFrame::startTest()
             }
         }
 
-        testCompleted(success, "setTextFlags");
+        testCompleted(success, "setCellTextFlags");
     }
     else
     {
-        testNotSupported("setTextFlags");
+        testNotSupported("setCellTextFlags");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 44: setSpan";
+    qDebug()<<"TEST 51: horizontalHeader_SetCellTextFlags";
+    // ----------------------------------------------------------------
+    if (mFastTable->inherits("FastTableWidget"))
+    {
+        success=true;
+
+        FastTableWidget* aTable=(FastTableWidget*)mFastTable;
+
+        int aNewFlag=Qt::AlignRight | Qt::AlignTop;
+
+        for (int i=0; i<aTable->horizontalHeader_RowCount(); ++i)
+        {
+            for (int j=0; j<aTable->columnCount(); ++j)
+            {
+                aTable->horizontalHeader_SetCellTextFlags(i, j, aNewFlag);
+            }
+        }
+
+        for (int i=0; i<((PublicCustomFastTable*)aTable)->horizontalHeader_GetRowCount(); ++i)
+        {
+            for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
+            {
+                TEST_STEP(mHorizontalHeader_CellTextFlags->at(i).at(j)==aNewFlag);
+                TEST_STEP(aTable->horizontalHeader_CellTextFlags(i, j)==aNewFlag);
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+
+            if (!success)
+            {
+                break;
+            }
+        }
+
+        aTable->horizontalHeader_ResetCellTextFlag(1, 0);
+
+        TEST_STEP(aTable->horizontalHeader_CellTextFlags(1, 0)==(FASTTABLE_HEADER_DEFAULT_TEXT_FLAG));
+
+        aTable->horizontalHeader_ResetCellTextFlags();
+
+        if (success)
+        {
+            for (int i=0; i<((PublicCustomFastTable*)aTable)->horizontalHeader_GetRowCount(); ++i)
+            {
+                for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
+                {
+                    TEST_STEP(mHorizontalHeader_CellTextFlags->at(i).at(j)==(FASTTABLE_HEADER_DEFAULT_TEXT_FLAG));
+                    TEST_STEP(aTable->horizontalHeader_CellTextFlags(i, j)==(FASTTABLE_HEADER_DEFAULT_TEXT_FLAG));
+
+                    if (!success)
+                    {
+                        break;
+                    }
+                }
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        testCompleted(success, "horizontalHeader_SetCellTextFlags");
+    }
+    else
+    {
+        testNotSupported("horizontalHeader_SetCellTextFlags");
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 52: verticalHeader_SetCellTextFlags";
+    // ----------------------------------------------------------------
+    if (mFastTable->inherits("FastTableWidget"))
+    {
+        success=true;
+
+        FastTableWidget* aTable=(FastTableWidget*)mFastTable;
+
+        int aNewFlag=Qt::AlignRight | Qt::AlignTop;
+
+        for (int i=0; i<aTable->rowCount(); ++i)
+        {
+            for (int j=0; j<aTable->verticalHeader_ColumnCount(); ++j)
+            {
+                aTable->verticalHeader_SetCellTextFlags(i, j, aNewFlag);
+            }
+        }
+
+        for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
+        {
+            for (int j=0; j<((PublicCustomFastTable*)aTable)->verticalHeader_GetColumnCount(); ++j)
+            {
+                TEST_STEP(mVerticalHeader_CellTextFlags->at(i).at(j)==aNewFlag);
+                TEST_STEP(aTable->verticalHeader_CellTextFlags(i, j)==aNewFlag);
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+
+            if (!success)
+            {
+                break;
+            }
+        }
+
+        aTable->verticalHeader_ResetCellTextFlag(1, 0);
+
+        TEST_STEP(aTable->verticalHeader_CellTextFlags(1, 0)==(FASTTABLE_DEFAULT_TEXT_FLAG));
+
+        aTable->verticalHeader_ResetCellTextFlags();
+
+        if (success)
+        {
+            for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
+            {
+                for (int j=0; j<((PublicCustomFastTable*)aTable)->verticalHeader_GetColumnCount(); ++j)
+                {
+                    TEST_STEP(mVerticalHeader_CellTextFlags->at(i).at(j)==(FASTTABLE_DEFAULT_TEXT_FLAG));
+                    TEST_STEP(aTable->verticalHeader_CellTextFlags(i, j)==(FASTTABLE_DEFAULT_TEXT_FLAG));
+
+                    if (!success)
+                    {
+                        break;
+                    }
+                }
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+        }
+
+        testCompleted(success, "verticalHeader_SetCellTextFlags");
+    }
+    else
+    {
+        testNotSupported("verticalHeader_SetCellTextFlags");
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 53: setSpan";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1368,7 +2042,7 @@ void TestFrame::startTest()
         {
             for (int j=2; j<=4; j++)
             {
-                if (i!=1 && j!=3)
+                if (i!=1 || j!=3)
                 {
                     TEST_STEP(mCellMergeParentRow->at(i).at(j)==-1);
                     TEST_STEP(mCellMergeParentColumn->at(i).at(j)==-1);
@@ -1421,6 +2095,161 @@ void TestFrame::startTest()
     else
     {
         testNotSupported("setSpan");
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 54: horizontalHeader_SetSpan";
+    // ----------------------------------------------------------------
+    if (mFastTable->inherits("FastTableWidget"))
+    {
+        success=true;
+
+        FastTableWidget* aTable=(FastTableWidget*)mFastTable;
+
+        aTable->horizontalHeader_SetSpan(0, 2, 2, 3);
+
+        for (int i=0; i<=1; i++)
+        {
+            for (int j=2; j<=4; j++)
+            {
+                TEST_STEP(mHorizontalHeader_CellMergeParentRow->at(i).at(j)==0);
+                TEST_STEP(mHorizontalHeader_CellMergeParentColumn->at(i).at(j)==2);
+                TEST_STEP(aTable->horizontalHeader_SpanParent(i, j)==QPoint(2, 0));
+            }
+        }
+
+        TEST_STEP(mHorizontalHeader_CellMergeX->at(0).at(2)==3);
+        TEST_STEP(mHorizontalHeader_CellMergeY->at(0).at(2)==2);
+
+        aTable->horizontalHeader_SetSpan(0, 1, 1, 2);
+
+        for (int i=0; i<=1; i++)
+        {
+            for (int j=2; j<=4; j++)
+            {
+                if (i!=0 || j!=2)
+                {
+                    TEST_STEP(mHorizontalHeader_CellMergeParentRow->at(i).at(j)==-1);
+                    TEST_STEP(mHorizontalHeader_CellMergeParentColumn->at(i).at(j)==-1);
+                    TEST_STEP(aTable->horizontalHeader_SpanParent(i, j)==QPoint(-1, -1));
+                }
+            }
+        }
+
+        TEST_STEP(mHorizontalHeader_CellMergeX->at(0).at(2)==1);
+        TEST_STEP(mHorizontalHeader_CellMergeY->at(0).at(2)==1);
+
+        for (int i=1; i<=2; i++)
+        {
+            TEST_STEP(mHorizontalHeader_CellMergeParentRow->at(0).at(i)==0);
+            TEST_STEP(mHorizontalHeader_CellMergeParentColumn->at(0).at(i)==1);
+            TEST_STEP(aTable->horizontalHeader_SpanParent(0, i)==QPoint(1, 0));
+        }
+
+        TEST_STEP(mHorizontalHeader_CellMergeX->at(0).at(1)==2);
+        TEST_STEP(mHorizontalHeader_CellMergeY->at(0).at(1)==1);
+
+        aTable->horizontalHeader_ClearSpans();
+
+        for (int i=0; i<((PublicCustomFastTable*)aTable)->horizontalHeader_GetRowCount(); ++i)
+        {
+            for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
+            {
+                TEST_STEP(aTable->horizontalHeader_RowSpan(i, j)==1);
+                TEST_STEP(aTable->horizontalHeader_ColumnSpan(i, j)==1);
+                TEST_STEP(aTable->horizontalHeader_SpanParent(i, j)==QPoint(-1, -1));
+                TEST_STEP(mHorizontalHeader_CellMergeX->at(i).at(j)==1);
+                TEST_STEP(mHorizontalHeader_CellMergeY->at(i).at(j)==1);
+                TEST_STEP(mHorizontalHeader_CellMergeParentRow->at(i).at(j)==-1);
+                TEST_STEP(mHorizontalHeader_CellMergeParentColumn->at(i).at(j)==-1);
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+
+            if (!success)
+            {
+                break;
+            }
+        }
+
+        testCompleted(success, "horizontalHeader_SetSpan");
+    }
+    else
+    {
+        testNotSupported("horizontalHeader_SetSpan");
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 55: verticalHeader_SetSpan";
+    // ----------------------------------------------------------------
+    if (mFastTable->inherits("FastTableWidget"))
+    {
+        success=true;
+
+        FastTableWidget* aTable=(FastTableWidget*)mFastTable;
+
+        aTable->verticalHeader_SetSpan(2, 0, 3, 1);
+
+        for (int i=2; i<=4; i++)
+        {
+            TEST_STEP(mVerticalHeader_CellMergeParentRow->at(i).at(0)==2);
+            TEST_STEP(mVerticalHeader_CellMergeParentColumn->at(i).at(0)==0);
+            TEST_STEP(aTable->verticalHeader_SpanParent(i, 0)==QPoint(0, 2));
+        }
+
+        TEST_STEP(mVerticalHeader_CellMergeX->at(2).at(0)==1);
+        TEST_STEP(mVerticalHeader_CellMergeY->at(2).at(0)==3);
+
+        aTable->verticalHeader_SetSpan(3, 0, 2, 1);
+
+        TEST_STEP(mVerticalHeader_CellMergeParentRow->at(2).at(0)==-1);
+        TEST_STEP(mVerticalHeader_CellMergeParentColumn->at(2).at(0)==-1);
+        TEST_STEP(aTable->verticalHeader_SpanParent(2, 0)==QPoint(-1, -1));
+        TEST_STEP(mVerticalHeader_CellMergeX->at(2).at(0)==1);
+        TEST_STEP(mVerticalHeader_CellMergeY->at(2).at(0)==1);
+
+        for (int i=3; i<=4; i++)
+        {
+            TEST_STEP(mVerticalHeader_CellMergeParentRow->at(i).at(0)==3);
+            TEST_STEP(mVerticalHeader_CellMergeParentColumn->at(i).at(0)==0);
+            TEST_STEP(aTable->verticalHeader_SpanParent(i, 0)==QPoint(0, 3));
+        }
+
+        TEST_STEP(mVerticalHeader_CellMergeX->at(3).at(0)==1);
+        TEST_STEP(mVerticalHeader_CellMergeY->at(3).at(0)==2);
+
+        aTable->verticalHeader_ClearSpans();
+
+        for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
+        {
+            for (int j=0; j<((PublicCustomFastTable*)aTable)->verticalHeader_GetColumnCount(); ++j)
+            {
+                TEST_STEP(aTable->verticalHeader_RowSpan(i, j)==1);
+                TEST_STEP(aTable->verticalHeader_ColumnSpan(i, j)==1);
+                TEST_STEP(aTable->verticalHeader_SpanParent(i, j)==QPoint(-1, -1));
+                TEST_STEP(mVerticalHeader_CellMergeX->at(i).at(j)==1);
+                TEST_STEP(mVerticalHeader_CellMergeY->at(i).at(j)==1);
+                TEST_STEP(mVerticalHeader_CellMergeParentRow->at(i).at(j)==-1);
+                TEST_STEP(mVerticalHeader_CellMergeParentColumn->at(i).at(j)==-1);
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+
+            if (!success)
+            {
+                break;
+            }
+        }
+
+        testCompleted(success, "verticalHeader_SetSpan");
+    }
+    else
+    {
+        testNotSupported("verticalHeader_SetSpan");
     }
 }
 

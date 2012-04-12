@@ -18,32 +18,32 @@ public:
     void resetBackgroundBrushes();
     void resetForegroundColors();
     void resetFonts();
-    void resetTextFlags();
+    void resetCellTextFlags();
 
     void horizontalHeader_ResetBackgroundBrushes();
     void horizontalHeader_ResetForegroundColors();
     void horizontalHeader_ResetFonts();
-    void horizontalHeader_ResetTextFlags();
+    void horizontalHeader_ResetCellTextFlags();
 
     void verticalHeader_ResetBackgroundBrushes();
     void verticalHeader_ResetForegroundColors();
     void verticalHeader_ResetFonts();
-    void verticalHeader_ResetTextFlags();
+    void verticalHeader_ResetCellTextFlags();
 
     void resetBackgroundBrush(const int row, const int column);
     void resetForegroundColor(const int row, const int column);
     void resetFont(const int row, const int column);
-    void resetTextFlag(const int row, const int column);
+    void resetCellTextFlag(const int row, const int column);
 
     void horizontalHeader_ResetBackgroundBrush(const int row, const int column);
     void horizontalHeader_ResetForegroundColor(const int row, const int column);
     void horizontalHeader_ResetFont(const int row, const int column);
-    void horizontalHeader_ResetTextFlag(const int row, const int column);
+    void horizontalHeader_ResetCellTextFlag(const int row, const int column);
 
     void verticalHeader_ResetBackgroundBrush(const int row, const int column);
     void verticalHeader_ResetForegroundColor(const int row, const int column);
     void verticalHeader_ResetFont(const int row, const int column);
-    void verticalHeader_ResetTextFlag(const int row, const int column);
+    void verticalHeader_ResetCellTextFlag(const int row, const int column);
 
     void insertRow(int row);
     void deleteRow(int row);
