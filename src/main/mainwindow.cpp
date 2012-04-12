@@ -22,15 +22,15 @@ MainWindow::MainWindow(QWidget *parent) :
     aFastTableWidget->horizontalHeader_SetRowCount(1);
     aFastTableWidget->verticalHeader_SetColumnCount(1);
 
-    for (int i=0; i<aFastTableWidget->rowCount(); i++)
+    for (int i=0; i<aFastTableWidget->rowCount(); ++i)
     {
-        for (int j=0; j<aFastTableWidget->columnCount(); j++)
+        for (int j=0; j<aFastTableWidget->columnCount(); ++j)
         {
             aFastTableWidget->setText(i, j, "Hello, World");
         }
     }
 
-    for (int i=0; i<aFastTableWidget->columnCount(); i++)
+    for (int i=0; i<aFastTableWidget->columnCount(); ++i)
     {
         aFastTableWidget->horizontalHeader_SetText(i, "Header");
     }

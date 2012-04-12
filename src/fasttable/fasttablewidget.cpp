@@ -40,12 +40,12 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                         int aWidth=0;
                         int aHeight=0;
 
-                        for (int g=0; g<spanX; g++)
+                        for (int g=0; g<spanX; ++g)
                         {
                             aWidth+=mColumnWidths.at(j+g);
                         }
 
-                        for (int g=0; g<spanY; g++)
+                        for (int g=0; g<spanY; ++g)
                         {
                             aHeight+=mRowHeights.at(i+g);
                         }
@@ -107,12 +107,12 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                         int aWidth=0;
                         int aHeight=0;
 
-                        for (int g=0; g<spanX; g++)
+                        for (int g=0; g<spanX; ++g)
                         {
                             aWidth+=mColumnWidths.at(j+g);
                         }
 
-                        for (int g=0; g<spanY; g++)
+                        for (int g=0; g<spanY; ++g)
                         {
                             aHeight+=mHorizontalHeader_RowHeights.at(i+g);
                         }
@@ -174,12 +174,12 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                         int aWidth=0;
                         int aHeight=0;
 
-                        for (int g=0; g<spanX; g++)
+                        for (int g=0; g<spanX; ++g)
                         {
                             aWidth+=mVerticalHeader_ColumnWidths.at(j+g);
                         }
 
-                        for (int g=0; g<spanY; g++)
+                        for (int g=0; g<spanY; ++g)
                         {
                             aHeight+=mRowHeights.at(i+g);
                         }
@@ -317,7 +317,7 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 
             bool good=false;
 
-            for (int i=0; i<mHorizontalHeader_CellMergeX.at(row).at(column); i++)
+            for (int i=0; i<mHorizontalHeader_CellMergeX.at(row).at(column); ++i)
             {
                 if (mHorizontalHeader_SelectedColumns.at(column+i))
                 {
@@ -379,7 +379,7 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 
             bool good=false;
 
-            for (int i=0; i<mVerticalHeader_CellMergeY.at(row).at(column); i++)
+            for (int i=0; i<mVerticalHeader_CellMergeY.at(row).at(column); ++i)
             {
                 if (mVerticalHeader_SelectedRows.at(row+i))
                 {
@@ -441,7 +441,7 @@ void FastTableWidget::updateVisibleRange()
 
     if (originalLeft>=0)
     {
-        for (int i=0; i<mRowCount; i++)
+        for (int i=0; i<mRowCount; ++i)
         {
             int parentColumn=mCellMergeParentColumn.at(i).at(originalLeft);
 
@@ -451,7 +451,7 @@ void FastTableWidget::updateVisibleRange()
             }
         }
 
-        for (int i=0; i<mHorizontalHeader_RowCount; i++)
+        for (int i=0; i<mHorizontalHeader_RowCount; ++i)
         {
             int parentColumn=mHorizontalHeader_CellMergeParentColumn.at(i).at(originalLeft);
 
@@ -464,7 +464,7 @@ void FastTableWidget::updateVisibleRange()
 
     if (originalTop>=0)
     {
-        for (int i=0; i<mColumnCount; i++)
+        for (int i=0; i<mColumnCount; ++i)
         {
             int parentRow=mCellMergeParentRow.at(originalTop).at(i);
 
@@ -474,7 +474,7 @@ void FastTableWidget::updateVisibleRange()
             }
         }
 
-        for (int i=0; i<mVerticalHeader_ColumnCount; i++)
+        for (int i=0; i<mVerticalHeader_ColumnCount; ++i)
         {
             int parentRow=mVerticalHeader_CellMergeParentRow.at(originalTop).at(i);
 
@@ -1598,9 +1598,9 @@ void FastTableWidget::setSpan(const int row, const int column, quint16 rowSpan, 
     int parentRow;
     int parentColumn;
 
-    for (int i=0; i<rowSpan; i++)
+    for (int i=0; i<rowSpan; ++i)
     {
-        for (int j=0; j<columnSpan; j++)
+        for (int j=0; j<columnSpan; ++j)
         {
             parentRow=mCellMergeParentRow.at(row+i).at(column+j);
             parentColumn=mCellMergeParentColumn.at(row+i).at(column+j);
@@ -1610,9 +1610,9 @@ void FastTableWidget::setSpan(const int row, const int column, quint16 rowSpan, 
                 int parentSpanX=mCellMergeX.at(parentRow).at(parentColumn);
                 int parentSpanY=mCellMergeY.at(parentRow).at(parentColumn);
 
-                for (int g=0; g<parentSpanY; g++)
+                for (int g=0; g<parentSpanY; ++g)
                 {
-                    for (int h=0; h<parentSpanX; h++)
+                    for (int h=0; h<parentSpanX; ++h)
                     {
                         mCellMergeParentRow[parentRow+g][parentColumn+h]=-1;
                         mCellMergeParentColumn[parentRow+g][parentColumn+h]=-1;
@@ -1712,9 +1712,9 @@ void FastTableWidget::horizontalHeader_SetSpan(const int row, const int column, 
     int parentRow;
     int parentColumn;
 
-    for (int i=0; i<rowSpan; i++)
+    for (int i=0; i<rowSpan; ++i)
     {
-        for (int j=0; j<columnSpan; j++)
+        for (int j=0; j<columnSpan; ++j)
         {
             parentRow=mHorizontalHeader_CellMergeParentRow.at(row+i).at(column+j);
             parentColumn=mHorizontalHeader_CellMergeParentColumn.at(row+i).at(column+j);
@@ -1724,9 +1724,9 @@ void FastTableWidget::horizontalHeader_SetSpan(const int row, const int column, 
                 int parentSpanX=mHorizontalHeader_CellMergeX.at(parentRow).at(parentColumn);
                 int parentSpanY=mHorizontalHeader_CellMergeY.at(parentRow).at(parentColumn);
 
-                for (int g=0; g<parentSpanY; g++)
+                for (int g=0; g<parentSpanY; ++g)
                 {
-                    for (int h=0; h<parentSpanX; h++)
+                    for (int h=0; h<parentSpanX; ++h)
                     {
                         mHorizontalHeader_CellMergeParentRow[parentRow+g][parentColumn+h]=-1;
                         mHorizontalHeader_CellMergeParentColumn[parentRow+g][parentColumn+h]=-1;
@@ -1826,9 +1826,9 @@ void FastTableWidget::verticalHeader_SetSpan(const int row, const int column, qu
     int parentRow;
     int parentColumn;
 
-    for (int i=0; i<rowSpan; i++)
+    for (int i=0; i<rowSpan; ++i)
     {
-        for (int j=0; j<columnSpan; j++)
+        for (int j=0; j<columnSpan; ++j)
         {
             parentRow=mVerticalHeader_CellMergeParentRow.at(row+i).at(column+j);
             parentColumn=mVerticalHeader_CellMergeParentColumn.at(row+i).at(column+j);
@@ -1838,9 +1838,9 @@ void FastTableWidget::verticalHeader_SetSpan(const int row, const int column, qu
                 int parentSpanX=mVerticalHeader_CellMergeX.at(parentRow).at(parentColumn);
                 int parentSpanY=mVerticalHeader_CellMergeY.at(parentRow).at(parentColumn);
 
-                for (int g=0; g<parentSpanY; g++)
+                for (int g=0; g<parentSpanY; ++g)
                 {
-                    for (int h=0; h<parentSpanX; h++)
+                    for (int h=0; h<parentSpanX; ++h)
                     {
                         mVerticalHeader_CellMergeParentRow[parentRow+g][parentColumn+h]=-1;
                         mVerticalHeader_CellMergeParentColumn[parentRow+g][parentColumn+h]=-1;

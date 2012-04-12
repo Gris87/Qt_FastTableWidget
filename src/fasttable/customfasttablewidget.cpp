@@ -1542,7 +1542,7 @@ void CustomFastTableWidget::horizontalHeader_SetText(const int column, const QSt
 {
     START_PROFILE;
 
-    for (int i=0; i<mHorizontalHeader_RowCount; i++)
+    for (int i=0; i<mHorizontalHeader_RowCount; ++i)
     {
         mHorizontalHeader_Data[i][column]=text;
     }
@@ -1573,7 +1573,7 @@ void CustomFastTableWidget::verticalHeader_SetText(const int row, const QString 
 {
     START_PROFILE;
 
-    for (int i=0; i<mVerticalHeader_ColumnCount; i++)
+    for (int i=0; i<mVerticalHeader_ColumnCount; ++i)
     {
         mVerticalHeader_Data[row][i]=text;
     }
@@ -1613,7 +1613,7 @@ void CustomFastTableWidget::setCellSelected(const int row, const int column, con
                     if (mCurSelection.at(i).x()==column)
                     {
                         mCurSelection.removeAt(i);
-                        i--;
+                        --i;
 
                         continue;
                     }

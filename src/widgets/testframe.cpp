@@ -2023,9 +2023,9 @@ void TestFrame::startTest()
 
         aTable->setSpan(1, 2, 2, 3);
 
-        for (int i=1; i<=2; i++)
+        for (int i=1; i<=2; ++i)
         {
-            for (int j=2; j<=4; j++)
+            for (int j=2; j<=4; ++j)
             {
                 TEST_STEP(mCellMergeParentRow->at(i).at(j)==1);
                 TEST_STEP(mCellMergeParentColumn->at(i).at(j)==2);
@@ -2038,9 +2038,9 @@ void TestFrame::startTest()
 
         aTable->setSpan(0, 3, 2, 1);
 
-        for (int i=1; i<=2; i++)
+        for (int i=1; i<=2; ++i)
         {
-            for (int j=2; j<=4; j++)
+            for (int j=2; j<=4; ++j)
             {
                 if (i!=1 || j!=3)
                 {
@@ -2054,7 +2054,7 @@ void TestFrame::startTest()
         TEST_STEP(mCellMergeX->at(1).at(2)==1);
         TEST_STEP(mCellMergeY->at(1).at(2)==1);
 
-        for (int i=0; i<=1; i++)
+        for (int i=0; i<=1; ++i)
         {
             TEST_STEP(mCellMergeParentRow->at(i).at(3)==0);
             TEST_STEP(mCellMergeParentColumn->at(i).at(3)==3);
@@ -2107,9 +2107,9 @@ void TestFrame::startTest()
 
         aTable->horizontalHeader_SetSpan(0, 2, 2, 3);
 
-        for (int i=0; i<=1; i++)
+        for (int i=0; i<=1; ++i)
         {
-            for (int j=2; j<=4; j++)
+            for (int j=2; j<=4; ++j)
             {
                 TEST_STEP(mHorizontalHeader_CellMergeParentRow->at(i).at(j)==0);
                 TEST_STEP(mHorizontalHeader_CellMergeParentColumn->at(i).at(j)==2);
@@ -2122,9 +2122,9 @@ void TestFrame::startTest()
 
         aTable->horizontalHeader_SetSpan(0, 1, 1, 2);
 
-        for (int i=0; i<=1; i++)
+        for (int i=0; i<=1; ++i)
         {
-            for (int j=2; j<=4; j++)
+            for (int j=2; j<=4; ++j)
             {
                 if (i!=0 || j!=2)
                 {
@@ -2138,7 +2138,7 @@ void TestFrame::startTest()
         TEST_STEP(mHorizontalHeader_CellMergeX->at(0).at(2)==1);
         TEST_STEP(mHorizontalHeader_CellMergeY->at(0).at(2)==1);
 
-        for (int i=1; i<=2; i++)
+        for (int i=1; i<=2; ++i)
         {
             TEST_STEP(mHorizontalHeader_CellMergeParentRow->at(0).at(i)==0);
             TEST_STEP(mHorizontalHeader_CellMergeParentColumn->at(0).at(i)==1);
@@ -2191,7 +2191,7 @@ void TestFrame::startTest()
 
         aTable->verticalHeader_SetSpan(2, 0, 3, 1);
 
-        for (int i=2; i<=4; i++)
+        for (int i=2; i<=4; ++i)
         {
             TEST_STEP(mVerticalHeader_CellMergeParentRow->at(i).at(0)==2);
             TEST_STEP(mVerticalHeader_CellMergeParentColumn->at(i).at(0)==0);
@@ -2209,7 +2209,7 @@ void TestFrame::startTest()
         TEST_STEP(mVerticalHeader_CellMergeX->at(2).at(0)==1);
         TEST_STEP(mVerticalHeader_CellMergeY->at(2).at(0)==1);
 
-        for (int i=3; i<=4; i++)
+        for (int i=3; i<=4; ++i)
         {
             TEST_STEP(mVerticalHeader_CellMergeParentRow->at(i).at(0)==3);
             TEST_STEP(mVerticalHeader_CellMergeParentColumn->at(i).at(0)==0);
