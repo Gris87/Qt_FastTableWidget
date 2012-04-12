@@ -7,7 +7,7 @@
 #include <QTimer>
 #include "qdebug.h"
 
-#include "src/widgets/testframe.h"
+#include "src/tests/testframe.h"
 
 namespace Ui {
     class TestDialog;

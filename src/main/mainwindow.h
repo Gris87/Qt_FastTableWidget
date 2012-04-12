@@ -9,7 +9,7 @@
 #include "qdebug.h"
 
 #include "src/fasttable/fasttablewidget.h"
-#include "src/main/testdialog.h"
+#include "src/tests/testdialog.h"
 
 namespace Ui {
     class MainWindow;

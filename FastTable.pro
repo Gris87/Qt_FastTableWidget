@@ -11,23 +11,23 @@ TEMPLATE = app
 
 
 SOURCES += src/main.cpp\
-        src/main/mainwindow.cpp \
-        src/main/testdialog.cpp \
-        src/fasttable/fasttablewidget.cpp \
-    src/widgets/testframe.cpp \
-    src/fasttable/publictablewidget.cpp \
-    src/fasttable/customfasttablewidget.cpp
+           src/main/mainwindow.cpp \
+           src/fasttable/customfasttablewidget.cpp \
+           src/fasttable/fasttablewidget.cpp \
+           src/tests/testdialog.cpp \
+           src/tests/testframe.cpp \
+           src/tests/publictablewidget.cpp
 
 HEADERS  += src/main/mainwindow.h \
-        src/main/testdialog.h \
-        src/fasttable/fasttablewidget.h \
-    src/widgets/testframe.h \
-    src/fasttable/publictablewidget.h \
-    src/fasttable/customfasttablewidget.h
+           src/fasttable/customfasttablewidget.h \
+           src/fasttable/fasttablewidget.h \
+           src/tests/testdialog.h \
+           src/tests/testframe.h \
+           src/tests/publictablewidget.h
 
 FORMS    += src/main/mainwindow.ui \
-            src/main/testdialog.ui \
-    src/widgets/testframe.ui
+            src/tests/testdialog.ui \
+            src/tests/testframe.ui
 
 OTHER_FILES += \
     TODO.txt

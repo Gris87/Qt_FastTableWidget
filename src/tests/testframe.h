@@ -9,7 +9,7 @@
 #include "qdebug.h"
 
 #include "src/fasttable/customfasttablewidget.h"
-#include "src/fasttable/publictablewidget.h"
+#include "src/tests/publictablewidget.h"
 
 #define TEST_STEP(condition) if (success)\
                              {\
