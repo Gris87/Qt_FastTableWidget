@@ -22,6 +22,8 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
     int offsetX=-horizontalScrollBar()->value();
     int offsetY=-verticalScrollBar()->value();
 
+    QSize areaSize=viewport()->size();
+
     if (mVisibleLeft>=0 && mVisibleTop>=0)
     {
         for (int i=mVisibleTop; i<=mVisibleBottom; ++i)
@@ -49,11 +51,11 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                         }
 
                         if (
-                            offsetX+mOffsetX.at(j)<=viewport()->width()
+                            offsetX+mOffsetX.at(j)<=areaSize.width()
                             &&
                             offsetX+mOffsetX.at(j)>=-aWidth
                             &&
-                            offsetY+mOffsetY.at(i)<=viewport()->height()
+                            offsetY+mOffsetY.at(i)<=areaSize.height()
                             &&
                             offsetY+mOffsetY.at(i)>=-aHeight
                             &&
@@ -69,11 +71,11 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                 else
                 {
                     if (
-                        offsetX+mOffsetX.at(j)<=viewport()->width()
+                        offsetX+mOffsetX.at(j)<=areaSize.width()
                         &&
                         offsetX+mOffsetX.at(j)>=-mColumnWidths.at(j)
                         &&
-                        offsetY+mOffsetY.at(i)<=viewport()->height()
+                        offsetY+mOffsetY.at(i)<=areaSize.height()
                         &&
                         offsetY+mOffsetY.at(i)>=-mRowHeights.at(i)
                         &&
@@ -116,11 +118,11 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                         }
 
                         if (
-                            offsetX+mOffsetX.at(j)<=viewport()->width()
+                            offsetX+mOffsetX.at(j)<=areaSize.width()
                             &&
                             offsetX+mOffsetX.at(j)>=-aWidth
                             &&
-                            mHorizontalHeader_OffsetY.at(i)<=viewport()->height()
+                            mHorizontalHeader_OffsetY.at(i)<=areaSize.height()
                             &&
                             mHorizontalHeader_OffsetY.at(i)>=-aHeight
                             &&
@@ -136,11 +138,11 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                 else
                 {
                     if (
-                        offsetX+mOffsetX.at(j)<=viewport()->width()
+                        offsetX+mOffsetX.at(j)<=areaSize.width()
                         &&
                         offsetX+mOffsetX.at(j)>=-mColumnWidths.at(j)
                         &&
-                        mHorizontalHeader_OffsetY.at(i)<=viewport()->height()
+                        mHorizontalHeader_OffsetY.at(i)<=areaSize.height()
                         &&
                         mHorizontalHeader_OffsetY.at(i)>=-mHorizontalHeader_RowHeights.at(i)
                         &&
@@ -183,11 +185,11 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                         }
 
                         if (
-                            mVerticalHeader_OffsetX.at(j)<=viewport()->width()
+                            mVerticalHeader_OffsetX.at(j)<=areaSize.width()
                             &&
                             mVerticalHeader_OffsetX.at(j)>=-aWidth
                             &&
-                            offsetY+mOffsetY.at(i)<=viewport()->height()
+                            offsetY+mOffsetY.at(i)<=areaSize.height()
                             &&
                             offsetY+mOffsetY.at(i)>=-aHeight
                             &&
@@ -203,11 +205,11 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                 else
                 {
                     if (
-                        mVerticalHeader_OffsetX.at(j)<=viewport()->width()
+                        mVerticalHeader_OffsetX.at(j)<=areaSize.width()
                         &&
                         mVerticalHeader_OffsetX.at(j)>=-mVerticalHeader_ColumnWidths.at(j)
                         &&
-                        offsetY+mOffsetY.at(i)<=viewport()->height()
+                        offsetY+mOffsetY.at(i)<=areaSize.height()
                         &&
                         offsetY+mOffsetY.at(i)>=-mRowHeights.at(i)
                         &&

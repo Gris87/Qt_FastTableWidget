@@ -310,10 +310,10 @@ void CustomFastTableWidget::updateBarsRanges()
 {
     START_PROFILE;
 
-    QSize areaSize = viewport()->size();
+    QSize areaSize=viewport()->size();
 
-    horizontalScrollBar()->setPageStep(mTotalWidth);
-    verticalScrollBar()->setPageStep(mTotalHeight);
+    horizontalScrollBar()->setPageStep(areaSize.width()-mVerticalHeader_TotalWidth);
+    verticalScrollBar()->setPageStep(areaSize.height()-mHorizontalHeader_TotalHeight);
 
     horizontalScrollBar()->setRange(0, mTotalWidth  - areaSize.width()  + 1);
     verticalScrollBar()->setRange(0,   mTotalHeight - areaSize.height() + 1);
@@ -336,10 +336,12 @@ void CustomFastTableWidget::updateVisibleRange()
     }
     else
     {
+        QSize areaSize=viewport()->size();
+
         int minX=horizontalScrollBar()->value();
         int minY=verticalScrollBar()->value();
-        int maxX=minX+viewport()->width();
-        int maxY=minY+viewport()->height();
+        int maxX=minX+areaSize.width();
+        int maxY=minY+areaSize.height();
 
         if (mVerticalHeader_ColumnCount==0)
         {
