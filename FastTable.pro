@@ -16,19 +16,25 @@ SOURCES += src/main.cpp\
            src/fasttable/fasttablewidget.cpp \
            src/tests/testdialog.cpp \
            src/tests/testframe.cpp \
-           src/tests/publictablewidget.cpp
+           src/tests/publictablewidget.cpp \
+           src/controller/controllerdialog.cpp
 
 HEADERS  += src/main/mainwindow.h \
            src/fasttable/customfasttablewidget.h \
            src/fasttable/fasttablewidget.h \
            src/tests/testdialog.h \
            src/tests/testframe.h \
-           src/tests/publictablewidget.h
+           src/tests/publictablewidget.h \
+           src/controller/controllerdialog.h
 
 FORMS    += src/main/mainwindow.ui \
             src/tests/testdialog.ui \
-            src/tests/testframe.ui
+            src/tests/testframe.ui \
+            src/controller/controllerdialog.ui
 
 OTHER_FILES += \
     TODO.txt
+
+
+
 

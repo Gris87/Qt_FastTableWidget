@@ -10,6 +10,7 @@
 
 #include "src/fasttable/fasttablewidget.h"
 #include "src/tests/testdialog.h"
+#include "src/controller/controllerdialog.h"
 
 namespace Ui {
     class MainWindow;
@@ -25,6 +26,7 @@ public:
 
 private slots:
     void on_testButton_clicked();
+    void on_controllerButton_clicked();
 
 private:
     Ui::MainWindow *ui;

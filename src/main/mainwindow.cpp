@@ -48,3 +48,9 @@ void MainWindow::on_testButton_clicked()
     TestDialog dialog(this);
     dialog.exec();
 }
+
+void MainWindow::on_controllerButton_clicked()
+{
+    ControllerDialog dialog(this);
+    dialog.exec();
+}
