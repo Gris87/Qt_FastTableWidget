@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     frect.moveCenter(QDesktopWidget().availableGeometry().center());
     move(frect.topLeft());
 
-    CustomFastTableWidget* aFastTableWidget=new CustomFastTableWidget(this);
+    FastTableWidget* aFastTableWidget=new FastTableWidget(this);
     ui->fastTableLayout->addWidget(aFastTableWidget);
 
     qint64 aStart=QDateTime::currentMSecsSinceEpoch();

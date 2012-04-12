@@ -1307,7 +1307,7 @@ void TestFrame::startTest()
 
         aTable->resetTextFlag(10, 5);
 
-        TEST_STEP(aTable->cellTextFlags(10, 5)==(Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap));
+        TEST_STEP(aTable->cellTextFlags(10, 5)==(FASTTABLE_DEFAULT_TEXT_FLAG));
 
         aTable->resetTextFlags();
 
@@ -1317,7 +1317,7 @@ void TestFrame::startTest()
             {
                 for (int j=0; j<((PublicCustomFastTable*)aTable)->getColumnCount(); ++j)
                 {
-                    TEST_STEP(aTable->cellTextFlags(i, j)==(Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap));
+                    TEST_STEP(aTable->cellTextFlags(i, j)==(FASTTABLE_DEFAULT_TEXT_FLAG));
 
                     if (!success)
                     {

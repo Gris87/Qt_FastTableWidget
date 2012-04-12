@@ -3,6 +3,8 @@
 
 #include "customfasttablewidget.h"
 
+#define FASTTABLE_DEFAULT_TEXT_FLAG Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap
+
 //------------------------------------------------------------------------------
 
 class FastTableWidget : public CustomFastTableWidget
@@ -20,16 +22,42 @@ public:
     void resetFonts();
     void resetTextFlags();
 
+    void horizontalHeader_ResetBackgroundBrushes();
+    void horizontalHeader_ResetForegroundColors();
+    void horizontalHeader_ResetFonts();
+    void horizontalHeader_ResetTextFlags();
+
+    void verticalHeader_ResetBackgroundBrushes();
+    void verticalHeader_ResetForegroundColors();
+    void verticalHeader_ResetFonts();
+    void verticalHeader_ResetTextFlags();
+
     void resetBackgroundBrush(const int row, const int column);
     void resetForegroundColor(const int row, const int column);
     void resetFont(const int row, const int column);
     void resetTextFlag(const int row, const int column);
+
+    void horizontalHeader_ResetBackgroundBrush(const int row, const int column);
+    void horizontalHeader_ResetForegroundColor(const int row, const int column);
+    void horizontalHeader_ResetFont(const int row, const int column);
+    void horizontalHeader_ResetTextFlag(const int row, const int column);
+
+    void verticalHeader_ResetBackgroundBrush(const int row, const int column);
+    void verticalHeader_ResetForegroundColor(const int row, const int column);
+    void verticalHeader_ResetFont(const int row, const int column);
+    void verticalHeader_ResetTextFlag(const int row, const int column);
 
     void insertRow(int row);
     void deleteRow(int row);
 
     void insertColumn(int column);
     void deleteColumn(int column);
+
+    void horizontalHeader_InsertRow(int row);
+    void horizontalHeader_DeleteRow(int row);
+
+    void verticalHeader_InsertColumn(int column);
+    void verticalHeader_DeleteColumn(int column);
 
     QBrush backgroundBrush(const int row, const int column);
     void setBackgroundBrush(const int row, const int column, const QBrush brush);

@@ -42,82 +42,82 @@ QList< QList<int> >       *PublicFastTable::getCellMergeParentColumn()
 
 QList< QList<QBrush *> >  *PublicFastTable::horizontalHeader_GetBackgroundBrushes()
 {
-    return &mBackgroundBrushes;
+    return &mHorizontalHeader_BackgroundBrushes;
 }
 
 QList< QList<QColor *> >  *PublicFastTable::horizontalHeader_GetForegroundColors()
 {
-    return &mForegroundColors;
+    return &mHorizontalHeader_ForegroundColors;
 }
 
 QList< QList<QFont *> >   *PublicFastTable::horizontalHeader_GetCellFonts()
 {
-    return &mCellFonts;
+    return &mHorizontalHeader_CellFonts;
 }
 
 QList< QList<int> >       *PublicFastTable::horizontalHeader_GetCellTextFlags()
 {
-    return &mCellTextFlags;
+    return &mHorizontalHeader_CellTextFlags;
 }
 
 QList< QList<quint16> >   *PublicFastTable::horizontalHeader_GetCellMergeX()
 {
-    return &mCellMergeX;
+    return &mHorizontalHeader_CellMergeX;
 }
 
 QList< QList<quint16> >   *PublicFastTable::horizontalHeader_GetCellMergeY()
 {
-    return &mCellMergeY;
+    return &mHorizontalHeader_CellMergeY;
 }
 
 QList< QList<int> >       *PublicFastTable::horizontalHeader_GetCellMergeParentRow()
 {
-    return &mCellMergeParentRow;
+    return &mHorizontalHeader_CellMergeParentRow;
 }
 
 QList< QList<int> >       *PublicFastTable::horizontalHeader_GetCellMergeParentColumn()
 {
-    return &mCellMergeParentColumn;
+    return &mHorizontalHeader_CellMergeParentColumn;
 }
 
 QList< QList<QBrush *> >  *PublicFastTable::verticalHeader_GetBackgroundBrushes()
 {
-    return &mBackgroundBrushes;
+    return &mVerticalHeader_BackgroundBrushes;
 }
 
 QList< QList<QColor *> >  *PublicFastTable::verticalHeader_GetForegroundColors()
 {
-    return &mForegroundColors;
+    return &mVerticalHeader_ForegroundColors;
 }
 
 QList< QList<QFont *> >   *PublicFastTable::verticalHeader_GetCellFonts()
 {
-    return &mCellFonts;
+    return &mVerticalHeader_CellFonts;
 }
 
 QList< QList<int> >       *PublicFastTable::verticalHeader_GetCellTextFlags()
 {
-    return &mCellTextFlags;
+    return &mVerticalHeader_CellTextFlags;
 }
 
 QList< QList<quint16> >   *PublicFastTable::verticalHeader_GetCellMergeX()
 {
-    return &mCellMergeX;
+    return &mVerticalHeader_CellMergeX;
 }
 
 QList< QList<quint16> >   *PublicFastTable::verticalHeader_GetCellMergeY()
 {
-    return &mCellMergeY;
+    return &mVerticalHeader_CellMergeY;
 }
 
 QList< QList<int> >       *PublicFastTable::verticalHeader_GetCellMergeParentRow()
 {
-    return &mCellMergeParentRow;
+    return &mVerticalHeader_CellMergeParentRow;
 }
 
 QList< QList<int> >       *PublicFastTable::verticalHeader_GetCellMergeParentColumn()
 {
-    return &mCellMergeParentColumn;
+    return &mVerticalHeader_CellMergeParentColumn;
 }
 
 // ==============================================================================================================

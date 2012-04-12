@@ -244,6 +244,14 @@ void FastTableWidget::clearTable()
     resetForegroundColors();
     resetFonts();
 
+    horizontalHeader_ResetBackgroundBrushes();
+    horizontalHeader_ResetForegroundColors();
+    horizontalHeader_ResetFonts();
+
+    verticalHeader_ResetBackgroundBrushes();
+    verticalHeader_ResetForegroundColors();
+    verticalHeader_ResetFonts();
+
     mBackgroundBrushes.clear();
     mForegroundColors.clear();
     mCellFonts.clear();
@@ -252,6 +260,24 @@ void FastTableWidget::clearTable()
     mCellMergeY.clear();
     mCellMergeParentRow.clear();
     mCellMergeParentColumn.clear();
+
+    mHorizontalHeader_BackgroundBrushes.clear();
+    mHorizontalHeader_ForegroundColors.clear();
+    mHorizontalHeader_CellFonts.clear();
+    mHorizontalHeader_CellTextFlags.clear();
+    mHorizontalHeader_CellMergeX.clear();
+    mHorizontalHeader_CellMergeY.clear();
+    mHorizontalHeader_CellMergeParentRow.clear();
+    mHorizontalHeader_CellMergeParentColumn.clear();
+
+    mVerticalHeader_BackgroundBrushes.clear();
+    mVerticalHeader_ForegroundColors.clear();
+    mVerticalHeader_CellFonts.clear();
+    mVerticalHeader_CellTextFlags.clear();
+    mVerticalHeader_CellMergeX.clear();
+    mVerticalHeader_CellMergeY.clear();
+    mVerticalHeader_CellMergeParentRow.clear();
+    mVerticalHeader_CellMergeParentColumn.clear();
 
     CustomFastTableWidget::clearTable();
 
@@ -323,11 +349,155 @@ void FastTableWidget::resetTextFlags()
     {
         for (int j=0; j<mColumnCount; ++j)
         {
-            mCellTextFlags[i][j]=Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
+            mCellTextFlags[i][j]=FASTTABLE_DEFAULT_TEXT_FLAG;
         }
     }
 
     END_PROFILE("void FastTableWidget::resetTextFlags()");
+}
+
+void FastTableWidget::horizontalHeader_ResetBackgroundBrushes()
+{
+    START_PROFILE;
+
+    for (int i=0; i<mHorizontalHeader_RowCount; ++i)
+    {
+        for (int j=0; j<mColumnCount; ++j)
+        {
+            if (mHorizontalHeader_BackgroundBrushes.at(i).at(j))
+            {
+                delete mHorizontalHeader_BackgroundBrushes.at(i).at(j);
+                mHorizontalHeader_BackgroundBrushes[i][j]=0;
+            }
+        }
+    }
+
+    END_PROFILE("void FastTableWidget::horizontalHeader_ResetBackgroundBrushes()");
+}
+
+void FastTableWidget::horizontalHeader_ResetForegroundColors()
+{
+    START_PROFILE;
+
+    for (int i=0; i<mHorizontalHeader_RowCount; ++i)
+    {
+        for (int j=0; j<mColumnCount; ++j)
+        {
+            if (mHorizontalHeader_ForegroundColors.at(i).at(j))
+            {
+                delete mHorizontalHeader_ForegroundColors.at(i).at(j);
+                mHorizontalHeader_ForegroundColors[i][j]=0;
+            }
+        }
+    }
+
+    END_PROFILE("void FastTableWidget::horizontalHeader_ResetForegroundColors()");
+}
+
+void FastTableWidget::horizontalHeader_ResetFonts()
+{
+    START_PROFILE;
+
+    for (int i=0; i<mHorizontalHeader_RowCount; ++i)
+    {
+        for (int j=0; j<mColumnCount; ++j)
+        {
+            if (mHorizontalHeader_CellFonts.at(i).at(j))
+            {
+                delete mHorizontalHeader_CellFonts.at(i).at(j);
+                mHorizontalHeader_CellFonts[i][j]=0;
+            }
+        }
+    }
+
+    END_PROFILE("void FastTableWidget::horizontalHeader_ResetFonts()");
+}
+
+void FastTableWidget::horizontalHeader_ResetTextFlags()
+{
+    START_PROFILE;
+
+    for (int i=0; i<mHorizontalHeader_RowCount; ++i)
+    {
+        for (int j=0; j<mColumnCount; ++j)
+        {
+            mHorizontalHeader_CellTextFlags[i][j]=FASTTABLE_DEFAULT_TEXT_FLAG;
+        }
+    }
+
+    END_PROFILE("void FastTableWidget::horizontalHeader_ResetTextFlags()");
+}
+
+void FastTableWidget::verticalHeader_ResetBackgroundBrushes()
+{
+    START_PROFILE;
+
+    for (int i=0; i<mRowCount; ++i)
+    {
+        for (int j=0; j<mVerticalHeader_ColumnCount; ++j)
+        {
+            if (mVerticalHeader_BackgroundBrushes.at(i).at(j))
+            {
+                delete mVerticalHeader_BackgroundBrushes.at(i).at(j);
+                mVerticalHeader_BackgroundBrushes[i][j]=0;
+            }
+        }
+    }
+
+    END_PROFILE("void FastTableWidget::verticalHeader_ResetBackgroundBrushes()");
+}
+
+void FastTableWidget::verticalHeader_ResetForegroundColors()
+{
+    START_PROFILE;
+
+    for (int i=0; i<mRowCount; ++i)
+    {
+        for (int j=0; j<mVerticalHeader_ColumnCount; ++j)
+        {
+            if (mVerticalHeader_ForegroundColors.at(i).at(j))
+            {
+                delete mVerticalHeader_ForegroundColors.at(i).at(j);
+                mVerticalHeader_ForegroundColors[i][j]=0;
+            }
+        }
+    }
+
+    END_PROFILE("void FastTableWidget::verticalHeader_ResetForegroundColors()");
+}
+
+void FastTableWidget::verticalHeader_ResetFonts()
+{
+    START_PROFILE;
+
+    for (int i=0; i<mRowCount; ++i)
+    {
+        for (int j=0; j<mVerticalHeader_ColumnCount; ++j)
+        {
+            if (mVerticalHeader_CellFonts.at(i).at(j))
+            {
+                delete mVerticalHeader_CellFonts.at(i).at(j);
+                mVerticalHeader_CellFonts[i][j]=0;
+            }
+        }
+    }
+
+    END_PROFILE("void FastTableWidget::verticalHeader_ResetFonts()");
+}
+
+void FastTableWidget::verticalHeader_ResetTextFlags()
+{
+    START_PROFILE;
+
+    for (int i=0; i<mRowCount; ++i)
+    {
+        for (int j=0; j<mVerticalHeader_ColumnCount; ++j)
+        {
+            mVerticalHeader_CellTextFlags[i][j]=FASTTABLE_DEFAULT_TEXT_FLAG;
+        }
+    }
+
+    END_PROFILE("void FastTableWidget::verticalHeader_ResetTextFlags()");
 }
 
 void FastTableWidget::resetBackgroundBrush(const int row, const int column)
@@ -373,7 +543,7 @@ void FastTableWidget::resetTextFlag(const int row, const int column)
 {
     START_PROFILE;
 
-    mCellTextFlags[row][column]=Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap;
+    mCellTextFlags[row][column]=FASTTABLE_DEFAULT_TEXT_FLAG;
 
     END_PROFILE("void FastTableWidget::resetTextFlag(const int row, const int column)");
 }
@@ -399,16 +569,37 @@ void FastTableWidget::insertRow(int row)
     mCellMergeParentRow.insert(row, aNewRowint);
     mCellMergeParentColumn.insert(row, aNewRowint);
 
+    mVerticalHeader_BackgroundBrushes.insert(row, aNewRowBrush);
+    mVerticalHeader_ForegroundColors.insert(row, aNewRowColor);
+    mVerticalHeader_CellFonts.insert(row, aNewRowFont);
+    mVerticalHeader_CellTextFlags.insert(row, aNewRowint);
+    mVerticalHeader_CellMergeX.insert(row, aNewRowqint16);
+    mVerticalHeader_CellMergeY.insert(row, aNewRowqint16);
+    mVerticalHeader_CellMergeParentRow.insert(row, aNewRowint);
+    mVerticalHeader_CellMergeParentColumn.insert(row, aNewRowint);
+
     for (int i=0; i<mColumnCount; ++i)
     {
         mBackgroundBrushes[row].append(0);
         mForegroundColors[row].append(0);
         mCellFonts[row].append(0);
-        mCellTextFlags[row].append(Qt::AlignTop | Qt::AlignVCenter | Qt::TextWordWrap);
+        mCellTextFlags[row].append(FASTTABLE_DEFAULT_TEXT_FLAG);
         mCellMergeX[row].append(1);
         mCellMergeY[row].append(1);
         mCellMergeParentRow[row].append(-1);
         mCellMergeParentColumn[row].append(-1);
+    }
+
+    for (int i=0; i<mVerticalHeader_ColumnCount; ++i)
+    {
+        mVerticalHeader_BackgroundBrushes[row].append(0);
+        mVerticalHeader_ForegroundColors[row].append(0);
+        mVerticalHeader_CellFonts[row].append(0);
+        mVerticalHeader_CellTextFlags[row].append(FASTTABLE_DEFAULT_TEXT_FLAG);
+        mVerticalHeader_CellMergeX[row].append(1);
+        mVerticalHeader_CellMergeY[row].append(1);
+        mVerticalHeader_CellMergeParentRow[row].append(-1);
+        mVerticalHeader_CellMergeParentColumn[row].append(-1);
     }
 
     END_PROFILE("void FastTableWidget::insertRow(int row)");
@@ -436,6 +627,24 @@ void FastTableWidget::deleteRow(int row)
         }
     }
 
+    for (int i=0; i<mVerticalHeader_ColumnCount; ++i)
+    {
+        if (mVerticalHeader_BackgroundBrushes.at(row).at(i))
+        {
+            delete mVerticalHeader_BackgroundBrushes.at(row).at(i);
+        }
+
+        if (mVerticalHeader_ForegroundColors.at(row).at(i))
+        {
+            delete mVerticalHeader_ForegroundColors.at(row).at(i);
+        }
+
+        if (mVerticalHeader_CellFonts.at(row).at(i))
+        {
+            delete mVerticalHeader_CellFonts.at(row).at(i);
+        }
+    }
+
     mBackgroundBrushes.removeAt(row);
     mForegroundColors.removeAt(row);
     mCellFonts.removeAt(row);
@@ -444,6 +653,15 @@ void FastTableWidget::deleteRow(int row)
     mCellMergeY.removeAt(row);
     mCellMergeParentRow.removeAt(row);
     mCellMergeParentColumn.removeAt(row);
+
+    mVerticalHeader_BackgroundBrushes.removeAt(row);
+    mVerticalHeader_ForegroundColors.removeAt(row);
+    mVerticalHeader_CellFonts.removeAt(row);
+    mVerticalHeader_CellTextFlags.removeAt(row);
+    mVerticalHeader_CellMergeX.removeAt(row);
+    mVerticalHeader_CellMergeY.removeAt(row);
+    mVerticalHeader_CellMergeParentRow.removeAt(row);
+    mVerticalHeader_CellMergeParentColumn.removeAt(row);
 
     CustomFastTableWidget::deleteRow(row);
 
@@ -461,11 +679,23 @@ void FastTableWidget::insertColumn(int column)
         mBackgroundBrushes[i].insert(column, 0);
         mForegroundColors[i].insert(column, 0);
         mCellFonts[i].insert(column, 0);
-        mCellTextFlags[i].insert(column, Qt::AlignTop | Qt::AlignVCenter | Qt::TextWordWrap);
+        mCellTextFlags[i].insert(column, FASTTABLE_DEFAULT_TEXT_FLAG);
         mCellMergeX[i].insert(column, 1);
         mCellMergeY[i].insert(column, 1);
         mCellMergeParentRow[i].insert(column, -1);
         mCellMergeParentColumn[i].insert(column, -1);
+    }
+
+    for (int i=0; i<mHorizontalHeader_Data.length(); ++i)
+    {
+        mHorizontalHeader_BackgroundBrushes[i].insert(column, 0);
+        mHorizontalHeader_ForegroundColors[i].insert(column, 0);
+        mHorizontalHeader_CellFonts[i].insert(column, 0);
+        mHorizontalHeader_CellTextFlags[i].insert(column, FASTTABLE_DEFAULT_TEXT_FLAG);
+        mHorizontalHeader_CellMergeX[i].insert(column, 1);
+        mHorizontalHeader_CellMergeY[i].insert(column, 1);
+        mHorizontalHeader_CellMergeParentRow[i].insert(column, -1);
+        mHorizontalHeader_CellMergeParentColumn[i].insert(column, -1);
     }
 
     END_PROFILE("void FastTableWidget::insertColumn(int column)");
@@ -502,9 +732,165 @@ void FastTableWidget::deleteColumn(int column)
         mCellMergeParentColumn[i].removeAt(column);
     }
 
+    for (int i=0; i<mHorizontalHeader_Data.length(); ++i)
+    {
+        if (mHorizontalHeader_BackgroundBrushes.at(i).at(column))
+        {
+            delete mHorizontalHeader_BackgroundBrushes.at(i).at(column);
+        }
+
+        if (mHorizontalHeader_ForegroundColors.at(i).at(column))
+        {
+            delete mHorizontalHeader_ForegroundColors.at(i).at(column);
+        }
+
+        if (mHorizontalHeader_CellFonts.at(i).at(column))
+        {
+            delete mHorizontalHeader_CellFonts.at(i).at(column);
+        }
+
+        mHorizontalHeader_BackgroundBrushes[i].removeAt(column);
+        mHorizontalHeader_ForegroundColors[i].removeAt(column);
+        mHorizontalHeader_CellFonts[i].removeAt(column);
+        mHorizontalHeader_CellTextFlags[i].removeAt(column);
+        mHorizontalHeader_CellMergeX[i].removeAt(column);
+        mHorizontalHeader_CellMergeY[i].removeAt(column);
+        mHorizontalHeader_CellMergeParentRow[i].removeAt(column);
+        mHorizontalHeader_CellMergeParentColumn[i].removeAt(column);
+    }
+
     CustomFastTableWidget::deleteColumn(column);
 
     END_PROFILE("void FastTableWidget::deleteColumn(int column)");
+}
+
+void FastTableWidget::horizontalHeader_InsertRow(int row)
+{
+    START_PROFILE;
+
+    CustomFastTableWidget::horizontalHeader_InsertRow(row);
+
+    QList<QBrush *> aNewRowBrush;
+    QList<QColor *> aNewRowColor;
+    QList<QFont *> aNewRowFont;
+    QList<int> aNewRowint;
+    QList<quint16> aNewRowqint16;
+
+    mHorizontalHeader_BackgroundBrushes.insert(row, aNewRowBrush);
+    mHorizontalHeader_ForegroundColors.insert(row, aNewRowColor);
+    mHorizontalHeader_CellFonts.insert(row, aNewRowFont);
+    mHorizontalHeader_CellTextFlags.insert(row, aNewRowint);
+    mHorizontalHeader_CellMergeX.insert(row, aNewRowqint16);
+    mHorizontalHeader_CellMergeY.insert(row, aNewRowqint16);
+    mHorizontalHeader_CellMergeParentRow.insert(row, aNewRowint);
+    mHorizontalHeader_CellMergeParentColumn.insert(row, aNewRowint);
+
+    for (int i=0; i<mColumnCount; ++i)
+    {
+        mHorizontalHeader_BackgroundBrushes[row].append(0);
+        mHorizontalHeader_ForegroundColors[row].append(0);
+        mHorizontalHeader_CellFonts[row].append(0);
+        mHorizontalHeader_CellTextFlags[row].append(FASTTABLE_DEFAULT_TEXT_FLAG);
+        mHorizontalHeader_CellMergeX[row].append(1);
+        mHorizontalHeader_CellMergeY[row].append(1);
+        mHorizontalHeader_CellMergeParentRow[row].append(-1);
+        mHorizontalHeader_CellMergeParentColumn[row].append(-1);
+    }
+
+    END_PROFILE("void FastTableWidget::horizontalHeader_InsertRow(int row)");
+}
+
+void FastTableWidget::horizontalHeader_DeleteRow(int row)
+{
+    START_PROFILE;
+
+    for (int i=0; i<mColumnCount; ++i)
+    {
+        if (mHorizontalHeader_BackgroundBrushes.at(row).at(i))
+        {
+            delete mHorizontalHeader_BackgroundBrushes.at(row).at(i);
+        }
+
+        if (mHorizontalHeader_ForegroundColors.at(row).at(i))
+        {
+            delete mHorizontalHeader_ForegroundColors.at(row).at(i);
+        }
+
+        if (mHorizontalHeader_CellFonts.at(row).at(i))
+        {
+            delete mHorizontalHeader_CellFonts.at(row).at(i);
+        }
+    }
+
+    mHorizontalHeader_BackgroundBrushes.removeAt(row);
+    mHorizontalHeader_ForegroundColors.removeAt(row);
+    mHorizontalHeader_CellFonts.removeAt(row);
+    mHorizontalHeader_CellTextFlags.removeAt(row);
+    mHorizontalHeader_CellMergeX.removeAt(row);
+    mHorizontalHeader_CellMergeY.removeAt(row);
+    mHorizontalHeader_CellMergeParentRow.removeAt(row);
+    mHorizontalHeader_CellMergeParentColumn.removeAt(row);
+
+    CustomFastTableWidget::horizontalHeader_DeleteRow(row);
+
+    END_PROFILE("void FastTableWidget::horizontalHeader_DeleteRow(int row)");
+}
+
+void FastTableWidget::verticalHeader_InsertColumn(int column)
+{
+    START_PROFILE;
+
+    CustomFastTableWidget::verticalHeader_InsertColumn(column);
+
+    for (int i=0; i<mData.length(); ++i)
+    {
+        mVerticalHeader_BackgroundBrushes[i].insert(column, 0);
+        mVerticalHeader_ForegroundColors[i].insert(column, 0);
+        mVerticalHeader_CellFonts[i].insert(column, 0);
+        mVerticalHeader_CellTextFlags[i].insert(column, FASTTABLE_DEFAULT_TEXT_FLAG);
+        mVerticalHeader_CellMergeX[i].insert(column, 1);
+        mVerticalHeader_CellMergeY[i].insert(column, 1);
+        mVerticalHeader_CellMergeParentRow[i].insert(column, -1);
+        mVerticalHeader_CellMergeParentColumn[i].insert(column, -1);
+    }
+
+    END_PROFILE("void FastTableWidget::verticalHeader_InsertColumn(int column)");
+}
+
+void FastTableWidget::verticalHeader_DeleteColumn(int column)
+{
+    START_PROFILE;
+
+    for (int i=0; i<mData.length(); ++i)
+    {
+        if (mVerticalHeader_BackgroundBrushes.at(i).at(column))
+        {
+            delete mVerticalHeader_BackgroundBrushes.at(i).at(column);
+        }
+
+        if (mVerticalHeader_ForegroundColors.at(i).at(column))
+        {
+            delete mVerticalHeader_ForegroundColors.at(i).at(column);
+        }
+
+        if (mVerticalHeader_CellFonts.at(i).at(column))
+        {
+            delete mVerticalHeader_CellFonts.at(i).at(column);
+        }
+
+        mVerticalHeader_BackgroundBrushes[i].removeAt(column);
+        mVerticalHeader_ForegroundColors[i].removeAt(column);
+        mVerticalHeader_CellFonts[i].removeAt(column);
+        mVerticalHeader_CellTextFlags[i].removeAt(column);
+        mVerticalHeader_CellMergeX[i].removeAt(column);
+        mVerticalHeader_CellMergeY[i].removeAt(column);
+        mVerticalHeader_CellMergeParentRow[i].removeAt(column);
+        mVerticalHeader_CellMergeParentColumn[i].removeAt(column);
+    }
+
+    CustomFastTableWidget::verticalHeader_DeleteColumn(column);
+
+    END_PROFILE("void FastTableWidget::verticalHeader_DeleteColumn(int column)");
 }
 
 QBrush FastTableWidget::backgroundBrush(const int row, const int column)
