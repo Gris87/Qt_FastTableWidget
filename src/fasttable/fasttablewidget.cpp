@@ -1149,6 +1149,70 @@ void FastTableWidget::setForegroundColor(const int row, const int column, const 
     END_PROFILE("void FastTableWidget::setForegroundColor(const int row, const int column, const QColor color)");
 }
 
+QColor FastTableWidget::horizontalHeader_ForegroundColor(const int row, const int column)
+{
+    START_PROFILE;
+
+    QColor *aColor=mHorizontalHeader_ForegroundColors.at(row).at(column);
+
+    if (aColor==0)
+    {
+        aColor=&mHorizontalHeader_DefaultForegroundColor;
+    }
+
+    END_PROFILE("QColor FastTableWidget::horizontalHeader_ForegroundColor(const int row, const int column)");
+
+    return *aColor;
+}
+
+void FastTableWidget::horizontalHeader_SetForegroundColor(const int row, const int column, const QColor color)
+{
+    START_PROFILE;
+
+    if (mHorizontalHeader_ForegroundColors.at(row).at(column))
+    {
+        *mHorizontalHeader_ForegroundColors[row][column]=color;
+    }
+    else
+    {
+        mHorizontalHeader_ForegroundColors[row][column]=new QColor(color);
+    }
+
+    END_PROFILE("void FastTableWidget::horizontalHeader_SetForegroundColor(const int row, const int column, const QColor color)");
+}
+
+QColor FastTableWidget::verticalHeader_ForegroundColor(const int row, const int column)
+{
+    START_PROFILE;
+
+    QColor *aColor=mVerticalHeader_ForegroundColors.at(row).at(column);
+
+    if (aColor==0)
+    {
+        aColor=&mVerticalHeader_DefaultForegroundColor;
+    }
+
+    END_PROFILE("QColor FastTableWidget::verticalHeader_ForegroundColor(const int row, const int column)");
+
+    return *aColor;
+}
+
+void FastTableWidget::verticalHeader_SetForegroundColor(const int row, const int column, const QColor color)
+{
+    START_PROFILE;
+
+    if (mVerticalHeader_ForegroundColors.at(row).at(column))
+    {
+        *mVerticalHeader_ForegroundColors[row][column]=color;
+    }
+    else
+    {
+        mVerticalHeader_ForegroundColors[row][column]=new QColor(color);
+    }
+
+    END_PROFILE("void FastTableWidget::verticalHeader_SetForegroundColor(const int row, const int column, const QColor color)");
+}
+
 QFont FastTableWidget::cellFont(const int row, const int column)
 {
     if (mCellFonts.at(row).at(column))
@@ -1175,6 +1239,58 @@ void FastTableWidget::setCellFont(const int row, const int column, const QFont f
     END_PROFILE("void FastTableWidget::setCellFont(const int row, const int column, const QFont font)");
 }
 
+QFont FastTableWidget::horizontalHeader_CellFont(const int row, const int column)
+{
+    if (mHorizontalHeader_CellFonts.at(row).at(column))
+    {
+        return *mHorizontalHeader_CellFonts.at(row).at(column);
+    }
+
+    return this->font();
+}
+
+void FastTableWidget::horizontalHeader_SetCellFont(const int row, const int column, const QFont font)
+{
+    START_PROFILE;
+
+    if (mHorizontalHeader_CellFonts.at(row).at(column))
+    {
+        *mHorizontalHeader_CellFonts[row][column]=font;
+    }
+    else
+    {
+        mHorizontalHeader_CellFonts[row][column]=new QFont(font);
+    }
+
+    END_PROFILE("void FastTableWidget::horizontalHeader_SetCellFont(const int row, const int column, const QFont font)");
+}
+
+QFont FastTableWidget::verticalHeader_CellFont(const int row, const int column)
+{
+    if (mVerticalHeader_CellFonts.at(row).at(column))
+    {
+        return *mVerticalHeader_CellFonts.at(row).at(column);
+    }
+
+    return this->font();
+}
+
+void FastTableWidget::verticalHeader_SetCellFont(const int row, const int column, const QFont font)
+{
+    START_PROFILE;
+
+    if (mVerticalHeader_CellFonts.at(row).at(column))
+    {
+        *mVerticalHeader_CellFonts[row][column]=font;
+    }
+    else
+    {
+        mVerticalHeader_CellFonts[row][column]=new QFont(font);
+    }
+
+    END_PROFILE("void FastTableWidget::verticalHeader_SetCellFont(const int row, const int column, const QFont font)");
+}
+
 int FastTableWidget::cellTextFlags(const int row, const int column)
 {
     return mCellTextFlags.at(row).at(column);
@@ -1187,6 +1303,34 @@ void FastTableWidget::setCellTextFlags(const int row, const int column, const in
     mCellTextFlags[row][column]=flags;
 
     END_PROFILE("void FastTableWidget::setCellTextFlags(const int row, const int column, const int flags)");
+}
+
+int FastTableWidget::horizontalHeader_CellTextFlags(const int row, const int column)
+{
+    return mHorizontalHeader_CellTextFlags.at(row).at(column);
+}
+
+void FastTableWidget::horizontalHeader_SetCellTextFlags(const int row, const int column, const int flags)
+{
+    START_PROFILE;
+
+    mHorizontalHeader_CellTextFlags[row][column]=flags;
+
+    END_PROFILE("void FastTableWidget::horizontalHeader_SetCellTextFlags(const int row, const int column, const int flags)");
+}
+
+int FastTableWidget::verticalHeader_CellTextFlags(const int row, const int column)
+{
+    return mVerticalHeader_CellTextFlags.at(row).at(column);
+}
+
+void FastTableWidget::verticalHeader_SetCellTextFlags(const int row, const int column, const int flags)
+{
+    START_PROFILE;
+
+    mVerticalHeader_CellTextFlags[row][column]=flags;
+
+    END_PROFILE("void FastTableWidget::verticalHeader_SetCellTextFlags(const int row, const int column, const int flags)");
 }
 
 void FastTableWidget::clearSpans()
@@ -1301,4 +1445,232 @@ QPoint FastTableWidget::spanParent(const int row, const int column)
     return QPoint(mCellMergeParentColumn.at(row).at(column), mCellMergeParentRow.at(row).at(column));
 
     END_PROFILE("QPoint FastTableWidget::spanParent(const int row, const int column)");
+}
+
+void FastTableWidget::horizontalHeader_ClearSpans()
+{
+    START_PROFILE;
+
+    for (int i=0; i<mHorizontalHeader_RowCount; ++i)
+    {
+        for (int j=0; j<mColumnCount; ++j)
+        {
+            mHorizontalHeader_CellMergeX[i][j]=1;
+            mHorizontalHeader_CellMergeY[i][j]=1;
+            mHorizontalHeader_CellMergeParentRow[i][j]=-1;
+            mHorizontalHeader_CellMergeParentColumn[i][j]=-1;
+        }
+    }
+
+    END_PROFILE("void FastTableWidget::horizontalHeader_ClearSpans()");
+}
+
+void FastTableWidget::horizontalHeader_SetSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan)
+{
+    START_PROFILE;
+
+    if (row+rowSpan>mHorizontalHeader_RowCount)
+    {
+        rowSpan=mHorizontalHeader_RowCount-row;
+    }
+
+    if (column+columnSpan>mColumnCount)
+    {
+        columnSpan=mColumnCount-column;
+    }
+
+    if (rowSpan<1)
+    {
+        rowSpan=1;
+    }
+
+    if (columnSpan<1)
+    {
+        columnSpan=1;
+    }
+
+    int parentRow;
+    int parentColumn;
+
+    for (int i=0; i<rowSpan; i++)
+    {
+        for (int j=0; j<columnSpan; j++)
+        {
+            parentRow=mHorizontalHeader_CellMergeParentRow.at(row+i).at(column+j);
+            parentColumn=mHorizontalHeader_CellMergeParentColumn.at(row+i).at(column+j);
+
+            if (parentRow>=0 && parentColumn>=0)
+            {
+                int parentSpanX=mHorizontalHeader_CellMergeX.at(parentRow).at(parentColumn);
+                int parentSpanY=mHorizontalHeader_CellMergeY.at(parentRow).at(parentColumn);
+
+                for (int g=0; g<parentSpanY; g++)
+                {
+                    for (int h=0; h<parentSpanX; h++)
+                    {
+                        mHorizontalHeader_CellMergeParentRow[parentRow+g][parentColumn+h]=-1;
+                        mHorizontalHeader_CellMergeParentColumn[parentRow+g][parentColumn+h]=-1;
+                    }
+                }
+
+                mHorizontalHeader_CellMergeX[parentRow][parentColumn]=1;
+                mHorizontalHeader_CellMergeY[parentRow][parentColumn]=1;
+            }
+
+            mHorizontalHeader_CellMergeParentRow[row+i][column+j]=row;
+            mHorizontalHeader_CellMergeParentColumn[row+i][column+j]=column;
+        }
+    }
+
+    mHorizontalHeader_CellMergeX[row][column]=columnSpan;
+    mHorizontalHeader_CellMergeY[row][column]=rowSpan;
+
+    if (rowSpan==1 && columnSpan==1)
+    {
+        mHorizontalHeader_CellMergeParentRow[row][column]=-1;
+        mHorizontalHeader_CellMergeParentColumn[row][column]=-1;
+    }
+
+    END_PROFILE("void FastTableWidget::horizontalHeader_SetSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan)");
+}
+
+quint16 FastTableWidget::horizontalHeader_RowSpan(const int row, const int column)
+{
+    START_PROFILE;
+
+    return mHorizontalHeader_CellMergeY.at(row).at(column);
+
+    END_PROFILE("quint16 FastTableWidget::horizontalHeader_RowSpan(const int row, const int column)");
+}
+
+quint16 FastTableWidget::horizontalHeader_ColumnSpan(const int row, const int column)
+{
+    START_PROFILE;
+
+    return mHorizontalHeader_CellMergeX.at(row).at(column);
+
+    END_PROFILE("quint16 FastTableWidget::horizontalHeader_ColumnSpan(const int row, const int column)");
+}
+
+QPoint FastTableWidget::horizontalHeader_SpanParent(const int row, const int column)
+{
+    START_PROFILE;
+
+    return QPoint(mHorizontalHeader_CellMergeParentColumn.at(row).at(column), mHorizontalHeader_CellMergeParentRow.at(row).at(column));
+
+    END_PROFILE("QPoint FastTableWidget::horizontalHeader_SpanParent(const int row, const int column)");
+}
+
+void FastTableWidget::verticalHeader_ClearSpans()
+{
+    START_PROFILE;
+
+    for (int i=0; i<mRowCount; ++i)
+    {
+        for (int j=0; j<mVerticalHeader_ColumnCount; ++j)
+        {
+            mVerticalHeader_CellMergeX[i][j]=1;
+            mVerticalHeader_CellMergeY[i][j]=1;
+            mVerticalHeader_CellMergeParentRow[i][j]=-1;
+            mVerticalHeader_CellMergeParentColumn[i][j]=-1;
+        }
+    }
+
+    END_PROFILE("void FastTableWidget::verticalHeader_ClearSpans()");
+}
+
+void FastTableWidget::verticalHeader_SetSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan)
+{
+    START_PROFILE;
+
+    if (row+rowSpan>mRowCount)
+    {
+        rowSpan=mRowCount-row;
+    }
+
+    if (column+columnSpan>mVerticalHeader_ColumnCount)
+    {
+        columnSpan=mVerticalHeader_ColumnCount-column;
+    }
+
+    if (rowSpan<1)
+    {
+        rowSpan=1;
+    }
+
+    if (columnSpan<1)
+    {
+        columnSpan=1;
+    }
+
+    int parentRow;
+    int parentColumn;
+
+    for (int i=0; i<rowSpan; i++)
+    {
+        for (int j=0; j<columnSpan; j++)
+        {
+            parentRow=mVerticalHeader_CellMergeParentRow.at(row+i).at(column+j);
+            parentColumn=mVerticalHeader_CellMergeParentColumn.at(row+i).at(column+j);
+
+            if (parentRow>=0 && parentColumn>=0)
+            {
+                int parentSpanX=mVerticalHeader_CellMergeX.at(parentRow).at(parentColumn);
+                int parentSpanY=mVerticalHeader_CellMergeY.at(parentRow).at(parentColumn);
+
+                for (int g=0; g<parentSpanY; g++)
+                {
+                    for (int h=0; h<parentSpanX; h++)
+                    {
+                        mVerticalHeader_CellMergeParentRow[parentRow+g][parentColumn+h]=-1;
+                        mVerticalHeader_CellMergeParentColumn[parentRow+g][parentColumn+h]=-1;
+                    }
+                }
+
+                mVerticalHeader_CellMergeX[parentRow][parentColumn]=1;
+                mVerticalHeader_CellMergeY[parentRow][parentColumn]=1;
+            }
+
+            mVerticalHeader_CellMergeParentRow[row+i][column+j]=row;
+            mVerticalHeader_CellMergeParentColumn[row+i][column+j]=column;
+        }
+    }
+
+    mVerticalHeader_CellMergeX[row][column]=columnSpan;
+    mVerticalHeader_CellMergeY[row][column]=rowSpan;
+
+    if (rowSpan==1 && columnSpan==1)
+    {
+        mVerticalHeader_CellMergeParentRow[row][column]=-1;
+        mVerticalHeader_CellMergeParentColumn[row][column]=-1;
+    }
+
+    END_PROFILE("void FastTableWidget::verticalHeader_SetSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan)");
+}
+
+quint16 FastTableWidget::verticalHeader_RowSpan(const int row, const int column)
+{
+    START_PROFILE;
+
+    return mVerticalHeader_CellMergeY.at(row).at(column);
+
+    END_PROFILE("quint16 FastTableWidget::verticalHeader_RowSpan(const int row, const int column)");
+}
+
+quint16 FastTableWidget::verticalHeader_ColumnSpan(const int row, const int column)
+{
+    START_PROFILE;
+
+    return mVerticalHeader_CellMergeX.at(row).at(column);
+
+    END_PROFILE("quint16 FastTableWidget::verticalHeader_ColumnSpan(const int row, const int column)");
+}
+
+QPoint FastTableWidget::verticalHeader_SpanParent(const int row, const int column)
+{
+    START_PROFILE;
+
+    return QPoint(mVerticalHeader_CellMergeParentColumn.at(row).at(column), mVerticalHeader_CellMergeParentRow.at(row).at(column));
+
+    END_PROFILE("QPoint FastTableWidget::verticalHeader_SpanParent(const int row, const int column)");
 }

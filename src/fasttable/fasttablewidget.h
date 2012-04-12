@@ -71,17 +71,47 @@ public:
     QColor foregroundColor(const int row, const int column);
     void setForegroundColor(const int row, const int column, const QColor color);
 
+    QColor horizontalHeader_ForegroundColor(const int row, const int column);
+    void horizontalHeader_SetForegroundColor(const int row, const int column, const QColor color);
+
+    QColor verticalHeader_ForegroundColor(const int row, const int column);
+    void verticalHeader_SetForegroundColor(const int row, const int column, const QColor color);
+
     QFont cellFont(const int row, const int column);
     void setCellFont(const int row, const int column, const QFont font);
 
+    QFont horizontalHeader_CellFont(const int row, const int column);
+    void horizontalHeader_SetCellFont(const int row, const int column, const QFont font);
+
+    QFont verticalHeader_CellFont(const int row, const int column);
+    void verticalHeader_SetCellFont(const int row, const int column, const QFont font);
+
     int cellTextFlags(const int row, const int column);
     void setCellTextFlags(const int row, const int column, const int flags);
+
+    int horizontalHeader_CellTextFlags(const int row, const int column);
+    void horizontalHeader_SetCellTextFlags(const int row, const int column, const int flags);
+
+    int verticalHeader_CellTextFlags(const int row, const int column);
+    void verticalHeader_SetCellTextFlags(const int row, const int column, const int flags);
 
     void clearSpans();
     void setSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan);
     quint16 rowSpan(const int row, const int column);
     quint16 columnSpan(const int row, const int column);
     QPoint spanParent(const int row, const int column);
+
+    void horizontalHeader_ClearSpans();
+    void horizontalHeader_SetSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan);
+    quint16 horizontalHeader_RowSpan(const int row, const int column);
+    quint16 horizontalHeader_ColumnSpan(const int row, const int column);
+    QPoint horizontalHeader_SpanParent(const int row, const int column);
+
+    void verticalHeader_ClearSpans();
+    void verticalHeader_SetSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan);
+    quint16 verticalHeader_RowSpan(const int row, const int column);
+    quint16 verticalHeader_ColumnSpan(const int row, const int column);
+    QPoint verticalHeader_SpanParent(const int row, const int column);
 
 protected:
     QList< QList<QBrush *> > mBackgroundBrushes;
