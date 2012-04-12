@@ -13,17 +13,17 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
     mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
     mDefaultForegroundColor.setRgb(0, 0, 0);
-    mGridColor.setRgb(216, 216, 216);
+    mGridColor.setRgb(192, 192, 192);
 
-    mHorizontalHeader_DefaultBackgroundBrush.setColor(QColor(240, 240, 240));
+    mHorizontalHeader_DefaultBackgroundBrush.setColor(QColor(235, 234, 219));
     mHorizontalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
     mHorizontalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
-    mHorizontalHeader_GridColor.setRgb(213, 213, 213);
+    mHorizontalHeader_GridColor.setRgb(199, 197, 178);
 
-    mVerticalHeader_DefaultBackgroundBrush.setColor(QColor(240, 240, 240));
+    mVerticalHeader_DefaultBackgroundBrush.setColor(QColor(235, 234, 219));
     mVerticalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
     mVerticalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
-    mVerticalHeader_GridColor.setRgb(213, 213, 213);
+    mVerticalHeader_GridColor.setRgb(199, 197, 178);
 
     mSelectionBrush.setColor(QColor(0, 0, 255));
 
@@ -136,11 +136,18 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
 {
     START_FREQUENT_PROFILE;
 
+    if (width<=0 || height<=0)
+    {
+        return;
+    }
+
     QColor  *aGridColor;
     QBrush  *aBackgroundBrush;
     QColor  *aTextColor;
     QString *aText;
     QString aVerticalText;
+    QFont   *aFont;
+    QFont   aTextFont;
 
     switch (drawComponent)
     {
@@ -150,6 +157,9 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
             aBackgroundBrush=&mDefaultBackgroundBrush;
             aTextColor=&mDefaultForegroundColor;
             aText=&mData[row][column];
+
+            aTextFont=font();
+            aFont=&aTextFont;
         }
         break;
         case DrawHorizontalHeaderCell:
@@ -158,6 +168,9 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
             aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
             aTextColor=&mHorizontalHeader_DefaultForegroundColor;
             aText=&mHorizontalHeader_Data[row][column];
+
+            aTextFont=font();
+            aFont=&aTextFont;
         }
         break;
         case DrawVerticalHeaderCell:
@@ -172,6 +185,9 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
                 aVerticalText=QString::number(row+1);
                 aText=&aVerticalText;
             }
+
+            aTextFont=font();
+            aFont=&aTextFont;
         }
         break;
         case DrawTopLeftCorner:
@@ -180,6 +196,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
             aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
             aTextColor=0;
             aText=0;
+            aFont=0;
         }
         break;
         default:
@@ -188,23 +205,55 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
             aBackgroundBrush=0;
             aTextColor=0;
             aText=0;
+            aFont=0;
         }
         break;
     }
 
-    painter.setPen(QPen(*aGridColor));
-    painter.setFont(font());
+    paintCell(painter, x ,y, width, height, row, column, drawComponent, aGridColor, aBackgroundBrush, aTextColor, aText, aFont)
 
-    painter.fillRect(x, y, width, height, *aBackgroundBrush);
-    painter.drawRect(x, y, width, height);
+    END_FREQUENT_PROFILE("void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int row, const int column)");
+}
 
-    if (aText)
+void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent,
+                                      QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aTextColor, QString *aText, QFont *aFont)
+{
+    START_FREQUENT_PROFILE;
+
+    if (drawComponent==DrawCell || height<=8)
+    {
+        painter.fillRect(x, y, width, height, *aBackgroundBrush);
+
+        painter.setPen(QPen(*aGridColor));
+        painter.drawRect(x, y, width, height);
+    }
+    else
+    {
+        painter.fillRect(x+1, y+1, width, height, *aBackgroundBrush);
+
+        painter.setPen(QPen(QColor(255, 255, 255)));
+        painter.drawLine(x+width, y+4, x+width, y+height-4);
+
+        painter.setPen(QPen(*aGridColor));
+        painter.drawLine(x+width-1, y+4, x+width-1, y+height-4);
+        painter.drawLine(x, y+height, x+width, y+height);
+
+        QColor backColor=aBackgroundBrush->color();
+
+        painter.setPen(QPen(QColor(backColor.red()+(aGridColor->red()-backColor.red())*2/3, backColor.red()+(aGridColor->green()-backColor.green())*2/3, backColor.red()+(aGridColor->blue()-backColor.blue())*2/3)));
+        painter.drawLine(x, y+height-1, x+width, y+height-1);
+        painter.setPen(QPen(QColor(backColor.red()+(aGridColor->red()-backColor.red())/3, backColor.red()+(aGridColor->green()-backColor.green())/3, backColor.red()+(aGridColor->blue()-backColor.blue())/3)));
+        painter.drawLine(x, y+height-2, x+width, y+height-2);
+    }
+
+    if (aText && width>8 && height>8)
     {
         painter.setPen(QPen(*aTextColor));
+        painter.setFont(*aFont);
         painter.drawText(x+4, y+4, width-8, height-8, Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap, *aText);
     }
 
-    END_FREQUENT_PROFILE("void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int row, const int column)");
+    END_FREQUENT_PROFILE("void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aTextColor, QString *aText, QString aVerticalText, QFont *aFont, QFont aTextFont)");
 }
 
 void CustomFastTableWidget::horizontalScrollBarValueChanged(int value)
