@@ -56,6 +56,10 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                             offsetY+mOffsetY.at(i)<=viewport()->height()
                             &&
                             offsetY+mOffsetY.at(i)>=-aHeight
+                            &&
+                            aWidth>0
+                            &&
+                            aHeight>0
                            )
                         {
                             paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), aWidth, aHeight, i, j, DrawCell);
@@ -72,6 +76,10 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                         offsetY+mOffsetY.at(i)<=viewport()->height()
                         &&
                         offsetY+mOffsetY.at(i)>=-mRowHeights.at(i)
+                        &&
+                        mColumnWidths.at(j)>0
+                        &&
+                        mRowHeights.at(i)>0
                        )
                     {
                         paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), mColumnWidths.at(j), mRowHeights.at(i), i, j, DrawCell);
@@ -115,6 +123,10 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                             mHorizontalHeader_OffsetY.at(i)<=viewport()->height()
                             &&
                             mHorizontalHeader_OffsetY.at(i)>=-aHeight
+                            &&
+                            aWidth>0
+                            &&
+                            aHeight>0
                            )
                         {
                             paintCell(painter, offsetX+mOffsetX.at(j), mHorizontalHeader_OffsetY.at(i), aWidth, aHeight, i, j, DrawHorizontalHeaderCell);
@@ -131,6 +143,10 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                         mHorizontalHeader_OffsetY.at(i)<=viewport()->height()
                         &&
                         mHorizontalHeader_OffsetY.at(i)>=-mHorizontalHeader_RowHeights.at(i)
+                        &&
+                        mColumnWidths.at(j)>0
+                        &&
+                        mHorizontalHeader_RowHeights.at(i)>0
                        )
                     {
                         paintCell(painter, offsetX+mOffsetX.at(j), mHorizontalHeader_OffsetY.at(i), mColumnWidths.at(j), mHorizontalHeader_RowHeights.at(i), i, j, DrawHorizontalHeaderCell);
@@ -174,6 +190,10 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                             offsetY+mOffsetY.at(i)<=viewport()->height()
                             &&
                             offsetY+mOffsetY.at(i)>=-aHeight
+                            &&
+                            aWidth>0
+                            &&
+                            aHeight>0
                            )
                         {
                             paintCell(painter, mVerticalHeader_OffsetX.at(j), offsetY+mOffsetY.at(i), aWidth, aHeight, i, j, DrawVerticalHeaderCell);
@@ -190,6 +210,10 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                         offsetY+mOffsetY.at(i)<=viewport()->height()
                         &&
                         offsetY+mOffsetY.at(i)>=-mRowHeights.at(i)
+                        &&
+                        mVerticalHeader_ColumnWidths.at(j)>0
+                        &&
+                        mRowHeights.at(i)>0
                        )
                     {
                         paintCell(painter, mVerticalHeader_OffsetX.at(j), offsetY+mOffsetY.at(i), mVerticalHeader_ColumnWidths.at(j), mRowHeights.at(i), i, j, DrawVerticalHeaderCell);
@@ -199,7 +223,7 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
         }
     }
 
-    if (mVerticalHeader_VisibleRight>=0 && mHorizontalHeader_VisibleBottom>=0)
+    if (mVerticalHeader_VisibleRight>=0 && mHorizontalHeader_VisibleBottom>=0 && mVerticalHeader_TotalWidth>=0 && mHorizontalHeader_TotalHeight>=0)
     {
         paintCell(painter, 0, 0, mVerticalHeader_TotalWidth, mHorizontalHeader_TotalHeight, -1, -1, DrawTopLeftCorner);
     }

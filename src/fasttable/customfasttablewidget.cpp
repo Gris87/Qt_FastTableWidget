@@ -99,7 +99,10 @@ void CustomFastTableWidget::paintEvent(QPaintEvent *event)
         {
             for (int j=mVisibleLeft; j<=mVisibleRight; ++j)
             {
-                paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), mColumnWidths.at(j), mRowHeights.at(i), i, j, DrawCell);
+                if (mColumnWidths.at(j)>=0 && mRowHeights.at(i)>=0)
+                {
+                    paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), mColumnWidths.at(j), mRowHeights.at(i), i, j, DrawCell);
+                }
             }
         }
     }
@@ -110,7 +113,10 @@ void CustomFastTableWidget::paintEvent(QPaintEvent *event)
         {
             for (int j=mVisibleLeft; j<=mVisibleRight; ++j)
             {
-                paintCell(painter, offsetX+mOffsetX.at(j), mHorizontalHeader_OffsetY.at(i), mColumnWidths.at(j), mHorizontalHeader_RowHeights.at(i), i, j, DrawHorizontalHeaderCell);
+                if (mColumnWidths.at(j)>=0 && mHorizontalHeader_RowHeights.at(i)>=0)
+                {
+                    paintCell(painter, offsetX+mOffsetX.at(j), mHorizontalHeader_OffsetY.at(i), mColumnWidths.at(j), mHorizontalHeader_RowHeights.at(i), i, j, DrawHorizontalHeaderCell);
+                }
             }
         }
     }
@@ -121,12 +127,15 @@ void CustomFastTableWidget::paintEvent(QPaintEvent *event)
         {
             for (int j=0; j<=mVerticalHeader_VisibleRight; ++j)
             {
-                paintCell(painter, mVerticalHeader_OffsetX.at(j), offsetY+mOffsetY.at(i), mVerticalHeader_ColumnWidths.at(j), mRowHeights.at(i), i, j, DrawVerticalHeaderCell);
+                if (mVerticalHeader_ColumnWidths.at(j)>=0 && mRowHeights.at(i)>=0)
+                {
+                    paintCell(painter, mVerticalHeader_OffsetX.at(j), offsetY+mOffsetY.at(i), mVerticalHeader_ColumnWidths.at(j), mRowHeights.at(i), i, j, DrawVerticalHeaderCell);
+                }
             }
         }
     }
 
-    if (mVerticalHeader_VisibleRight>=0 && mHorizontalHeader_VisibleBottom>=0)
+    if (mVerticalHeader_VisibleRight>=0 && mHorizontalHeader_VisibleBottom>=0 && mVerticalHeader_TotalWidth>0 && mHorizontalHeader_TotalHeight>0)
     {
         paintCell(painter, 0, 0, mVerticalHeader_TotalWidth, mHorizontalHeader_TotalHeight, -1, -1, DrawTopLeftCorner);
     }
@@ -137,11 +146,6 @@ void CustomFastTableWidget::paintEvent(QPaintEvent *event)
 void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent)
 {
     START_FREQUENT_PROFILE;
-
-    if (width<=0 || height<=0)
-    {
-        return;
-    }
 
     QColor  *aGridColor;
     QBrush  *aBackgroundBrush;
