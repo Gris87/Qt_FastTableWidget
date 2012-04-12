@@ -28,6 +28,11 @@ private slots:
     void on_horizontalHeaderRowCountSpinBox_valueChanged(int value);
     void on_verticalHeaderColumnCountSpinBox_valueChanged(int value);
 
+    void on_rowCountButton_clicked();
+    void on_columnCountButton_clicked();
+    void on_horizontalHeaderRowCountButton_clicked();
+    void on_verticalHeaderColumnCountButton_clicked();
+
 private:
     Ui::ControllerDialog *ui;
 };

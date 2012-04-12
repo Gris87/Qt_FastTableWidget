@@ -9,6 +9,8 @@ QT       += core gui
 TARGET = FastTable
 TEMPLATE = app
 
+RC_FILE = Resources.rc
+RESOURCES += Resources.qrc
 
 SOURCES += src/main.cpp\
            src/main/mainwindow.cpp \

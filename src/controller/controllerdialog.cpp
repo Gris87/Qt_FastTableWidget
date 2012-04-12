@@ -6,6 +6,8 @@ ControllerDialog::ControllerDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setWindowFlags(Qt::Window);
+
     mFastTableWidget=new FastTableWidget(this);
     ui->fastTableLayout->insertWidget(0, mFastTableWidget);
 
@@ -51,4 +53,24 @@ void ControllerDialog::on_horizontalHeaderRowCountSpinBox_valueChanged(int value
 void ControllerDialog::on_verticalHeaderColumnCountSpinBox_valueChanged(int value)
 {
     mFastTableWidget->verticalHeader_SetColumnCount(value);
+}
+
+void ControllerDialog::on_rowCountButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_columnCountButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_horizontalHeaderRowCountButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_verticalHeaderColumnCountButton_clicked()
+{
+
 }
