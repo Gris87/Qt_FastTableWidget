@@ -62,6 +62,12 @@ public:
     QBrush backgroundBrush(const int row, const int column);
     void setBackgroundBrush(const int row, const int column, const QBrush brush);
 
+    QBrush horizontalHeader_BackgroundBrush(const int row, const int column);
+    void horizontalHeader_SetBackgroundBrush(const int row, const int column, const QBrush brush);
+
+    QBrush verticalHeader_BackgroundBrush(const int row, const int column);
+    void verticalHeader_SetBackgroundBrush(const int row, const int column, const QBrush brush);
+
     QColor foregroundColor(const int row, const int column);
     void setForegroundColor(const int row, const int column, const QColor color);
 

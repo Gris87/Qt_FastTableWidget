@@ -118,7 +118,7 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 void FastTableWidget::updateVisibleRange()
 {
     START_PROFILE;
-
+/*
     if (mRowCount==0 || mColumnCount==0)
     {
         mVisibleLeft=-1;
@@ -222,6 +222,38 @@ void FastTableWidget::updateVisibleRange()
             }
         }
 
+        for (int i=0; i<mColumnCount; i++)
+        {
+            int parentRow=mCellMergeParentRow.at(originalTop).at(i);
+
+            if (parentRow>=0 && parentRow<mVisibleTop)
+            {
+                mVisibleTop=parentRow;
+            }
+        }
+    }
+    */
+
+    CustomFastTableWidget::updateVisibleRange();
+
+    int originalLeft=mVisibleLeft;
+    int originalTop=mVisibleTop;
+
+    if (originalLeft>=0)
+    {
+        for (int i=0; i<mRowCount; i++)
+        {
+            int parentColumn=mCellMergeParentColumn.at(i).at(originalLeft);
+
+            if (parentColumn>=0 &&parentColumn<mVisibleLeft)
+            {
+                mVisibleLeft=parentColumn;
+            }
+        }
+    }
+
+    if (originalTop>=0)
+    {
         for (int i=0; i<mColumnCount; i++)
         {
             int parentRow=mCellMergeParentRow.at(originalTop).at(i);
@@ -546,6 +578,102 @@ void FastTableWidget::resetTextFlag(const int row, const int column)
     mCellTextFlags[row][column]=FASTTABLE_DEFAULT_TEXT_FLAG;
 
     END_PROFILE("void FastTableWidget::resetTextFlag(const int row, const int column)");
+}
+
+void FastTableWidget::horizontalHeader_ResetBackgroundBrush(const int row, const int column)
+{
+    START_PROFILE;
+
+    if (mHorizontalHeader_BackgroundBrushes.at(row).at(column))
+    {
+        delete mHorizontalHeader_BackgroundBrushes.at(row).at(column);
+        mHorizontalHeader_BackgroundBrushes[row][column]=0;
+    }
+
+    END_PROFILE("void FastTableWidget::horizontalHeader_ResetBackgroundBrush(const int row, const int column)");
+}
+
+void FastTableWidget::horizontalHeader_ResetForegroundColor(const int row, const int column)
+{
+    START_PROFILE;
+
+    if (mHorizontalHeader_ForegroundColors.at(row).at(column))
+    {
+        delete mHorizontalHeader_ForegroundColors.at(row).at(column);
+        mHorizontalHeader_ForegroundColors[row][column]=0;
+    }
+
+    END_PROFILE("void FastTableWidget::horizontalHeader_ResetForegroundColor(const int row, const int column)");
+}
+
+void FastTableWidget::horizontalHeader_ResetFont(const int row, const int column)
+{
+    START_PROFILE;
+
+    if (mHorizontalHeader_CellFonts.at(row).at(column))
+    {
+        delete mHorizontalHeader_CellFonts.at(row).at(column);
+        mHorizontalHeader_CellFonts[row][column]=0;
+    }
+
+    END_PROFILE("void FastTableWidget::horizontalHeader_ResetFont(const int row, const int column)");
+}
+
+void FastTableWidget::horizontalHeader_ResetTextFlag(const int row, const int column)
+{
+    START_PROFILE;
+
+    mHorizontalHeader_CellTextFlags[row][column]=FASTTABLE_DEFAULT_TEXT_FLAG;
+
+    END_PROFILE("void FastTableWidget::horizontalHeader_ResetTextFlag(const int row, const int column)");
+}
+
+void FastTableWidget::verticalHeader_ResetBackgroundBrush(const int row, const int column)
+{
+    START_PROFILE;
+
+    if (mVerticalHeader_BackgroundBrushes.at(row).at(column))
+    {
+        delete mVerticalHeader_BackgroundBrushes.at(row).at(column);
+        mVerticalHeader_BackgroundBrushes[row][column]=0;
+    }
+
+    END_PROFILE("void FastTableWidget::verticalHeader_ResetBackgroundBrush(const int row, const int column)");
+}
+
+void FastTableWidget::verticalHeader_ResetForegroundColor(const int row, const int column)
+{
+    START_PROFILE;
+
+    if (mVerticalHeader_ForegroundColors.at(row).at(column))
+    {
+        delete mVerticalHeader_ForegroundColors.at(row).at(column);
+        mVerticalHeader_ForegroundColors[row][column]=0;
+    }
+
+    END_PROFILE("void FastTableWidget::verticalHeader_ResetForegroundColor(const int row, const int column)");
+}
+
+void FastTableWidget::verticalHeader_ResetFont(const int row, const int column)
+{
+    START_PROFILE;
+
+    if (mVerticalHeader_CellFonts.at(row).at(column))
+    {
+        delete mVerticalHeader_CellFonts.at(row).at(column);
+        mVerticalHeader_CellFonts[row][column]=0;
+    }
+
+    END_PROFILE("void FastTableWidget::verticalHeader_ResetFont(const int row, const int column)");
+}
+
+void FastTableWidget::verticalHeader_ResetTextFlag(const int row, const int column)
+{
+    START_PROFILE;
+
+    mVerticalHeader_CellTextFlags[row][column]=FASTTABLE_DEFAULT_TEXT_FLAG;
+
+    END_PROFILE("void FastTableWidget::verticalHeader_ResetTextFlag(const int row, const int column)");
 }
 
 void FastTableWidget::insertRow(int row)
@@ -923,6 +1051,70 @@ void FastTableWidget::setBackgroundBrush(const int row, const int column, const 
     }
 
     END_PROFILE("void FastTableWidget::setBackgroundBrush(const int row, const int column, const QBrush brush)");
+}
+
+QBrush FastTableWidget::horizontalHeader_BackgroundBrush(const int row, const int column)
+{
+    START_PROFILE;
+
+    QBrush *aBrush=mHorizontalHeader_BackgroundBrushes.at(row).at(column);
+
+    if (aBrush==0)
+    {
+        aBrush=&mHorizontalHeader_DefaultBackgroundBrush;
+    }
+
+    END_PROFILE("QBrush FastTableWidget::horizontalHeader_BackgroundBrush(const int row, const int column)");
+
+    return *aBrush;
+}
+
+void FastTableWidget::horizontalHeader_SetBackgroundBrush(const int row, const int column, const QBrush brush)
+{
+    START_PROFILE;
+
+    if (mHorizontalHeader_BackgroundBrushes.at(row).at(column))
+    {
+        *mHorizontalHeader_BackgroundBrushes[row][column]=brush;
+    }
+    else
+    {
+        mHorizontalHeader_BackgroundBrushes[row][column]=new QBrush(brush);
+    }
+
+    END_PROFILE("void FastTableWidget::horizontalHeader_SetBackgroundBrush(const int row, const int column, const QBrush brush)");
+}
+
+QBrush FastTableWidget::verticalHeader_BackgroundBrush(const int row, const int column)
+{
+    START_PROFILE;
+
+    QBrush *aBrush=mVerticalHeader_BackgroundBrushes.at(row).at(column);
+
+    if (aBrush==0)
+    {
+        aBrush=&mVerticalHeader_DefaultBackgroundBrush;
+    }
+
+    END_PROFILE("QBrush FastTableWidget::verticalHeader_BackgroundBrush(const int row, const int column)");
+
+    return *aBrush;
+}
+
+void FastTableWidget::verticalHeader_SetBackgroundBrush(const int row, const int column, const QBrush brush)
+{
+    START_PROFILE;
+
+    if (mVerticalHeader_BackgroundBrushes.at(row).at(column))
+    {
+        *mVerticalHeader_BackgroundBrushes[row][column]=brush;
+    }
+    else
+    {
+        mVerticalHeader_BackgroundBrushes[row][column]=new QBrush(brush);
+    }
+
+    END_PROFILE("void FastTableWidget::verticalHeader_SetBackgroundBrush(const int row, const int column, const QBrush brush)");
 }
 
 QColor FastTableWidget::foregroundColor(const int row, const int column)
