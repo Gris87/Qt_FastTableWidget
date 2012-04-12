@@ -154,6 +154,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
     QString aVerticalText;
     QFont   *aFont;
     QFont   aTextFont;
+    int     textFlags;
 
     switch (drawComponent)
     {
@@ -176,6 +177,8 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
 
             aTextFont=font();
             aFont=&aTextFont;
+
+            textFlags=FASTTABLE_DEFAULT_TEXT_FLAG;
         }
         break;
         case DrawHorizontalHeaderCell:
@@ -195,6 +198,8 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
                 aFont->setPointSize(aFont->pointSize()+1);
                 aFont->setBold(true);
             }
+
+            textFlags=FASTTABLE_HEADER_DEFAULT_TEXT_FLAG;
         }
         break;
         case DrawVerticalHeaderCell:
@@ -218,6 +223,8 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
                 aFont->setPointSize(aFont->pointSize()+1);
                 aFont->setBold(true);
             }
+
+            textFlags=FASTTABLE_DEFAULT_TEXT_FLAG;
         }
         break;
         case DrawTopLeftCorner:
@@ -227,6 +234,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
             aTextColor=0;
             aText=0;
             aFont=0;
+            textFlags=0;
         }
         break;
         default:
@@ -236,11 +244,12 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
             aTextColor=0;
             aText=0;
             aFont=0;
+            textFlags=0;
         }
         break;
     }
 
-    paintCell(painter, x ,y, width, height, row, column, drawComponent, aGridColor, aBackgroundBrush, aTextColor, aText, aFont, FASTTABLE_DEFAULT_TEXT_FLAG);
+    paintCell(painter, x ,y, width, height, row, column, drawComponent, aGridColor, aBackgroundBrush, aTextColor, aText, aFont, textFlags);
 
     END_FREQUENT_PROFILE("void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int row, const int column)");
 }

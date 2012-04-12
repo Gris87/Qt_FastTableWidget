@@ -1,4 +1,4 @@
-Custom to Fast
+Tests for fast
 Controller to make any changes
 update() when it necessary
 Mouse handler

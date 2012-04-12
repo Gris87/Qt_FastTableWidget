@@ -237,53 +237,195 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 {
     START_FREQUENT_PROFILE;
 
-    CustomFastTableWidget::paintCell(painter, x, y, width, height, row, column, drawComponent);
+    QColor  *aGridColor;
+    QBrush  *aBackgroundBrush;
+    QColor  *aTextColor;
+    QString *aText;
+    QString aVerticalText;
+    QFont   *aFont;
+    QFont   aTextFont;
+    int     textFlags;
 
-    /*
-    QBrush *aBackgroundBrush;
-
-    if (mSelectedCells.at(row).at(column))
+    switch (drawComponent)
     {
-        aBackgroundBrush=&mSelectionBrush;
-    }
-    else
-    {
-        aBackgroundBrush=mBackgroundBrushes.at(row).at(column);
-
-        if (aBackgroundBrush==0)
+        case DrawCell:
         {
-            aBackgroundBrush=&mDefaultBackgroundBrush;
+            aGridColor=&mGridColor;
+
+            if (mSelectedCells.at(row).at(column))
+            {
+                aBackgroundBrush=&mSelectionBrush;
+                aTextColor=&mSelectionTextColor;
+            }
+            else
+            {
+                aBackgroundBrush=mBackgroundBrushes.at(row).at(column);
+
+                if (aBackgroundBrush==0)
+                {
+                    aBackgroundBrush=&mDefaultBackgroundBrush;
+                }
+
+                aTextColor=mForegroundColors.at(row).at(column);
+
+                if (aTextColor==0)
+                {
+                    aTextColor=&mDefaultForegroundColor;
+                }
+            }
+
+            aText=&mData[row][column];
+
+            aFont=mCellFonts.at(row).at(column);
+
+            if (aFont==0)
+            {
+                aTextFont=font();
+                aFont=&aTextFont;
+            }
+
+            textFlags=mCellTextFlags.at(row).at(column);
         }
+        break;
+        case DrawHorizontalHeaderCell:
+        {
+            aGridColor=&mHorizontalHeader_GridColor;
+
+            aBackgroundBrush=mHorizontalHeader_BackgroundBrushes.at(row).at(column);
+
+            if (aBackgroundBrush==0)
+            {
+                aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
+            }
+
+            aTextColor=mHorizontalHeader_ForegroundColors.at(row).at(column);
+
+            if (aTextColor==0)
+            {
+                aTextColor=&mHorizontalHeader_DefaultForegroundColor;
+            }
+
+            aText=&mHorizontalHeader_Data[row][column];
+
+            aFont=mHorizontalHeader_CellFonts.at(row).at(column);
+
+            if (aFont==0)
+            {
+                aTextFont=font();
+                aFont=&aTextFont;
+            }
+
+            bool good=false;
+
+            for (int i=0; i<mHorizontalHeader_CellMergeX.at(row).at(column); i++)
+            {
+                if (mHorizontalHeader_SelectedColumns.at(column+i))
+                {
+                    good=true;
+                    break;
+                }
+            }
+
+            if (good)
+            {
+                if (aFont!=&aTextFont)
+                {
+                    aTextFont=*aFont;
+                    aFont=&aTextFont;
+                }
+
+                aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
+
+                aFont->setPointSize(aFont->pointSize()+1);
+                aFont->setBold(true);
+            }
+
+            textFlags=mHorizontalHeader_CellTextFlags.at(row).at(column);
+        }
+        break;
+        case DrawVerticalHeaderCell:
+        {
+            aGridColor=&mVerticalHeader_GridColor;
+
+            aBackgroundBrush=mVerticalHeader_BackgroundBrushes.at(row).at(column);
+
+            if (aBackgroundBrush==0)
+            {
+                aBackgroundBrush=&mVerticalHeader_DefaultBackgroundBrush;
+            }
+
+            aTextColor=mVerticalHeader_ForegroundColors.at(row).at(column);
+
+            if (aTextColor==0)
+            {
+                aTextColor=&mVerticalHeader_DefaultForegroundColor;
+            }
+
+            aText=&mVerticalHeader_Data[row][column];
+
+            if (*aText=="")
+            {
+                aVerticalText=QString::number(row+1);
+                aText=&aVerticalText;
+            }
+
+            aFont=mVerticalHeader_CellFonts.at(row).at(column);
+
+            if (aFont==0)
+            {
+                aTextFont=font();
+                aFont=&aTextFont;
+            }
+
+            bool good=false;
+
+            for (int i=0; i<mVerticalHeader_CellMergeY.at(row).at(column); i++)
+            {
+                if (mVerticalHeader_SelectedRows.at(row+i))
+                {
+                    good=true;
+                    break;
+                }
+            }
+
+            if (good)
+            {
+                if (aFont!=&aTextFont)
+                {
+                    aTextFont=*aFont;
+                    aFont=&aTextFont;
+                }
+
+                aFont->setPointSize(aFont->pointSize()+1);
+                aFont->setBold(true);
+            }
+
+            textFlags=mVerticalHeader_CellTextFlags.at(row).at(column);
+        }
+        break;
+        case DrawTopLeftCorner:
+        {
+            aGridColor=&mHorizontalHeader_GridColor;
+            aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
+            aTextColor=0;
+            aText=0;
+            aFont=0;
+            textFlags=0;
+        }
+        break;
+        default:
+        {
+            aGridColor=0;
+            aBackgroundBrush=0;
+            aTextColor=0;
+            aText=0;
+            aFont=0;
+            textFlags=0;
+        }
+        break;
     }
 
-    QColor *aForegroundColor;
-
-    aForegroundColor=mForegroundColors.at(row).at(column);
-
-    if (aForegroundColor==0)
-    {
-        aForegroundColor=&mDefaultForegroundColor;
-    }
-
-    QFont *aFont=mCellFonts.at(row).at(column);
-
-    if (aFont)
-    {
-        painter.setFont(*aFont);
-    }
-    else
-    {
-        painter.setFont(font());
-    }
-
-    painter.setPen(QPen(mGridColor));
-
-    painter.fillRect(x, y, width, height, *aBackgroundBrush);
-    painter.drawRect(x, y, width, height);
-
-    painter.setPen(QPen(*aForegroundColor));
-    painter.drawText(x+4, y+4, width-8, height-8, mCellTextFlags.at(row).at(column), mData.at(row).at(column));
-    */
+    CustomFastTableWidget::paintCell(painter, x ,y, width, height, row, column, drawComponent, aGridColor, aBackgroundBrush, aTextColor, aText, aFont, textFlags);
 
     END_FREQUENT_PROFILE("void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int row, const int column)");
 }
@@ -531,7 +673,7 @@ void FastTableWidget::horizontalHeader_ResetTextFlags()
     {
         for (int j=0; j<mColumnCount; ++j)
         {
-            mHorizontalHeader_CellTextFlags[i][j]=FASTTABLE_DEFAULT_TEXT_FLAG;
+            mHorizontalHeader_CellTextFlags[i][j]=FASTTABLE_HEADER_DEFAULT_TEXT_FLAG;
         }
     }
 
@@ -701,7 +843,7 @@ void FastTableWidget::horizontalHeader_ResetTextFlag(const int row, const int co
 {
     START_PROFILE;
 
-    mHorizontalHeader_CellTextFlags[row][column]=FASTTABLE_DEFAULT_TEXT_FLAG;
+    mHorizontalHeader_CellTextFlags[row][column]=FASTTABLE_HEADER_DEFAULT_TEXT_FLAG;
 
     END_PROFILE("void FastTableWidget::horizontalHeader_ResetTextFlag(const int row, const int column)");
 }
@@ -897,7 +1039,7 @@ void FastTableWidget::insertColumn(int column)
         mHorizontalHeader_BackgroundBrushes[i].insert(column, 0);
         mHorizontalHeader_ForegroundColors[i].insert(column, 0);
         mHorizontalHeader_CellFonts[i].insert(column, 0);
-        mHorizontalHeader_CellTextFlags[i].insert(column, FASTTABLE_DEFAULT_TEXT_FLAG);
+        mHorizontalHeader_CellTextFlags[i].insert(column, FASTTABLE_HEADER_DEFAULT_TEXT_FLAG);
         mHorizontalHeader_CellMergeX[i].insert(column, 1);
         mHorizontalHeader_CellMergeY[i].insert(column, 1);
         mHorizontalHeader_CellMergeParentRow[i].insert(column, -1);
@@ -996,7 +1138,7 @@ void FastTableWidget::horizontalHeader_InsertRow(int row)
         mHorizontalHeader_BackgroundBrushes[row].append(0);
         mHorizontalHeader_ForegroundColors[row].append(0);
         mHorizontalHeader_CellFonts[row].append(0);
-        mHorizontalHeader_CellTextFlags[row].append(FASTTABLE_DEFAULT_TEXT_FLAG);
+        mHorizontalHeader_CellTextFlags[row].append(FASTTABLE_HEADER_DEFAULT_TEXT_FLAG);
         mHorizontalHeader_CellMergeX[row].append(1);
         mHorizontalHeader_CellMergeY[row].append(1);
         mHorizontalHeader_CellMergeParentRow[row].append(-1);
