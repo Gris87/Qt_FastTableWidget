@@ -259,10 +259,12 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
 
         painter.setPen(QPen(QColor(255, 255, 255)));
         painter.drawLine(x+width, y+4, x+width, y+height-4);
+        painter.drawLine(x, y+4, x, y+height-4);
 
         painter.setPen(QPen(*aGridColor));
         painter.drawLine(x+width-1, y+4, x+width-1, y+height-4);
         painter.drawLine(x, y+height, x+width, y+height);
+        painter.drawLine(x, y, x+width, y);
 
         QColor backColor=aBackgroundBrush->color();
 

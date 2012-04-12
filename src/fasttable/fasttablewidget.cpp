@@ -48,12 +48,34 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                             aHeight+=mRowHeights.at(i+g);
                         }
 
-                        paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), aWidth, aHeight, i, j, DrawCell);
+                        if (
+                            offsetX+mOffsetX.at(j)<=viewport()->width()
+                            &&
+                            offsetX+mOffsetX.at(j)>=-aWidth
+                            &&
+                            offsetY+mOffsetY.at(i)<=viewport()->height()
+                            &&
+                            offsetY+mOffsetY.at(i)>=-aHeight
+                           )
+                        {
+                            paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), aWidth, aHeight, i, j, DrawCell);
+                        }
                     }
                 }
                 else
                 {
-                    paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), mColumnWidths.at(j), mRowHeights.at(i), i, j, DrawCell);
+                    if (
+                        offsetX+mOffsetX.at(j)<=viewport()->width()
+                        &&
+                        offsetX+mOffsetX.at(j)>=-mColumnWidths.at(j)
+                        &&
+                        offsetY+mOffsetY.at(i)<=viewport()->height()
+                        &&
+                        offsetY+mOffsetY.at(i)>=-mRowHeights.at(i)
+                       )
+                    {
+                        paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), mColumnWidths.at(j), mRowHeights.at(i), i, j, DrawCell);
+                    }
                 }
             }
         }
@@ -85,12 +107,34 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                             aHeight+=mHorizontalHeader_RowHeights.at(i+g);
                         }
 
-                        paintCell(painter, offsetX+mOffsetX.at(j), mHorizontalHeader_OffsetY.at(i), aWidth, aHeight, i, j, DrawHorizontalHeaderCell);
+                        if (
+                            offsetX+mOffsetX.at(j)<=viewport()->width()
+                            &&
+                            offsetX+mOffsetX.at(j)>=-aWidth
+                            &&
+                            mHorizontalHeader_OffsetY.at(i)<=viewport()->height()
+                            &&
+                            mHorizontalHeader_OffsetY.at(i)>=-aHeight
+                           )
+                        {
+                            paintCell(painter, offsetX+mOffsetX.at(j), mHorizontalHeader_OffsetY.at(i), aWidth, aHeight, i, j, DrawHorizontalHeaderCell);
+                        }
                     }
                 }
                 else
                 {
-                    paintCell(painter, offsetX+mOffsetX.at(j), mHorizontalHeader_OffsetY.at(i), mColumnWidths.at(j), mHorizontalHeader_RowHeights.at(i), i, j, DrawHorizontalHeaderCell);
+                    if (
+                        offsetX+mOffsetX.at(j)<=viewport()->width()
+                        &&
+                        offsetX+mOffsetX.at(j)>=-mColumnWidths.at(j)
+                        &&
+                        mHorizontalHeader_OffsetY.at(i)<=viewport()->height()
+                        &&
+                        mHorizontalHeader_OffsetY.at(i)>=-mHorizontalHeader_RowHeights.at(i)
+                       )
+                    {
+                        paintCell(painter, offsetX+mOffsetX.at(j), mHorizontalHeader_OffsetY.at(i), mColumnWidths.at(j), mHorizontalHeader_RowHeights.at(i), i, j, DrawHorizontalHeaderCell);
+                    }
                 }
             }
         }
@@ -122,12 +166,34 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
                             aHeight+=mRowHeights.at(i+g);
                         }
 
-                        paintCell(painter, mVerticalHeader_OffsetX.at(j), offsetY+mOffsetY.at(i), aWidth, aHeight, i, j, DrawVerticalHeaderCell);
+                        if (
+                            mVerticalHeader_OffsetX.at(j)<=viewport()->width()
+                            &&
+                            mVerticalHeader_OffsetX.at(j)>=-aWidth
+                            &&
+                            offsetY+mOffsetY.at(i)<=viewport()->height()
+                            &&
+                            offsetY+mOffsetY.at(i)>=-aHeight
+                           )
+                        {
+                            paintCell(painter, mVerticalHeader_OffsetX.at(j), offsetY+mOffsetY.at(i), aWidth, aHeight, i, j, DrawVerticalHeaderCell);
+                        }
                     }
                 }
                 else
                 {
-                    paintCell(painter, mVerticalHeader_OffsetX.at(j), offsetY+mOffsetY.at(i), mVerticalHeader_ColumnWidths.at(j), mRowHeights.at(i), i, j, DrawVerticalHeaderCell);
+                    if (
+                        mVerticalHeader_OffsetX.at(j)<=viewport()->width()
+                        &&
+                        mVerticalHeader_OffsetX.at(j)>=-mVerticalHeader_ColumnWidths.at(j)
+                        &&
+                        offsetY+mOffsetY.at(i)<=viewport()->height()
+                        &&
+                        offsetY+mOffsetY.at(i)>=-mRowHeights.at(i)
+                       )
+                    {
+                        paintCell(painter, mVerticalHeader_OffsetX.at(j), offsetY+mOffsetY.at(i), mVerticalHeader_ColumnWidths.at(j), mRowHeights.at(i), i, j, DrawVerticalHeaderCell);
+                    }
                 }
             }
         }
