@@ -22,6 +22,12 @@ public:
     explicit ControllerDialog(QWidget *parent = 0);
     ~ControllerDialog();
 
+private slots:
+    void on_rowCountSpinBox_valueChanged(int value);
+    void on_columnCountSpinBox_valueChanged(int value);
+    void on_horizontalHeaderRowCountSpinBox_valueChanged(int value);
+    void on_verticalHeaderColumnCountSpinBox_valueChanged(int value);
+
 private:
     Ui::ControllerDialog *ui;
 };

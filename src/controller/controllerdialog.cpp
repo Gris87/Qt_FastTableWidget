@@ -9,10 +9,10 @@ ControllerDialog::ControllerDialog(QWidget *parent) :
     mFastTableWidget=new FastTableWidget(this);
     ui->fastTableLayout->insertWidget(0, mFastTableWidget);
 
-    mFastTableWidget->setRowCount(50);
-    mFastTableWidget->setColumnCount(20);
-    mFastTableWidget->horizontalHeader_SetRowCount(1);
-    mFastTableWidget->verticalHeader_SetColumnCount(1);
+    ui->rowCountSpinBox->setValue(50);
+    ui->columnCountSpinBox->setValue(20);
+    ui->horizontalHeaderRowCountSpinBox->setValue(1);
+    ui->verticalHeaderColumnCountSpinBox->setValue(1);
 
     for (int i=0; i<mFastTableWidget->rowCount(); ++i)
     {
@@ -31,4 +31,24 @@ ControllerDialog::ControllerDialog(QWidget *parent) :
 ControllerDialog::~ControllerDialog()
 {
     delete ui;
+}
+
+void ControllerDialog::on_rowCountSpinBox_valueChanged(int value)
+{
+    mFastTableWidget->setRowCount(value);
+}
+
+void ControllerDialog::on_columnCountSpinBox_valueChanged(int value)
+{
+    mFastTableWidget->setColumnCount(value);
+}
+
+void ControllerDialog::on_horizontalHeaderRowCountSpinBox_valueChanged(int value)
+{
+    mFastTableWidget->horizontalHeader_SetRowCount(value);
+}
+
+void ControllerDialog::on_verticalHeaderColumnCountSpinBox_valueChanged(int value)
+{
+    mFastTableWidget->verticalHeader_SetColumnCount(value);
 }
