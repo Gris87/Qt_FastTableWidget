@@ -32,7 +32,7 @@
 #endif
 
 #define FASTTABLE_DEFAULT_TEXT_FLAG Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap
-#define FASTTABLE_HEADER_DEFAULT_TEXT_FLAG Qt::Center | Qt::TextWordWrap
+#define FASTTABLE_HEADER_DEFAULT_TEXT_FLAG Qt::AlignCenter | Qt::TextWordWrap
 
 //------------------------------------------------------------------------------
 
