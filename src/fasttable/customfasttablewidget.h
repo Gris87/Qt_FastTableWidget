@@ -56,6 +56,7 @@ class CustomFastTableWidget : public QAbstractScrollArea
     Q_PROPERTY(QColor  verticalHeader_DefaultForegroundColor   READ verticalHeader_DefaultForegroundColor   WRITE verticalHeader_SetDefaultForegroundColor)
     Q_PROPERTY(QColor  verticalHeader_GridColor                READ verticalHeader_GridColor                WRITE verticalHeader_SetGridColor)
     Q_PROPERTY(QBrush  selectionBrush                          READ selectionBrush                          WRITE setSelectionBrush)
+    Q_PROPERTY(QColor  selectionTextColor                      READ selectionTextColor                      WRITE setSelectionTextColor)
 
 public:
 
@@ -133,6 +134,9 @@ public:
     QBrush selectionBrush();
     void setSelectionBrush(QBrush brush);
 
+    QColor selectionTextColor();
+    void setSelectionTextColor(QColor color);
+
     quint16 defaultWidth();
     void setDefaultWidth(quint16 width);
 
@@ -176,6 +180,10 @@ public:
     virtual bool cellSelected(const int row, const int column);
     virtual void setCellSelected(const int row, const int column, const bool selected);
 
+    QList<QPoint> currentSelection();
+    bool horizontalHeader_ColumnSelected(const int column);
+    bool verticalHeader_RowSelected(const int row);
+
 protected:
     int mRowCount;
     int mColumnCount;
@@ -195,6 +203,7 @@ protected:
     QColor mVerticalHeader_GridColor;
 
     QBrush mSelectionBrush;
+    QColor mSelectionTextColor;
 
     quint16 mDefaultWidth;
     quint16 mDefaultHeight;

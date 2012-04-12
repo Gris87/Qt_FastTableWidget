@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     aFastTableWidget->setRowCount(50);
     aFastTableWidget->setColumnCount(20);
-    aFastTableWidget->horizontalHeader_SetRowCount(3);
+    aFastTableWidget->horizontalHeader_SetRowCount(2);
     aFastTableWidget->verticalHeader_SetColumnCount(1);
     //aFastTableWidget->setRowCount(30000);
     //aFastTableWidget->setColumnCount(250);
@@ -29,6 +29,13 @@ MainWindow::MainWindow(QWidget *parent) :
             aFastTableWidget->setText(i, j, "Hello, World");
         }
     }
+
+    for (int i=0; i<aFastTableWidget->columnCount(); i++)
+    {
+        aFastTableWidget->horizontalHeader_SetText(i, "Header");
+    }
+
+    aFastTableWidget->setCellSelected(2, 1, true);
 
     qDebug()<<"Time to fill with data:"<<QDateTime::currentMSecsSinceEpoch()-aStart<<"ms";
 }

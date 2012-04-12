@@ -192,6 +192,11 @@ QBrush PublicCustomFastTable::getSelectionBrush()
     return mSelectionBrush;
 }
 
+QColor PublicCustomFastTable::getSelectionTextColor()
+{
+    return mSelectionTextColor;
+}
+
 quint16 PublicCustomFastTable::getDefaultWidth()
 {
     return mDefaultWidth;

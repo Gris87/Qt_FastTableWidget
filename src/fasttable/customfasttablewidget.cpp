@@ -25,7 +25,9 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     mVerticalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
     mVerticalHeader_GridColor.setRgb(199, 197, 178);
 
-    mSelectionBrush.setColor(QColor(0, 0, 255));
+    mSelectionBrush.setColor(QColor(49, 106, 197));
+    mSelectionBrush.setStyle(Qt::SolidPattern);
+    mSelectionTextColor.setRgb(255, 255, 255);
 
     mDefaultWidth=100;
     mDefaultHeight=30;
@@ -154,8 +156,18 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
         case DrawCell:
         {
             aGridColor=&mGridColor;
-            aBackgroundBrush=&mDefaultBackgroundBrush;
-            aTextColor=&mDefaultForegroundColor;
+
+            if (mSelectedCells.at(row).at(column))
+            {
+                aBackgroundBrush=&mSelectionBrush;
+                aTextColor=&mSelectionTextColor;
+            }
+            else
+            {
+                aBackgroundBrush=&mDefaultBackgroundBrush;
+                aTextColor=&mDefaultForegroundColor;
+            }
+
             aText=&mData[row][column];
 
             aTextFont=font();
@@ -171,6 +183,14 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
 
             aTextFont=font();
             aFont=&aTextFont;
+
+            if (mHorizontalHeader_SelectedColumns.at(column))
+            {
+                aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
+
+                aFont->setPointSize(aFont->pointSize()+1);
+                aFont->setBold(true);
+            }
         }
         break;
         case DrawVerticalHeaderCell:
@@ -188,6 +208,12 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
 
             aTextFont=font();
             aFont=&aTextFont;
+
+            if (mVerticalHeader_SelectedRows.at(row))
+            {
+                aFont->setPointSize(aFont->pointSize()+1);
+                aFont->setBold(true);
+            }
         }
         break;
         case DrawTopLeftCorner:
@@ -246,7 +272,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
         painter.drawLine(x, y+height-2, x+width, y+height-2);
     }
 
-    if (aText && width>8 && height>8)
+    if (width>8 && height>8 && aText)
     {
         painter.setPen(QPen(*aTextColor));
         painter.setFont(*aFont);
@@ -1220,6 +1246,20 @@ void CustomFastTableWidget::setSelectionBrush(QBrush brush)
     END_PROFILE("void CustomFastTableWidget::setSelectionBrush(QBrush brush)");
 }
 
+QColor CustomFastTableWidget::selectionTextColor()
+{
+    return mSelectionTextColor;
+}
+
+void CustomFastTableWidget::setSelectionTextColor(QColor color)
+{
+    START_PROFILE;
+
+    mSelectionTextColor=color;
+
+    END_PROFILE("CustomFastTableWidget::setSelectionTextColor(QColor color)");
+}
+
 quint16 CustomFastTableWidget::defaultWidth()
 {
     return mDefaultWidth;
@@ -1540,19 +1580,57 @@ void CustomFastTableWidget::setCellSelected(const int row, const int column, con
         if (selected)
         {
             mCurSelection.append(QPoint(column, row));
+
+            mVerticalHeader_SelectedRows[row]=true;
+            mHorizontalHeader_SelectedColumns[column]=true;
         }
         else
         {
+            bool rowFound=false;
+            bool columnFound=false;
+
             for (int i=0; i<mCurSelection.length(); ++i)
             {
-                if (mCurSelection.at(i).y()==row && mCurSelection.at(i).x()==column)
+                if (mCurSelection.at(i).y()==row)
                 {
-                    mCurSelection.removeAt(i);
-                    break;
+                    rowFound=true;
+
+                    if (mCurSelection.at(i).x()==column)
+                    {
+                        mCurSelection.removeAt(i);
+                        i--;
+
+                        continue;
+                    }
+                }
+                else
+                {
+                    if (mCurSelection.at(i).x()==column)
+                    {
+                        columnFound=true;
+                    }
                 }
             }
+
+            mVerticalHeader_SelectedRows[row]=rowFound;
+            mHorizontalHeader_SelectedColumns[column]=columnFound;
         }
     }
 
     END_PROFILE("void CustomFastTableWidget::setCellSelected(const int row, const int column, const bool selected)");
+}
+
+QList<QPoint> CustomFastTableWidget::currentSelection()
+{
+    return mCurSelection;
+}
+
+bool CustomFastTableWidget::horizontalHeader_ColumnSelected(const int column)
+{
+    return mHorizontalHeader_SelectedColumns.at(column);
+}
+
+bool CustomFastTableWidget::verticalHeader_RowSelected(const int row)
+{
+    return mVerticalHeader_SelectedRows.at(row);
 }

@@ -31,6 +31,8 @@ TestDialog::~TestDialog()
 
 void TestDialog::startTests()
 {
+    qDebug()<<"Testing started";
+
     for (int i=0; i<ui->testsTabWidget->count(); ++i)
     {
         qDebug()<<"========================================================";

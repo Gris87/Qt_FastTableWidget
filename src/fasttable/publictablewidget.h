@@ -55,6 +55,7 @@ public:
     QColor verticalHeader_GetGridColor();
 
     QBrush getSelectionBrush();
+    QColor getSelectionTextColor();
 
     quint16 getDefaultWidth();
     quint16 getDefaultHeight();
