@@ -31,6 +31,8 @@
     #define END_FREQUENT_PROFILE(text)
 #endif
 
+#define FASTTABLE_DEFAULT_TEXT_FLAG Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap
+
 //------------------------------------------------------------------------------
 
 class CustomFastTableWidget : public QAbstractScrollArea
@@ -245,7 +247,7 @@ protected:
     void paintEvent(QPaintEvent *event);
     virtual void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent);
     virtual void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent,
-                           QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aTextColor, QString *aText, QFont *aFont);
+                           QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aTextColor, QString *aText, QFont *aFont, int aTextFlags);
 
     void updateBarsRanges();
     virtual void updateVisibleRange();

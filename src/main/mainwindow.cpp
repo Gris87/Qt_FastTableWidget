@@ -37,6 +37,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     aFastTableWidget->setCellSelected(2, 1, true);
 
+    aFastTableWidget->horizontalHeader_SetBackgroundBrush(0, 2, QBrush(QColor(100, 30, 255)));
+    aFastTableWidget->horizontalHeader_SetForegroundColor(1, 1, QColor(100, 30, 255));
+    aFastTableWidget->horizontalHeader_SetSpan(0, 0, 1, 2);
+    aFastTableWidget->verticalHeader_SetSpan(0, 0, 2, 1);
+    /*aFastTableWidget->horizontalHeader_SetBackgroundBrush(0, 2, QBrush(QColor(100, 30, 255)));
+    aFastTableWidget->horizontalHeader_SetBackgroundBrush(0, 2, QBrush(QColor(100, 30, 255)));
+    aFastTableWidget->horizontalHeader_SetBackgroundBrush(0, 2, QBrush(QColor(100, 30, 255)));
+*/
     qDebug()<<"Time to fill with data:"<<QDateTime::currentMSecsSinceEpoch()-aStart<<"ms";
 }
 

@@ -236,13 +236,13 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
         break;
     }
 
-    paintCell(painter, x ,y, width, height, row, column, drawComponent, aGridColor, aBackgroundBrush, aTextColor, aText, aFont)
+    paintCell(painter, x ,y, width, height, row, column, drawComponent, aGridColor, aBackgroundBrush, aTextColor, aText, aFont, FASTTABLE_DEFAULT_TEXT_FLAG);
 
     END_FREQUENT_PROFILE("void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int row, const int column)");
 }
 
 void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent,
-                                      QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aTextColor, QString *aText, QFont *aFont)
+                                      QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aTextColor, QString *aText, QFont *aFont, int aTextFlags)
 {
     START_FREQUENT_PROFILE;
 
@@ -276,10 +276,10 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
     {
         painter.setPen(QPen(*aTextColor));
         painter.setFont(*aFont);
-        painter.drawText(x+4, y+4, width-8, height-8, Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap, *aText);
+        painter.drawText(x+4, y+4, width-8, height-8, aTextFlags, *aText);
     }
 
-    END_FREQUENT_PROFILE("void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aTextColor, QString *aText, QString aVerticalText, QFont *aFont, QFont aTextFont)");
+    END_FREQUENT_PROFILE("void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aTextColor, QString *aText, QFont *aFont, int aTextFlags)");
 }
 
 void CustomFastTableWidget::horizontalScrollBarValueChanged(int value)

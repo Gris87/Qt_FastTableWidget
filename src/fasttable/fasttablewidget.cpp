@@ -22,43 +22,120 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
     int offsetX=-horizontalScrollBar()->value();
     int offsetY=-verticalScrollBar()->value();
 
-    if (mVisibleTop<0 || mVisibleLeft<0)
+    if (mVisibleLeft>=0 && mVisibleTop>=0)
     {
-        return;
-    }
-
-    for (int i=mVisibleTop; i<=mVisibleBottom; ++i)
-    {
-        for (int j=mVisibleLeft; j<=mVisibleRight; ++j)
+        for (int i=mVisibleTop; i<=mVisibleBottom; ++i)
         {
-            if (mCellMergeParentRow.at(i).at(j)>=0 && mCellMergeParentColumn.at(i).at(j)>=0)
+            for (int j=mVisibleLeft; j<=mVisibleRight; ++j)
             {
-                int spanX=mCellMergeX.at(i).at(j);
-                int spanY=mCellMergeY.at(i).at(j);
-
-                if (spanX>1 || spanY>1)
+                if (mCellMergeParentRow.at(i).at(j)>=0 && mCellMergeParentColumn.at(i).at(j)>=0)
                 {
-                    int aWidth=0;
-                    int aHeight=0;
+                    int spanX=mCellMergeX.at(i).at(j);
+                    int spanY=mCellMergeY.at(i).at(j);
 
-                    for (int g=0; g<spanX; g++)
+                    if (spanX>1 || spanY>1)
                     {
-                        aWidth+=mColumnWidths.at(j+g);
-                    }
+                        int aWidth=0;
+                        int aHeight=0;
 
-                    for (int g=0; g<spanY; g++)
-                    {
-                        aHeight+=mRowHeights.at(i+g);
-                    }
+                        for (int g=0; g<spanX; g++)
+                        {
+                            aWidth+=mColumnWidths.at(j+g);
+                        }
 
-                    paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), aWidth, aHeight, i, j, DrawCell);
+                        for (int g=0; g<spanY; g++)
+                        {
+                            aHeight+=mRowHeights.at(i+g);
+                        }
+
+                        paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), aWidth, aHeight, i, j, DrawCell);
+                    }
+                }
+                else
+                {
+                    paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), mColumnWidths.at(j), mRowHeights.at(i), i, j, DrawCell);
                 }
             }
-            else
+        }
+    }
+
+    if (mHorizontalHeader_VisibleBottom>=0 && mVisibleLeft>=0)
+    {
+        for (int i=0; i<=mHorizontalHeader_VisibleBottom; ++i)
+        {
+            for (int j=mVisibleLeft; j<=mVisibleRight; ++j)
             {
-                paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), mColumnWidths.at(j), mRowHeights.at(i), i, j, DrawCell);
+                if (mHorizontalHeader_CellMergeParentRow.at(i).at(j)>=0 && mHorizontalHeader_CellMergeParentColumn.at(i).at(j)>=0)
+                {
+                    int spanX=mHorizontalHeader_CellMergeX.at(i).at(j);
+                    int spanY=mHorizontalHeader_CellMergeY.at(i).at(j);
+
+                    if (spanX>1 || spanY>1)
+                    {
+                        int aWidth=0;
+                        int aHeight=0;
+
+                        for (int g=0; g<spanX; g++)
+                        {
+                            aWidth+=mColumnWidths.at(j+g);
+                        }
+
+                        for (int g=0; g<spanY; g++)
+                        {
+                            aHeight+=mHorizontalHeader_RowHeights.at(i+g);
+                        }
+
+                        paintCell(painter, offsetX+mOffsetX.at(j), mHorizontalHeader_OffsetY.at(i), aWidth, aHeight, i, j, DrawHorizontalHeaderCell);
+                    }
+                }
+                else
+                {
+                    paintCell(painter, offsetX+mOffsetX.at(j), mHorizontalHeader_OffsetY.at(i), mColumnWidths.at(j), mHorizontalHeader_RowHeights.at(i), i, j, DrawHorizontalHeaderCell);
+                }
             }
         }
+    }
+
+    if (mVerticalHeader_VisibleRight>=0 && mVisibleTop>=0)
+    {
+        for (int i=mVisibleTop; i<=mVisibleBottom; ++i)
+        {
+            for (int j=0; j<=mVerticalHeader_VisibleRight; ++j)
+            {
+                if (mVerticalHeader_CellMergeParentRow.at(i).at(j)>=0 && mVerticalHeader_CellMergeParentColumn.at(i).at(j)>=0)
+                {
+                    int spanX=mVerticalHeader_CellMergeX.at(i).at(j);
+                    int spanY=mVerticalHeader_CellMergeY.at(i).at(j);
+
+                    if (spanX>1 || spanY>1)
+                    {
+                        int aWidth=0;
+                        int aHeight=0;
+
+                        for (int g=0; g<spanX; g++)
+                        {
+                            aWidth+=mVerticalHeader_ColumnWidths.at(j+g);
+                        }
+
+                        for (int g=0; g<spanY; g++)
+                        {
+                            aHeight+=mRowHeights.at(i+g);
+                        }
+
+                        paintCell(painter, mVerticalHeader_OffsetX.at(j), offsetY+mOffsetY.at(i), aWidth, aHeight, i, j, DrawVerticalHeaderCell);
+                    }
+                }
+                else
+                {
+                    paintCell(painter, mVerticalHeader_OffsetX.at(j), offsetY+mOffsetY.at(i), mVerticalHeader_ColumnWidths.at(j), mRowHeights.at(i), i, j, DrawVerticalHeaderCell);
+                }
+            }
+        }
+    }
+
+    if (mVerticalHeader_VisibleRight>=0 && mHorizontalHeader_VisibleBottom>=0)
+    {
+        paintCell(painter, 0, 0, mVerticalHeader_TotalWidth, mHorizontalHeader_TotalHeight, -1, -1, DrawTopLeftCorner);
     }
 
     END_FREQUENT_PROFILE("void FastTableWidget::paintEvent(QPaintEvent *event)");
@@ -68,6 +145,9 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 {
     START_FREQUENT_PROFILE;
 
+    CustomFastTableWidget::paintCell(painter, x, y, width, height, row, column, drawComponent);
+
+    /*
     QBrush *aBackgroundBrush;
 
     if (mSelectedCells.at(row).at(column))
@@ -111,6 +191,7 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 
     painter.setPen(QPen(*aForegroundColor));
     painter.drawText(x+4, y+4, width-8, height-8, mCellTextFlags.at(row).at(column), mData.at(row).at(column));
+    */
 
     END_FREQUENT_PROFILE("void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int row, const int column)");
 }
@@ -118,121 +199,6 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 void FastTableWidget::updateVisibleRange()
 {
     START_PROFILE;
-/*
-    if (mRowCount==0 || mColumnCount==0)
-    {
-        mVisibleLeft=-1;
-        mVisibleRight=-1;
-        mVisibleTop=-1;
-        mVisibleBottom=-1;
-    }
-    else
-    {
-        if (
-            mVisibleLeft<0
-            ||
-            mVisibleRight<0
-            ||
-            mVisibleTop<0
-            ||
-            mVisibleBottom<0
-           )
-        {
-            mVisibleLeft=0;
-            mVisibleRight=0;
-            mVisibleTop=0;
-            mVisibleBottom=0;
-        }
-        else
-        {
-            if (mVisibleLeft>=mColumnCount)
-            {
-                mVisibleLeft=mColumnCount-1;
-            }
-            if (mVisibleRight>=mColumnCount)
-            {
-                mVisibleRight=mColumnCount-1;
-            }
-            if (mVisibleTop>=mRowCount)
-            {
-                mVisibleTop=mRowCount-1;
-            }
-            if (mVisibleBottom>=mRowCount)
-            {
-                mVisibleBottom=mRowCount-1;
-            }
-        }
-
-        int minX=horizontalScrollBar()->value();
-        int minY=verticalScrollBar()->value();
-        int maxX=minX+viewport()->width();
-        int maxY=minY+viewport()->height();
-
-        while (mVisibleLeft<mColumnCount-1 && mOffsetX.at(mVisibleLeft)<minX && mOffsetX.at(mVisibleLeft)+mColumnWidths.at(mVisibleLeft)<minX)
-        {
-            mVisibleLeft++;
-        }
-
-        while (mVisibleLeft>0 && mOffsetX.at(mVisibleLeft)>minX && mOffsetX.at(mVisibleLeft)+mColumnWidths.at(mVisibleLeft)>minX)
-        {
-            mVisibleLeft--;
-        }
-
-        while (mVisibleRight<mColumnCount-1 && mOffsetX.at(mVisibleRight)<maxX && mOffsetX.at(mVisibleRight)+mColumnWidths.at(mVisibleRight)<maxX)
-        {
-            mVisibleRight++;
-        }
-
-        while (mVisibleRight>0 && mOffsetX.at(mVisibleRight)>maxX && mOffsetX.at(mVisibleRight)+mColumnWidths.at(mVisibleRight)>maxX)
-        {
-            mVisibleRight--;
-        }
-
-        while (mVisibleTop<mRowCount-1 && mOffsetY.at(mVisibleTop)<minY && mOffsetY.at(mVisibleTop)+mRowHeights.at(mVisibleTop)<minY)
-        {
-            mVisibleTop++;
-        }
-
-        while (mVisibleTop>0 && mOffsetY.at(mVisibleTop)>minY && mOffsetY.at(mVisibleTop)+mRowHeights.at(mVisibleTop)>minY)
-        {
-            mVisibleTop--;
-        }
-
-        while (mVisibleBottom<mRowCount-1 && mOffsetY.at(mVisibleBottom)<maxY && mOffsetY.at(mVisibleBottom)+mRowHeights.at(mVisibleBottom)<maxY)
-        {
-            mVisibleBottom++;
-        }
-
-        while (mVisibleBottom>0 && mOffsetY.at(mVisibleBottom)>maxY && mOffsetY.at(mVisibleBottom)+mRowHeights.at(mVisibleBottom)>maxY)
-        {
-            mVisibleBottom--;
-        }
-
-        int originalLeft=mVisibleLeft;
-        int originalTop=mVisibleTop;
-
-        for (int i=0; i<mRowCount; i++)
-        {
-
-            int parentColumn=mCellMergeParentColumn.at(i).at(originalLeft);
-
-            if (parentColumn>=0 &&parentColumn<mVisibleLeft)
-            {
-                mVisibleLeft=parentColumn;
-            }
-        }
-
-        for (int i=0; i<mColumnCount; i++)
-        {
-            int parentRow=mCellMergeParentRow.at(originalTop).at(i);
-
-            if (parentRow>=0 && parentRow<mVisibleTop)
-            {
-                mVisibleTop=parentRow;
-            }
-        }
-    }
-    */
 
     CustomFastTableWidget::updateVisibleRange();
 
@@ -250,6 +216,16 @@ void FastTableWidget::updateVisibleRange()
                 mVisibleLeft=parentColumn;
             }
         }
+
+        for (int i=0; i<mHorizontalHeader_RowCount; i++)
+        {
+            int parentColumn=mHorizontalHeader_CellMergeParentColumn.at(i).at(originalLeft);
+
+            if (parentColumn>=0 &&parentColumn<mVisibleLeft)
+            {
+                mVisibleLeft=parentColumn;
+            }
+        }
     }
 
     if (originalTop>=0)
@@ -257,6 +233,16 @@ void FastTableWidget::updateVisibleRange()
         for (int i=0; i<mColumnCount; i++)
         {
             int parentRow=mCellMergeParentRow.at(originalTop).at(i);
+
+            if (parentRow>=0 && parentRow<mVisibleTop)
+            {
+                mVisibleTop=parentRow;
+            }
+        }
+
+        for (int i=0; i<mVerticalHeader_ColumnCount; i++)
+        {
+            int parentRow=mVerticalHeader_CellMergeParentRow.at(originalTop).at(i);
 
             if (parentRow>=0 && parentRow<mVisibleTop)
             {

@@ -3,8 +3,6 @@
 
 #include "customfasttablewidget.h"
 
-#define FASTTABLE_DEFAULT_TEXT_FLAG Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap
-
 //------------------------------------------------------------------------------
 
 class FastTableWidget : public CustomFastTableWidget
