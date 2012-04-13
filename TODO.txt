@@ -2,3 +2,5 @@ Controller to make any changes
 update() when it necessary
 Mouse handler
 Action queue to remove unecessary function calls
+Assert
+Negative width or height means that row/column is hidden
