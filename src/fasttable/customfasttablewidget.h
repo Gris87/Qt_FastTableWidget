@@ -107,6 +107,8 @@ public:
     qint16 verticalHeader_ColumnCount();
     void verticalHeader_SetColumnCount(qint16 count);
 
+    void setSizes(int aRowCount, int aColumnCount, qint16 aHorizontalHeaderRowCount=1, qint16 aVerticalHeaderColumnCount=1);
+
     QBrush defaultBackgroundBrush();
     void setDefaultBackgroundBrush(QBrush brush);
 

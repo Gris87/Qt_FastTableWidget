@@ -15,12 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     qint64 aStart=QDateTime::currentMSecsSinceEpoch();
 
-    aFastTableWidget->setRowCount(50);
-    aFastTableWidget->setColumnCount(20);
-    //aFastTableWidget->setRowCount(30000);
-    //aFastTableWidget->setColumnCount(250);
-    aFastTableWidget->horizontalHeader_SetRowCount(1);
-    aFastTableWidget->verticalHeader_SetColumnCount(1);
+    aFastTableWidget->setSizes(50, 20, 1 ,1);
+    //aFastTableWidget->setSizes(30000, 250, 1 ,1);
 
     for (int i=0; i<aFastTableWidget->rowCount(); ++i)
     {

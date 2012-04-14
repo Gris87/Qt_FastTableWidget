@@ -8,9 +8,9 @@
 #include <QDateTime>
 #include "qdebug.h"
 
+#include "src/controller/controllerdialog.h"
 #include "src/fasttable/fasttablewidget.h"
 #include "src/tests/testdialog.h"
-#include "src/controller/controllerdialog.h"
 
 namespace Ui {
     class MainWindow;

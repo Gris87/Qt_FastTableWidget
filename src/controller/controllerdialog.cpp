@@ -57,20 +57,24 @@ void ControllerDialog::on_verticalHeaderColumnCountSpinBox_valueChanged(int valu
 
 void ControllerDialog::on_rowCountButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getRowCount(), this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_columnCountButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getColumnCount(), this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_horizontalHeaderRowCountButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->horizontalHeader_GetRowCount(), this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_verticalHeaderColumnCountButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->verticalHeader_GetColumnCount(), this);
+    dialog.exec();
 }
