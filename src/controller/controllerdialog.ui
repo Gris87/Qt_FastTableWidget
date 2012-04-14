@@ -193,7 +193,7 @@
           </widget>
          </item>
          <item row="0" column="2">
-          <widget class="QPushButton" name="rowCountButton">
+          <widget class="QPushButton" name="rowCountViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -213,7 +213,7 @@
           </widget>
          </item>
          <item row="1" column="2">
-          <widget class="QPushButton" name="columnCountButton">
+          <widget class="QPushButton" name="columnCountViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -233,7 +233,7 @@
           </widget>
          </item>
          <item row="2" column="2">
-          <widget class="QPushButton" name="horizontalHeaderRowCountButton">
+          <widget class="QPushButton" name="horizontalHeaderRowCountViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -253,7 +253,7 @@
           </widget>
          </item>
          <item row="3" column="2">
-          <widget class="QPushButton" name="verticalHeaderColumnCountButton">
+          <widget class="QPushButton" name="verticalHeaderColumnCountViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -280,84 +280,84 @@
           <number>4</number>
          </property>
          <item row="0" column="1">
-          <widget class="QPushButton" name="clearButton_7">
+          <widget class="QPushButton" name="addRowButton">
            <property name="text">
             <string>Add row</string>
            </property>
           </widget>
          </item>
          <item row="0" column="2">
-          <widget class="QPushButton" name="clearButton_8">
+          <widget class="QPushButton" name="insertRowButton">
            <property name="text">
             <string>Insert row</string>
            </property>
           </widget>
          </item>
          <item row="0" column="3">
-          <widget class="QPushButton" name="clearButton_9">
+          <widget class="QPushButton" name="deleteRowButton">
            <property name="text">
             <string>Delete row</string>
            </property>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QPushButton" name="clearButton_10">
+          <widget class="QPushButton" name="addColumnButton">
            <property name="text">
             <string>Add column</string>
            </property>
           </widget>
          </item>
          <item row="1" column="2">
-          <widget class="QPushButton" name="clearButton_11">
+          <widget class="QPushButton" name="insertColumnButton">
            <property name="text">
             <string>Insert column</string>
            </property>
           </widget>
          </item>
          <item row="1" column="3">
-          <widget class="QPushButton" name="clearButton_12">
+          <widget class="QPushButton" name="deleteColumnButton">
            <property name="text">
             <string>Delete column</string>
            </property>
           </widget>
          </item>
          <item row="7" column="2">
-          <widget class="QPushButton" name="clearButton_16">
+          <widget class="QPushButton" name="insertHeaderColumnButton">
            <property name="text">
             <string>Insert column in header</string>
            </property>
           </widget>
          </item>
          <item row="4" column="1">
-          <widget class="QPushButton" name="clearButton_17">
+          <widget class="QPushButton" name="addHeaderRowButton">
            <property name="text">
             <string>Add row in header</string>
            </property>
           </widget>
          </item>
          <item row="7" column="1">
-          <widget class="QPushButton" name="clearButton_15">
+          <widget class="QPushButton" name="addHeaderColumnButton">
            <property name="text">
             <string>Add column in header</string>
            </property>
           </widget>
          </item>
          <item row="7" column="3">
-          <widget class="QPushButton" name="clearButton_14">
+          <widget class="QPushButton" name="deleteHeaderColumnButton">
            <property name="text">
             <string>Delete column from header</string>
            </property>
           </widget>
          </item>
          <item row="4" column="2">
-          <widget class="QPushButton" name="clearButton_19">
+          <widget class="QPushButton" name="insertHeaderRowButton">
            <property name="text">
             <string>Insert row in header</string>
            </property>
           </widget>
          </item>
          <item row="4" column="3">
-          <widget class="QPushButton" name="clearButton_18">
+          <widget class="QPushButton" name="deleteHeaderRowButton">
            <property name="text">
             <string>Delete row from header</string>
            </property>
@@ -382,42 +382,42 @@
        <item>
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="0" column="0">
-          <widget class="QPushButton" name="clearButton_2">
+          <widget class="QPushButton" name="selectRowButton">
            <property name="text">
             <string>Select row</string>
            </property>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QPushButton" name="clearButton_3">
+          <widget class="QPushButton" name="unselectRowButton">
            <property name="text">
             <string>Unselect row</string>
            </property>
           </widget>
          </item>
          <item row="1" column="0">
-          <widget class="QPushButton" name="clearButton_4">
+          <widget class="QPushButton" name="selectColumButton">
            <property name="text">
             <string>Select column</string>
            </property>
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QPushButton" name="clearButton_5">
+          <widget class="QPushButton" name="selectAllButton">
            <property name="text">
             <string>Select all</string>
            </property>
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QPushButton" name="clearButton_6">
+          <widget class="QPushButton" name="unselectAllButton">
            <property name="text">
             <string>Unselect all</string>
            </property>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QPushButton" name="clearButton_13">
+          <widget class="QPushButton" name="unselectColumnButton">
            <property name="text">
             <string>Unselect column</string>
            </property>
@@ -438,14 +438,14 @@
           <number>4</number>
          </property>
          <item row="1" column="0">
-          <widget class="QPushButton" name="clearButton_20">
+          <widget class="QPushButton" name="defaultBackgroundButton">
            <property name="text">
             <string>Default background color</string>
            </property>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QPushButton" name="rowCountButton_3">
+          <widget class="QPushButton" name="defaultBackgroundViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -465,70 +465,70 @@
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QPushButton" name="clearButton_21">
+          <widget class="QPushButton" name="defaultForegroundButton">
            <property name="text">
             <string>Default foreground color</string>
            </property>
           </widget>
          </item>
          <item row="3" column="0">
-          <widget class="QPushButton" name="clearButton_22">
+          <widget class="QPushButton" name="gridColorButton">
            <property name="text">
             <string>Grid color</string>
            </property>
           </widget>
          </item>
          <item row="4" column="0">
-          <widget class="QPushButton" name="clearButton_27">
+          <widget class="QPushButton" name="horizontalDefaultBackgroundButton">
            <property name="text">
             <string>Default background color in horizontal header</string>
            </property>
           </widget>
          </item>
          <item row="5" column="0">
-          <widget class="QPushButton" name="clearButton_28">
+          <widget class="QPushButton" name="horizontalDefaultForegroundButton">
            <property name="text">
             <string>Default foreground color in horizontal header</string>
            </property>
           </widget>
          </item>
          <item row="6" column="0">
-          <widget class="QPushButton" name="clearButton_29">
+          <widget class="QPushButton" name="horizontalGridColorButton">
            <property name="text">
             <string>Grid color in horizontal header</string>
            </property>
           </widget>
          </item>
          <item row="7" column="0">
-          <widget class="QPushButton" name="clearButton_30">
+          <widget class="QPushButton" name="verticalDefaultBackgroundButton">
            <property name="text">
             <string>Default background color in vertical header</string>
            </property>
           </widget>
          </item>
          <item row="8" column="0">
-          <widget class="QPushButton" name="clearButton_31">
+          <widget class="QPushButton" name="verticalDefaultForegroundButton">
            <property name="text">
             <string>Default foreground color in vertical header</string>
            </property>
           </widget>
          </item>
          <item row="9" column="0">
-          <widget class="QPushButton" name="clearButton_32">
+          <widget class="QPushButton" name="verticalGridColorButton">
            <property name="text">
             <string>Grid color in vertical header</string>
            </property>
           </widget>
          </item>
          <item row="10" column="0">
-          <widget class="QPushButton" name="clearButton_23">
+          <widget class="QPushButton" name="selectionColorButton">
            <property name="text">
             <string>Selection color</string>
            </property>
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QPushButton" name="rowCountButton_4">
+          <widget class="QPushButton" name="defaultForegroundViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -548,7 +548,7 @@
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="QPushButton" name="rowCountButton_5">
+          <widget class="QPushButton" name="gridColorViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -568,7 +568,7 @@
           </widget>
          </item>
          <item row="4" column="1">
-          <widget class="QPushButton" name="rowCountButton_6">
+          <widget class="QPushButton" name="horizontalDefaultBackgroundViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -588,7 +588,7 @@
           </widget>
          </item>
          <item row="5" column="1">
-          <widget class="QPushButton" name="rowCountButton_7">
+          <widget class="QPushButton" name="horizontalDefaultForegroundViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -608,7 +608,7 @@
           </widget>
          </item>
          <item row="6" column="1">
-          <widget class="QPushButton" name="rowCountButton_8">
+          <widget class="QPushButton" name="horizontalGridColorViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -628,7 +628,7 @@
           </widget>
          </item>
          <item row="7" column="1">
-          <widget class="QPushButton" name="rowCountButton_9">
+          <widget class="QPushButton" name="verticalDefaultBackgroundViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -648,7 +648,7 @@
           </widget>
          </item>
          <item row="8" column="1">
-          <widget class="QPushButton" name="rowCountButton_10">
+          <widget class="QPushButton" name="verticalDefaultForegroundViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -668,7 +668,7 @@
           </widget>
          </item>
          <item row="9" column="1">
-          <widget class="QPushButton" name="rowCountButton_11">
+          <widget class="QPushButton" name="verticalGridColorViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -688,7 +688,7 @@
           </widget>
          </item>
          <item row="10" column="1">
-          <widget class="QPushButton" name="rowCountButton_12">
+          <widget class="QPushButton" name="selectionColorViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -722,7 +722,7 @@
           <number>4</number>
          </property>
          <item row="0" column="0">
-          <widget class="QLabel" name="rowCountLabel_2">
+          <widget class="QLabel" name="defaultWidthLabel">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -741,7 +741,7 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QSpinBox" name="rowCountSpinBox_2">
+          <widget class="QSpinBox" name="defaultWidthSpinBox">
            <property name="minimum">
             <number>-1</number>
            </property>
@@ -751,7 +751,7 @@
           </widget>
          </item>
          <item row="1" column="0">
-          <widget class="QLabel" name="columnCountLabel_2">
+          <widget class="QLabel" name="defaultHeightLabel">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -770,7 +770,7 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QSpinBox" name="columnCountSpinBox_2">
+          <widget class="QSpinBox" name="defaultHeightSpinBox">
            <property name="minimum">
             <number>-1</number>
            </property>
@@ -780,7 +780,7 @@
           </widget>
          </item>
          <item row="0" column="2">
-          <widget class="QPushButton" name="rowCountButton_2">
+          <widget class="QPushButton" name="defaultWidthViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -800,7 +800,7 @@
           </widget>
          </item>
          <item row="1" column="2">
-          <widget class="QPushButton" name="columnCountButton_2">
+          <widget class="QPushButton" name="defaultHeightViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -834,35 +834,35 @@
           <number>4</number>
          </property>
          <item row="0" column="0">
-          <widget class="QPushButton" name="clearButton_24">
+          <widget class="QPushButton" name="columnWidthButton">
            <property name="text">
             <string>Column width</string>
            </property>
           </widget>
          </item>
          <item row="3" column="0">
-          <widget class="QPushButton" name="clearButton_26">
+          <widget class="QPushButton" name="headerColumnWidthButton">
            <property name="text">
             <string>Column width in vertical header</string>
            </property>
           </widget>
          </item>
          <item row="4" column="0">
-          <widget class="QPushButton" name="clearButton_33">
+          <widget class="QPushButton" name="headerRowHeightButton">
            <property name="text">
             <string>Row height in horizontal header</string>
            </property>
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QPushButton" name="clearButton_25">
+          <widget class="QPushButton" name="rowHeightButton">
            <property name="text">
             <string>Row height</string>
            </property>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QPushButton" name="columnCountButton_3">
+          <widget class="QPushButton" name="columnWidthViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -882,7 +882,7 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QPushButton" name="columnCountButton_4">
+          <widget class="QPushButton" name="rowHeightViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -902,7 +902,7 @@
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="QPushButton" name="columnCountButton_5">
+          <widget class="QPushButton" name="headerColumnWidthViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -922,7 +922,7 @@
           </widget>
          </item>
          <item row="4" column="1">
-          <widget class="QPushButton" name="columnCountButton_6">
+          <widget class="QPushButton" name="headerRowHeightViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -953,7 +953,7 @@
        <item>
         <layout class="QGridLayout" name="gridLayout_7">
          <item row="0" column="0">
-          <widget class="QLabel" name="label">
+          <widget class="QLabel" name="totalWidthLabel">
            <property name="font">
             <font>
              <weight>75</weight>
@@ -966,7 +966,7 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QPushButton" name="columnCountButton_7">
+          <widget class="QPushButton" name="totalWidthViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -986,7 +986,7 @@
           </widget>
          </item>
          <item row="1" column="0">
-          <widget class="QLabel" name="label_2">
+          <widget class="QLabel" name="totalHeightLabel">
            <property name="font">
             <font>
              <weight>75</weight>
@@ -999,7 +999,7 @@
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QLabel" name="label_3">
+          <widget class="QLabel" name="headerTotalWidthLabel">
            <property name="font">
             <font>
              <weight>75</weight>
@@ -1012,7 +1012,7 @@
           </widget>
          </item>
          <item row="3" column="0">
-          <widget class="QLabel" name="label_4">
+          <widget class="QLabel" name="headerTotalHeightLabel">
            <property name="font">
             <font>
              <weight>75</weight>
@@ -1025,7 +1025,7 @@
           </widget>
          </item>
          <item row="6" column="0">
-          <widget class="QLabel" name="label_5">
+          <widget class="QLabel" name="verticalVisibleRangesLabel">
            <property name="font">
             <font>
              <weight>75</weight>
@@ -1038,7 +1038,7 @@
           </widget>
          </item>
          <item row="5" column="0">
-          <widget class="QLabel" name="label_6">
+          <widget class="QLabel" name="horizontalVisibleRangesLabel">
            <property name="font">
             <font>
              <weight>75</weight>
@@ -1051,7 +1051,7 @@
           </widget>
          </item>
          <item row="4" column="0">
-          <widget class="QLabel" name="label_7">
+          <widget class="QLabel" name="visibleRangesLabel">
            <property name="font">
             <font>
              <weight>75</weight>
@@ -1064,7 +1064,7 @@
           </widget>
          </item>
          <item row="6" column="1">
-          <widget class="QPushButton" name="columnCountButton_8">
+          <widget class="QPushButton" name="verticalVisibleRangesViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -1084,7 +1084,7 @@
           </widget>
          </item>
          <item row="5" column="1">
-          <widget class="QPushButton" name="columnCountButton_9">
+          <widget class="QPushButton" name="horizontalVisibleRangesViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -1104,7 +1104,7 @@
           </widget>
          </item>
          <item row="4" column="1">
-          <widget class="QPushButton" name="columnCountButton_10">
+          <widget class="QPushButton" name="visibleRangesViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -1124,7 +1124,7 @@
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="QPushButton" name="columnCountButton_11">
+          <widget class="QPushButton" name="headerTotalHeightViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -1144,7 +1144,7 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QPushButton" name="columnCountButton_12">
+          <widget class="QPushButton" name="headerTotalWidthViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -1164,7 +1164,7 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QPushButton" name="columnCountButton_13">
+          <widget class="QPushButton" name="totalHeightViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -1198,28 +1198,21 @@
           <number>4</number>
          </property>
          <item row="0" column="0">
-          <widget class="QPushButton" name="clearButton_34">
+          <widget class="QPushButton" name="textButton">
            <property name="text">
             <string>Text</string>
            </property>
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QPushButton" name="clearButton_35">
+          <widget class="QPushButton" name="verticalTextButton">
            <property name="text">
             <string>Text in vertical header</string>
            </property>
           </widget>
          </item>
-         <item row="3" column="0">
-          <widget class="QPushButton" name="clearButton_36">
-           <property name="text">
-            <string>Text in horizontal header</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="1">
-          <widget class="QPushButton" name="columnCountButton_14">
+          <widget class="QPushButton" name="textViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -1239,7 +1232,7 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QPushButton" name="columnCountButton_16">
+          <widget class="QPushButton" name="verticalTextViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -1258,8 +1251,15 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
-          <widget class="QPushButton" name="columnCountButton_17">
+         <item row="1" column="0">
+          <widget class="QPushButton" name="horizontalTextButton">
+           <property name="text">
+            <string>Text in horizontal header</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="horizontalTextViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -1290,7 +1290,7 @@
        <item>
         <layout class="QGridLayout" name="gridLayout_10">
          <item row="0" column="1">
-          <widget class="QPushButton" name="columnCountButton_24">
+          <widget class="QPushButton" name="cellSelectedViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -1310,7 +1310,7 @@
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QLabel" name="label_16">
+          <widget class="QLabel" name="currentSelectionLabel">
            <property name="font">
             <font>
              <weight>75</weight>
@@ -1323,7 +1323,7 @@
           </widget>
          </item>
          <item row="3" column="0">
-          <widget class="QLabel" name="label_17">
+          <widget class="QLabel" name="rowsSelectedLabel">
            <property name="font">
             <font>
              <weight>75</weight>
@@ -1336,7 +1336,7 @@
           </widget>
          </item>
          <item row="4" column="0">
-          <widget class="QLabel" name="label_18">
+          <widget class="QLabel" name="columnsSelectedLabel">
            <property name="font">
             <font>
              <weight>75</weight>
@@ -1349,7 +1349,7 @@
           </widget>
          </item>
          <item row="4" column="1">
-          <widget class="QPushButton" name="columnCountButton_28">
+          <widget class="QPushButton" name="columnsSelectedViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -1369,7 +1369,7 @@
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="QPushButton" name="columnCountButton_29">
+          <widget class="QPushButton" name="rowsSelectedViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -1389,7 +1389,7 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QPushButton" name="columnCountButton_30">
+          <widget class="QPushButton" name="currentSelectionViewButton">
            <property name="maximumSize">
             <size>
              <width>25</width>
@@ -1409,7 +1409,7 @@
           </widget>
          </item>
          <item row="0" column="0">
-          <widget class="QPushButton" name="clearButton_37">
+          <widget class="QPushButton" name="cellSelectedButton">
            <property name="text">
             <string>Cell selected</string>
            </property>
