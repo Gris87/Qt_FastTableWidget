@@ -1149,10 +1149,22 @@ void CustomFastTableWidget::setSizes(int aRowCount, int aColumnCount, qint16 aHo
 {
     START_PROFILE;
 
+    bool wasAllowUpdates=updatesEnabled();
+
+    if (wasAllowUpdates)
+    {
+        setUpdatesEnabled(false);
+    }
+
     setRowCount(aRowCount);
     setColumnCount(aColumnCount);
     horizontalHeader_SetRowCount(aHorizontalHeaderRowCount);
     verticalHeader_SetColumnCount(aVerticalHeaderColumnCount);
+
+    if (wasAllowUpdates)
+    {
+        setUpdatesEnabled(true);
+    }
 
     END_PROFILE("void CustomFastTableWidget::setSizes(int aRowCount, int aColumnCount, qint16 aHorizontalHeaderRowCount, qint16 aVerticalHeaderColumnCount)");
 }
