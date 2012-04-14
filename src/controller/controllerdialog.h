@@ -29,6 +29,7 @@ private slots:
     void on_columnCountSpinBox_valueChanged(int value);
     void on_horizontalHeaderRowCountSpinBox_valueChanged(int value);
     void on_verticalHeaderColumnCountSpinBox_valueChanged(int value);
+    void on_clearButton_clicked();
 
     void on_rowCountButton_clicked();
     void on_columnCountButton_clicked();

@@ -488,7 +488,7 @@ void FastTableWidget::updateVisibleRange()
     END_PROFILE("void FastTableWidget::updateVisibleRange()");
 }
 
-void FastTableWidget::clearTable()
+void FastTableWidget::clear()
 {
     START_PROFILE;
 
@@ -531,9 +531,9 @@ void FastTableWidget::clearTable()
     mVerticalHeader_CellMergeParentRow.clear();
     mVerticalHeader_CellMergeParentColumn.clear();
 
-    CustomFastTableWidget::clearTable();
+    CustomFastTableWidget::clear();
 
-    END_PROFILE("void FastTableWidget::clearTable()");
+    END_PROFILE("void FastTableWidget::clear()");
 }
 
 void FastTableWidget::resetBackgroundBrushes()

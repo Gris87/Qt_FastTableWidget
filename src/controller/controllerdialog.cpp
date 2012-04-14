@@ -55,6 +55,16 @@ void ControllerDialog::on_verticalHeaderColumnCountSpinBox_valueChanged(int valu
     mFastTableWidget->verticalHeader_SetColumnCount(value);
 }
 
+void ControllerDialog::on_clearButton_clicked()
+{
+    mFastTableWidget->clear();
+
+    ui->rowCountSpinBox->setValue(0);
+    ui->columnCountSpinBox->setValue(0);
+    ui->horizontalHeaderRowCountSpinBox->setValue(0);
+    ui->verticalHeaderColumnCountSpinBox->setValue(0);
+}
+
 void ControllerDialog::on_rowCountButton_clicked()
 {
     ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getRowCount(), this);

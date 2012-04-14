@@ -68,7 +68,7 @@ public:
     explicit CustomFastTableWidget(QWidget *parent = 0);
     ~CustomFastTableWidget();
 
-    virtual void clearTable();
+    virtual void clear();
 
     virtual void selectRow(const int row);
     virtual void unselectRow(const int row);

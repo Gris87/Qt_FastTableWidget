@@ -58,7 +58,7 @@ CustomFastTableWidget::~CustomFastTableWidget()
 {
     START_PROFILE;
 
-    clearTable();
+    clear();
 
     END_PROFILE("CustomFastTableWidget::~CustomFastTableWidget()");
 }
@@ -319,13 +319,21 @@ void CustomFastTableWidget::updateBarsRanges()
 {
     START_PROFILE;
 
-    QSize areaSize=viewport()->size();
+    if (mTotalWidth<=0 || mTotalHeight<=0)
+    {
+        horizontalScrollBar()->setRange(0, 0);
+        verticalScrollBar()->setRange(0, 0);
+    }
+    else
+    {
+        QSize areaSize=viewport()->size();
 
-    horizontalScrollBar()->setPageStep(areaSize.width()-mVerticalHeader_TotalWidth);
-    verticalScrollBar()->setPageStep(areaSize.height()-mHorizontalHeader_TotalHeight);
+        horizontalScrollBar()->setPageStep(areaSize.width()-mVerticalHeader_TotalWidth);
+        verticalScrollBar()->setPageStep(areaSize.height()-mHorizontalHeader_TotalHeight);
 
-    horizontalScrollBar()->setRange(0, mTotalWidth  - areaSize.width()  + 1);
-    verticalScrollBar()->setRange(0,   mTotalHeight - areaSize.height() + 1);
+        horizontalScrollBar()->setRange(0, mTotalWidth  - areaSize.width()  + 1);
+        verticalScrollBar()->setRange(0,   mTotalHeight - areaSize.height() + 1);
+    }
 
     END_PROFILE("void CustomFastTableWidget::updateBarsRanges()");
 }
@@ -521,7 +529,7 @@ void CustomFastTableWidget::updateVisibleRange()
     END_PROFILE("void CustomFastTableWidget::updateVisibleRange()");
 }
 
-void CustomFastTableWidget::clearTable()
+void CustomFastTableWidget::clear()
 {
     START_PROFILE;
 
@@ -563,9 +571,11 @@ void CustomFastTableWidget::clearTable()
     mHorizontalHeader_SelectedColumns.clear();
     mVerticalHeader_SelectedRows.clear();
 
+    updateBarsRanges();
+
     update();
 
-    END_PROFILE("void CustomFastTableWidget::clearTable()");
+    END_PROFILE("void CustomFastTableWidget::clear()");
 }
 
 void CustomFastTableWidget::selectRow(const int row)

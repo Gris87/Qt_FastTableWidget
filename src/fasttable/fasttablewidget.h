@@ -13,7 +13,7 @@ public:
     explicit FastTableWidget(QWidget *parent = 0);
     ~FastTableWidget();
 
-    void clearTable();
+    void clear();
 
     void resetBackgroundBrushes();
     void resetForegroundColors();

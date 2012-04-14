@@ -27,7 +27,7 @@ TestFrame::TestFrame(CustomFastTableWidget* aFastTable, QWidget *parent) :
     addTestLabel("setColumnCount(20)");
     addTestLabel("setRowCount(2)");
     addTestLabel("setColumnCount(1)");
-    addTestLabel("clearTable()");
+    addTestLabel("clear()");
     addTestLabel("setRowCount(50)_2");
     addTestLabel("setColumnCount(20)_2");
     addTestLabel("horizontalHeader_SetRowCount(2)");
@@ -36,7 +36,7 @@ TestFrame::TestFrame(CustomFastTableWidget* aFastTable, QWidget *parent) :
     addTestLabel("setColumnCount(1)_2");
     addTestLabel("horizontalHeader_SetRowCount(50)");
     addTestLabel("verticalHeader_SetColumnCount(20)");
-    addTestLabel("clearTable()_2");
+    addTestLabel("clear()_2");
     addTestLabel("setRowCount(50)_3");
     addTestLabel("setColumnCount(20)_3");
     addTestLabel("horizontalHeader_SetRowCount(2)_2");
@@ -255,12 +255,12 @@ void TestFrame::startTest()
         testCompleted(success, "setColumnCount(1)");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 6: clearTable()";
+    qDebug()<<"TEST 6: clear()";
     // ----------------------------------------------------------------
     {
         success=true;
 
-        mFastTable->clearTable();
+        mFastTable->clear();
 
         TEST_STEP(((PublicCustomFastTable*)mFastTable)->verticalHeader_GetTotalWidth()==0);
         TEST_STEP(((PublicCustomFastTable*)mFastTable)->horizontalHeader_GetTotalHeight()==0);
@@ -268,10 +268,10 @@ void TestFrame::startTest()
         TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==0);
         TEST_STEP(checkForSizes(0, 0, 0, 0));
 
-        testCompleted(success, "clearTable()");
+        testCompleted(success, "clear()");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 7: setRowCount(50)";
+    qDebug()<<"TEST 7: setRowCount(50)_2";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -288,7 +288,7 @@ void TestFrame::startTest()
         testCompleted(success, "setRowCount(50)_2");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 8: setColumnCount(20)";
+    qDebug()<<"TEST 8: setColumnCount(20)_2";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -365,7 +365,7 @@ void TestFrame::startTest()
         testCompleted(success, "setRowCount(2)_2");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 12: setColumnCount(1)";
+    qDebug()<<"TEST 12: setColumnCount(1)_2";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -425,12 +425,12 @@ void TestFrame::startTest()
         testCompleted(success, "verticalHeader_SetColumnCount(20)");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 15: clearTable()";
+    qDebug()<<"TEST 15: clear()_2";
     // ----------------------------------------------------------------
     {
         success=true;
 
-        mFastTable->clearTable();
+        mFastTable->clear();
 
         TEST_STEP(((PublicCustomFastTable*)mFastTable)->verticalHeader_GetTotalWidth()==0);
         TEST_STEP(((PublicCustomFastTable*)mFastTable)->horizontalHeader_GetTotalHeight()==0);
@@ -438,10 +438,10 @@ void TestFrame::startTest()
         TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==0);
         TEST_STEP(checkForSizes(0, 0, 0, 0));
 
-        testCompleted(success, "clearTable()_2");
+        testCompleted(success, "clear()_2");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 16: setRowCount(50)";
+    qDebug()<<"TEST 16: setRowCount(50)_3";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -458,7 +458,7 @@ void TestFrame::startTest()
         testCompleted(success, "setRowCount(50)_3");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 17: setColumnCount(20)";
+    qDebug()<<"TEST 17: setColumnCount(20)_3";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -476,7 +476,7 @@ void TestFrame::startTest()
         testCompleted(success, "setColumnCount(20)_3");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 18: horizontalHeader_SetRowCount(2)";
+    qDebug()<<"TEST 18: horizontalHeader_SetRowCount(2)_2";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -495,7 +495,7 @@ void TestFrame::startTest()
         testCompleted(success, "horizontalHeader_SetRowCount(2)_2");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 19: verticalHeader_SetColumnCount(1)";
+    qDebug()<<"TEST 19: verticalHeader_SetColumnCount(1)_2";
     // ----------------------------------------------------------------
     {
         success=true;
