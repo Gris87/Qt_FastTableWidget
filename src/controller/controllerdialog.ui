@@ -396,7 +396,7 @@
           </widget>
          </item>
          <item row="1" column="0">
-          <widget class="QPushButton" name="selectColumButton">
+          <widget class="QPushButton" name="selectColumnButton">
            <property name="text">
             <string>Select column</string>
            </property>
