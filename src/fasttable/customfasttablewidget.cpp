@@ -732,6 +732,9 @@ void CustomFastTableWidget::insertRow(int row)
         mSelectedCells[row].append(false);
     }
 
+    updateBarsRanges();
+    updateVisibleRange();
+
     update();
 
     END_PROFILE("void CustomFastTableWidget::insertRow(int row)");
@@ -776,6 +779,9 @@ void CustomFastTableWidget::deleteRow(int row)
 
     mRowCount--;
 
+    updateBarsRanges();
+    updateVisibleRange();
+
     update();
 
     END_PROFILE("void CustomFastTableWidget::deleteRow(int row)");
@@ -818,6 +824,9 @@ void CustomFastTableWidget::insertColumn(int column)
     }
 
     mHorizontalHeader_SelectedColumns.insert(column, false);
+
+    updateBarsRanges();
+    updateVisibleRange();
 
     update();
 
@@ -868,6 +877,9 @@ void CustomFastTableWidget::deleteColumn(int column)
 
     mColumnCount--;
 
+    updateBarsRanges();
+    updateVisibleRange();
+
     update();
 
     END_PROFILE("void CustomFastTableWidget::deleteColumn(int column)");
@@ -913,6 +925,9 @@ void CustomFastTableWidget::horizontalHeader_InsertRow(int row)
         mHorizontalHeader_Data[row].append("");
     }
 
+    updateBarsRanges();
+    updateVisibleRange();
+
     update();
 
     END_PROFILE("void CustomFastTableWidget::horizontalHeader_InsertRow(int row)");
@@ -942,6 +957,9 @@ void CustomFastTableWidget::horizontalHeader_DeleteRow(int row)
     mHorizontalHeader_Data.removeAt(row);
 
     mHorizontalHeader_RowCount--;
+
+    updateBarsRanges();
+    updateVisibleRange();
 
     update();
 
@@ -984,6 +1002,9 @@ void CustomFastTableWidget::verticalHeader_InsertColumn(int column)
         mVerticalHeader_Data[i].insert(column, "");
     }
 
+    updateBarsRanges();
+    updateVisibleRange();
+
     update();
 
     END_PROFILE("void CustomFastTableWidget::verticalHeader_InsertColumn(int column)");
@@ -1018,6 +1039,9 @@ void CustomFastTableWidget::verticalHeader_DeleteColumn(int column)
 
     mVerticalHeader_ColumnCount--;
 
+    updateBarsRanges();
+    updateVisibleRange();
+
     update();
 
     END_PROFILE("void CustomFastTableWidget::verticalHeader_DeleteColumn(int column)");
@@ -1039,6 +1063,13 @@ void CustomFastTableWidget::setRowCount(int count)
 
     if (mRowCount!=count)
     {
+        bool wasAllowUpdates=updatesEnabled();
+
+        if (wasAllowUpdates)
+        {
+            setUpdatesEnabled(false);
+        }
+
         while (mRowCount<count)
         {
             addRow();
@@ -1049,8 +1080,10 @@ void CustomFastTableWidget::setRowCount(int count)
             deleteRow(mRowCount-1);
         }
 
-        updateBarsRanges();
-        updateVisibleRange();
+        if (wasAllowUpdates)
+        {
+            setUpdatesEnabled(true);
+        }
     }
 
     END_PROFILE("void CustomFastTableWidget::setRowCount(int count)");
@@ -1072,6 +1105,13 @@ void CustomFastTableWidget::setColumnCount(int count)
 
     if (mColumnCount!=count)
     {
+        bool wasAllowUpdates=updatesEnabled();
+
+        if (wasAllowUpdates)
+        {
+            setUpdatesEnabled(false);
+        }
+
         while (mColumnCount<count)
         {
             addColumn();
@@ -1082,8 +1122,10 @@ void CustomFastTableWidget::setColumnCount(int count)
             deleteColumn(mColumnCount-1);
         }
 
-        updateBarsRanges();
-        updateVisibleRange();
+        if (wasAllowUpdates)
+        {
+            setUpdatesEnabled(true);
+        }
     }
 
     END_PROFILE("void CustomFastTableWidget::setColumnCount(int count)");
@@ -1105,6 +1147,13 @@ void CustomFastTableWidget::horizontalHeader_SetRowCount(qint16 count)
 
     if (mHorizontalHeader_RowCount!=count)
     {
+        bool wasAllowUpdates=updatesEnabled();
+
+        if (wasAllowUpdates)
+        {
+            setUpdatesEnabled(false);
+        }
+
         while (mHorizontalHeader_RowCount<count)
         {
             horizontalHeader_AddRow();
@@ -1115,8 +1164,10 @@ void CustomFastTableWidget::horizontalHeader_SetRowCount(qint16 count)
             horizontalHeader_DeleteRow(mHorizontalHeader_RowCount-1);
         }
 
-        updateBarsRanges();
-        updateVisibleRange();
+        if (wasAllowUpdates)
+        {
+            setUpdatesEnabled(true);
+        }
     }
 
     END_PROFILE("void CustomFastTableWidget::horizontalHeader_SetRowCount(int count)");
@@ -1138,6 +1189,13 @@ void CustomFastTableWidget::verticalHeader_SetColumnCount(qint16 count)
 
     if (mVerticalHeader_ColumnCount!=count)
     {
+        bool wasAllowUpdates=updatesEnabled();
+
+        if (wasAllowUpdates)
+        {
+            setUpdatesEnabled(false);
+        }
+
         while (mVerticalHeader_ColumnCount<count)
         {
             verticalHeader_AddColumn();
@@ -1148,8 +1206,10 @@ void CustomFastTableWidget::verticalHeader_SetColumnCount(qint16 count)
             verticalHeader_DeleteColumn(mVerticalHeader_ColumnCount-1);
         }
 
-        updateBarsRanges();
-        updateVisibleRange();
+        if (wasAllowUpdates)
+        {
+            setUpdatesEnabled(true);
+        }
     }
 
     END_PROFILE("void CustomFastTableWidget::verticalHeader_SetColumnCount(int count)");

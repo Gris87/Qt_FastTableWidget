@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "ui_controllerdialog.h"
 
+#include <QInputDialog>
 #include "qdebug.h"
 
 #include "src/controller/viewdialog.h"
