@@ -5,3 +5,4 @@ Action queue to remove unecessary function calls
 Assert
 Negative width or height means that row/column is hidden
 Use setCapacity on clear and setRowCount...
+Q_FUNC_INFO
