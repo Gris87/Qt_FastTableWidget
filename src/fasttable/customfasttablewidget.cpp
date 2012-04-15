@@ -45,6 +45,24 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
 
     mVerticalHeader_VisibleRight=-1;
 
+    /*
+#ifdef Q_WS_X11
+    return QString("Linux");
+#endif
+#ifdef Q_WS_WIN
+    switch (QSysInfo::windowsVersion())
+    {
+        case QSysInfo::WV_NT: return "Windows NT (operating system version 4.0)";
+        case QSysInfo::WV_2000: return "Windows 2000 (operating system version 5.0)";
+        case QSysInfo::WV_XP: return "Windows XP (operating system version 5.1)";
+        case QSysInfo::WV_2003: return "Windows Server 2003, Windows Server 2003 R2, Windows Home Server, Windows XP Professional x64 Edition (operating system version 5.2)";
+        case QSysInfo::WV_VISTA: return "Windows Vista, Windows Server 2008 (operating system version 6.0)";
+        case QSysInfo::WV_WINDOWS7: return "Windows 7, Windows Server 2008 R2 (operating system version 6.1)";
+        default: return "Windows";
+    }
+#endif
+    */
+
     horizontalScrollBar()->setSingleStep(100);
     verticalScrollBar()->setSingleStep(100);
 
