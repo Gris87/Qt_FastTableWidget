@@ -13,7 +13,11 @@
 
 #include "qdebug.h"
 
-#define FASTTABLE_DEBUG
+#if 1
+    #define FASTTABLE_ASSERT(condition) Q_ASSERT(FASTTABLE_ASSERT)
+#else
+    #define FASTTABLE_ASSERT(condition)
+#endif
 
 #if 0
     #define START_PROFILE      qint64 profileStart=QDateTime::currentMSecsSinceEpoch();
