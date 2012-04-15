@@ -26,6 +26,11 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
 
     if (mVisibleLeft>=0 && mVisibleTop>=0)
     {
+        FASTTABLE_ASSERT(mVisibleBottom<mOffsetY.length());
+        FASTTABLE_ASSERT(mVisibleBottom<mRowHeights.length());
+        FASTTABLE_ASSERT(mVisibleRight<mOffsetX.length());
+        FASTTABLE_ASSERT(mVisibleRight<mColumnWidths.length());
+
         for (int i=mVisibleTop; i<=mVisibleBottom; ++i)
         {
             for (int j=mVisibleLeft; j<=mVisibleRight; ++j)
@@ -93,6 +98,11 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
 
     if (mHorizontalHeader_VisibleBottom>=0 && mVisibleLeft>=0)
     {
+        FASTTABLE_ASSERT(mHorizontalHeader_VisibleBottom<mHorizontalHeader_OffsetY.length());
+        FASTTABLE_ASSERT(mHorizontalHeader_VisibleBottom<mHorizontalHeader_RowHeights.length());
+        FASTTABLE_ASSERT(mVisibleRight<mOffsetX.length());
+        FASTTABLE_ASSERT(mVisibleRight<mColumnWidths.length());
+
         for (int i=0; i<=mHorizontalHeader_VisibleBottom; ++i)
         {
             for (int j=mVisibleLeft; j<=mVisibleRight; ++j)
@@ -160,6 +170,11 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
 
     if (mVerticalHeader_VisibleRight>=0 && mVisibleTop>=0)
     {
+        FASTTABLE_ASSERT(mVisibleBottom<mOffsetY.length());
+        FASTTABLE_ASSERT(mVisibleBottom<mRowHeights.length());
+        FASTTABLE_ASSERT(mVerticalHeader_VisibleRight<mVerticalHeader_OffsetX.length());
+        FASTTABLE_ASSERT(mVerticalHeader_VisibleRight<mVerticalHeader_ColumnWidths.length());
+
         for (int i=mVisibleTop; i<=mVisibleBottom; ++i)
         {
             for (int j=0; j<=mVerticalHeader_VisibleRight; ++j)
@@ -250,6 +265,19 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
     {
         case DrawCell:
         {
+            FASTTABLE_ASSERT(row>=0 && row<mSelectedCells.length());
+            FASTTABLE_ASSERT(column>=0 && column<mSelectedCells.at(row).length());
+            FASTTABLE_ASSERT(row>=0 && row<mBackgroundBrushes.length());
+            FASTTABLE_ASSERT(column>=0 && column<mBackgroundBrushes.at(row).length());
+            FASTTABLE_ASSERT(row>=0 && row<mForegroundColors.length());
+            FASTTABLE_ASSERT(column>=0 && column<mForegroundColors.at(row).length());
+            FASTTABLE_ASSERT(row>=0 && row<mData.length());
+            FASTTABLE_ASSERT(column>=0 && column<mData.at(row).length());
+            FASTTABLE_ASSERT(row>=0 && row<mCellFonts.length());
+            FASTTABLE_ASSERT(column>=0 && column<mCellFonts.at(row).length());
+            FASTTABLE_ASSERT(row>=0 && row<mCellTextFlags.length());
+            FASTTABLE_ASSERT(column>=0 && column<mCellTextFlags.at(row).length());
+
             aGridColor=&mGridColor;
 
             if (mSelectedCells.at(row).at(column))
@@ -289,6 +317,19 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
         break;
         case DrawHorizontalHeaderCell:
         {
+            FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_BackgroundBrushes.length());
+            FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_BackgroundBrushes.at(row).length());
+            FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_ForegroundColors.length());
+            FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_ForegroundColors.at(row).length());
+            FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_Data.length());
+            FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_Data.at(row).length());
+            FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellFonts.length());
+            FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellFonts.at(row).length());
+            FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellMergeX.length());
+            FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellMergeX.at(row).length());
+            FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellTextFlags.length());
+            FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellTextFlags.at(row).length());
+
             aGridColor=&mHorizontalHeader_GridColor;
 
             aBackgroundBrush=mHorizontalHeader_BackgroundBrushes.at(row).at(column);
@@ -319,6 +360,8 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 
             for (int i=0; i<mHorizontalHeader_CellMergeX.at(row).at(column); ++i)
             {
+                FASTTABLE_ASSERT(column+i>=0 && column+i<mHorizontalHeader_SelectedColumns.length());
+
                 if (mHorizontalHeader_SelectedColumns.at(column+i))
                 {
                     good=true;
@@ -334,8 +377,6 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
                     aFont=&aTextFont;
                 }
 
-                aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
-
                 aFont->setPointSize(aFont->pointSize()+1);
                 aFont->setBold(true);
             }
@@ -345,6 +386,19 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
         break;
         case DrawVerticalHeaderCell:
         {
+            FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_BackgroundBrushes.length());
+            FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_BackgroundBrushes.at(row).length());
+            FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_ForegroundColors.length());
+            FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_ForegroundColors.at(row).length());
+            FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_Data.length());
+            FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_Data.at(row).length());
+            FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellFonts.length());
+            FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellFonts.at(row).length());
+            FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellMergeY.length());
+            FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellMergeY.at(row).length());
+            FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellTextFlags.length());
+            FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellTextFlags.at(row).length());
+
             aGridColor=&mVerticalHeader_GridColor;
 
             aBackgroundBrush=mVerticalHeader_BackgroundBrushes.at(row).at(column);
@@ -381,6 +435,8 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 
             for (int i=0; i<mVerticalHeader_CellMergeY.at(row).at(column); ++i)
             {
+                FASTTABLE_ASSERT(row+i>=0 && row+i<mVerticalHeader_SelectedRows.length());
+
                 if (mVerticalHeader_SelectedRows.at(row+i))
                 {
                     good=true;
@@ -443,6 +499,9 @@ void FastTableWidget::updateVisibleRange()
     {
         for (int i=0; i<mRowCount; ++i)
         {
+            FASTTABLE_ASSERT(i<mCellMergeParentColumn.length());
+            FASTTABLE_ASSERT(originalLeft<mCellMergeParentColumn.at(i).length());
+
             int parentColumn=mCellMergeParentColumn.at(i).at(originalLeft);
 
             if (parentColumn>=0 &&parentColumn<mVisibleLeft)
@@ -453,6 +512,9 @@ void FastTableWidget::updateVisibleRange()
 
         for (int i=0; i<mHorizontalHeader_RowCount; ++i)
         {
+            FASTTABLE_ASSERT(i<mHorizontalHeader_CellMergeParentColumn.length());
+            FASTTABLE_ASSERT(originalLeft<mHorizontalHeader_CellMergeParentColumn.at(i).length());
+
             int parentColumn=mHorizontalHeader_CellMergeParentColumn.at(i).at(originalLeft);
 
             if (parentColumn>=0 &&parentColumn<mVisibleLeft)
@@ -466,6 +528,9 @@ void FastTableWidget::updateVisibleRange()
     {
         for (int i=0; i<mColumnCount; ++i)
         {
+            FASTTABLE_ASSERT(i<mCellMergeParentRow.length());
+            FASTTABLE_ASSERT(originalTop<mCellMergeParentRow.at(i).length());
+
             int parentRow=mCellMergeParentRow.at(originalTop).at(i);
 
             if (parentRow>=0 && parentRow<mVisibleTop)
@@ -476,6 +541,9 @@ void FastTableWidget::updateVisibleRange()
 
         for (int i=0; i<mVerticalHeader_ColumnCount; ++i)
         {
+            FASTTABLE_ASSERT(i<mVerticalHeader_CellMergeParentRow.length());
+            FASTTABLE_ASSERT(originalTop<mVerticalHeader_CellMergeParentRow.at(i).length());
+
             int parentRow=mVerticalHeader_CellMergeParentRow.at(originalTop).at(i);
 
             if (parentRow>=0 && parentRow<mVisibleTop)
@@ -544,6 +612,9 @@ void FastTableWidget::resetBackgroundBrushes()
     {
         for (int j=0; j<mColumnCount; ++j)
         {
+            FASTTABLE_ASSERT(i<mBackgroundBrushes.length());
+            FASTTABLE_ASSERT(j<mBackgroundBrushes.at(i).length());
+
             if (mBackgroundBrushes.at(i).at(j))
             {
                 delete mBackgroundBrushes.at(i).at(j);
@@ -565,6 +636,9 @@ void FastTableWidget::resetForegroundColors()
     {
         for (int j=0; j<mColumnCount; ++j)
         {
+            FASTTABLE_ASSERT(i<mForegroundColors.length());
+            FASTTABLE_ASSERT(j<mForegroundColors.at(i).length());
+
             if (mForegroundColors.at(i).at(j))
             {
                 delete mForegroundColors.at(i).at(j);
@@ -586,6 +660,9 @@ void FastTableWidget::resetFonts()
     {
         for (int j=0; j<mColumnCount; ++j)
         {
+            FASTTABLE_ASSERT(i<mCellFonts.length());
+            FASTTABLE_ASSERT(j<mCellFonts.at(i).length());
+
             if (mCellFonts.at(i).at(j))
             {
                 delete mCellFonts.at(i).at(j);
@@ -607,6 +684,9 @@ void FastTableWidget::resetCellTextFlags()
     {
         for (int j=0; j<mColumnCount; ++j)
         {
+            FASTTABLE_ASSERT(i<mCellTextFlags.length());
+            FASTTABLE_ASSERT(j<mCellTextFlags.at(i).length());
+
             mCellTextFlags[i][j]=FASTTABLE_DEFAULT_TEXT_FLAG;
         }
     }
@@ -624,6 +704,9 @@ void FastTableWidget::horizontalHeader_ResetBackgroundBrushes()
     {
         for (int j=0; j<mColumnCount; ++j)
         {
+            FASTTABLE_ASSERT(i<mHorizontalHeader_BackgroundBrushes.length());
+            FASTTABLE_ASSERT(j<mHorizontalHeader_BackgroundBrushes.at(i).length());
+
             if (mHorizontalHeader_BackgroundBrushes.at(i).at(j))
             {
                 delete mHorizontalHeader_BackgroundBrushes.at(i).at(j);
@@ -645,6 +728,9 @@ void FastTableWidget::horizontalHeader_ResetForegroundColors()
     {
         for (int j=0; j<mColumnCount; ++j)
         {
+            FASTTABLE_ASSERT(i<mHorizontalHeader_ForegroundColors.length());
+            FASTTABLE_ASSERT(j<mHorizontalHeader_ForegroundColors.at(i).length());
+
             if (mHorizontalHeader_ForegroundColors.at(i).at(j))
             {
                 delete mHorizontalHeader_ForegroundColors.at(i).at(j);
@@ -666,6 +752,9 @@ void FastTableWidget::horizontalHeader_ResetFonts()
     {
         for (int j=0; j<mColumnCount; ++j)
         {
+            FASTTABLE_ASSERT(i<mHorizontalHeader_CellFonts.length());
+            FASTTABLE_ASSERT(j<mHorizontalHeader_CellFonts.at(i).length());
+
             if (mHorizontalHeader_CellFonts.at(i).at(j))
             {
                 delete mHorizontalHeader_CellFonts.at(i).at(j);
@@ -687,6 +776,9 @@ void FastTableWidget::horizontalHeader_ResetCellTextFlags()
     {
         for (int j=0; j<mColumnCount; ++j)
         {
+            FASTTABLE_ASSERT(i<mHorizontalHeader_CellTextFlags.length());
+            FASTTABLE_ASSERT(j<mHorizontalHeader_CellTextFlags.at(i).length());
+
             mHorizontalHeader_CellTextFlags[i][j]=FASTTABLE_HEADER_DEFAULT_TEXT_FLAG;
         }
     }
@@ -704,6 +796,9 @@ void FastTableWidget::verticalHeader_ResetBackgroundBrushes()
     {
         for (int j=0; j<mVerticalHeader_ColumnCount; ++j)
         {
+            FASTTABLE_ASSERT(i<mVerticalHeader_BackgroundBrushes.length());
+            FASTTABLE_ASSERT(j<mVerticalHeader_BackgroundBrushes.at(i).length());
+
             if (mVerticalHeader_BackgroundBrushes.at(i).at(j))
             {
                 delete mVerticalHeader_BackgroundBrushes.at(i).at(j);
@@ -725,6 +820,9 @@ void FastTableWidget::verticalHeader_ResetForegroundColors()
     {
         for (int j=0; j<mVerticalHeader_ColumnCount; ++j)
         {
+            FASTTABLE_ASSERT(i<mVerticalHeader_ForegroundColors.length());
+            FASTTABLE_ASSERT(j<mVerticalHeader_ForegroundColors.at(i).length());
+
             if (mVerticalHeader_ForegroundColors.at(i).at(j))
             {
                 delete mVerticalHeader_ForegroundColors.at(i).at(j);
@@ -746,6 +844,9 @@ void FastTableWidget::verticalHeader_ResetFonts()
     {
         for (int j=0; j<mVerticalHeader_ColumnCount; ++j)
         {
+            FASTTABLE_ASSERT(i<mVerticalHeader_CellFonts.length());
+            FASTTABLE_ASSERT(j<mVerticalHeader_CellFonts.at(i).length());
+
             if (mVerticalHeader_CellFonts.at(i).at(j))
             {
                 delete mVerticalHeader_CellFonts.at(i).at(j);
@@ -767,6 +868,9 @@ void FastTableWidget::verticalHeader_ResetCellTextFlags()
     {
         for (int j=0; j<mVerticalHeader_ColumnCount; ++j)
         {
+            FASTTABLE_ASSERT(i<mVerticalHeader_CellTextFlags.length());
+            FASTTABLE_ASSERT(j<mVerticalHeader_CellTextFlags.at(i).length());
+
             mVerticalHeader_CellTextFlags[i][j]=FASTTABLE_DEFAULT_TEXT_FLAG;
         }
     }
@@ -779,6 +883,9 @@ void FastTableWidget::verticalHeader_ResetCellTextFlags()
 void FastTableWidget::resetBackgroundBrush(const int row, const int column)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row<mBackgroundBrushes.length());
+    FASTTABLE_ASSERT(column<mBackgroundBrushes.at(row).length());
 
     if (mBackgroundBrushes.at(row).at(column))
     {
@@ -795,6 +902,9 @@ void FastTableWidget::resetForegroundColor(const int row, const int column)
 {
     START_PROFILE;
 
+    FASTTABLE_ASSERT(row<mForegroundColors.length());
+    FASTTABLE_ASSERT(column<mForegroundColors.at(row).length());
+
     if (mForegroundColors.at(row).at(column))
     {
         delete mForegroundColors.at(row).at(column);
@@ -809,6 +919,9 @@ void FastTableWidget::resetForegroundColor(const int row, const int column)
 void FastTableWidget::resetFont(const int row, const int column)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row<mCellFonts.length());
+    FASTTABLE_ASSERT(column<mCellFonts.at(row).length());
 
     if (mCellFonts.at(row).at(column))
     {
@@ -825,6 +938,9 @@ void FastTableWidget::resetCellTextFlag(const int row, const int column)
 {
     START_PROFILE;
 
+    FASTTABLE_ASSERT(row<mCellTextFlags.length());
+    FASTTABLE_ASSERT(column<mCellTextFlags.at(row).length());
+
     mCellTextFlags[row][column]=FASTTABLE_DEFAULT_TEXT_FLAG;
 
     update();
@@ -835,6 +951,9 @@ void FastTableWidget::resetCellTextFlag(const int row, const int column)
 void FastTableWidget::horizontalHeader_ResetBackgroundBrush(const int row, const int column)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row<mHorizontalHeader_BackgroundBrushes.length());
+    FASTTABLE_ASSERT(column<mHorizontalHeader_BackgroundBrushes.at(row).length());
 
     if (mHorizontalHeader_BackgroundBrushes.at(row).at(column))
     {
@@ -851,6 +970,9 @@ void FastTableWidget::horizontalHeader_ResetForegroundColor(const int row, const
 {
     START_PROFILE;
 
+    FASTTABLE_ASSERT(row<mHorizontalHeader_ForegroundColors.length());
+    FASTTABLE_ASSERT(column<mHorizontalHeader_ForegroundColors.at(row).length());
+
     if (mHorizontalHeader_ForegroundColors.at(row).at(column))
     {
         delete mHorizontalHeader_ForegroundColors.at(row).at(column);
@@ -865,6 +987,9 @@ void FastTableWidget::horizontalHeader_ResetForegroundColor(const int row, const
 void FastTableWidget::horizontalHeader_ResetFont(const int row, const int column)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row<mHorizontalHeader_CellFonts.length());
+    FASTTABLE_ASSERT(column<mHorizontalHeader_CellFonts.at(row).length());
 
     if (mHorizontalHeader_CellFonts.at(row).at(column))
     {
@@ -881,6 +1006,9 @@ void FastTableWidget::horizontalHeader_ResetCellTextFlag(const int row, const in
 {
     START_PROFILE;
 
+    FASTTABLE_ASSERT(row<mHorizontalHeader_CellTextFlags.length());
+    FASTTABLE_ASSERT(column<mHorizontalHeader_CellTextFlags.at(row).length());
+
     mHorizontalHeader_CellTextFlags[row][column]=FASTTABLE_HEADER_DEFAULT_TEXT_FLAG;
 
     update();
@@ -891,6 +1019,9 @@ void FastTableWidget::horizontalHeader_ResetCellTextFlag(const int row, const in
 void FastTableWidget::verticalHeader_ResetBackgroundBrush(const int row, const int column)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row<mVerticalHeader_BackgroundBrushes.length());
+    FASTTABLE_ASSERT(column<mVerticalHeader_BackgroundBrushes.at(row).length());
 
     if (mVerticalHeader_BackgroundBrushes.at(row).at(column))
     {
@@ -907,6 +1038,9 @@ void FastTableWidget::verticalHeader_ResetForegroundColor(const int row, const i
 {
     START_PROFILE;
 
+    FASTTABLE_ASSERT(row<mVerticalHeader_ForegroundColors.length());
+    FASTTABLE_ASSERT(column<mVerticalHeader_ForegroundColors.at(row).length());
+
     if (mVerticalHeader_ForegroundColors.at(row).at(column))
     {
         delete mVerticalHeader_ForegroundColors.at(row).at(column);
@@ -921,6 +1055,9 @@ void FastTableWidget::verticalHeader_ResetForegroundColor(const int row, const i
 void FastTableWidget::verticalHeader_ResetFont(const int row, const int column)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row<mVerticalHeader_CellFonts.length());
+    FASTTABLE_ASSERT(column<mVerticalHeader_CellFonts.at(row).length());
 
     if (mVerticalHeader_CellFonts.at(row).at(column))
     {
@@ -937,6 +1074,9 @@ void FastTableWidget::verticalHeader_ResetCellTextFlag(const int row, const int 
 {
     START_PROFILE;
 
+    FASTTABLE_ASSERT(row<mVerticalHeader_CellTextFlags.length());
+    FASTTABLE_ASSERT(column<mVerticalHeader_CellTextFlags.at(row).length());
+
     mVerticalHeader_CellTextFlags[row][column]=FASTTABLE_DEFAULT_TEXT_FLAG;
 
     update();
@@ -947,6 +1087,24 @@ void FastTableWidget::verticalHeader_ResetCellTextFlag(const int row, const int 
 void FastTableWidget::insertRow(int row)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<=mBackgroundBrushes.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mForegroundColors.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mCellFonts.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mCellTextFlags.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mCellMergeX.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mCellMergeY.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mCellMergeParentRow.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mCellMergeParentColumn.length());
+
+    FASTTABLE_ASSERT(row>=0 && row<=mVerticalHeader_BackgroundBrushes.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mVerticalHeader_ForegroundColors.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mVerticalHeader_CellFonts.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mVerticalHeader_CellTextFlags.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mVerticalHeader_CellMergeX.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mVerticalHeader_CellMergeY.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mVerticalHeader_CellMergeParentRow.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mVerticalHeader_CellMergeParentColumn.length());
 
     CustomFastTableWidget::insertRow(row);
 
@@ -1004,6 +1162,24 @@ void FastTableWidget::insertRow(int row)
 void FastTableWidget::deleteRow(int row)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mBackgroundBrushes.length());
+    FASTTABLE_ASSERT(row>=0 && row<mForegroundColors.length());
+    FASTTABLE_ASSERT(row>=0 && row<mCellFonts.length());
+    FASTTABLE_ASSERT(row>=0 && row<mCellTextFlags.length());
+    FASTTABLE_ASSERT(row>=0 && row<mCellMergeX.length());
+    FASTTABLE_ASSERT(row>=0 && row<mCellMergeY.length());
+    FASTTABLE_ASSERT(row>=0 && row<mCellMergeParentRow.length());
+    FASTTABLE_ASSERT(row>=0 && row<mCellMergeParentColumn.length());
+
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_BackgroundBrushes.length());
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_ForegroundColors.length());
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellFonts.length());
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellTextFlags.length());
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellMergeX.length());
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellMergeY.length());
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellMergeParentRow.length());
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellMergeParentColumn.length());
 
     for (int i=0; i<mColumnCount; ++i)
     {
@@ -1072,6 +1248,15 @@ void FastTableWidget::insertColumn(int column)
 
     for (int i=0; i<mData.length(); ++i)
     {
+        FASTTABLE_ASSERT(column>=0 && column<=mBackgroundBrushes.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mForegroundColors.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mCellFonts.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mCellTextFlags.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mCellMergeX.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mCellMergeY.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mCellMergeParentRow.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mCellMergeParentColumn.at(i).length());
+
         mBackgroundBrushes[i].insert(column, 0);
         mForegroundColors[i].insert(column, 0);
         mCellFonts[i].insert(column, 0);
@@ -1084,6 +1269,15 @@ void FastTableWidget::insertColumn(int column)
 
     for (int i=0; i<mHorizontalHeader_Data.length(); ++i)
     {
+        FASTTABLE_ASSERT(column>=0 && column<=mHorizontalHeader_BackgroundBrushes.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mHorizontalHeader_ForegroundColors.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mHorizontalHeader_CellFonts.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mHorizontalHeader_CellTextFlags.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mHorizontalHeader_CellMergeX.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mHorizontalHeader_CellMergeY.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mHorizontalHeader_CellMergeParentRow.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mHorizontalHeader_CellMergeParentColumn.at(i).length());
+
         mHorizontalHeader_BackgroundBrushes[i].insert(column, 0);
         mHorizontalHeader_ForegroundColors[i].insert(column, 0);
         mHorizontalHeader_CellFonts[i].insert(column, 0);
@@ -1103,6 +1297,15 @@ void FastTableWidget::deleteColumn(int column)
 
     for (int i=0; i<mData.length(); ++i)
     {
+        FASTTABLE_ASSERT(column>=0 && column<mBackgroundBrushes.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mForegroundColors.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mCellFonts.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mCellTextFlags.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mCellMergeX.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mCellMergeY.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mCellMergeParentRow.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mCellMergeParentColumn.at(i).length());
+
         if (mBackgroundBrushes.at(i).at(column))
         {
             delete mBackgroundBrushes.at(i).at(column);
@@ -1130,6 +1333,15 @@ void FastTableWidget::deleteColumn(int column)
 
     for (int i=0; i<mHorizontalHeader_Data.length(); ++i)
     {
+        FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_BackgroundBrushes.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_ForegroundColors.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellFonts.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellTextFlags.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellMergeX.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellMergeY.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellMergeParentRow.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellMergeParentColumn.at(i).length());
+
         if (mHorizontalHeader_BackgroundBrushes.at(i).at(column))
         {
             delete mHorizontalHeader_BackgroundBrushes.at(i).at(column);
@@ -1163,6 +1375,15 @@ void FastTableWidget::deleteColumn(int column)
 void FastTableWidget::horizontalHeader_InsertRow(int row)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<=mHorizontalHeader_BackgroundBrushes.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mHorizontalHeader_ForegroundColors.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mHorizontalHeader_CellFonts.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mHorizontalHeader_CellTextFlags.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mHorizontalHeader_CellMergeX.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mHorizontalHeader_CellMergeY.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mHorizontalHeader_CellMergeParentRow.length());
+    FASTTABLE_ASSERT(row>=0 && row<=mHorizontalHeader_CellMergeParentColumn.length());
 
     CustomFastTableWidget::horizontalHeader_InsertRow(row);
 
@@ -1199,6 +1420,15 @@ void FastTableWidget::horizontalHeader_InsertRow(int row)
 void FastTableWidget::horizontalHeader_DeleteRow(int row)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_BackgroundBrushes.length());
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_ForegroundColors.length());
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellFonts.length());
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellTextFlags.length());
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellMergeX.length());
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellMergeY.length());
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellMergeParentRow.length());
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellMergeParentColumn.length());
 
     for (int i=0; i<mColumnCount; ++i)
     {
@@ -1240,6 +1470,15 @@ void FastTableWidget::verticalHeader_InsertColumn(int column)
 
     for (int i=0; i<mData.length(); ++i)
     {
+        FASTTABLE_ASSERT(column>=0 && column<=mVerticalHeader_BackgroundBrushes.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mVerticalHeader_ForegroundColors.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mVerticalHeader_CellFonts.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mVerticalHeader_CellTextFlags.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mVerticalHeader_CellMergeX.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mVerticalHeader_CellMergeY.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mVerticalHeader_CellMergeParentRow.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<=mVerticalHeader_CellMergeParentColumn.at(i).length());
+
         mVerticalHeader_BackgroundBrushes[i].insert(column, 0);
         mVerticalHeader_ForegroundColors[i].insert(column, 0);
         mVerticalHeader_CellFonts[i].insert(column, 0);
@@ -1259,6 +1498,15 @@ void FastTableWidget::verticalHeader_DeleteColumn(int column)
 
     for (int i=0; i<mData.length(); ++i)
     {
+        FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_BackgroundBrushes.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_ForegroundColors.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellFonts.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellTextFlags.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellMergeX.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellMergeY.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellMergeParentRow.at(i).length());
+        FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellMergeParentColumn.at(i).length());
+
         if (mVerticalHeader_BackgroundBrushes.at(i).at(column))
         {
             delete mVerticalHeader_BackgroundBrushes.at(i).at(column);
@@ -1293,6 +1541,9 @@ QBrush FastTableWidget::backgroundBrush(const int row, const int column)
 {
     START_PROFILE;
 
+    FASTTABLE_ASSERT(row>=0 && row<mBackgroundBrushes.length());
+    FASTTABLE_ASSERT(column>=0 && column<mBackgroundBrushes.at(row).length());
+
     QBrush *aBrush=mBackgroundBrushes.at(row).at(column);
 
     if (aBrush==0)
@@ -1308,6 +1559,9 @@ QBrush FastTableWidget::backgroundBrush(const int row, const int column)
 void FastTableWidget::setBackgroundBrush(const int row, const int column, const QBrush brush)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mBackgroundBrushes.length());
+    FASTTABLE_ASSERT(column>=0 && column<mBackgroundBrushes.at(row).length());
 
     if (mBackgroundBrushes.at(row).at(column))
     {
@@ -1327,6 +1581,9 @@ QBrush FastTableWidget::horizontalHeader_BackgroundBrush(const int row, const in
 {
     START_PROFILE;
 
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_BackgroundBrushes.length());
+    FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_BackgroundBrushes.at(row).length());
+
     QBrush *aBrush=mHorizontalHeader_BackgroundBrushes.at(row).at(column);
 
     if (aBrush==0)
@@ -1342,6 +1599,9 @@ QBrush FastTableWidget::horizontalHeader_BackgroundBrush(const int row, const in
 void FastTableWidget::horizontalHeader_SetBackgroundBrush(const int row, const int column, const QBrush brush)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_BackgroundBrushes.length());
+    FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_BackgroundBrushes.at(row).length());
 
     if (mHorizontalHeader_BackgroundBrushes.at(row).at(column))
     {
@@ -1361,6 +1621,9 @@ QBrush FastTableWidget::verticalHeader_BackgroundBrush(const int row, const int 
 {
     START_PROFILE;
 
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_BackgroundBrushes.length());
+    FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_BackgroundBrushes.at(row).length());
+
     QBrush *aBrush=mVerticalHeader_BackgroundBrushes.at(row).at(column);
 
     if (aBrush==0)
@@ -1376,6 +1639,9 @@ QBrush FastTableWidget::verticalHeader_BackgroundBrush(const int row, const int 
 void FastTableWidget::verticalHeader_SetBackgroundBrush(const int row, const int column, const QBrush brush)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_BackgroundBrushes.length());
+    FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_BackgroundBrushes.at(row).length());
 
     if (mVerticalHeader_BackgroundBrushes.at(row).at(column))
     {
@@ -1395,6 +1661,9 @@ QColor FastTableWidget::foregroundColor(const int row, const int column)
 {
     START_PROFILE;
 
+    FASTTABLE_ASSERT(row>=0 && row<mForegroundColors.length());
+    FASTTABLE_ASSERT(column>=0 && column<mForegroundColors.at(row).length());
+
     QColor *aColor=mForegroundColors.at(row).at(column);
 
     if (aColor==0)
@@ -1410,6 +1679,9 @@ QColor FastTableWidget::foregroundColor(const int row, const int column)
 void FastTableWidget::setForegroundColor(const int row, const int column, const QColor color)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mForegroundColors.length());
+    FASTTABLE_ASSERT(column>=0 && column<mForegroundColors.at(row).length());
 
     if (mForegroundColors.at(row).at(column))
     {
@@ -1429,6 +1701,9 @@ QColor FastTableWidget::horizontalHeader_ForegroundColor(const int row, const in
 {
     START_PROFILE;
 
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_ForegroundColors.length());
+    FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_ForegroundColors.at(row).length());
+
     QColor *aColor=mHorizontalHeader_ForegroundColors.at(row).at(column);
 
     if (aColor==0)
@@ -1444,6 +1719,9 @@ QColor FastTableWidget::horizontalHeader_ForegroundColor(const int row, const in
 void FastTableWidget::horizontalHeader_SetForegroundColor(const int row, const int column, const QColor color)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_ForegroundColors.length());
+    FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_ForegroundColors.at(row).length());
 
     if (mHorizontalHeader_ForegroundColors.at(row).at(column))
     {
@@ -1463,6 +1741,9 @@ QColor FastTableWidget::verticalHeader_ForegroundColor(const int row, const int 
 {
     START_PROFILE;
 
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_ForegroundColors.length());
+    FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_ForegroundColors.at(row).length());
+
     QColor *aColor=mVerticalHeader_ForegroundColors.at(row).at(column);
 
     if (aColor==0)
@@ -1478,6 +1759,9 @@ QColor FastTableWidget::verticalHeader_ForegroundColor(const int row, const int 
 void FastTableWidget::verticalHeader_SetForegroundColor(const int row, const int column, const QColor color)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_ForegroundColors.length());
+    FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_ForegroundColors.at(row).length());
 
     if (mVerticalHeader_ForegroundColors.at(row).at(column))
     {
@@ -1495,6 +1779,9 @@ void FastTableWidget::verticalHeader_SetForegroundColor(const int row, const int
 
 QFont FastTableWidget::cellFont(const int row, const int column)
 {
+    FASTTABLE_ASSERT(row>=0 && row<mCellFonts.length());
+    FASTTABLE_ASSERT(column>=0 && column<mCellFonts.at(row).length());
+
     if (mCellFonts.at(row).at(column))
     {
         return *mCellFonts.at(row).at(column);
@@ -1506,6 +1793,9 @@ QFont FastTableWidget::cellFont(const int row, const int column)
 void FastTableWidget::setCellFont(const int row, const int column, const QFont font)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mCellFonts.length());
+    FASTTABLE_ASSERT(column>=0 && column<mCellFonts.at(row).length());
 
     if (mCellFonts.at(row).at(column))
     {
@@ -1523,6 +1813,9 @@ void FastTableWidget::setCellFont(const int row, const int column, const QFont f
 
 QFont FastTableWidget::horizontalHeader_CellFont(const int row, const int column)
 {
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellFonts.length());
+    FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellFonts.at(row).length());
+
     if (mHorizontalHeader_CellFonts.at(row).at(column))
     {
         return *mHorizontalHeader_CellFonts.at(row).at(column);
@@ -1534,6 +1827,9 @@ QFont FastTableWidget::horizontalHeader_CellFont(const int row, const int column
 void FastTableWidget::horizontalHeader_SetCellFont(const int row, const int column, const QFont font)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellFonts.length());
+    FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellFonts.at(row).length());
 
     if (mHorizontalHeader_CellFonts.at(row).at(column))
     {
@@ -1551,6 +1847,9 @@ void FastTableWidget::horizontalHeader_SetCellFont(const int row, const int colu
 
 QFont FastTableWidget::verticalHeader_CellFont(const int row, const int column)
 {
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellFonts.length());
+    FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellFonts.at(row).length());
+
     if (mVerticalHeader_CellFonts.at(row).at(column))
     {
         return *mVerticalHeader_CellFonts.at(row).at(column);
@@ -1562,6 +1861,9 @@ QFont FastTableWidget::verticalHeader_CellFont(const int row, const int column)
 void FastTableWidget::verticalHeader_SetCellFont(const int row, const int column, const QFont font)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellFonts.length());
+    FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellFonts.at(row).length());
 
     if (mVerticalHeader_CellFonts.at(row).at(column))
     {
@@ -1579,12 +1881,18 @@ void FastTableWidget::verticalHeader_SetCellFont(const int row, const int column
 
 int FastTableWidget::cellTextFlags(const int row, const int column)
 {
+    FASTTABLE_ASSERT(row>=0 && row<mCellTextFlags.length());
+    FASTTABLE_ASSERT(column>=0 && column<mCellTextFlags.at(row).length());
+
     return mCellTextFlags.at(row).at(column);
 }
 
 void FastTableWidget::setCellTextFlags(const int row, const int column, const int flags)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mCellTextFlags.length());
+    FASTTABLE_ASSERT(column>=0 && column<mCellTextFlags.at(row).length());
 
     mCellTextFlags[row][column]=flags;
 
@@ -1595,12 +1903,18 @@ void FastTableWidget::setCellTextFlags(const int row, const int column, const in
 
 int FastTableWidget::horizontalHeader_CellTextFlags(const int row, const int column)
 {
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellTextFlags.length());
+    FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellTextFlags.at(row).length());
+
     return mHorizontalHeader_CellTextFlags.at(row).at(column);
 }
 
 void FastTableWidget::horizontalHeader_SetCellTextFlags(const int row, const int column, const int flags)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellTextFlags.length());
+    FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellTextFlags.at(row).length());
 
     mHorizontalHeader_CellTextFlags[row][column]=flags;
 
@@ -1611,12 +1925,18 @@ void FastTableWidget::horizontalHeader_SetCellTextFlags(const int row, const int
 
 int FastTableWidget::verticalHeader_CellTextFlags(const int row, const int column)
 {
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellTextFlags.length());
+    FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellTextFlags.at(row).length());
+
     return mVerticalHeader_CellTextFlags.at(row).at(column);
 }
 
 void FastTableWidget::verticalHeader_SetCellTextFlags(const int row, const int column, const int flags)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellTextFlags.length());
+    FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellTextFlags.at(row).length());
 
     mVerticalHeader_CellTextFlags[row][column]=flags;
 
@@ -1633,6 +1953,15 @@ void FastTableWidget::clearSpans()
     {
         for (int j=0; j<mColumnCount; ++j)
         {
+            FASTTABLE_ASSERT(i>=0 && i<mCellMergeX.length());
+            FASTTABLE_ASSERT(j>=0 && j<mCellMergeX.at(i).length());
+            FASTTABLE_ASSERT(i>=0 && i<mCellMergeY.length());
+            FASTTABLE_ASSERT(j>=0 && j<mCellMergeY.at(i).length());
+            FASTTABLE_ASSERT(i>=0 && i<mCellMergeParentRow.length());
+            FASTTABLE_ASSERT(j>=0 && j<mCellMergeParentRow.at(i).length());
+            FASTTABLE_ASSERT(i>=0 && i<mCellMergeParentColumn.length());
+            FASTTABLE_ASSERT(j>=0 && j<mCellMergeParentColumn.at(i).length());
+
             mCellMergeX[i][j]=1;
             mCellMergeY[i][j]=1;
             mCellMergeParentRow[i][j]=-1;
@@ -1648,6 +1977,15 @@ void FastTableWidget::clearSpans()
 void FastTableWidget::setSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mCellMergeX.length());
+    FASTTABLE_ASSERT(column>=0 && column<mCellMergeX.at(row).length());
+    FASTTABLE_ASSERT(row>=0 && row<mCellMergeY.length());
+    FASTTABLE_ASSERT(column>=0 && column<mCellMergeY.at(row).length());
+    FASTTABLE_ASSERT(row>=0 && row<mCellMergeParentRow.length());
+    FASTTABLE_ASSERT(column>=0 && column<mCellMergeParentRow.at(row).length());
+    FASTTABLE_ASSERT(row>=0 && row<mCellMergeParentColumn.length());
+    FASTTABLE_ASSERT(column>=0 && column<mCellMergeParentColumn.at(row).length());
 
     if (row+rowSpan>mRowCount)
     {
@@ -1676,11 +2014,21 @@ void FastTableWidget::setSpan(const int row, const int column, quint16 rowSpan, 
     {
         for (int j=0; j<columnSpan; ++j)
         {
+            FASTTABLE_ASSERT(row+i>=0 && row+i<mCellMergeParentRow.length());
+            FASTTABLE_ASSERT(column+j>=0 && column+j<mCellMergeParentRow.at(row+i).length());
+            FASTTABLE_ASSERT(row+i>=0 && row+i<mCellMergeParentColumn.length());
+            FASTTABLE_ASSERT(column+j>=0 && column+j<mCellMergeParentColumn.at(row+i).length());
+
             parentRow=mCellMergeParentRow.at(row+i).at(column+j);
             parentColumn=mCellMergeParentColumn.at(row+i).at(column+j);
 
             if (parentRow>=0 && parentColumn>=0)
             {
+                FASTTABLE_ASSERT(parentRow>=0 && parentRow<mCellMergeX.length());
+                FASTTABLE_ASSERT(parentColumn>=0 && parentColumn<mCellMergeX.at(parentRow).length());
+                FASTTABLE_ASSERT(parentRow>=0 && parentRow<mCellMergeY.length());
+                FASTTABLE_ASSERT(parentColumn>=0 && parentColumn<mCellMergeY.at(parentRow).length());
+
                 int parentSpanX=mCellMergeX.at(parentRow).at(parentColumn);
                 int parentSpanY=mCellMergeY.at(parentRow).at(parentColumn);
 
@@ -1688,6 +2036,11 @@ void FastTableWidget::setSpan(const int row, const int column, quint16 rowSpan, 
                 {
                     for (int h=0; h<parentSpanX; ++h)
                     {
+                        FASTTABLE_ASSERT(parentRow+g>=0 && parentRow+g<mCellMergeParentRow.length());
+                        FASTTABLE_ASSERT(parentColumn+h>=0 && parentColumn+h<mCellMergeParentRow.at(parentRow).length());
+                        FASTTABLE_ASSERT(parentRow+g>=0 && parentRow+g<mCellMergeParentColumn.length());
+                        FASTTABLE_ASSERT(parentColumn+h>=0 && parentColumn+h<mCellMergeParentColumn.at(parentRow).length());
+
                         mCellMergeParentRow[parentRow+g][parentColumn+h]=-1;
                         mCellMergeParentColumn[parentRow+g][parentColumn+h]=-1;
                     }
@@ -1720,6 +2073,9 @@ quint16 FastTableWidget::rowSpan(const int row, const int column)
 {
     START_PROFILE;
 
+    FASTTABLE_ASSERT(row>=0 && row<mCellMergeY.length());
+    FASTTABLE_ASSERT(column>=0 && column<mCellMergeY.at(row).length());
+
     return mCellMergeY.at(row).at(column);
 
     END_PROFILE("quint16 FastTableWidget::rowSpan(const int row, const int column)");
@@ -1729,6 +2085,9 @@ quint16 FastTableWidget::columnSpan(const int row, const int column)
 {
     START_PROFILE;
 
+    FASTTABLE_ASSERT(row>=0 && row<mCellMergeX.length());
+    FASTTABLE_ASSERT(column>=0 && column<mCellMergeX.at(row).length());
+
     return mCellMergeX.at(row).at(column);
 
     END_PROFILE("quint16 FastTableWidget::columnSpan(const int row, const int column)");
@@ -1737,6 +2096,11 @@ quint16 FastTableWidget::columnSpan(const int row, const int column)
 QPoint FastTableWidget::spanParent(const int row, const int column)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mCellMergeParentRow.length());
+    FASTTABLE_ASSERT(column>=0 && column<mCellMergeParentRow.at(row).length());
+    FASTTABLE_ASSERT(row>=0 && row<mCellMergeParentColumn.length());
+    FASTTABLE_ASSERT(column>=0 && column<mCellMergeParentColumn.at(row).length());
 
     return QPoint(mCellMergeParentColumn.at(row).at(column), mCellMergeParentRow.at(row).at(column));
 
@@ -1751,6 +2115,15 @@ void FastTableWidget::horizontalHeader_ClearSpans()
     {
         for (int j=0; j<mColumnCount; ++j)
         {
+            FASTTABLE_ASSERT(i>=0 && i<mHorizontalHeader_CellMergeX.length());
+            FASTTABLE_ASSERT(j>=0 && j<mHorizontalHeader_CellMergeX.at(i).length());
+            FASTTABLE_ASSERT(i>=0 && i<mHorizontalHeader_CellMergeY.length());
+            FASTTABLE_ASSERT(j>=0 && j<mHorizontalHeader_CellMergeY.at(i).length());
+            FASTTABLE_ASSERT(i>=0 && i<mHorizontalHeader_CellMergeParentRow.length());
+            FASTTABLE_ASSERT(j>=0 && j<mHorizontalHeader_CellMergeParentRow.at(i).length());
+            FASTTABLE_ASSERT(i>=0 && i<mHorizontalHeader_CellMergeParentColumn.length());
+            FASTTABLE_ASSERT(j>=0 && j<mHorizontalHeader_CellMergeParentColumn.at(i).length());
+
             mHorizontalHeader_CellMergeX[i][j]=1;
             mHorizontalHeader_CellMergeY[i][j]=1;
             mHorizontalHeader_CellMergeParentRow[i][j]=-1;
@@ -1766,6 +2139,15 @@ void FastTableWidget::horizontalHeader_ClearSpans()
 void FastTableWidget::horizontalHeader_SetSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellMergeX.length());
+    FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellMergeX.at(row).length());
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellMergeY.length());
+    FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellMergeY.at(row).length());
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellMergeParentRow.length());
+    FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellMergeParentRow.at(row).length());
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellMergeParentColumn.length());
+    FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellMergeParentColumn.at(row).length());
 
     if (row+rowSpan>mHorizontalHeader_RowCount)
     {
@@ -1794,11 +2176,21 @@ void FastTableWidget::horizontalHeader_SetSpan(const int row, const int column, 
     {
         for (int j=0; j<columnSpan; ++j)
         {
+            FASTTABLE_ASSERT(row+i>=0 && row+i<mHorizontalHeader_CellMergeParentRow.length());
+            FASTTABLE_ASSERT(column+j>=0 && column+j<mHorizontalHeader_CellMergeParentRow.at(row+i).length());
+            FASTTABLE_ASSERT(row+i>=0 && row+i<mHorizontalHeader_CellMergeParentColumn.length());
+            FASTTABLE_ASSERT(column+j>=0 && column+j<mHorizontalHeader_CellMergeParentColumn.at(row+i).length());
+
             parentRow=mHorizontalHeader_CellMergeParentRow.at(row+i).at(column+j);
             parentColumn=mHorizontalHeader_CellMergeParentColumn.at(row+i).at(column+j);
 
             if (parentRow>=0 && parentColumn>=0)
             {
+                FASTTABLE_ASSERT(parentRow>=0 && parentRow<mHorizontalHeader_CellMergeX.length());
+                FASTTABLE_ASSERT(parentColumn>=0 && parentColumn<mHorizontalHeader_CellMergeX.at(parentRow).length());
+                FASTTABLE_ASSERT(parentRow>=0 && parentRow<mHorizontalHeader_CellMergeY.length());
+                FASTTABLE_ASSERT(parentColumn>=0 && parentColumn<mHorizontalHeader_CellMergeY.at(parentRow).length());
+
                 int parentSpanX=mHorizontalHeader_CellMergeX.at(parentRow).at(parentColumn);
                 int parentSpanY=mHorizontalHeader_CellMergeY.at(parentRow).at(parentColumn);
 
@@ -1806,6 +2198,11 @@ void FastTableWidget::horizontalHeader_SetSpan(const int row, const int column, 
                 {
                     for (int h=0; h<parentSpanX; ++h)
                     {
+                        FASTTABLE_ASSERT(parentRow+g>=0 && parentRow+g<mHorizontalHeader_CellMergeParentRow.length());
+                        FASTTABLE_ASSERT(parentColumn+h>=0 && parentColumn+h<mHorizontalHeader_CellMergeParentRow.at(parentRow).length());
+                        FASTTABLE_ASSERT(parentRow+g>=0 && parentRow+g<mHorizontalHeader_CellMergeParentColumn.length());
+                        FASTTABLE_ASSERT(parentColumn+h>=0 && parentColumn+h<mHorizontalHeader_CellMergeParentColumn.at(parentRow).length());
+
                         mHorizontalHeader_CellMergeParentRow[parentRow+g][parentColumn+h]=-1;
                         mHorizontalHeader_CellMergeParentColumn[parentRow+g][parentColumn+h]=-1;
                     }
@@ -1838,6 +2235,9 @@ quint16 FastTableWidget::horizontalHeader_RowSpan(const int row, const int colum
 {
     START_PROFILE;
 
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellMergeY.length());
+    FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellMergeY.at(row).length());
+
     return mHorizontalHeader_CellMergeY.at(row).at(column);
 
     END_PROFILE("quint16 FastTableWidget::horizontalHeader_RowSpan(const int row, const int column)");
@@ -1847,6 +2247,9 @@ quint16 FastTableWidget::horizontalHeader_ColumnSpan(const int row, const int co
 {
     START_PROFILE;
 
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellMergeX.length());
+    FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellMergeX.at(row).length());
+
     return mHorizontalHeader_CellMergeX.at(row).at(column);
 
     END_PROFILE("quint16 FastTableWidget::horizontalHeader_ColumnSpan(const int row, const int column)");
@@ -1855,6 +2258,11 @@ quint16 FastTableWidget::horizontalHeader_ColumnSpan(const int row, const int co
 QPoint FastTableWidget::horizontalHeader_SpanParent(const int row, const int column)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellMergeParentRow.length());
+    FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellMergeParentRow.at(row).length());
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_CellMergeParentColumn.length());
+    FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_CellMergeParentColumn.at(row).length());
 
     return QPoint(mHorizontalHeader_CellMergeParentColumn.at(row).at(column), mHorizontalHeader_CellMergeParentRow.at(row).at(column));
 
@@ -1869,6 +2277,15 @@ void FastTableWidget::verticalHeader_ClearSpans()
     {
         for (int j=0; j<mVerticalHeader_ColumnCount; ++j)
         {
+            FASTTABLE_ASSERT(i>=0 && i<mVerticalHeader_CellMergeX.length());
+            FASTTABLE_ASSERT(j>=0 && j<mVerticalHeader_CellMergeX.at(i).length());
+            FASTTABLE_ASSERT(i>=0 && i<mVerticalHeader_CellMergeY.length());
+            FASTTABLE_ASSERT(j>=0 && j<mVerticalHeader_CellMergeY.at(i).length());
+            FASTTABLE_ASSERT(i>=0 && i<mVerticalHeader_CellMergeParentRow.length());
+            FASTTABLE_ASSERT(j>=0 && j<mVerticalHeader_CellMergeParentRow.at(i).length());
+            FASTTABLE_ASSERT(i>=0 && i<mVerticalHeader_CellMergeParentColumn.length());
+            FASTTABLE_ASSERT(j>=0 && j<mVerticalHeader_CellMergeParentColumn.at(i).length());
+
             mVerticalHeader_CellMergeX[i][j]=1;
             mVerticalHeader_CellMergeY[i][j]=1;
             mVerticalHeader_CellMergeParentRow[i][j]=-1;
@@ -1884,6 +2301,15 @@ void FastTableWidget::verticalHeader_ClearSpans()
 void FastTableWidget::verticalHeader_SetSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellMergeX.length());
+    FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellMergeX.at(row).length());
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellMergeY.length());
+    FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellMergeY.at(row).length());
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellMergeParentRow.length());
+    FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellMergeParentRow.at(row).length());
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellMergeParentColumn.length());
+    FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellMergeParentColumn.at(row).length());
 
     if (row+rowSpan>mRowCount)
     {
@@ -1912,11 +2338,21 @@ void FastTableWidget::verticalHeader_SetSpan(const int row, const int column, qu
     {
         for (int j=0; j<columnSpan; ++j)
         {
+            FASTTABLE_ASSERT(row+i>=0 && row+i<mVerticalHeader_CellMergeParentRow.length());
+            FASTTABLE_ASSERT(column+j>=0 && column+j<mVerticalHeader_CellMergeParentRow.at(row+i).length());
+            FASTTABLE_ASSERT(row+i>=0 && row+i<mVerticalHeader_CellMergeParentColumn.length());
+            FASTTABLE_ASSERT(column+j>=0 && column+j<mVerticalHeader_CellMergeParentColumn.at(row+i).length());
+
             parentRow=mVerticalHeader_CellMergeParentRow.at(row+i).at(column+j);
             parentColumn=mVerticalHeader_CellMergeParentColumn.at(row+i).at(column+j);
 
             if (parentRow>=0 && parentColumn>=0)
             {
+                FASTTABLE_ASSERT(parentRow>=0 && parentRow<mVerticalHeader_CellMergeX.length());
+                FASTTABLE_ASSERT(parentColumn>=0 && parentColumn<mVerticalHeader_CellMergeX.at(parentRow).length());
+                FASTTABLE_ASSERT(parentRow>=0 && parentRow<mVerticalHeader_CellMergeY.length());
+                FASTTABLE_ASSERT(parentColumn>=0 && parentColumn<mVerticalHeader_CellMergeY.at(parentRow).length());
+
                 int parentSpanX=mVerticalHeader_CellMergeX.at(parentRow).at(parentColumn);
                 int parentSpanY=mVerticalHeader_CellMergeY.at(parentRow).at(parentColumn);
 
@@ -1924,6 +2360,11 @@ void FastTableWidget::verticalHeader_SetSpan(const int row, const int column, qu
                 {
                     for (int h=0; h<parentSpanX; ++h)
                     {
+                        FASTTABLE_ASSERT(parentRow+g>=0 && parentRow+g<mVerticalHeader_CellMergeParentRow.length());
+                        FASTTABLE_ASSERT(parentColumn+h>=0 && parentColumn+h<mVerticalHeader_CellMergeParentRow.at(parentRow).length());
+                        FASTTABLE_ASSERT(parentRow+g>=0 && parentRow+g<mVerticalHeader_CellMergeParentColumn.length());
+                        FASTTABLE_ASSERT(parentColumn+h>=0 && parentColumn+h<mVerticalHeader_CellMergeParentColumn.at(parentRow).length());
+
                         mVerticalHeader_CellMergeParentRow[parentRow+g][parentColumn+h]=-1;
                         mVerticalHeader_CellMergeParentColumn[parentRow+g][parentColumn+h]=-1;
                     }
@@ -1956,6 +2397,9 @@ quint16 FastTableWidget::verticalHeader_RowSpan(const int row, const int column)
 {
     START_PROFILE;
 
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellMergeY.length());
+    FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellMergeY.at(row).length());
+
     return mVerticalHeader_CellMergeY.at(row).at(column);
 
     END_PROFILE("quint16 FastTableWidget::verticalHeader_RowSpan(const int row, const int column)");
@@ -1965,6 +2409,9 @@ quint16 FastTableWidget::verticalHeader_ColumnSpan(const int row, const int colu
 {
     START_PROFILE;
 
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellMergeX.length());
+    FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellMergeX.at(row).length());
+
     return mVerticalHeader_CellMergeX.at(row).at(column);
 
     END_PROFILE("quint16 FastTableWidget::verticalHeader_ColumnSpan(const int row, const int column)");
@@ -1973,6 +2420,11 @@ quint16 FastTableWidget::verticalHeader_ColumnSpan(const int row, const int colu
 QPoint FastTableWidget::verticalHeader_SpanParent(const int row, const int column)
 {
     START_PROFILE;
+
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellMergeParentRow.length());
+    FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellMergeParentRow.at(row).length());
+    FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellMergeParentColumn.length());
+    FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_CellMergeParentColumn.at(row).length());
 
     return QPoint(mVerticalHeader_CellMergeParentColumn.at(row).at(column), mVerticalHeader_CellMergeParentRow.at(row).at(column));
 
