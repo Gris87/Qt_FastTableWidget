@@ -1926,7 +1926,7 @@ void CustomFastTableWidget::horizontalHeader_SetText(const int column, const QSt
 
     for (int i=0; i<mHorizontalHeader_RowCount; ++i)
     {
-        FASTTABLE_ASSERT(i<mHorizontalHeader_RowCount.length());
+        FASTTABLE_ASSERT(i<mHorizontalHeader_Data.length());
         FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_Data.at(i).length());
 
         mHorizontalHeader_Data[i][column]=text;

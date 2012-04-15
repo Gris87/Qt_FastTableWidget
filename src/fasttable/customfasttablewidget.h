@@ -14,7 +14,7 @@
 #include "qdebug.h"
 
 #if 1
-    #define FASTTABLE_ASSERT(condition) Q_ASSERT(FASTTABLE_ASSERT)
+    #define FASTTABLE_ASSERT(condition) Q_ASSERT(condition)
 #else
     #define FASTTABLE_ASSERT(condition)
 #endif
