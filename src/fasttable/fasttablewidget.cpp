@@ -497,58 +497,58 @@ void FastTableWidget::updateVisibleRange()
 
     if (originalLeft>=0)
     {
-        for (int i=0; i<mRowCount; ++i)
+        for (int i=0; i<mCellMergeParentColumn.length(); ++i)
         {
-            FASTTABLE_ASSERT(i<mCellMergeParentColumn.length());
-            FASTTABLE_ASSERT(originalLeft<mCellMergeParentColumn.at(i).length());
-
-            int parentColumn=mCellMergeParentColumn.at(i).at(originalLeft);
-
-            if (parentColumn>=0 &&parentColumn<mVisibleLeft)
+            if (originalLeft<mCellMergeParentColumn.at(i).length())
             {
-                mVisibleLeft=parentColumn;
+                int parentColumn=mCellMergeParentColumn.at(i).at(originalLeft);
+
+                if (parentColumn>=0 &&parentColumn<mVisibleLeft)
+                {
+                    mVisibleLeft=parentColumn;
+                }
             }
         }
 
-        for (int i=0; i<mHorizontalHeader_RowCount; ++i)
+        for (int i=0; i<mHorizontalHeader_CellMergeParentColumn.length(); ++i)
         {
-            FASTTABLE_ASSERT(i<mHorizontalHeader_CellMergeParentColumn.length());
-            FASTTABLE_ASSERT(originalLeft<mHorizontalHeader_CellMergeParentColumn.at(i).length());
-
-            int parentColumn=mHorizontalHeader_CellMergeParentColumn.at(i).at(originalLeft);
-
-            if (parentColumn>=0 &&parentColumn<mVisibleLeft)
+            if (originalLeft<mHorizontalHeader_CellMergeParentColumn.at(i).length())
             {
-                mVisibleLeft=parentColumn;
+                int parentColumn=mHorizontalHeader_CellMergeParentColumn.at(i).at(originalLeft);
+
+                if (parentColumn>=0 &&parentColumn<mVisibleLeft)
+                {
+                    mVisibleLeft=parentColumn;
+                }
             }
         }
     }
 
     if (originalTop>=0)
     {
-        for (int i=0; i<mColumnCount; ++i)
+        if (originalTop<mCellMergeParentRow.length())
         {
-            FASTTABLE_ASSERT(i<mCellMergeParentRow.length());
-            FASTTABLE_ASSERT(originalTop<mCellMergeParentRow.at(i).length());
-
-            int parentRow=mCellMergeParentRow.at(originalTop).at(i);
-
-            if (parentRow>=0 && parentRow<mVisibleTop)
+            for (int i=0; i<mCellMergeParentRow.at(originalTop).length(); ++i)
             {
-                mVisibleTop=parentRow;
+                int parentRow=mCellMergeParentRow.at(originalTop).at(i);
+
+                if (parentRow>=0 && parentRow<mVisibleTop)
+                {
+                    mVisibleTop=parentRow;
+                }
             }
         }
 
-        for (int i=0; i<mVerticalHeader_ColumnCount; ++i)
+        if (originalTop<mVerticalHeader_CellMergeParentRow.length())
         {
-            FASTTABLE_ASSERT(i<mVerticalHeader_CellMergeParentRow.length());
-            FASTTABLE_ASSERT(originalTop<mVerticalHeader_CellMergeParentRow.at(i).length());
-
-            int parentRow=mVerticalHeader_CellMergeParentRow.at(originalTop).at(i);
-
-            if (parentRow>=0 && parentRow<mVisibleTop)
+            for (int i=0; i<mVerticalHeader_CellMergeParentRow.at(originalTop).length(); ++i)
             {
-                mVisibleTop=parentRow;
+                int parentRow=mVerticalHeader_CellMergeParentRow.at(originalTop).at(i);
+
+                if (parentRow>=0 && parentRow<mVisibleTop)
+                {
+                    mVisibleTop=parentRow;
+                }
             }
         }
     }
