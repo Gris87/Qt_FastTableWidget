@@ -85,106 +85,275 @@ void ControllerDialog::on_insertRowButton_clicked()
 
 void ControllerDialog::on_deleteRowButton_clicked()
 {
-    QInputDialog dialog(this);
-
-    dialog.setWindowTitle("Input row");
-    dialog.setIntMinimum(0);
-    dialog.setIntMaximum(mFastTableWidget->rowCount());
-    dialog.setIntValue(0);
-
-    if (dialog.exec())
+    if (mFastTableWidget->rowCount()>0)
     {
-        mFastTableWidget->deleteRow(dialog.intValue());
+        QInputDialog dialog(this);
 
-        disconnect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
-        ui->rowCountSpinBox->setValue(mFastTableWidget->rowCount());
-        connect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
+        dialog.setWindowTitle("Delete row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount());
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            mFastTableWidget->deleteRow(dialog.intValue());
+
+            disconnect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
+            ui->rowCountSpinBox->setValue(mFastTableWidget->rowCount());
+            connect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
+        }
     }
 }
 
 void ControllerDialog::on_addColumnButton_clicked()
 {
+    mFastTableWidget->addColumn();
 
+    disconnect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
+    ui->columnCountSpinBox->setValue(mFastTableWidget->columnCount());
+    connect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
 }
 
 void ControllerDialog::on_insertColumnButton_clicked()
 {
+    QInputDialog dialog(this);
 
+    dialog.setWindowTitle("Input column");
+    dialog.setIntMinimum(0);
+    dialog.setIntMaximum(mFastTableWidget->columnCount());
+    dialog.setIntValue(0);
+
+    if (dialog.exec())
+    {
+        mFastTableWidget->insertColumn(dialog.intValue());
+
+        disconnect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
+        ui->columnCountSpinBox->setValue(mFastTableWidget->columnCount());
+        connect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
+    }
 }
 
 void ControllerDialog::on_deleteColumnButton_clicked()
 {
+    if (mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Delete column");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->columnCount());
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            mFastTableWidget->deleteColumn(dialog.intValue());
+
+            disconnect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
+            ui->columnCountSpinBox->setValue(mFastTableWidget->columnCount());
+            connect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
+        }
+    }
 }
 
 void ControllerDialog::on_addHeaderRowButton_clicked()
 {
+    mFastTableWidget->horizontalHeader_AddRow();
 
+    disconnect(ui->horizontalHeaderRowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalHeaderRowCountSpinBox_valueChanged(int)));
+    ui->horizontalHeaderRowCountSpinBox->setValue(mFastTableWidget->horizontalHeader_RowCount());
+    connect(ui->horizontalHeaderRowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalHeaderRowCountSpinBox_valueChanged(int)));
 }
 
 void ControllerDialog::on_insertHeaderRowButton_clicked()
 {
+    QInputDialog dialog(this);
 
+    dialog.setWindowTitle("Input row");
+    dialog.setIntMinimum(0);
+    dialog.setIntMaximum(mFastTableWidget->horizontalHeader_RowCount());
+    dialog.setIntValue(0);
+
+    if (dialog.exec())
+    {
+        mFastTableWidget->horizontalHeader_InsertRow(dialog.intValue());
+
+        disconnect(ui->horizontalHeaderRowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalHeaderRowCountSpinBox_valueChanged(int)));
+        ui->horizontalHeaderRowCountSpinBox->setValue(mFastTableWidget->horizontalHeader_RowCount());
+        connect(ui->horizontalHeaderRowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalHeaderRowCountSpinBox_valueChanged(int)));
+    }
 }
 
 void ControllerDialog::on_deleteHeaderRowButton_clicked()
 {
+    if (mFastTableWidget->horizontalHeader_RowCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Delete row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->horizontalHeader_RowCount());
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            mFastTableWidget->horizontalHeader_DeleteRow(dialog.intValue());
+
+            disconnect(ui->horizontalHeaderRowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalHeaderRowCountSpinBox_valueChanged(int)));
+            ui->horizontalHeaderRowCountSpinBox->setValue(mFastTableWidget->horizontalHeader_RowCount());
+            connect(ui->horizontalHeaderRowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalHeaderRowCountSpinBox_valueChanged(int)));
+        }
+    }
 }
 
 void ControllerDialog::on_addHeaderColumnButton_clicked()
 {
+    mFastTableWidget->verticalHeader_AddColumn();
 
+    disconnect(ui->verticalHeaderColumnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_verticalHeaderColumnCountSpinBox_valueChanged(int)));
+    ui->verticalHeaderColumnCountSpinBox->setValue(mFastTableWidget->verticalHeader_ColumnCount());
+    connect(ui->verticalHeaderColumnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_verticalHeaderColumnCountSpinBox_valueChanged(int)));
 }
 
 void ControllerDialog::on_insertHeaderColumnButton_clicked()
 {
+    QInputDialog dialog(this);
 
+    dialog.setWindowTitle("Input column");
+    dialog.setIntMinimum(0);
+    dialog.setIntMaximum(mFastTableWidget->verticalHeader_ColumnCount());
+    dialog.setIntValue(0);
+
+    if (dialog.exec())
+    {
+        mFastTableWidget->verticalHeader_InsertColumn(dialog.intValue());
+
+        disconnect(ui->verticalHeaderColumnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_verticalHeaderColumnCountSpinBox_valueChanged(int)));
+        ui->verticalHeaderColumnCountSpinBox->setValue(mFastTableWidget->verticalHeader_ColumnCount());
+        connect(ui->verticalHeaderColumnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_verticalHeaderColumnCountSpinBox_valueChanged(int)));
+    }
 }
 
 void ControllerDialog::on_deleteHeaderColumnButton_clicked()
 {
+    if (mFastTableWidget->verticalHeader_ColumnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Delete column");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->verticalHeader_ColumnCount());
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            mFastTableWidget->verticalHeader_DeleteColumn(dialog.intValue());
+
+            disconnect(ui->verticalHeaderColumnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_verticalHeaderColumnCountSpinBox_valueChanged(int)));
+            ui->verticalHeaderColumnCountSpinBox->setValue(mFastTableWidget->verticalHeader_ColumnCount());
+            connect(ui->verticalHeaderColumnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_verticalHeaderColumnCountSpinBox_valueChanged(int)));
+        }
+    }
 }
 
 void ControllerDialog::on_clearButton_clicked()
 {
     mFastTableWidget->clear();
 
-    ui->rowCountSpinBox->setValue(0);
-    ui->columnCountSpinBox->setValue(0);
-    ui->horizontalHeaderRowCountSpinBox->setValue(0);
-    ui->verticalHeaderColumnCountSpinBox->setValue(0);
+    disconnect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
+    disconnect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
+    disconnect(ui->horizontalHeaderRowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalHeaderRowCountSpinBox_valueChanged(int)));
+    disconnect(ui->verticalHeaderColumnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_verticalHeaderColumnCountSpinBox_valueChanged(int)));
+    ui->rowCountSpinBox->setValue(mFastTableWidget->rowCount());
+    ui->columnCountSpinBox->setValue(mFastTableWidget->columnCount());
+    ui->horizontalHeaderRowCountSpinBox->setValue(mFastTableWidget->horizontalHeader_RowCount());
+    ui->verticalHeaderColumnCountSpinBox->setValue(mFastTableWidget->verticalHeader_ColumnCount());
+    connect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
+    connect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
+    connect(ui->horizontalHeaderRowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalHeaderRowCountSpinBox_valueChanged(int)));
+    connect(ui->verticalHeaderColumnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_verticalHeaderColumnCountSpinBox_valueChanged(int)));
 }
 
 void ControllerDialog::on_selectRowButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount());
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            mFastTableWidget->selectRow(dialog.intValue());
+        }
+    }
 }
 
 void ControllerDialog::on_unselectRowButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0)
+    {
+        QInputDialog dialog(this);
+
+        dialog.setWindowTitle("Unselect row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount());
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            mFastTableWidget->unselectRow(dialog.intValue());
+        }
+    }
 
 }
 
 void ControllerDialog::on_selectColumnButton_clicked()
 {
+    if (mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select column");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->columnCount());
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            mFastTableWidget->selectColumn(dialog.intValue());
+        }
+    }
 }
 
 void ControllerDialog::on_unselectColumnButton_clicked()
 {
+    if (mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Unselect column");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->columnCount());
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            mFastTableWidget->unselectColumn(dialog.intValue());
+        }
+    }
 }
 
 void ControllerDialog::on_selectAllButton_clicked()
 {
-
+    mFastTableWidget->selectAll();
 }
 
 void ControllerDialog::on_unselectAllButton_clicked()
 {
-
+    mFastTableWidget->unselectAll();
 }
 
 void ControllerDialog::on_defaultBackgroundButton_clicked()
