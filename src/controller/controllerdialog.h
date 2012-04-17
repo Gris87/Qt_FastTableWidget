@@ -5,6 +5,7 @@
 #include "ui_controllerdialog.h"
 
 #include <QInputDialog>
+#include <QColorDialog>
 #include "qdebug.h"
 
 #include "src/controller/viewdialog.h"
@@ -59,6 +60,7 @@ private slots:
     void on_verticalDefaultForegroundButton_clicked();
     void on_verticalGridColorButton_clicked();
     void on_selectionColorButton_clicked();
+    void on_selectionTextColorButton_clicked();
     void on_defaultWidthSpinBox_valueChanged(int value);
     void on_defaultHeightSpinBox_valueChanged(int value);
     void on_columnWidthButton_clicked();
@@ -72,16 +74,6 @@ private slots:
     void on_columnCountViewButton_clicked();
     void on_horizontalHeaderRowCountViewButton_clicked();
     void on_verticalHeaderColumnCountViewButton_clicked();
-    void on_defaultBackgroundViewButton_clicked();
-    void on_defaultForegroundViewButton_clicked();
-    void on_gridColorViewButton_clicked();
-    void on_horizontalDefaultBackgroundViewButton_clicked();
-    void on_horizontalDefaultForegroundViewButton_clicked();
-    void on_horizontalGridColorViewButton_clicked();
-    void on_verticalDefaultBackgroundViewButton_clicked();
-    void on_verticalDefaultForegroundViewButton_clicked();
-    void on_verticalGridColorViewButton_clicked();
-    void on_selectionColorViewButton_clicked();
     void on_defaultWidthViewButton_clicked();
     void on_defaultHeightViewButton_clicked();
     void on_headerColumnWidthButton_clicked();

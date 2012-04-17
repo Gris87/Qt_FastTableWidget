@@ -11,6 +11,9 @@ ControllerDialog::ControllerDialog(QWidget *parent) :
     mFastTableWidget=new FastTableWidget(this);
     ui->fastTableLayout->insertWidget(0, mFastTableWidget);
 
+    ui->defaultWidthSpinBox->setValue(100);
+    ui->defaultHeightSpinBox->setValue(30);
+
     ui->rowCountSpinBox->setValue(50);
     ui->columnCountSpinBox->setValue(20);
     ui->horizontalHeaderRowCountSpinBox->setValue(1);
@@ -358,62 +361,155 @@ void ControllerDialog::on_unselectAllButton_clicked()
 
 void ControllerDialog::on_defaultBackgroundButton_clicked()
 {
+    QColorDialog dialog(this);
 
+    dialog.setWindowTitle("Default background color");
+    dialog.setCurrentColor(mFastTableWidget->defaultBackgroundBrush().color());
+
+    if (dialog.exec())
+    {
+        mFastTableWidget->setDefaultBackgroundBrush(QBrush(dialog.selectedColor()));
+    }
 }
 
 void ControllerDialog::on_defaultForegroundButton_clicked()
 {
+    QColorDialog dialog(this);
 
+    dialog.setWindowTitle("Default foreground color");
+    dialog.setCurrentColor(mFastTableWidget->defaultForegroundColor());
+
+    if (dialog.exec())
+    {
+        mFastTableWidget->setDefaultForegroundColor(dialog.selectedColor());
+    }
 }
 
 void ControllerDialog::on_gridColorButton_clicked()
 {
+    QColorDialog dialog(this);
 
+    dialog.setWindowTitle("Grid color");
+    dialog.setCurrentColor(mFastTableWidget->gridColor());
+
+    if (dialog.exec())
+    {
+        mFastTableWidget->setGridColor(dialog.selectedColor());
+    }
 }
 
 void ControllerDialog::on_horizontalDefaultBackgroundButton_clicked()
 {
+    QColorDialog dialog(this);
 
+    dialog.setWindowTitle("Default background color");
+    dialog.setCurrentColor(mFastTableWidget->horizontalHeader_DefaultBackgroundBrush().color());
+
+    if (dialog.exec())
+    {
+        mFastTableWidget->horizontalHeader_SetDefaultBackgroundBrush(QBrush(dialog.selectedColor()));
+    }
 }
 
 void ControllerDialog::on_horizontalDefaultForegroundButton_clicked()
 {
+    QColorDialog dialog(this);
 
+    dialog.setWindowTitle("Default foreground color");
+    dialog.setCurrentColor(mFastTableWidget->horizontalHeader_DefaultForegroundColor());
+
+    if (dialog.exec())
+    {
+        mFastTableWidget->horizontalHeader_SetDefaultForegroundColor(dialog.selectedColor());
+    }
 }
 
 void ControllerDialog::on_horizontalGridColorButton_clicked()
 {
+    QColorDialog dialog(this);
 
+    dialog.setWindowTitle("Grid color");
+    dialog.setCurrentColor(mFastTableWidget->horizontalHeader_GridColor());
+
+    if (dialog.exec())
+    {
+        mFastTableWidget->horizontalHeader_SetGridColor(dialog.selectedColor());
+    }
 }
 
 void ControllerDialog::on_verticalDefaultBackgroundButton_clicked()
 {
+    QColorDialog dialog(this);
 
+    dialog.setWindowTitle("Default background color");
+    dialog.setCurrentColor(mFastTableWidget->verticalHeader_DefaultBackgroundBrush().color());
+
+    if (dialog.exec())
+    {
+        mFastTableWidget->verticalHeader_SetDefaultBackgroundBrush(QBrush(dialog.selectedColor()));
+    }
 }
 
 void ControllerDialog::on_verticalDefaultForegroundButton_clicked()
 {
+    QColorDialog dialog(this);
 
+    dialog.setWindowTitle("Default foreground color");
+    dialog.setCurrentColor(mFastTableWidget->verticalHeader_DefaultForegroundColor());
+
+    if (dialog.exec())
+    {
+        mFastTableWidget->verticalHeader_SetDefaultForegroundColor(dialog.selectedColor());
+    }
 }
 
 void ControllerDialog::on_verticalGridColorButton_clicked()
 {
+    QColorDialog dialog(this);
 
+    dialog.setWindowTitle("Grid color");
+    dialog.setCurrentColor(mFastTableWidget->verticalHeader_GridColor());
+
+    if (dialog.exec())
+    {
+        mFastTableWidget->verticalHeader_SetGridColor(dialog.selectedColor());
+    }
 }
 
 void ControllerDialog::on_selectionColorButton_clicked()
 {
+    QColorDialog dialog(this);
 
+    dialog.setWindowTitle("Selection color");
+    dialog.setCurrentColor(mFastTableWidget->selectionBrush().color());
+
+    if (dialog.exec())
+    {
+        mFastTableWidget->setSelectionBrush(QBrush(dialog.selectedColor()));
+    }
+}
+
+void ControllerDialog::on_selectionTextColorButton_clicked()
+{
+    QColorDialog dialog(this);
+
+    dialog.setWindowTitle("Selection text color");
+    dialog.setCurrentColor(mFastTableWidget->selectionTextColor());
+
+    if (dialog.exec())
+    {
+        mFastTableWidget->setSelectionTextColor(dialog.selectedColor());
+    }
 }
 
 void ControllerDialog::on_defaultWidthSpinBox_valueChanged(int value)
 {
-
+    mFastTableWidget->setDefaultWidth(value);
 }
 
 void ControllerDialog::on_defaultHeightSpinBox_valueChanged(int value)
 {
-
+    mFastTableWidget->setDefaultHeight(value);
 }
 
 void ControllerDialog::on_columnWidthButton_clicked()
@@ -475,64 +571,16 @@ void ControllerDialog::on_verticalHeaderColumnCountViewButton_clicked()
     dialog.exec();
 }
 
-void ControllerDialog::on_defaultBackgroundViewButton_clicked()
-{
-
-}
-
-void ControllerDialog::on_defaultForegroundViewButton_clicked()
-{
-
-}
-
-void ControllerDialog::on_gridColorViewButton_clicked()
-{
-
-}
-
-void ControllerDialog::on_horizontalDefaultBackgroundViewButton_clicked()
-{
-
-}
-
-void ControllerDialog::on_horizontalDefaultForegroundViewButton_clicked()
-{
-
-}
-
-void ControllerDialog::on_horizontalGridColorViewButton_clicked()
-{
-
-}
-
-void ControllerDialog::on_verticalDefaultBackgroundViewButton_clicked()
-{
-
-}
-
-void ControllerDialog::on_verticalDefaultForegroundViewButton_clicked()
-{
-
-}
-
-void ControllerDialog::on_verticalGridColorViewButton_clicked()
-{
-
-}
-
-void ControllerDialog::on_selectionColorViewButton_clicked()
-{
-
-}
-
 void ControllerDialog::on_defaultWidthViewButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->defaultWidth(), this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_defaultHeightViewButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->defaultHeight(), this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_columnWidthViewButton_clicked()
