@@ -16,6 +16,32 @@ ViewDialog::ViewDialog(int aValue, QWidget *parent) :
     mFastTableWidget->setText(0, 0, valueToString(aValue));
 }
 
+ViewDialog::ViewDialog(QList<quint16> *aValues, bool isVertical, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::ViewDialog)
+{
+    VIEWDIALOG_BASE_CONSTRUCTOR;
+
+    if (isVertical)
+    {
+        mFastTableWidget->setRowCount(aValues->length());
+
+        for (int i=0; i<aValues->length(); i++)
+        {
+            mFastTableWidget->setText(i, 0, valueToString(aValues->at(i)));
+        }
+    }
+    else
+    {
+        mFastTableWidget->setColumnCount(aValues->length());
+
+        for (int i=0; i<aValues->length(); i++)
+        {
+            mFastTableWidget->setText(0, i, valueToString(aValues->at(i)));
+        }
+    }
+}
+
 ViewDialog::~ViewDialog()
 {
     delete ui;

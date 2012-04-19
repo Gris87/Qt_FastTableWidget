@@ -32,6 +32,7 @@ public:
 
     explicit ViewDialog(QWidget *parent = 0);
     explicit ViewDialog(int aValue, QWidget *parent = 0);
+    explicit ViewDialog(QList<quint16> *aValues, bool isVertical, QWidget *parent = 0);
     ~ViewDialog();
 
 private:

@@ -644,7 +644,7 @@ void ControllerDialog::on_textButton_clicked()
             dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
             dialog2.setIntValue(0);
 
-            if (dialog.exec())
+            if (dialog2.exec())
             {
                 QInputDialog dialog3(this);
 
@@ -680,7 +680,7 @@ void ControllerDialog::on_horizontalTextButton_clicked()
             dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
             dialog2.setIntValue(0);
 
-            if (dialog.exec())
+            if (dialog2.exec())
             {
                 QInputDialog dialog3(this);
 
@@ -716,7 +716,7 @@ void ControllerDialog::on_verticalTextButton_clicked()
             dialog2.setIntMaximum(mFastTableWidget->verticalHeader_ColumnCount()-1);
             dialog2.setIntValue(0);
 
-            if (dialog.exec())
+            if (dialog2.exec())
             {
                 QInputDialog dialog3(this);
 
@@ -727,6 +727,34 @@ void ControllerDialog::on_verticalTextButton_clicked()
                 {
                     mFastTableWidget->verticalHeader_SetText(dialog.intValue(), dialog2.intValue(), dialog3.textValue());
                 }
+            }
+        }
+    }
+}
+
+void ControllerDialog::on_cellSelectedButton_clicked()
+{
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
+
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                mFastTableWidget->setCellSelected(dialog.intValue(), dialog2.intValue(), !mFastTableWidget->cellSelected(dialog.intValue(), dialog2.intValue()));
             }
         }
     }
@@ -770,42 +798,50 @@ void ControllerDialog::on_defaultHeightViewButton_clicked()
 
 void ControllerDialog::on_columnWidthViewButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getColumnWidths(), false, this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_rowHeightViewButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getRowHeights(), true, this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_headerColumnWidthViewButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->verticalHeader_GetColumnWidths(), false, this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_headerRowHeightViewButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->horizontalHeader_GetRowHeights(), true, this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_totalWidthViewButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->totalWidth(), this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_totalHeightViewButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->totalHeight(), this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_headerTotalWidthViewButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->verticalHeader_TotalWidth(), this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_headerTotalHeightViewButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->horizontalHeader_TotalHeight(), this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_visibleRangesViewButton_clicked()
@@ -834,11 +870,6 @@ void ControllerDialog::on_horizontalTextViewButton_clicked()
 }
 
 void ControllerDialog::on_verticalTextViewButton_clicked()
-{
-
-}
-
-void ControllerDialog::on_cellSelectedButton_clicked()
 {
 
 }
