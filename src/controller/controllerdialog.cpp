@@ -94,7 +94,7 @@ void ControllerDialog::on_deleteRowButton_clicked()
 
         dialog.setWindowTitle("Delete row");
         dialog.setIntMinimum(0);
-        dialog.setIntMaximum(mFastTableWidget->rowCount());
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
         dialog.setIntValue(0);
 
         if (dialog.exec())
@@ -144,7 +144,7 @@ void ControllerDialog::on_deleteColumnButton_clicked()
 
         dialog.setWindowTitle("Delete column");
         dialog.setIntMinimum(0);
-        dialog.setIntMaximum(mFastTableWidget->columnCount());
+        dialog.setIntMaximum(mFastTableWidget->columnCount()-1);
         dialog.setIntValue(0);
 
         if (dialog.exec())
@@ -194,7 +194,7 @@ void ControllerDialog::on_deleteHeaderRowButton_clicked()
 
         dialog.setWindowTitle("Delete row");
         dialog.setIntMinimum(0);
-        dialog.setIntMaximum(mFastTableWidget->horizontalHeader_RowCount());
+        dialog.setIntMaximum(mFastTableWidget->horizontalHeader_RowCount()-1);
         dialog.setIntValue(0);
 
         if (dialog.exec())
@@ -244,7 +244,7 @@ void ControllerDialog::on_deleteHeaderColumnButton_clicked()
 
         dialog.setWindowTitle("Delete column");
         dialog.setIntMinimum(0);
-        dialog.setIntMaximum(mFastTableWidget->verticalHeader_ColumnCount());
+        dialog.setIntMaximum(mFastTableWidget->verticalHeader_ColumnCount()-1);
         dialog.setIntValue(0);
 
         if (dialog.exec())
@@ -284,7 +284,7 @@ void ControllerDialog::on_selectRowButton_clicked()
 
         dialog.setWindowTitle("Select row");
         dialog.setIntMinimum(0);
-        dialog.setIntMaximum(mFastTableWidget->rowCount());
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
         dialog.setIntValue(0);
 
         if (dialog.exec())
@@ -302,7 +302,7 @@ void ControllerDialog::on_unselectRowButton_clicked()
 
         dialog.setWindowTitle("Unselect row");
         dialog.setIntMinimum(0);
-        dialog.setIntMaximum(mFastTableWidget->rowCount());
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
         dialog.setIntValue(0);
 
         if (dialog.exec())
@@ -321,7 +321,7 @@ void ControllerDialog::on_selectColumnButton_clicked()
 
         dialog.setWindowTitle("Select column");
         dialog.setIntMinimum(0);
-        dialog.setIntMaximum(mFastTableWidget->columnCount());
+        dialog.setIntMaximum(mFastTableWidget->columnCount()-1);
         dialog.setIntValue(0);
 
         if (dialog.exec())
@@ -339,7 +339,7 @@ void ControllerDialog::on_unselectColumnButton_clicked()
 
         dialog.setWindowTitle("Unselect column");
         dialog.setIntMinimum(0);
-        dialog.setIntMaximum(mFastTableWidget->columnCount());
+        dialog.setIntMaximum(mFastTableWidget->columnCount()-1);
         dialog.setIntValue(0);
 
         if (dialog.exec())
@@ -514,37 +514,222 @@ void ControllerDialog::on_defaultHeightSpinBox_valueChanged(int value)
 
 void ControllerDialog::on_columnWidthButton_clicked()
 {
+    if (mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select column");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->columnCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Input width");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(32767);
+            dialog2.setIntValue(mFastTableWidget->columnWidth(dialog.intValue()));
+
+            if (dialog2.exec())
+            {
+                mFastTableWidget->setColumnWidth(dialog.intValue(), dialog2.intValue());
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_rowHeightButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Input height");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(32767);
+            dialog2.setIntValue(mFastTableWidget->rowHeight(dialog.intValue()));
+
+            if (dialog2.exec())
+            {
+                mFastTableWidget->setRowHeight(dialog.intValue(), dialog2.intValue());
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_headerColumnWidthButton_clicked()
 {
+    if (mFastTableWidget->verticalHeader_ColumnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select column");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->verticalHeader_ColumnCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Input width");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(32767);
+            dialog2.setIntValue(mFastTableWidget->verticalHeader_ColumnWidth(dialog.intValue()));
+
+            if (dialog2.exec())
+            {
+                mFastTableWidget->verticalHeader_SetColumnWidth(dialog.intValue(), dialog2.intValue());
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_headerRowHeightButton_clicked()
 {
+    if (mFastTableWidget->horizontalHeader_RowCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->horizontalHeader_RowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Input height");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(32767);
+            dialog2.setIntValue(mFastTableWidget->horizontalHeader_RowHeight(dialog.intValue()));
+
+            if (dialog2.exec())
+            {
+                mFastTableWidget->horizontalHeader_SetRowHeight(dialog.intValue(), dialog2.intValue());
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_textButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog.exec())
+            {
+                QInputDialog dialog3(this);
+
+                dialog3.setWindowTitle("Input text");
+                dialog3.setTextValue(mFastTableWidget->text(dialog.intValue(), dialog2.intValue()));
+
+                if (dialog3.exec())
+                {
+                    mFastTableWidget->setText(dialog.intValue(), dialog2.intValue(), dialog3.textValue());
+                }
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_horizontalTextButton_clicked()
 {
+    if (mFastTableWidget->horizontalHeader_RowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->horizontalHeader_RowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog.exec())
+            {
+                QInputDialog dialog3(this);
+
+                dialog3.setWindowTitle("Input text");
+                dialog3.setTextValue(mFastTableWidget->horizontalHeader_Text(dialog.intValue(), dialog2.intValue()));
+
+                if (dialog3.exec())
+                {
+                    mFastTableWidget->horizontalHeader_SetText(dialog.intValue(), dialog2.intValue(), dialog3.textValue());
+                }
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_verticalTextButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->verticalHeader_ColumnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->verticalHeader_ColumnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog.exec())
+            {
+                QInputDialog dialog3(this);
+
+                dialog3.setWindowTitle("Input text");
+                dialog3.setTextValue(mFastTableWidget->verticalHeader_Text(dialog.intValue(), dialog2.intValue()));
+
+                if (dialog3.exec())
+                {
+                    mFastTableWidget->verticalHeader_SetText(dialog.intValue(), dialog2.intValue(), dialog3.textValue());
+                }
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_rowCountViewButton_clicked()
