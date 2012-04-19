@@ -846,50 +846,101 @@ void ControllerDialog::on_headerTotalHeightViewButton_clicked()
 
 void ControllerDialog::on_visibleRangesViewButton_clicked()
 {
+    QRect aRect=mFastTableWidget->visibleRange();
 
+    QList<int> aList;
+
+    aList.append(aRect.left());
+    aList.append(aRect.top());
+    aList.append(aRect.right());
+    aList.append(aRect.bottom());
+
+    ViewDialog dialog(&aList, false, this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_horizontalVisibleRangesViewButton_clicked()
 {
+    QRect aRect=mFastTableWidget->horizontalHeader_VisibleRange();
 
+    QList<int> aList;
+
+    aList.append(aRect.left());
+    aList.append(aRect.top());
+    aList.append(aRect.right());
+    aList.append(aRect.bottom());
+
+    ViewDialog dialog(&aList, false, this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_verticalVisibleRangesViewButton_clicked()
 {
+    QRect aRect=mFastTableWidget->verticalHeader_VisibleRange();
 
+    QList<int> aList;
+
+    aList.append(aRect.left());
+    aList.append(aRect.top());
+    aList.append(aRect.right());
+    aList.append(aRect.bottom());
+
+    ViewDialog dialog(&aList, false, this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_textViewButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getData(), this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_horizontalTextViewButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->horizontalHeader_GetData(), this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_verticalTextViewButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->verticalHeader_GetData(), this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_cellSelectedViewButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getSelectedCells(), this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_currentSelectionViewButton_clicked()
 {
+    QList<QList<int> > aList;
 
+    QList<QPoint> *aSelection=((PublicCustomFastTable*)mFastTableWidget)->getCurSelection();
+
+    for (int i=0; i<aSelection->length(); i++)
+    {
+        QList<int> aRow;
+
+        aRow.append(aSelection->at(i).x());
+        aRow.append(aSelection->at(i).y());
+
+        aList.append(aRow);
+    }
+
+    ViewDialog dialog(&aList, this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_rowsSelectedViewButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->verticalHeader_GetSelectedRows(), true, this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_columnsSelectedViewButton_clicked()
 {
-
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->horizontalHeader_GetSelectedColumns(), false, this);
+    dialog.exec();
 }

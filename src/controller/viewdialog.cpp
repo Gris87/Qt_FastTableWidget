@@ -42,6 +42,136 @@ ViewDialog::ViewDialog(QList<quint16> *aValues, bool isVertical, QWidget *parent
     }
 }
 
+ViewDialog::ViewDialog(QList<int> *aValues, bool isVertical, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::ViewDialog)
+{
+    VIEWDIALOG_BASE_CONSTRUCTOR;
+
+    if (isVertical)
+    {
+        mFastTableWidget->setRowCount(aValues->length());
+
+        for (int i=0; i<aValues->length(); i++)
+        {
+            mFastTableWidget->setText(i, 0, valueToString(aValues->at(i)));
+        }
+    }
+    else
+    {
+        mFastTableWidget->setColumnCount(aValues->length());
+
+        for (int i=0; i<aValues->length(); i++)
+        {
+            mFastTableWidget->setText(0, i, valueToString(aValues->at(i)));
+        }
+    }
+}
+
+ViewDialog::ViewDialog(QList<bool> *aValues, bool isVertical, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::ViewDialog)
+{
+    VIEWDIALOG_BASE_CONSTRUCTOR;
+
+    if (isVertical)
+    {
+        mFastTableWidget->setRowCount(aValues->length());
+
+        for (int i=0; i<aValues->length(); i++)
+        {
+            mFastTableWidget->setText(i, 0, valueToString(aValues->at(i)));
+        }
+    }
+    else
+    {
+        mFastTableWidget->setColumnCount(aValues->length());
+
+        for (int i=0; i<aValues->length(); i++)
+        {
+            mFastTableWidget->setText(0, i, valueToString(aValues->at(i)));
+        }
+    }
+}
+
+ViewDialog::ViewDialog(QList<QList<int> > *aValues, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::ViewDialog)
+{
+    VIEWDIALOG_BASE_CONSTRUCTOR;
+
+    mFastTableWidget->setRowCount(aValues->length());
+
+    if (aValues->length()>0)
+    {
+        mFastTableWidget->setColumnCount(aValues->at(0).length());
+
+        for (int i=0; i<aValues->length(); i++)
+        {
+            for (int j=0; j<aValues->at(i).length(); j++)
+            {
+                mFastTableWidget->setText(i, j, valueToString(aValues->at(i).at(j)));
+            }
+        }
+    }
+    else
+    {
+         mFastTableWidget->setColumnCount(0);
+    }
+}
+
+ViewDialog::ViewDialog(QList<QList<bool> > *aValues, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::ViewDialog)
+{
+    VIEWDIALOG_BASE_CONSTRUCTOR;
+
+    mFastTableWidget->setRowCount(aValues->length());
+
+    if (aValues->length()>0)
+    {
+        mFastTableWidget->setColumnCount(aValues->at(0).length());
+
+        for (int i=0; i<aValues->length(); i++)
+        {
+            for (int j=0; j<aValues->at(i).length(); j++)
+            {
+                mFastTableWidget->setText(i, j, valueToString(aValues->at(i).at(j)));
+            }
+        }
+    }
+    else
+    {
+         mFastTableWidget->setColumnCount(0);
+    }
+}
+
+ViewDialog::ViewDialog(QList<QStringList> *aValues, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::ViewDialog)
+{
+    VIEWDIALOG_BASE_CONSTRUCTOR;
+
+    mFastTableWidget->setRowCount(aValues->length());
+
+    if (aValues->length()>0)
+    {
+        mFastTableWidget->setColumnCount(aValues->at(0).length());
+
+        for (int i=0; i<aValues->length(); i++)
+        {
+            for (int j=0; j<aValues->at(i).length(); j++)
+            {
+                mFastTableWidget->setText(i, j, valueToString(aValues->at(i).at(j)));
+            }
+        }
+    }
+    else
+    {
+         mFastTableWidget->setColumnCount(0);
+    }
+}
+
 ViewDialog::~ViewDialog()
 {
     delete ui;
@@ -50,6 +180,23 @@ ViewDialog::~ViewDialog()
 QString ViewDialog::valueToString(int aValue)
 {
     return QString::number(aValue);
+}
+
+QString ViewDialog::valueToString(bool aValue)
+{
+    if (aValue)
+    {
+        return "true";
+    }
+    else
+    {
+        return "false";
+    }
+}
+
+QString ViewDialog::valueToString(QString aValue)
+{
+    return aValue;
 }
 
 int ViewDialog::exec()
