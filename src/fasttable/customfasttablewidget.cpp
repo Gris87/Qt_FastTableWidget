@@ -3,6 +3,7 @@
 CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     QAbstractScrollArea(parent)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     mRowCount=0;
@@ -69,29 +70,32 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(horizontalScrollBarValueChanged(int)));
     connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(verticalScrollBarValueChanged(int)));
 
-    END_PROFILE("CustomFastTableWidget::CustomFastTableWidget(QWidget *parent)");
+    END_PROFILE;
 }
 
 CustomFastTableWidget::~CustomFastTableWidget()
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     clear();
 
-    END_PROFILE("CustomFastTableWidget::~CustomFastTableWidget()");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     QAbstractScrollArea::mousePressEvent(event);
 
-    END_PROFILE("void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::resizeEvent(QResizeEvent *event)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     updateBarsRanges();
@@ -99,11 +103,12 @@ void CustomFastTableWidget::resizeEvent(QResizeEvent *event)
 
     QAbstractScrollArea::resizeEvent(event);
 
-    END_PROFILE("void CustomFastTableWidget::resizeEvent(QResizeEvent *event)");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::paintEvent(QPaintEvent *event)
 {
+    FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
 
     QPainter painter(viewport());
@@ -173,11 +178,12 @@ void CustomFastTableWidget::paintEvent(QPaintEvent *event)
         paintCell(painter, 0, 0, mVerticalHeader_TotalWidth, mHorizontalHeader_TotalHeight, -1, -1, DrawTopLeftCorner);
     }
 
-    END_FREQUENT_PROFILE("void CustomFastTableWidget::paintEvent(QPaintEvent *event)");
+    END_FREQUENT_PROFILE;
 }
 
 void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent)
 {
+    FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
 
     QColor  *aGridColor;
@@ -297,12 +303,13 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
 
     paintCell(painter, x ,y, width, height, row, column, drawComponent, aGridColor, aBackgroundBrush, aTextColor, aText, aFont, textFlags);
 
-    END_FREQUENT_PROFILE("void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int row, const int column)");
+    END_FREQUENT_PROFILE;
 }
 
 void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent,
                                       QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aTextColor, QString *aText, QFont *aFont, int aTextFlags)
 {
+    FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
 
     if (drawComponent==DrawCell || height<=8)
@@ -340,29 +347,32 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
         painter.drawText(x+4, y+4, width-8, height-8, aTextFlags, *aText);
     }
 
-    END_FREQUENT_PROFILE("void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aTextColor, QString *aText, QFont *aFont, int aTextFlags)");
+    END_FREQUENT_PROFILE;
 }
 
 void CustomFastTableWidget::horizontalScrollBarValueChanged(int value)
 {
+    FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
 
     updateVisibleRange();
 
-    END_FREQUENT_PROFILE("void CustomFastTableWidget::horizontalScrollBarValueChanged(int value)");
+    END_FREQUENT_PROFILE;
 }
 
 void CustomFastTableWidget::verticalScrollBarValueChanged(int value)
 {
+    FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
 
     updateVisibleRange();
 
-    END_FREQUENT_PROFILE("void CustomFastTableWidget::verticalScrollBarValueChanged(int value)");
+    END_FREQUENT_PROFILE;
 }
 
 void CustomFastTableWidget::updateBarsRanges()
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     if (mTotalWidth<=0 || mTotalHeight<=0)
@@ -381,11 +391,12 @@ void CustomFastTableWidget::updateBarsRanges()
         verticalScrollBar()->setRange(0,   mTotalHeight - areaSize.height() + 1);
     }
 
-    END_PROFILE("void CustomFastTableWidget::updateBarsRanges()");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::updateVisibleRange()
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     if (mRowCount==0 || mColumnCount==0)
@@ -588,11 +599,12 @@ void CustomFastTableWidget::updateVisibleRange()
         }
     }
 
-    END_PROFILE("void CustomFastTableWidget::updateVisibleRange()");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::clear()
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     mRowCount=0;
@@ -637,11 +649,12 @@ void CustomFastTableWidget::clear()
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::clear()");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::selectRow(const int row)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(row>=0 && row<mRowCount);
@@ -651,11 +664,12 @@ void CustomFastTableWidget::selectRow(const int row)
         setCellSelected(row, i, true);
     }
 
-    END_PROFILE("void CustomFastTableWidget::selectRow(const int row)");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::unselectRow(const int row)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(row>=0 && row<mRowCount);
@@ -665,11 +679,12 @@ void CustomFastTableWidget::unselectRow(const int row)
         setCellSelected(row, i, false);
     }
 
-    END_PROFILE("void CustomFastTableWidget::unselectRow(const int row)");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::selectColumn(const int column)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(column>=0 && column<mColumnCount);
@@ -679,11 +694,12 @@ void CustomFastTableWidget::selectColumn(const int column)
         setCellSelected(i, column, true);
     }
 
-    END_PROFILE("void CustomFastTableWidget::selectColumn(const int column)");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::unselectColumn(const int column)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(column>=0 && column<mColumnCount);
@@ -693,11 +709,12 @@ void CustomFastTableWidget::unselectColumn(const int column)
         setCellSelected(i, column, false);
     }
 
-    END_PROFILE("void CustomFastTableWidget::unselectColumn(const int column)");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::selectAll()
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     mCurSelection.clear();
@@ -736,11 +753,12 @@ void CustomFastTableWidget::selectAll()
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::selectAll()");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::unselectAll()
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     for (int i=0; i<mCurSelection.length(); ++i)
@@ -769,20 +787,22 @@ void CustomFastTableWidget::unselectAll()
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::unselectAll()");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::addRow()
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     insertRow(mRowCount);
 
-    END_PROFILE("void CustomFastTableWidget::addRow()");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::insertRow(int row)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(row>=0 && row<=mRowCount);
@@ -829,11 +849,12 @@ void CustomFastTableWidget::insertRow(int row)
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::insertRow(int row)");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::deleteRow(int row)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(row>=0 && row<mRowCount);
@@ -890,20 +911,22 @@ void CustomFastTableWidget::deleteRow(int row)
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::deleteRow(int row)");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::addColumn()
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     insertColumn(mColumnCount);
 
-    END_PROFILE("void CustomFastTableWidget::addColumn()");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::insertColumn(int column)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(column>=0 && column<=mColumnCount);
@@ -946,11 +969,12 @@ void CustomFastTableWidget::insertColumn(int column)
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::insertColumn(int column)");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::deleteColumn(int column)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(column>=0 && column<mColumnCount);
@@ -1013,20 +1037,22 @@ void CustomFastTableWidget::deleteColumn(int column)
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::deleteColumn(int column)");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::horizontalHeader_AddRow()
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     horizontalHeader_InsertRow(mHorizontalHeader_RowCount);
 
-    END_PROFILE("void CustomFastTableWidget::horizontalHeader_AddRow()");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::horizontalHeader_InsertRow(int row)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(row>=0 && row<=mHorizontalHeader_RowCount);
@@ -1068,11 +1094,12 @@ void CustomFastTableWidget::horizontalHeader_InsertRow(int row)
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::horizontalHeader_InsertRow(int row)");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::horizontalHeader_DeleteRow(int row)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_RowCount);
@@ -1115,20 +1142,22 @@ void CustomFastTableWidget::horizontalHeader_DeleteRow(int row)
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::horizontalHeader_DeleteRow(int row)");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::verticalHeader_AddColumn()
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     verticalHeader_InsertColumn(mVerticalHeader_ColumnCount);
 
-    END_PROFILE("void CustomFastTableWidget::verticalHeader_AddColumn()");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::verticalHeader_InsertColumn(int column)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(column>=0 && column<=mVerticalHeader_ColumnCount);
@@ -1167,11 +1196,12 @@ void CustomFastTableWidget::verticalHeader_InsertColumn(int column)
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::verticalHeader_InsertColumn(int column)");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::verticalHeader_DeleteColumn(int column)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_ColumnCount);
@@ -1219,16 +1249,18 @@ void CustomFastTableWidget::verticalHeader_DeleteColumn(int column)
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::verticalHeader_DeleteColumn(int column)");
+    END_PROFILE;
 }
 
 int CustomFastTableWidget::rowCount()
 {
+    FASTTABLE_DEBUG;
     return mRowCount;
 }
 
 void CustomFastTableWidget::setRowCount(int count)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     if (count<0)
@@ -1261,16 +1293,18 @@ void CustomFastTableWidget::setRowCount(int count)
         }
     }
 
-    END_PROFILE("void CustomFastTableWidget::setRowCount(int count)");
+    END_PROFILE;
 }
 
 int CustomFastTableWidget::columnCount()
 {
+    FASTTABLE_DEBUG;
     return mColumnCount;
 }
 
 void CustomFastTableWidget::setColumnCount(int count)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     if (count<0)
@@ -1303,16 +1337,18 @@ void CustomFastTableWidget::setColumnCount(int count)
         }
     }
 
-    END_PROFILE("void CustomFastTableWidget::setColumnCount(int count)");
+    END_PROFILE;
 }
 
 qint16 CustomFastTableWidget::horizontalHeader_RowCount()
 {
+    FASTTABLE_DEBUG;
     return mHorizontalHeader_RowCount;
 }
 
 void CustomFastTableWidget::horizontalHeader_SetRowCount(qint16 count)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     if (count<0)
@@ -1345,16 +1381,18 @@ void CustomFastTableWidget::horizontalHeader_SetRowCount(qint16 count)
         }
     }
 
-    END_PROFILE("void CustomFastTableWidget::horizontalHeader_SetRowCount(int count)");
+    END_PROFILE;
 }
 
 qint16 CustomFastTableWidget::verticalHeader_ColumnCount()
 {
+    FASTTABLE_DEBUG;
     return mVerticalHeader_ColumnCount;
 }
 
 void CustomFastTableWidget::verticalHeader_SetColumnCount(qint16 count)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     if (count<0)
@@ -1387,11 +1425,12 @@ void CustomFastTableWidget::verticalHeader_SetColumnCount(qint16 count)
         }
     }
 
-    END_PROFILE("void CustomFastTableWidget::verticalHeader_SetColumnCount(int count)");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::setSizes(int aRowCount, int aColumnCount, qint16 aHorizontalHeaderRowCount, qint16 aVerticalHeaderColumnCount)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     bool wasAllowUpdates=updatesEnabled();
@@ -1411,192 +1450,216 @@ void CustomFastTableWidget::setSizes(int aRowCount, int aColumnCount, qint16 aHo
         setUpdatesEnabled(true);
     }
 
-    END_PROFILE("void CustomFastTableWidget::setSizes(int aRowCount, int aColumnCount, qint16 aHorizontalHeaderRowCount, qint16 aVerticalHeaderColumnCount)");
+    END_PROFILE;
 }
 
 QBrush CustomFastTableWidget::defaultBackgroundBrush()
 {
+    FASTTABLE_DEBUG;
     return mDefaultBackgroundBrush;
 }
 
 void CustomFastTableWidget::setDefaultBackgroundBrush(QBrush brush)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     mDefaultBackgroundBrush=brush;
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::setDefaultBackgroundBrush(QBrush brush)");
+    END_PROFILE;
 }
 
 QColor CustomFastTableWidget::defaultForegroundColor()
 {
+    FASTTABLE_DEBUG;
     return mDefaultForegroundColor;
 }
 
 void CustomFastTableWidget::setDefaultForegroundColor(QColor color)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     mDefaultForegroundColor=color;
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::setDefaultForegroundColor(QColor color)");
+    END_PROFILE;
 }
 
 QColor CustomFastTableWidget::gridColor()
 {
+    FASTTABLE_DEBUG;
     return mGridColor;
 }
 
 void CustomFastTableWidget::setGridColor(QColor color)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     mGridColor=color;
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::setGridColor(QColor color)");
+    END_PROFILE;
 }
 
 QBrush CustomFastTableWidget::horizontalHeader_DefaultBackgroundBrush()
 {
+    FASTTABLE_DEBUG;
     return mHorizontalHeader_DefaultBackgroundBrush;
 }
 
 void CustomFastTableWidget::horizontalHeader_SetDefaultBackgroundBrush(QBrush brush)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     mHorizontalHeader_DefaultBackgroundBrush=brush;
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::horizontalHeader_SetDefaultBackgroundBrush(QBrush brush)");
+    END_PROFILE;
 }
 
 QColor CustomFastTableWidget::horizontalHeader_DefaultForegroundColor()
 {
+    FASTTABLE_DEBUG;
     return mHorizontalHeader_DefaultForegroundColor;
 }
 
 void CustomFastTableWidget::horizontalHeader_SetDefaultForegroundColor(QColor color)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     mHorizontalHeader_DefaultForegroundColor=color;
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::horizontalHeader_SetDefaultForegroundColor(QColor color)");
+    END_PROFILE;
 }
 
 QColor CustomFastTableWidget::horizontalHeader_GridColor()
 {
+    FASTTABLE_DEBUG;
     return mHorizontalHeader_GridColor;
 }
 
 void CustomFastTableWidget::horizontalHeader_SetGridColor(QColor color)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     mHorizontalHeader_GridColor=color;
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::horizontalHeader_SetGridColor(QColor color)");
+    END_PROFILE;
 }
 
 QBrush CustomFastTableWidget::verticalHeader_DefaultBackgroundBrush()
 {
+    FASTTABLE_DEBUG;
     return mVerticalHeader_DefaultBackgroundBrush;
 }
 
 void CustomFastTableWidget::verticalHeader_SetDefaultBackgroundBrush(QBrush brush)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     mVerticalHeader_DefaultBackgroundBrush=brush;
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::verticalHeader_SetDefaultBackgroundBrush(QBrush brush)");
+    END_PROFILE;
 }
 
 QColor CustomFastTableWidget::verticalHeader_DefaultForegroundColor()
 {
+    FASTTABLE_DEBUG;
     return mVerticalHeader_DefaultForegroundColor;
 }
 
 void CustomFastTableWidget::verticalHeader_SetDefaultForegroundColor(QColor color)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     mVerticalHeader_DefaultForegroundColor=color;
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::verticalHeader_SetDefaultForegroundColor(QColor color)");
+    END_PROFILE;
 }
 
 QColor CustomFastTableWidget::verticalHeader_GridColor()
 {
+    FASTTABLE_DEBUG;
     return mVerticalHeader_GridColor;
 }
 
 void CustomFastTableWidget::verticalHeader_SetGridColor(QColor color)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     mVerticalHeader_GridColor=color;
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::verticalHeader_SetGridColor(QColor color)");
+    END_PROFILE;
 }
 
 QBrush CustomFastTableWidget::selectionBrush()
 {
+    FASTTABLE_DEBUG;
     return mSelectionBrush;
 }
 
 void CustomFastTableWidget::setSelectionBrush(QBrush brush)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     mSelectionBrush=brush;
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::setSelectionBrush(QBrush brush)");
+    END_PROFILE;
 }
 
 QColor CustomFastTableWidget::selectionTextColor()
 {
+    FASTTABLE_DEBUG;
     return mSelectionTextColor;
 }
 
 void CustomFastTableWidget::setSelectionTextColor(QColor color)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     mSelectionTextColor=color;
 
     viewport()->update();
 
-    END_PROFILE("CustomFastTableWidget::setSelectionTextColor(QColor color)");
+    END_PROFILE;
 }
 
 quint16 CustomFastTableWidget::defaultWidth()
 {
+    FASTTABLE_DEBUG;
     return mDefaultWidth;
 }
 
 void CustomFastTableWidget::setDefaultWidth(quint16 width)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     if (width<=0)
@@ -1606,16 +1669,18 @@ void CustomFastTableWidget::setDefaultWidth(quint16 width)
 
     mDefaultWidth=width;
 
-    END_PROFILE("void CustomFastTableWidget::setDefaultWidth(quint16 width)");
+    END_PROFILE;
 }
 
 quint16 CustomFastTableWidget::defaultHeight()
 {
+    FASTTABLE_DEBUG;
     return mDefaultHeight;
 }
 
 void CustomFastTableWidget::setDefaultHeight(quint16 height)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     if (height<=0)
@@ -1625,11 +1690,12 @@ void CustomFastTableWidget::setDefaultHeight(quint16 height)
 
     mDefaultHeight=height;
 
-    END_PROFILE("void CustomFastTableWidget::setDefaultHeight(quint16 height)");
+    END_PROFILE;
 }
 
 quint16 CustomFastTableWidget::columnWidth(const int column)
 {
+    FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(column<mColumnWidths.length());
 
     return mColumnWidths.at(column);
@@ -1637,6 +1703,7 @@ quint16 CustomFastTableWidget::columnWidth(const int column)
 
 void CustomFastTableWidget::setColumnWidth(const int column, const quint16 width)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(column<mColumnWidths.length());
@@ -1666,11 +1733,12 @@ void CustomFastTableWidget::setColumnWidth(const int column, const quint16 width
         viewport()->update();
     }
 
-    END_PROFILE("void CustomFastTableWidget::setColumnWidth(const int column, const quint16 width)");
+    END_PROFILE;
 }
 
 quint16 CustomFastTableWidget::rowHeight(const int row)
 {
+    FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(row<mRowHeights.length());
 
     return mRowHeights.at(row);
@@ -1678,6 +1746,7 @@ quint16 CustomFastTableWidget::rowHeight(const int row)
 
 void CustomFastTableWidget::setRowHeight(const int row, const quint16 height)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(row<mRowHeights.length());
@@ -1707,11 +1776,12 @@ void CustomFastTableWidget::setRowHeight(const int row, const quint16 height)
         viewport()->update();
     }
 
-    END_PROFILE("void CustomFastTableWidget::setRowHeight(const int row, const quint16 height)");
+    END_PROFILE;
 }
 
 quint16 CustomFastTableWidget::verticalHeader_ColumnWidth(const int column)
 {
+    FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(column<mVerticalHeader_ColumnWidths.length());
 
     return mVerticalHeader_ColumnWidths.at(column);
@@ -1719,6 +1789,7 @@ quint16 CustomFastTableWidget::verticalHeader_ColumnWidth(const int column)
 
 void CustomFastTableWidget::verticalHeader_SetColumnWidth(const int column, const quint16 width)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(column<mVerticalHeader_ColumnWidths.length());
@@ -1759,11 +1830,12 @@ void CustomFastTableWidget::verticalHeader_SetColumnWidth(const int column, cons
         viewport()->update();
     }
 
-    END_PROFILE("void CustomFastTableWidget::setColumnWidth(const int column, const quint16 width)");
+    END_PROFILE;
 }
 
 quint16 CustomFastTableWidget::horizontalHeader_RowHeight(const int row)
 {
+    FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(row<mHorizontalHeader_RowHeights.length());
 
     return mHorizontalHeader_RowHeights.at(row);
@@ -1771,6 +1843,7 @@ quint16 CustomFastTableWidget::horizontalHeader_RowHeight(const int row)
 
 void CustomFastTableWidget::horizontalHeader_SetRowHeight(const int row, const quint16 height)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(row<mHorizontalHeader_RowHeights.length());
@@ -1811,43 +1884,49 @@ void CustomFastTableWidget::horizontalHeader_SetRowHeight(const int row, const q
         viewport()->update();
     }
 
-    END_PROFILE("void CustomFastTableWidget::horizontalHeader_SetRowHeight(const int row, const quint16 height)");
+    END_PROFILE;
 }
 
 int CustomFastTableWidget::totalWidth()
 {
+    FASTTABLE_DEBUG;
     return mTotalWidth;
 }
 
 int CustomFastTableWidget::totalHeight()
 {
+    FASTTABLE_DEBUG;
     return mTotalHeight;
 }
 
 int CustomFastTableWidget::verticalHeader_TotalWidth()
 {
+    FASTTABLE_DEBUG;
     return mVerticalHeader_TotalWidth;
 }
 
 int CustomFastTableWidget::horizontalHeader_TotalHeight()
 {
+    FASTTABLE_DEBUG;
     return mHorizontalHeader_TotalHeight;
 }
 
 QRect CustomFastTableWidget::visibleRange()
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     QRect aRect;
     aRect.setCoords(mVisibleLeft, mVisibleTop, mVisibleRight, mVisibleBottom);
 
-    END_PROFILE("QRect CustomFastTableWidget::visibleRange()");
+    END_PROFILE;
 
     return aRect;
 }
 
 QRect CustomFastTableWidget::horizontalHeader_VisibleRange()
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     QRect aRect;
@@ -1861,13 +1940,14 @@ QRect CustomFastTableWidget::horizontalHeader_VisibleRange()
         aRect.setCoords(-1, -1, -1, -1);
     }
 
-    END_PROFILE("QRect CustomFastTableWidget::horizontalHeader_VisibleRange()");
+    END_PROFILE;
 
     return aRect;
 }
 
 QRect CustomFastTableWidget::verticalHeader_VisibleRange()
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     QRect aRect;
@@ -1881,13 +1961,14 @@ QRect CustomFastTableWidget::verticalHeader_VisibleRange()
         aRect.setCoords(-1, -1, -1, -1);
     }
 
-    END_PROFILE("QRect CustomFastTableWidget::verticalHeader_VisibleRange()");
+    END_PROFILE;
 
     return aRect;
 }
 
 QString CustomFastTableWidget::text(const int row, const int column)
 {
+    FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(row>=0 && row<mData.length());
     FASTTABLE_ASSERT(column>=0 && column<mData.at(row).length());
 
@@ -1896,7 +1977,8 @@ QString CustomFastTableWidget::text(const int row, const int column)
 
 void CustomFastTableWidget::setText(const int row, const int column, const QString text)
 {
-    START_FREQUENT_PROFILE;
+    FASTTABLE_DEBUG;
+    START_PROFILE;
 
     FASTTABLE_ASSERT(row>=0 && row<mData.length());
     FASTTABLE_ASSERT(column>=0 && column<mData.at(row).length());
@@ -1905,11 +1987,12 @@ void CustomFastTableWidget::setText(const int row, const int column, const QStri
 
     viewport()->update();
 
-    END_FREQUENT_PROFILE("void CustomFastTableWidget::setText(const int row, const int column, const QString text)");
+    END_PROFILE;
 }
 
 QString CustomFastTableWidget::horizontalHeader_Text(const int row, const int column)
 {
+    FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_Data.length());
     FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_Data.at(row).length());
 
@@ -1918,6 +2001,7 @@ QString CustomFastTableWidget::horizontalHeader_Text(const int row, const int co
 
 QString CustomFastTableWidget::horizontalHeader_Text(const int column)
 {
+    FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(mHorizontalHeader_Data.length()>0);
     FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_Data.at(0).length());
 
@@ -1926,6 +2010,7 @@ QString CustomFastTableWidget::horizontalHeader_Text(const int column)
 
 void CustomFastTableWidget::horizontalHeader_SetText(const int row, const int column, const QString text)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_Data.length());
@@ -1935,11 +2020,12 @@ void CustomFastTableWidget::horizontalHeader_SetText(const int row, const int co
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::horizontalHeader_SetText(const int row, const int column, const QString text)");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::horizontalHeader_SetText(const int column, const QString text)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     for (int i=0; i<mHorizontalHeader_RowCount; ++i)
@@ -1952,11 +2038,12 @@ void CustomFastTableWidget::horizontalHeader_SetText(const int column, const QSt
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::horizontalHeader_SetText(const int column, const QString text)");
+    END_PROFILE;
 }
 
 QString CustomFastTableWidget::verticalHeader_Text(const int row, const int column)
 {
+    FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_Data.length());
     FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_Data.at(row).length());
 
@@ -1965,6 +2052,7 @@ QString CustomFastTableWidget::verticalHeader_Text(const int row, const int colu
 
 QString CustomFastTableWidget::verticalHeader_Text(const int row)
 {
+    FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_Data.length());
     FASTTABLE_ASSERT(mVerticalHeader_Data.at(row).length()>0);
 
@@ -1973,6 +2061,7 @@ QString CustomFastTableWidget::verticalHeader_Text(const int row)
 
 void CustomFastTableWidget::verticalHeader_SetText(const int row, const int column, const QString text)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_Data.length());
@@ -1982,11 +2071,12 @@ void CustomFastTableWidget::verticalHeader_SetText(const int row, const int colu
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::verticalHeader_SetText(const int row, const int column, const QString text)");
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::verticalHeader_SetText(const int row, const QString text)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_Data.length());
@@ -2000,11 +2090,12 @@ void CustomFastTableWidget::verticalHeader_SetText(const int row, const QString 
 
     viewport()->update();
 
-    END_PROFILE("void CustomFastTableWidget::verticalHeader_SetText(const int row, const QString text)");
+    END_PROFILE;
 }
 
 bool CustomFastTableWidget::cellSelected(const int row, const int column)
 {
+    FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(row>=0 && row<mSelectedCells.length());
     FASTTABLE_ASSERT(column>=0 && column<mSelectedCells.at(row).length());
 
@@ -2013,6 +2104,7 @@ bool CustomFastTableWidget::cellSelected(const int row, const int column)
 
 void CustomFastTableWidget::setCellSelected(const int row, const int column, const bool selected)
 {
+    FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(row>=0 && row<mSelectedCells.length());
@@ -2066,16 +2158,18 @@ void CustomFastTableWidget::setCellSelected(const int row, const int column, con
         viewport()->update();
     }
 
-    END_PROFILE("void CustomFastTableWidget::setCellSelected(const int row, const int column, const bool selected)");
+    END_PROFILE;
 }
 
 QList<QPoint> CustomFastTableWidget::currentSelection()
 {
+    FASTTABLE_DEBUG;
     return mCurSelection;
 }
 
 bool CustomFastTableWidget::horizontalHeader_ColumnSelected(const int column)
 {
+    FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_SelectedColumns.length());
 
     return mHorizontalHeader_SelectedColumns.at(column);
@@ -2083,6 +2177,7 @@ bool CustomFastTableWidget::horizontalHeader_ColumnSelected(const int column)
 
 bool CustomFastTableWidget::verticalHeader_RowSelected(const int row)
 {
+    FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_SelectedRows.length());
 
     return mVerticalHeader_SelectedRows.at(row);

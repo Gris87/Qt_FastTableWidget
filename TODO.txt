@@ -1,4 +1,3 @@
-Q_FUNC_INFO
 Different styles
 Mouse handler
 Action queue to remove unnecessary function calls

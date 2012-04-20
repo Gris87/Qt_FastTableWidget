@@ -13,26 +13,43 @@
 
 #include "qdebug.h"
 
+// Asserting
 #if 1
-    #define FASTTABLE_ASSERT(condition) Q_ASSERT(condition)
+    #define FASTTABLE_ASSERT(condition)  Q_ASSERT(condition)
 #else
     #define FASTTABLE_ASSERT(condition)
 #endif
 
+// Debuging
 #if 0
-    #define START_PROFILE      qint64 profileStart=QDateTime::currentMSecsSinceEpoch();
-    #define END_PROFILE(text)  qDebug()<<text" :"<<QDateTime::currentMSecsSinceEpoch()-profileStart;
+    #define FASTTABLE_DEBUG  qDebug()<<"Debug:"<<Q_FUNC_INFO;
 #else
-    #define START_PROFILE
-    #define END_PROFILE(text)
+    #define FASTTABLE_DEBUG
 #endif
 
+// Frequent debuging
 #if 0
-    #define START_FREQUENT_PROFILE      START_PROFILE
-    #define END_FREQUENT_PROFILE(text)  END_PROFILE(text)
+    #define FASTTABLE_FREQUENT_DEBUG  FASTTABLE_DEBUG
+#else
+    #define FASTTABLE_FREQUENT_DEBUG
+#endif
+
+// Profiling
+#if 0
+    #define START_PROFILE  qint64 profileStart=QDateTime::currentMSecsSinceEpoch();
+    #define END_PROFILE    qDebug()<<Q_FUNC_INFO<<":"<<QDateTime::currentMSecsSinceEpoch()-profileStart<<"ms";
+#else
+    #define START_PROFILE
+    #define END_PROFILE
+#endif
+
+// Frequent profiling
+#if 0
+    #define START_FREQUENT_PROFILE  START_PROFILE
+    #define END_FREQUENT_PROFILE    END_PROFILE
 #else
     #define START_FREQUENT_PROFILE
-    #define END_FREQUENT_PROFILE(text)
+    #define END_FREQUENT_PROFILE
 #endif
 
 #define FASTTABLE_DEFAULT_TEXT_FLAG Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap
