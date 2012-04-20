@@ -86,6 +86,8 @@ public:
 
     enum DrawComponent {DrawCell, DrawHorizontalHeaderCell, DrawVerticalHeaderCell, DrawTopLeftCorner};
 
+    enum Style {StyleWinXP, StyleWin7};
+
     explicit CustomFastTableWidget(QWidget *parent = 0);
     ~CustomFastTableWidget();
 
@@ -96,6 +98,9 @@ public:
 
     virtual void selectColumn(const int column);
     virtual void unselectColumn(const int column);
+
+    Style style();
+    void setStyle(Style style, bool keepColors=false);
 
     void selectAll();
     void unselectAll();
@@ -211,6 +216,8 @@ public:
     bool verticalHeader_RowSelected(const int row);
 
 protected:
+    Style mStyle;
+
     int mRowCount;
     int mColumnCount;
     qint16 mHorizontalHeader_RowCount;

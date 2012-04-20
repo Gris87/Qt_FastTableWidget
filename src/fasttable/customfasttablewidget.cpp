@@ -11,25 +11,6 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     mHorizontalHeader_RowCount=0;
     mVerticalHeader_ColumnCount=0;
 
-    mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
-    mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
-    mDefaultForegroundColor.setRgb(0, 0, 0);
-    mGridColor.setRgb(192, 192, 192);
-
-    mHorizontalHeader_DefaultBackgroundBrush.setColor(QColor(235, 234, 219));
-    mHorizontalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
-    mHorizontalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
-    mHorizontalHeader_GridColor.setRgb(199, 197, 178);
-
-    mVerticalHeader_DefaultBackgroundBrush.setColor(QColor(235, 234, 219));
-    mVerticalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
-    mVerticalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
-    mVerticalHeader_GridColor.setRgb(199, 197, 178);
-
-    mSelectionBrush.setColor(QColor(49, 106, 197));
-    mSelectionBrush.setStyle(Qt::SolidPattern);
-    mSelectionTextColor.setRgb(255, 255, 255);
-
     mDefaultWidth=100;
     mDefaultHeight=30;
     mTotalWidth=0;
@@ -46,23 +27,32 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
 
     mVerticalHeader_VisibleRight=-1;
 
-    /*
 #ifdef Q_WS_X11
-    return QString("Linux");
+    mStyle=StyleWin7;
+    setStyle(StyleWinXP);
 #endif
 #ifdef Q_WS_WIN
     switch (QSysInfo::windowsVersion())
     {
-        case QSysInfo::WV_NT: return "Windows NT (operating system version 4.0)";
-        case QSysInfo::WV_2000: return "Windows 2000 (operating system version 5.0)";
-        case QSysInfo::WV_XP: return "Windows XP (operating system version 5.1)";
-        case QSysInfo::WV_2003: return "Windows Server 2003, Windows Server 2003 R2, Windows Home Server, Windows XP Professional x64 Edition (operating system version 5.2)";
-        case QSysInfo::WV_VISTA: return "Windows Vista, Windows Server 2008 (operating system version 6.0)";
-        case QSysInfo::WV_WINDOWS7: return "Windows 7, Windows Server 2008 R2 (operating system version 6.1)";
-        default: return "Windows";
+        case QSysInfo::WV_XP:
+        {
+            mStyle=StyleWin7;
+            setStyle(StyleWinXP);
+        }
+        break;
+        case QSysInfo::WV_WINDOWS7:
+        {
+            setStyle(StyleWin7);
+        }
+        break;
+        default:
+        {
+            mStyle=StyleWin7;
+            setStyle(StyleWinXP);
+        }
+        break;
     }
 #endif
-    */
 
     horizontalScrollBar()->setSingleStep(100);
     verticalScrollBar()->setSingleStep(100);
@@ -321,23 +311,67 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
     }
     else
     {
-        painter.fillRect(x+1, y+1, width, height, *aBackgroundBrush);
+        switch (mStyle)
+        {
+            case StyleWinXP:
+            {
+                painter.fillRect(x+1, y+1, width, height-3, *aBackgroundBrush);
 
-        painter.setPen(QPen(QColor(255, 255, 255)));
-        painter.drawLine(x+width, y+4, x+width, y+height-4);
-        painter.drawLine(x, y+4, x, y+height-4);
+                painter.setPen(QPen(QColor(255, 255, 255)));
+                painter.drawLine(x+width, y+4, x+width, y+height-4);
+                painter.drawLine(x, y+4, x, y+height-4);
 
-        painter.setPen(QPen(*aGridColor));
-        painter.drawLine(x+width-1, y+4, x+width-1, y+height-4);
-        painter.drawLine(x, y+height, x+width, y+height);
-        painter.drawLine(x, y, x+width, y);
+                painter.setPen(QPen(*aGridColor));
+                painter.drawLine(x+width-1, y+4, x+width-1, y+height-4);
+                painter.drawLine(x, y+height, x+width, y+height);
+                painter.drawLine(x, y, x+width, y);
 
-        QColor backColor=aBackgroundBrush->color();
+                QColor backColor=aBackgroundBrush->color();
 
-        painter.setPen(QPen(QColor(backColor.red()+(aGridColor->red()-backColor.red())*2/3, backColor.red()+(aGridColor->green()-backColor.green())*2/3, backColor.red()+(aGridColor->blue()-backColor.blue())*2/3)));
-        painter.drawLine(x, y+height-1, x+width, y+height-1);
-        painter.setPen(QPen(QColor(backColor.red()+(aGridColor->red()-backColor.red())/3, backColor.red()+(aGridColor->green()-backColor.green())/3, backColor.red()+(aGridColor->blue()-backColor.blue())/3)));
-        painter.drawLine(x, y+height-2, x+width, y+height-2);
+                painter.setPen(QPen(QColor(backColor.red()+(aGridColor->red()-backColor.red())*2/3, backColor.green()+(aGridColor->green()-backColor.green())*2/3, backColor.blue()+(aGridColor->blue()-backColor.blue())*2/3)));
+                painter.drawLine(x, y+height-1, x+width, y+height-1);
+                painter.setPen(QPen(QColor(backColor.red()+(aGridColor->red()-backColor.red())/3, backColor.green()+(aGridColor->green()-backColor.green())/3, backColor.blue()+(aGridColor->blue()-backColor.blue())/3)));
+                painter.drawLine(x, y+height-2, x+width, y+height-2);
+            }
+            break;
+            case StyleWin7:
+            {
+                painter.setPen(QPen(QColor(255, 255, 255)));
+                painter.drawLine(x+1, y, x+1, y+height);
+                painter.drawLine(x+width-1, y, x+width-1, y+height);
+
+                QColor backColorDown=aBackgroundBrush->color();
+
+                int r=backColorDown.red()+15;
+                int g=backColorDown.green()+15;
+                int b=backColorDown.blue()+15;
+
+                if (r>255)
+                {
+                    r=255;
+                }
+
+                if (g>255)
+                {
+                    g=255;
+                }
+
+                if (b>255)
+                {
+                    b=255;
+                }
+
+                QColor backColorUp(r, g, b);
+
+                painter.fillRect(x+2, y, width-3, height/2, backColorUp);
+                painter.fillRect(x+2, y+height/2, width-3, height/2, backColorDown);
+
+                painter.setPen(QPen(*aGridColor));
+                painter.drawLine(x, y+height, x+width, y+height);
+                painter.drawLine(x, y, x+width, y);
+            }
+            break;
+        }
     }
 
     if (width>8 && height>8 && aText)
@@ -707,6 +741,78 @@ void CustomFastTableWidget::unselectColumn(const int column)
     for (int i=0; i<mRowCount; ++i)
     {
         setCellSelected(i, column, false);
+    }
+
+    END_PROFILE;
+}
+
+CustomFastTableWidget::Style CustomFastTableWidget::style()
+{
+    FASTTABLE_DEBUG;
+    return mStyle;
+}
+
+void CustomFastTableWidget::setStyle(Style style, bool keepColors)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    if (mStyle!=style)
+    {
+        mStyle=style;
+
+        if (!keepColors)
+        {
+            switch (mStyle)
+            {
+                case StyleWinXP:
+                {
+                    mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
+                    mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
+                    mDefaultForegroundColor.setRgb(0, 0, 0);
+                    mGridColor.setRgb(192, 192, 192);
+
+                    mHorizontalHeader_DefaultBackgroundBrush.setColor(QColor(235, 234, 219));
+                    mHorizontalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
+                    mHorizontalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
+                    mHorizontalHeader_GridColor.setRgb(199, 197, 178);
+
+                    mVerticalHeader_DefaultBackgroundBrush.setColor(QColor(235, 234, 219));
+                    mVerticalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
+                    mVerticalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
+                    mVerticalHeader_GridColor.setRgb(199, 197, 178);
+
+                    mSelectionBrush.setColor(QColor(49, 106, 197));
+                    mSelectionBrush.setStyle(Qt::SolidPattern);
+                    mSelectionTextColor.setRgb(255, 255, 255);
+                }
+                break;
+                case StyleWin7:
+                {
+                    mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
+                    mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
+                    mDefaultForegroundColor.setRgb(0, 0, 0);
+                    mGridColor.setRgb(216, 216, 216);
+
+                    mHorizontalHeader_DefaultBackgroundBrush.setColor(QColor(241, 242, 244));
+                    mHorizontalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
+                    mHorizontalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
+                    mHorizontalHeader_GridColor.setRgb(213, 213, 213);
+
+                    mVerticalHeader_DefaultBackgroundBrush.setColor(QColor(241, 242, 244));
+                    mVerticalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
+                    mVerticalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
+                    mVerticalHeader_GridColor.setRgb(213, 213, 213);
+
+                    mSelectionBrush.setColor(QColor(51, 153, 255));
+                    mSelectionBrush.setStyle(Qt::SolidPattern);
+                    mSelectionTextColor.setRgb(255, 255, 255);
+                }
+                break;
+            }
+        }
+
+        viewport()->update();
     }
 
     END_PROFILE;
