@@ -1,8 +1,9 @@
 Controller to make any changes
 Q_FUNC_INFO
+Different styles
 Mouse handler
 Action queue to remove unnecessary function calls
-Assert
+Cell flags
 Negative width or height means that row/column is hidden
 Use setCapacity on clear and setRowCount...
 Optimize painting with selecting update rectangles

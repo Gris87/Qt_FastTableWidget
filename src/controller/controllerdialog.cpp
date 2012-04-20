@@ -8,34 +8,19 @@ ControllerDialog::ControllerDialog(QWidget *parent) :
 
     setWindowFlags(Qt::Window);
 
-    mFastTableWidget=new FastTableWidget(this);
-    ui->fastTableLayout->insertWidget(0, mFastTableWidget);
-
-    ui->defaultWidthSpinBox->setValue(100);
-    ui->defaultHeightSpinBox->setValue(30);
-
-    ui->rowCountSpinBox->setValue(50);
-    ui->columnCountSpinBox->setValue(20);
-    ui->horizontalHeaderRowCountSpinBox->setValue(1);
-    ui->verticalHeaderColumnCountSpinBox->setValue(1);
-
-    for (int i=0; i<mFastTableWidget->rowCount(); ++i)
-    {
-        for (int j=0; j<mFastTableWidget->columnCount(); ++j)
-        {
-            mFastTableWidget->setText(i, j, "Hello, World");
-        }
-    }
-
-    for (int i=0; i<mFastTableWidget->columnCount(); ++i)
-    {
-        mFastTableWidget->horizontalHeader_SetText(i, "Header");
-    }
+    on_createFastTableButton_clicked();
 }
 
 ControllerDialog::~ControllerDialog()
 {
     delete ui;
+}
+
+void ControllerDialog::on_deleteButton_clicked()
+{
+    delete mFastTableWidget;
+
+    ui->mainStackedWidget->setCurrentIndex(1);
 }
 
 void ControllerDialog::on_rowCountSpinBox_valueChanged(int value)
@@ -760,6 +745,360 @@ void ControllerDialog::on_cellSelectedButton_clicked()
     }
 }
 
+void ControllerDialog::on_backgroundButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_resetBackgroundButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_resetAllBackgroundButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_foregroundButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_resetForegroundButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_resetAllForegroundButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_cellFontButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_resetCellFontButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_resetAllCellFontButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_cellTextFlagsButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_resetCellTextFlagsButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_resetAllCellTextFlagsButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_horizontalBackgroundButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_horizontalResetBackgroundButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_horizontalResetAllBackgroundButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_horizontalForegroundButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_horizontalResetForegroundButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_horizontalResetAllForegroundButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_horizontalCellFontButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_horizontalResetCellFontButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_horizontalResetAllCellFontButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_horizontalCellTextFlagsButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_horizontalResetCellTextFlagsButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_horizontalResetAllCellTextFlagsButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_verticalBackgroundButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_verticalResetBackgroundButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_verticalResetAllBackgroundButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_verticalForegroundButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_verticalResetForegroundButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_verticalResetAllForegroundButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_verticalCellFontButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_verticalResetCellFontButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_verticalResetAllCellFontButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_verticalCellTextFlagsButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_verticalResetCellTextFlagsButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_verticalResetAllCellTextFlagsButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_mergeButton_clicked()
+{
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
+
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                QInputDialog dialog3(this);
+
+                dialog3.setWindowTitle("Select row");
+                dialog3.setIntMinimum(0);
+                dialog3.setIntMaximum(mFastTableWidget->rowCount()-1);
+                dialog3.setIntValue(0);
+
+                if (dialog3.exec())
+                {
+                    QInputDialog dialog4(this);
+
+                    dialog4.setWindowTitle("Select column");
+                    dialog4.setIntMinimum(0);
+                    dialog4.setIntMaximum(mFastTableWidget->columnCount()-1);
+                    dialog4.setIntValue(0);
+
+                    if (dialog4.exec())
+                    {
+                        int aLeft=qMin(dialog2.intValue(), dialog4.intValue());
+                        int aTop=qMin(dialog.intValue(), dialog3.intValue());
+                        int aRight=qMax(dialog2.intValue(), dialog4.intValue());
+                        int aBottom=qMax(dialog.intValue(), dialog3.intValue());
+
+                        ((FastTableWidget*)mFastTableWidget)->setSpan(aTop, aLeft, aBottom-aTop+1, aRight-aLeft+1);
+                    }
+                }
+            }
+        }
+    }
+}
+
+void ControllerDialog::on_clearSpansButton_clicked()
+{
+    ((FastTableWidget*)mFastTableWidget)->clearSpans();
+}
+
+void ControllerDialog::on_horizontalMergeButton_clicked()
+{
+    if (mFastTableWidget->horizontalHeader_RowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
+
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->horizontalHeader_RowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                QInputDialog dialog3(this);
+
+                dialog3.setWindowTitle("Select row");
+                dialog3.setIntMinimum(0);
+                dialog3.setIntMaximum(mFastTableWidget->horizontalHeader_RowCount()-1);
+                dialog3.setIntValue(0);
+
+                if (dialog3.exec())
+                {
+                    QInputDialog dialog4(this);
+
+                    dialog4.setWindowTitle("Select column");
+                    dialog4.setIntMinimum(0);
+                    dialog4.setIntMaximum(mFastTableWidget->columnCount()-1);
+                    dialog4.setIntValue(0);
+
+                    if (dialog4.exec())
+                    {
+                        int aLeft=qMin(dialog2.intValue(), dialog4.intValue());
+                        int aTop=qMin(dialog.intValue(), dialog3.intValue());
+                        int aRight=qMax(dialog2.intValue(), dialog4.intValue());
+                        int aBottom=qMax(dialog.intValue(), dialog3.intValue());
+
+                        ((FastTableWidget*)mFastTableWidget)->horizontalHeader_SetSpan(aTop, aLeft, aBottom-aTop+1, aRight-aLeft+1);
+                    }
+                }
+            }
+        }
+    }
+}
+
+void ControllerDialog::on_horizontalClearSpansButton_clicked()
+{
+    ((FastTableWidget*)mFastTableWidget)->horizontalHeader_ClearSpans();
+}
+
+void ControllerDialog::on_verticalMergeButton_clicked()
+{
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->verticalHeader_ColumnCount()>0)
+    {
+        QInputDialog dialog(this);
+
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->verticalHeader_ColumnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                QInputDialog dialog3(this);
+
+                dialog3.setWindowTitle("Select row");
+                dialog3.setIntMinimum(0);
+                dialog3.setIntMaximum(mFastTableWidget->rowCount()-1);
+                dialog3.setIntValue(0);
+
+                if (dialog3.exec())
+                {
+                    QInputDialog dialog4(this);
+
+                    dialog4.setWindowTitle("Select column");
+                    dialog4.setIntMinimum(0);
+                    dialog4.setIntMaximum(mFastTableWidget->verticalHeader_ColumnCount()-1);
+                    dialog4.setIntValue(0);
+
+                    if (dialog4.exec())
+                    {
+                        int aLeft=qMin(dialog2.intValue(), dialog4.intValue());
+                        int aTop=qMin(dialog.intValue(), dialog3.intValue());
+                        int aRight=qMax(dialog2.intValue(), dialog4.intValue());
+                        int aBottom=qMax(dialog.intValue(), dialog3.intValue());
+
+                        ((FastTableWidget*)mFastTableWidget)->verticalHeader_SetSpan(aTop, aLeft, aBottom-aTop+1, aRight-aLeft+1);
+                    }
+                }
+            }
+        }
+    }
+}
+
+void ControllerDialog::on_verticalClearSpansButton_clicked()
+{
+    ((FastTableWidget*)mFastTableWidget)->verticalHeader_ClearSpans();
+}
+
 void ControllerDialog::on_rowCountViewButton_clicked()
 {
     ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getRowCount(), this);
@@ -943,4 +1282,202 @@ void ControllerDialog::on_columnsSelectedViewButton_clicked()
 {
     ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->horizontalHeader_GetSelectedColumns(), false, this);
     dialog.exec();
+}
+
+void ControllerDialog::on_mergeParentViewButton_clicked()
+{
+    QList<QStringList> aList;
+
+    for (int i=0; i<mFastTableWidget->rowCount(); i++)
+    {
+        QStringList aRow;
+
+        for (int j=0; j<mFastTableWidget->columnCount(); j++)
+        {
+            QPoint aPoint=((FastTableWidget*)mFastTableWidget)->spanParent(i, j);
+
+            aRow.append(QString::number(aPoint.y())+" "+QString::number(aPoint.x()));
+        }
+
+        aList.append(aRow);
+    }
+
+    ViewDialog dialog(&aList, this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_mergeXYViewButton_clicked()
+{
+    QList<QStringList> aList;
+
+    for (int i=0; i<mFastTableWidget->rowCount(); i++)
+    {
+        QStringList aRow;
+
+        for (int j=0; j<mFastTableWidget->columnCount(); j++)
+        {
+            aRow.append(QString::number(((FastTableWidget*)mFastTableWidget)->columnSpan(i, j))+" "+QString::number(((FastTableWidget*)mFastTableWidget)->rowSpan(i, j)));
+        }
+
+        aList.append(aRow);
+    }
+
+    ViewDialog dialog(&aList, this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_horizontalMergeParentViewButton_clicked()
+{
+    QList<QStringList> aList;
+
+    for (int i=0; i<mFastTableWidget->horizontalHeader_RowCount(); i++)
+    {
+        QStringList aRow;
+
+        for (int j=0; j<mFastTableWidget->columnCount(); j++)
+        {
+            QPoint aPoint=((FastTableWidget*)mFastTableWidget)->horizontalHeader_SpanParent(i, j);
+
+            aRow.append(QString::number(aPoint.y())+" "+QString::number(aPoint.x()));
+        }
+
+        aList.append(aRow);
+    }
+
+    ViewDialog dialog(&aList, this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_horizontalMergeXYViewButton_clicked()
+{
+    QList<QStringList> aList;
+
+    for (int i=0; i<mFastTableWidget->horizontalHeader_RowCount(); i++)
+    {
+        QStringList aRow;
+
+        for (int j=0; j<mFastTableWidget->columnCount(); j++)
+        {
+            aRow.append(QString::number(((FastTableWidget*)mFastTableWidget)->horizontalHeader_ColumnSpan(i, j))+" "+QString::number(((FastTableWidget*)mFastTableWidget)->horizontalHeader_RowSpan(i, j)));
+        }
+
+        aList.append(aRow);
+    }
+
+    ViewDialog dialog(&aList, this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_verticalMergeParentViewButton_clicked()
+{
+    QList<QStringList> aList;
+
+    for (int i=0; i<mFastTableWidget->rowCount(); i++)
+    {
+        QStringList aRow;
+
+        for (int j=0; j<mFastTableWidget->verticalHeader_ColumnCount(); j++)
+        {
+            QPoint aPoint=((FastTableWidget*)mFastTableWidget)->verticalHeader_SpanParent(i, j);
+
+            aRow.append(QString::number(aPoint.y())+" "+QString::number(aPoint.x()));
+        }
+
+        aList.append(aRow);
+    }
+
+    ViewDialog dialog(&aList, this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_verticalMergeXYViewButton_clicked()
+{
+    QList<QStringList> aList;
+
+    for (int i=0; i<mFastTableWidget->rowCount(); i++)
+    {
+        QStringList aRow;
+
+        for (int j=0; j<mFastTableWidget->verticalHeader_ColumnCount(); j++)
+        {
+            aRow.append(QString::number(((FastTableWidget*)mFastTableWidget)->verticalHeader_ColumnSpan(i, j))+" "+QString::number(((FastTableWidget*)mFastTableWidget)->verticalHeader_RowSpan(i, j)));
+        }
+
+        aList.append(aRow);
+    }
+
+    ViewDialog dialog(&aList, this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_createCustomTableButton_clicked()
+{
+    mFastTableWidget=new CustomFastTableWidget(this);
+    ui->fastTableLayout->insertWidget(0, mFastTableWidget);
+
+    ui->defaultWidthSpinBox->setValue(100);
+    ui->defaultHeightSpinBox->setValue(30);
+
+    ui->rowCountSpinBox->setValue(0);
+    ui->columnCountSpinBox->setValue(0);
+    ui->horizontalHeaderRowCountSpinBox->setValue(0);
+    ui->verticalHeaderColumnCountSpinBox->setValue(0);
+
+    ui->rowCountSpinBox->setValue(50);
+    ui->columnCountSpinBox->setValue(20);
+    ui->horizontalHeaderRowCountSpinBox->setValue(1);
+    ui->verticalHeaderColumnCountSpinBox->setValue(1);
+
+    for (int i=0; i<mFastTableWidget->rowCount(); ++i)
+    {
+        for (int j=0; j<mFastTableWidget->columnCount(); ++j)
+        {
+            mFastTableWidget->setText(i, j, "Hello, World");
+        }
+    }
+
+    for (int i=0; i<mFastTableWidget->columnCount(); ++i)
+    {
+        mFastTableWidget->horizontalHeader_SetText(i, "Header");
+    }
+
+    ui->fastTableControlWidget->setVisible(false);
+
+    ui->mainStackedWidget->setCurrentIndex(0);
+}
+
+void ControllerDialog::on_createFastTableButton_clicked()
+{
+    mFastTableWidget=new FastTableWidget(this);
+    ui->fastTableLayout->insertWidget(0, mFastTableWidget);
+
+    ui->defaultWidthSpinBox->setValue(100);
+    ui->defaultHeightSpinBox->setValue(30);
+
+    ui->rowCountSpinBox->setValue(0);
+    ui->columnCountSpinBox->setValue(0);
+    ui->horizontalHeaderRowCountSpinBox->setValue(0);
+    ui->verticalHeaderColumnCountSpinBox->setValue(0);
+
+    ui->rowCountSpinBox->setValue(50);
+    ui->columnCountSpinBox->setValue(20);
+    ui->horizontalHeaderRowCountSpinBox->setValue(1);
+    ui->verticalHeaderColumnCountSpinBox->setValue(1);
+
+    for (int i=0; i<mFastTableWidget->rowCount(); ++i)
+    {
+        for (int j=0; j<mFastTableWidget->columnCount(); ++j)
+        {
+            mFastTableWidget->setText(i, j, "Hello, World");
+        }
+    }
+
+    for (int i=0; i<mFastTableWidget->columnCount(); ++i)
+    {
+        mFastTableWidget->horizontalHeader_SetText(i, "Header");
+    }
+
+    ui->fastTableControlWidget->setVisible(true);
+
+    ui->mainStackedWidget->setCurrentIndex(0);
 }
