@@ -20,22 +20,25 @@ SOURCES += src/main.cpp\
            src/tests/testframe.cpp \
            src/tests/publictablewidget.cpp \
            src/controller/controllerdialog.cpp \
-    src/controller/viewdialog.cpp
+           src/controller/viewdialog.cpp \
+           src/controller/aligndialog.cpp
 
 HEADERS  += src/main/mainwindow.h \
-           src/fasttable/customfasttablewidget.h \
-           src/fasttable/fasttablewidget.h \
-           src/tests/testdialog.h \
-           src/tests/testframe.h \
-           src/tests/publictablewidget.h \
-           src/controller/controllerdialog.h \
-    src/controller/viewdialog.h
+            src/fasttable/customfasttablewidget.h \
+            src/fasttable/fasttablewidget.h \
+            src/tests/testdialog.h \
+            src/tests/testframe.h \
+            src/tests/publictablewidget.h \
+            src/controller/controllerdialog.h \
+            src/controller/viewdialog.h \
+            src/controller/aligndialog.h
 
 FORMS    += src/main/mainwindow.ui \
             src/tests/testdialog.ui \
             src/tests/testframe.ui \
             src/controller/controllerdialog.ui \
-    src/controller/viewdialog.ui
+            src/controller/viewdialog.ui \
+            src/controller/aligndialog.ui
 
 OTHER_FILES += \
     TODO.txt

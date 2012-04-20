@@ -747,182 +747,827 @@ void ControllerDialog::on_cellSelectedButton_clicked()
 
 void ControllerDialog::on_backgroundButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                QColorDialog dialog3(this);
+
+                dialog3.setWindowTitle("Background color");
+                dialog3.setCurrentColor(((FastTableWidget*)mFastTableWidget)->backgroundBrush(dialog.intValue(), dialog2.intValue()).color());
+
+                if (dialog3.exec())
+                {
+                    ((FastTableWidget*)mFastTableWidget)->setBackgroundBrush(dialog.intValue(), dialog2.intValue(), QBrush(dialog3.selectedColor()));
+                }
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_resetBackgroundButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                ((FastTableWidget*)mFastTableWidget)->resetBackgroundBrush(dialog.intValue(), dialog2.intValue());
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_resetAllBackgroundButton_clicked()
 {
-
+    ((FastTableWidget*)mFastTableWidget)->resetBackgroundBrushes();
 }
 
 void ControllerDialog::on_foregroundButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                QColorDialog dialog3(this);
+
+                dialog3.setWindowTitle("Foreground color");
+                dialog3.setCurrentColor(((FastTableWidget*)mFastTableWidget)->foregroundColor(dialog.intValue(), dialog2.intValue()));
+
+                if (dialog3.exec())
+                {
+                    ((FastTableWidget*)mFastTableWidget)->setForegroundColor(dialog.intValue(), dialog2.intValue(), dialog3.selectedColor());
+                }
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_resetForegroundButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                ((FastTableWidget*)mFastTableWidget)->resetForegroundColor(dialog.intValue(), dialog2.intValue());
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_resetAllForegroundButton_clicked()
 {
-
+    ((FastTableWidget*)mFastTableWidget)->resetForegroundColors();
 }
 
 void ControllerDialog::on_cellFontButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                QFontDialog dialog3(this);
+
+                dialog3.setWindowTitle("Cell font");
+                dialog3.setCurrentFont(((FastTableWidget*)mFastTableWidget)->cellFont(dialog.intValue(), dialog2.intValue()));
+
+                if (dialog3.exec())
+                {
+                    ((FastTableWidget*)mFastTableWidget)->setCellFont(dialog.intValue(), dialog2.intValue(), dialog3.selectedFont());
+                }
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_resetCellFontButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                ((FastTableWidget*)mFastTableWidget)->resetFont(dialog.intValue(), dialog2.intValue());
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_resetAllCellFontButton_clicked()
 {
-
+    ((FastTableWidget*)mFastTableWidget)->resetFonts();
 }
 
 void ControllerDialog::on_cellTextFlagsButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                AlignDialog dialog3(((FastTableWidget*)mFastTableWidget)->cellTextFlags(dialog.intValue(), dialog2.intValue()), this);
+
+                dialog3.setWindowTitle("Cell text flags");
+
+                if (dialog3.exec())
+                {
+                    ((FastTableWidget*)mFastTableWidget)->setCellTextFlags(dialog.intValue(), dialog2.intValue(), dialog3.resultAlignment);
+                }
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_resetCellTextFlagsButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                ((FastTableWidget*)mFastTableWidget)->resetCellTextFlag(dialog.intValue(), dialog2.intValue());
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_resetAllCellTextFlagsButton_clicked()
 {
-
+    ((FastTableWidget*)mFastTableWidget)->resetCellTextFlags();
 }
 
 void ControllerDialog::on_horizontalBackgroundButton_clicked()
 {
+    if (mFastTableWidget->horizontalHeader_RowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->horizontalHeader_RowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                QColorDialog dialog3(this);
+
+                dialog3.setWindowTitle("Background color");
+                dialog3.setCurrentColor(((FastTableWidget*)mFastTableWidget)->horizontalHeader_BackgroundBrush(dialog.intValue(), dialog2.intValue()).color());
+
+                if (dialog3.exec())
+                {
+                    ((FastTableWidget*)mFastTableWidget)->horizontalHeader_SetBackgroundBrush(dialog.intValue(), dialog2.intValue(), QBrush(dialog3.selectedColor()));
+                }
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_horizontalResetBackgroundButton_clicked()
 {
+    if (mFastTableWidget->horizontalHeader_RowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->horizontalHeader_RowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                ((FastTableWidget*)mFastTableWidget)->horizontalHeader_ResetBackgroundBrush(dialog.intValue(), dialog2.intValue());
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_horizontalResetAllBackgroundButton_clicked()
 {
-
+    ((FastTableWidget*)mFastTableWidget)->horizontalHeader_ResetBackgroundBrushes();
 }
 
 void ControllerDialog::on_horizontalForegroundButton_clicked()
 {
+    if (mFastTableWidget->horizontalHeader_RowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->horizontalHeader_RowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                QColorDialog dialog3(this);
+
+                dialog3.setWindowTitle("Foreground color");
+                dialog3.setCurrentColor(((FastTableWidget*)mFastTableWidget)->horizontalHeader_ForegroundColor(dialog.intValue(), dialog2.intValue()));
+
+                if (dialog3.exec())
+                {
+                    ((FastTableWidget*)mFastTableWidget)->horizontalHeader_SetForegroundColor(dialog.intValue(), dialog2.intValue(), dialog3.selectedColor());
+                }
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_horizontalResetForegroundButton_clicked()
 {
+    if (mFastTableWidget->horizontalHeader_RowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->horizontalHeader_RowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                ((FastTableWidget*)mFastTableWidget)->horizontalHeader_ResetForegroundColor(dialog.intValue(), dialog2.intValue());
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_horizontalResetAllForegroundButton_clicked()
 {
-
+    ((FastTableWidget*)mFastTableWidget)->horizontalHeader_ResetForegroundColors();
 }
 
 void ControllerDialog::on_horizontalCellFontButton_clicked()
 {
+    if (mFastTableWidget->horizontalHeader_RowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->horizontalHeader_RowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                QFontDialog dialog3(this);
+
+                dialog3.setWindowTitle("Cell font");
+                dialog3.setCurrentFont(((FastTableWidget*)mFastTableWidget)->horizontalHeader_CellFont(dialog.intValue(), dialog2.intValue()));
+
+                if (dialog3.exec())
+                {
+                    ((FastTableWidget*)mFastTableWidget)->horizontalHeader_SetCellFont(dialog.intValue(), dialog2.intValue(), dialog3.selectedFont());
+                }
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_horizontalResetCellFontButton_clicked()
 {
+    if (mFastTableWidget->horizontalHeader_RowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->horizontalHeader_RowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                ((FastTableWidget*)mFastTableWidget)->horizontalHeader_ResetFont(dialog.intValue(), dialog2.intValue());
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_horizontalResetAllCellFontButton_clicked()
 {
-
+    ((FastTableWidget*)mFastTableWidget)->horizontalHeader_ResetFonts();
 }
 
 void ControllerDialog::on_horizontalCellTextFlagsButton_clicked()
 {
+    if (mFastTableWidget->horizontalHeader_RowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->horizontalHeader_RowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                AlignDialog dialog3(((FastTableWidget*)mFastTableWidget)->horizontalHeader_CellTextFlags(dialog.intValue(), dialog2.intValue()), this);
+
+                dialog3.setWindowTitle("Cell text flags");
+
+                if (dialog3.exec())
+                {
+                    ((FastTableWidget*)mFastTableWidget)->horizontalHeader_SetCellTextFlags(dialog.intValue(), dialog2.intValue(), dialog3.resultAlignment);
+                }
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_horizontalResetCellTextFlagsButton_clicked()
 {
+    if (mFastTableWidget->horizontalHeader_RowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->horizontalHeader_RowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                ((FastTableWidget*)mFastTableWidget)->horizontalHeader_ResetCellTextFlag(dialog.intValue(), dialog2.intValue());
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_horizontalResetAllCellTextFlagsButton_clicked()
 {
-
+    ((FastTableWidget*)mFastTableWidget)->horizontalHeader_ResetCellTextFlags();
 }
 
 void ControllerDialog::on_verticalBackgroundButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->verticalHeader_ColumnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->verticalHeader_ColumnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                QColorDialog dialog3(this);
+
+                dialog3.setWindowTitle("Background color");
+                dialog3.setCurrentColor(((FastTableWidget*)mFastTableWidget)->verticalHeader_BackgroundBrush(dialog.intValue(), dialog2.intValue()).color());
+
+                if (dialog3.exec())
+                {
+                    ((FastTableWidget*)mFastTableWidget)->verticalHeader_SetBackgroundBrush(dialog.intValue(), dialog2.intValue(), QBrush(dialog3.selectedColor()));
+                }
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_verticalResetBackgroundButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->verticalHeader_ColumnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->verticalHeader_ColumnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                ((FastTableWidget*)mFastTableWidget)->verticalHeader_ResetBackgroundBrush(dialog.intValue(), dialog2.intValue());
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_verticalResetAllBackgroundButton_clicked()
 {
-
+    ((FastTableWidget*)mFastTableWidget)->verticalHeader_ResetBackgroundBrushes();
 }
 
 void ControllerDialog::on_verticalForegroundButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->verticalHeader_ColumnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->verticalHeader_ColumnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                QColorDialog dialog3(this);
+
+                dialog3.setWindowTitle("Foreground color");
+                dialog3.setCurrentColor(((FastTableWidget*)mFastTableWidget)->verticalHeader_ForegroundColor(dialog.intValue(), dialog2.intValue()));
+
+                if (dialog3.exec())
+                {
+                    ((FastTableWidget*)mFastTableWidget)->verticalHeader_SetForegroundColor(dialog.intValue(), dialog2.intValue(), dialog3.selectedColor());
+                }
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_verticalResetForegroundButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->verticalHeader_ColumnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->verticalHeader_ColumnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                ((FastTableWidget*)mFastTableWidget)->verticalHeader_ResetForegroundColor(dialog.intValue(), dialog2.intValue());
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_verticalResetAllForegroundButton_clicked()
 {
-
+    ((FastTableWidget*)mFastTableWidget)->verticalHeader_ResetForegroundColors();
 }
 
 void ControllerDialog::on_verticalCellFontButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->verticalHeader_ColumnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->verticalHeader_ColumnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                QFontDialog dialog3(this);
+
+                dialog3.setWindowTitle("Cell font");
+                dialog3.setCurrentFont(((FastTableWidget*)mFastTableWidget)->verticalHeader_CellFont(dialog.intValue(), dialog2.intValue()));
+
+                if (dialog3.exec())
+                {
+                    ((FastTableWidget*)mFastTableWidget)->verticalHeader_SetCellFont(dialog.intValue(), dialog2.intValue(), dialog3.selectedFont());
+                }
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_verticalResetCellFontButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->verticalHeader_ColumnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->verticalHeader_ColumnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                ((FastTableWidget*)mFastTableWidget)->verticalHeader_ResetFont(dialog.intValue(), dialog2.intValue());
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_verticalResetAllCellFontButton_clicked()
 {
-
+    ((FastTableWidget*)mFastTableWidget)->verticalHeader_ResetFonts();
 }
 
 void ControllerDialog::on_verticalCellTextFlagsButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->verticalHeader_ColumnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->verticalHeader_ColumnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                AlignDialog dialog3(((FastTableWidget*)mFastTableWidget)->verticalHeader_CellTextFlags(dialog.intValue(), dialog2.intValue()), this);
+
+                dialog3.setWindowTitle("Cell text flags");
+
+                if (dialog3.exec())
+                {
+                    ((FastTableWidget*)mFastTableWidget)->verticalHeader_SetCellTextFlags(dialog.intValue(), dialog2.intValue(), dialog3.resultAlignment);
+                }
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_verticalResetCellTextFlagsButton_clicked()
 {
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->verticalHeader_ColumnCount()>0)
+    {
+        QInputDialog dialog(this);
 
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->verticalHeader_ColumnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                ((FastTableWidget*)mFastTableWidget)->verticalHeader_ResetCellTextFlag(dialog.intValue(), dialog2.intValue());
+            }
+        }
+    }
 }
 
 void ControllerDialog::on_verticalResetAllCellTextFlagsButton_clicked()
 {
-
+    ((FastTableWidget*)mFastTableWidget)->verticalHeader_ResetCellTextFlags();
 }
 
 void ControllerDialog::on_mergeButton_clicked()
@@ -1413,7 +2058,7 @@ void ControllerDialog::on_verticalMergeXYViewButton_clicked()
 void ControllerDialog::on_createCustomTableButton_clicked()
 {
     mFastTableWidget=new CustomFastTableWidget(this);
-    ui->fastTableLayout->insertWidget(0, mFastTableWidget);
+    ui->fastTableLayout->addWidget(mFastTableWidget);
 
     ui->defaultWidthSpinBox->setValue(100);
     ui->defaultHeightSpinBox->setValue(30);
@@ -1449,7 +2094,7 @@ void ControllerDialog::on_createCustomTableButton_clicked()
 void ControllerDialog::on_createFastTableButton_clicked()
 {
     mFastTableWidget=new FastTableWidget(this);
-    ui->fastTableLayout->insertWidget(0, mFastTableWidget);
+    ui->fastTableLayout->addWidget(mFastTableWidget);
 
     ui->defaultWidthSpinBox->setValue(100);
     ui->defaultHeightSpinBox->setValue(30);

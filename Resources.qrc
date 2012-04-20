@@ -1,5 +1,23 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/find.png</file>
+        <file>images/CellTopSelected.png</file>
+        <file>images/CellBottom.png</file>
+        <file>images/CellBottomLeft.png</file>
+        <file>images/CellBottomLeftSelected.png</file>
+        <file>images/CellBottomRight.png</file>
+        <file>images/CellBottomRightSelected.png</file>
+        <file>images/CellBottomSelected.png</file>
+        <file>images/CellCenter.png</file>
+        <file>images/CellCenterSelected.png</file>
+        <file>images/CellLeft.png</file>
+        <file>images/CellLeftSelected.png</file>
+        <file>images/CellRight.png</file>
+        <file>images/CellRightSelected.png</file>
+        <file>images/CellTop.png</file>
+        <file>images/CellTopLeft.png</file>
+        <file>images/CellTopLeftSelected.png</file>
+        <file>images/CellTopRight.png</file>
+        <file>images/CellTopRightSelected.png</file>
+        <file>images/Find.png</file>
     </qresource>
 </RCC>

@@ -13,7 +13,7 @@
                                     setWindowFlags(Qt::Window);\
                                     \
                                     mFastTableWidget=new FastTableWidget(this);\
-                                    ui->fastTableLayout->insertWidget(0, mFastTableWidget);\
+                                    ui->fastTableLayout->addWidget(mFastTableWidget);\
                                     \
                                     mFastTableWidget->setSizes(1, 1);
 
