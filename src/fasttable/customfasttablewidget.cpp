@@ -438,7 +438,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
                 painter.drawLine(x+width-1, y, x+width-1, y+height);
 
                 painter.fillRect(x+2, y, width-3, height/2, backColorUp);
-                painter.fillRect(x+2, y+height/2, width-3, height/2, backColorDown);
+                painter.fillRect(x+2, y+height/2, width-3, height-height/2, backColorDown);
 
                 painter.setPen(QPen(*aGridColor));
                 painter.drawRect(x, y, width, height);
