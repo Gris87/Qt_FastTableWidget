@@ -28,8 +28,13 @@ public:
     explicit ControllerDialog(QWidget *parent = 0);
     ~ControllerDialog();
 
+    void setStyleButtonsFlat();
+
 private slots:
     void on_deleteButton_clicked();
+    void on_styleLinuxButton_clicked();
+    void on_styleWinXPButton_clicked();
+    void on_styleWin7Button_clicked();
 
     void on_rowCountSpinBox_valueChanged(int value);
     void on_columnCountSpinBox_valueChanged(int value);

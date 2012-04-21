@@ -23,6 +23,31 @@ void ControllerDialog::on_deleteButton_clicked()
     ui->mainStackedWidget->setCurrentIndex(1);
 }
 
+void ControllerDialog::setStyleButtonsFlat()
+{
+    ui->styleLinuxButton->setFlat(mFastTableWidget->style()!=CustomFastTableWidget::StyleLinux);
+    ui->styleWinXPButton->setFlat(mFastTableWidget->style()!=CustomFastTableWidget::StyleWinXP);
+    ui->styleWin7Button->setFlat (mFastTableWidget->style()!=CustomFastTableWidget::StyleWin7);
+}
+
+void ControllerDialog::on_styleLinuxButton_clicked()
+{
+    mFastTableWidget->setStyle(CustomFastTableWidget::StyleLinux);
+    setStyleButtonsFlat();
+}
+
+void ControllerDialog::on_styleWinXPButton_clicked()
+{
+    mFastTableWidget->setStyle(CustomFastTableWidget::StyleWinXP);
+    setStyleButtonsFlat();
+}
+
+void ControllerDialog::on_styleWin7Button_clicked()
+{
+    mFastTableWidget->setStyle(CustomFastTableWidget::StyleWin7);
+    setStyleButtonsFlat();
+}
+
 void ControllerDialog::on_rowCountSpinBox_valueChanged(int value)
 {
     mFastTableWidget->setRowCount(value);
@@ -2088,6 +2113,8 @@ void ControllerDialog::on_createCustomTableButton_clicked()
 
     ui->fastTableControlWidget->setVisible(false);
 
+    setStyleButtonsFlat();
+
     ui->mainStackedWidget->setCurrentIndex(0);
 }
 
@@ -2123,6 +2150,8 @@ void ControllerDialog::on_createFastTableButton_clicked()
     }
 
     ui->fastTableControlWidget->setVisible(true);
+
+    setStyleButtonsFlat();
 
     ui->mainStackedWidget->setCurrentIndex(0);
 }

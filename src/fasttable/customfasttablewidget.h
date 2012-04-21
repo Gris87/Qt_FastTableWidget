@@ -86,7 +86,7 @@ public:
 
     enum DrawComponent {DrawCell, DrawHorizontalHeaderCell, DrawVerticalHeaderCell, DrawTopLeftCorner};
 
-    enum Style {StyleWinXP, StyleWin7};
+    enum Style {StyleLinux, StyleWinXP, StyleWin7};
 
     explicit CustomFastTableWidget(QWidget *parent = 0);
     ~CustomFastTableWidget();

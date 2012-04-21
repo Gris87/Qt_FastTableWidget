@@ -27,16 +27,15 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
 
     mVerticalHeader_VisibleRight=-1;
 
-#ifdef Q_WS_X11
-    mStyle=StyleWin7;
-    setStyle(StyleWinXP);
+#ifdef Q_OS_LINUX
+    mStyle=StyleWinXP;
+    setStyle(StyleLinux);
 #endif
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     switch (QSysInfo::windowsVersion())
     {
         case QSysInfo::WV_XP:
         {
-            mStyle=StyleWin7;
             setStyle(StyleWinXP);
         }
         break;
@@ -47,7 +46,6 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
         break;
         default:
         {
-            mStyle=StyleWin7;
             setStyle(StyleWinXP);
         }
         break;
@@ -304,15 +302,91 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
 
     if (drawComponent==DrawCell || height<=8)
     {
-        painter.fillRect(x, y, width, height, *aBackgroundBrush);
+        if (mStyle==StyleLinux)
+        {
+            QColor backColorDown=aBackgroundBrush->color();
 
-        painter.setPen(QPen(*aGridColor));
-        painter.drawRect(x, y, width, height);
+            int r=backColorDown.red()+10;
+            int g=backColorDown.green()+10;
+            int b=backColorDown.blue()+10;
+
+            if (r>255)
+            {
+                r=255;
+            }
+
+            if (g>255)
+            {
+                g=255;
+            }
+
+            if (b>255)
+            {
+                b=255;
+            }
+
+            QColor backColorUp(r, g, b);
+
+            QLinearGradient aGradient(x, y, x, y+height);
+            aGradient.setColorAt(0, backColorUp);
+            aGradient.setColorAt(1, backColorDown);
+
+            QBrush aBrush(aGradient);
+
+            painter.fillRect(x, y, width, height, aBrush);
+
+            painter.setPen(QPen(*aGridColor));
+            painter.drawRect(x, y, width, height);
+        }
+        else
+        {
+            painter.fillRect(x, y, width, height, *aBackgroundBrush);
+
+            painter.setPen(QPen(*aGridColor));
+            painter.drawRect(x, y, width, height);
+        }
     }
     else
     {
         switch (mStyle)
         {
+            case StyleLinux:
+            {
+                QColor backColorDown=aBackgroundBrush->color();
+
+                int r=backColorDown.red()+20;
+                int g=backColorDown.green()+20;
+                int b=backColorDown.blue()+20;
+
+                if (r>255)
+                {
+                    r=255;
+                }
+
+                if (g>255)
+                {
+                    g=255;
+                }
+
+                if (b>255)
+                {
+                    b=255;
+                }
+
+                QColor backColorUp(r, g, b);
+
+                QLinearGradient aGradient(x, y, x, y+height);
+                aGradient.setColorAt(0, backColorUp);
+                aGradient.setColorAt(1, backColorDown);
+
+                QBrush aBrush(aGradient);
+
+                painter.fillRect(x, y, width, height, aBrush);
+
+                painter.setPen(QPen(*aGridColor));
+                painter.drawRect(x, y, width, height);
+            }
+            break;
             case StyleWinXP:
             {
                 painter.fillRect(x+1, y+1, width, height-3, *aBackgroundBrush);
@@ -764,6 +838,28 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
         {
             switch (mStyle)
             {
+                case StyleLinux:
+                {
+                    mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
+                    mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
+                    mDefaultForegroundColor.setRgb(0, 0, 0);
+                    mGridColor.setRgb(202, 201, 200);
+
+                    mHorizontalHeader_DefaultBackgroundBrush.setColor(QColor(234, 233, 231));
+                    mHorizontalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
+                    mHorizontalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
+                    mHorizontalHeader_GridColor.setRgb(210, 207, 204);
+
+                    mVerticalHeader_DefaultBackgroundBrush.setColor(QColor(233, 232, 231));
+                    mVerticalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
+                    mVerticalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
+                    mVerticalHeader_GridColor.setRgb(190, 186, 182);
+
+                    mSelectionBrush.setColor(QColor(235, 110, 60));
+                    mSelectionBrush.setStyle(Qt::SolidPattern);
+                    mSelectionTextColor.setRgb(255, 255, 255);
+                }
+                break;
                 case StyleWinXP:
                 {
                     mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
