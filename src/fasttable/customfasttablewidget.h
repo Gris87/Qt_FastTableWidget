@@ -84,8 +84,9 @@ class CustomFastTableWidget : public QAbstractScrollArea
 
 public:
 
-    enum DrawComponent {DrawCell, DrawHorizontalHeaderCell, DrawVerticalHeaderCell, DrawTopLeftCorner};
+    typedef void (*DrawFunction)(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, QColor *aGridColor, QBrush *aBackgroundBrush);
 
+    enum DrawComponent {DrawCell, DrawHorizontalHeaderCell, DrawVerticalHeaderCell, DrawTopLeftCorner};
     enum Style {StyleLinux, StyleWinXP, StyleWin7};
 
     explicit CustomFastTableWidget(QWidget *parent = 0);
@@ -101,6 +102,9 @@ public:
 
     Style style();
     void setStyle(Style style, bool keepColors=false);
+
+    void setDrawCellFunction(DrawFunction aDrawCellFunction);
+    void setDrawHeaderCellFunction(DrawFunction aDrawHeaderCellFunction);
 
     void selectAll();
     void unselectAll();
@@ -218,6 +222,9 @@ public:
 protected:
     Style mStyle;
 
+    DrawFunction mDrawCellFunction;
+    DrawFunction mDrawHeaderCellFunction;
+
     int mRowCount;
     int mColumnCount;
     qint16 mHorizontalHeader_RowCount;
@@ -279,6 +286,12 @@ protected:
     virtual void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent);
     virtual void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent,
                            QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aTextColor, QString *aText, QFont *aFont, int aTextFlags);
+
+    static void paintCellLinux(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, QColor *aGridColor, QBrush *aBackgroundBrush);
+    static void paintCellDefault(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, QColor *aGridColor, QBrush *aBackgroundBrush);
+    static void paintHeaderCellLinux(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, QColor *aGridColor, QBrush *aBackgroundBrush);
+    static void paintHeaderCellWinXP(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, QColor *aGridColor, QBrush *aBackgroundBrush);
+    static void paintHeaderCellWin7(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, QColor *aGridColor, QBrush *aBackgroundBrush);
 
     void updateBarsRanges();
     virtual void updateVisibleRange();
