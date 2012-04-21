@@ -336,10 +336,6 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
             break;
             case StyleWin7:
             {
-                painter.setPen(QPen(QColor(255, 255, 255)));
-                painter.drawLine(x+1, y, x+1, y+height);
-                painter.drawLine(x+width-1, y, x+width-1, y+height);
-
                 QColor backColorDown=aBackgroundBrush->color();
 
                 int r=backColorDown.red()+15;
@@ -362,6 +358,10 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
                 }
 
                 QColor backColorUp(r, g, b);
+
+                painter.setPen(QPen(backColorUp));
+                painter.drawLine(x+1, y, x+1, y+height);
+                painter.drawLine(x+width-1, y, x+width-1, y+height);
 
                 painter.fillRect(x+2, y, width-3, height/2, backColorUp);
                 painter.fillRect(x+2, y+height/2, width-3, height/2, backColorDown);
