@@ -32,6 +32,7 @@ public:
 
 private slots:
     void on_deleteButton_clicked();
+    void on_styleSimpleButton_clicked();
     void on_styleLinuxButton_clicked();
     void on_styleWinXPButton_clicked();
     void on_styleWin7Button_clicked();

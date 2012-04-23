@@ -1,7 +1,6 @@
-Different styles
+Negative width or height means that row/column is hidden
 Mouse handler
 Action queue to remove unnecessary function calls
-Cell flags
-Negative width or height means that row/column is hidden
+Cell flags (Selection, Editing, Enabled)
 Use setCapacity on clear and setRowCount...
 Optimize painting with selecting update rectangles

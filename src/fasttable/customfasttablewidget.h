@@ -87,7 +87,7 @@ public:
     typedef void (*DrawFunction)(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, QColor *aGridColor, QBrush *aBackgroundBrush);
 
     enum DrawComponent {DrawCell, DrawHorizontalHeaderCell, DrawVerticalHeaderCell, DrawTopLeftCorner};
-    enum Style {StyleLinux, StyleWinXP, StyleWin7};
+    enum Style {StyleSimple, StyleLinux, StyleWinXP, StyleWin7};
 
     explicit CustomFastTableWidget(QWidget *parent = 0);
     ~CustomFastTableWidget();

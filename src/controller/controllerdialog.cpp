@@ -25,9 +25,17 @@ void ControllerDialog::on_deleteButton_clicked()
 
 void ControllerDialog::setStyleButtonsFlat()
 {
-    ui->styleLinuxButton->setFlat(mFastTableWidget->style()!=CustomFastTableWidget::StyleLinux);
-    ui->styleWinXPButton->setFlat(mFastTableWidget->style()!=CustomFastTableWidget::StyleWinXP);
-    ui->styleWin7Button->setFlat (mFastTableWidget->style()!=CustomFastTableWidget::StyleWin7);
+    ui->styleSimpleButton->setFlat(mFastTableWidget->style()!=CustomFastTableWidget::StyleSimple);
+    ui->styleLinuxButton->setFlat (mFastTableWidget->style()!=CustomFastTableWidget::StyleLinux);
+    ui->styleWinXPButton->setFlat (mFastTableWidget->style()!=CustomFastTableWidget::StyleWinXP);
+    ui->styleWin7Button->setFlat  (mFastTableWidget->style()!=CustomFastTableWidget::StyleWin7);
+}
+
+
+void ControllerDialog::on_styleSimpleButton_clicked()
+{
+    mFastTableWidget->setStyle(CustomFastTableWidget::StyleSimple);
+    setStyleButtonsFlat();
 }
 
 void ControllerDialog::on_styleLinuxButton_clicked()

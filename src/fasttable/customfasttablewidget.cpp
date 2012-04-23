@@ -28,7 +28,6 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     mVerticalHeader_VisibleRight=-1;
 
 #ifdef Q_OS_LINUX
-    mStyle=StyleWinXP;
     setStyle(StyleLinux);
 #endif
 #ifdef Q_OS_WIN
@@ -864,6 +863,28 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
         {
             switch (mStyle)
             {
+                case StyleSimple:
+                {
+                    mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
+                    mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
+                    mDefaultForegroundColor.setRgb(0, 0, 0);
+                    mGridColor.setRgb(200, 200, 200);
+
+                    mHorizontalHeader_DefaultBackgroundBrush.setColor(QColor(220, 220, 220));
+                    mHorizontalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
+                    mHorizontalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
+                    mHorizontalHeader_GridColor.setRgb(200, 200, 200);
+
+                    mVerticalHeader_DefaultBackgroundBrush.setColor(QColor(220, 220, 220));
+                    mVerticalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
+                    mVerticalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
+                    mVerticalHeader_GridColor.setRgb(200, 200, 200);
+
+                    mSelectionBrush.setColor(QColor(49, 106, 197));
+                    mSelectionBrush.setStyle(Qt::SolidPattern);
+                    mSelectionTextColor.setRgb(255, 255, 255);
+                }
+                break;
                 case StyleLinux:
                 {
                     mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
@@ -935,6 +956,12 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
 
         switch (mStyle)
         {
+            case StyleSimple:
+            {
+                mDrawCellFunction=&paintCellDefault;
+                mDrawHeaderCellFunction=&paintCellDefault;
+            }
+            break;
             case StyleLinux:
             {
                 mDrawCellFunction=&paintCellLinux;
