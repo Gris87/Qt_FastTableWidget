@@ -1954,6 +1954,12 @@ void CustomFastTableWidget::setDefaultWidth(quint16 width)
     {
         width=1;
     }
+    else
+    if (width>32767)
+    {
+        FASTTABLE_LOG_DEBUG("Default width is too big: "+QString::number(width)+". The maximum width is 32767");
+        width=32767;
+    }
 
     mDefaultWidth=width;
 
@@ -1975,6 +1981,12 @@ void CustomFastTableWidget::setDefaultHeight(quint16 height)
     {
         height=1;
     }
+    else
+    if (height>32767)
+    {
+        FASTTABLE_LOG_DEBUG("Default height is too big: "+QString::number(height)+". The maximum height is 32767");
+        height=32767;
+    }
 
     mDefaultHeight=height;
 
@@ -1989,12 +2001,18 @@ quint16 CustomFastTableWidget::columnWidth(const int column)
     return mColumnWidths.at(column);
 }
 
-void CustomFastTableWidget::setColumnWidth(const int column, const quint16 width)
+void CustomFastTableWidget::setColumnWidth(const int column, quint16 width)
 {
     FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(column<mColumnWidths.length());
+
+    if (width>32767)
+    {
+        FASTTABLE_LOG_DEBUG("Width for column #"+QString::number(column)+" is too big: "+QString::number(width)+". The maximum width is 32767");
+        width=32767;
+    }
 
     if (mColumnWidths.at(column)!=width)
     {
@@ -2032,12 +2050,18 @@ quint16 CustomFastTableWidget::rowHeight(const int row)
     return mRowHeights.at(row);
 }
 
-void CustomFastTableWidget::setRowHeight(const int row, const quint16 height)
+void CustomFastTableWidget::setRowHeight(const int row, quint16 height)
 {
     FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(row<mRowHeights.length());
+
+    if (height>32767)
+    {
+        FASTTABLE_LOG_DEBUG("Height for row #"+QString::number(row)+" is too big: "+QString::number(height)+". The maximum height is 32767");
+        height=32767;
+    }
 
     if (mRowHeights.at(row)!=height)
     {
@@ -2075,12 +2099,18 @@ quint16 CustomFastTableWidget::verticalHeader_ColumnWidth(const int column)
     return mVerticalHeader_ColumnWidths.at(column);
 }
 
-void CustomFastTableWidget::verticalHeader_SetColumnWidth(const int column, const quint16 width)
+void CustomFastTableWidget::verticalHeader_SetColumnWidth(const int column, quint16 width)
 {
     FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(column<mVerticalHeader_ColumnWidths.length());
+
+    if (width>32767)
+    {
+        FASTTABLE_LOG_DEBUG("Width for column #"+QString::number(column)+" in vertical header is too big: "+QString::number(width)+". The maximum width is 32767");
+        width=32767;
+    }
 
     if (mVerticalHeader_ColumnWidths.at(column)!=width)
     {
@@ -2129,12 +2159,18 @@ quint16 CustomFastTableWidget::horizontalHeader_RowHeight(const int row)
     return mHorizontalHeader_RowHeights.at(row);
 }
 
-void CustomFastTableWidget::horizontalHeader_SetRowHeight(const int row, const quint16 height)
+void CustomFastTableWidget::horizontalHeader_SetRowHeight(const int row, quint16 height)
 {
     FASTTABLE_DEBUG;
     START_PROFILE;
 
     FASTTABLE_ASSERT(row<mHorizontalHeader_RowHeights.length());
+
+    if (height>32767)
+    {
+        FASTTABLE_LOG_DEBUG("Height for row #"+QString::number(row)+" in horizontal header is too big: "+QString::number(height)+". The maximum height is 32767");
+        height=32767;
+    }
 
     if (mHorizontalHeader_RowHeights.at(row)!=height)
     {

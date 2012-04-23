@@ -262,12 +262,12 @@ QList< QStringList > *PublicCustomFastTable::getData()
     return &mData;
 }
 
-QList< quint16 >     *PublicCustomFastTable::getRowHeights()
+QList< qint16 >      *PublicCustomFastTable::getRowHeights()
 {
     return &mRowHeights;
 }
 
-QList< quint16 >     *PublicCustomFastTable::getColumnWidths()
+QList< qint16 >      *PublicCustomFastTable::getColumnWidths()
 {
     return &mColumnWidths;
 }
@@ -287,7 +287,7 @@ QList< QStringList > *PublicCustomFastTable::horizontalHeader_GetData()
     return &mHorizontalHeader_Data;
 }
 
-QList< quint16 >     *PublicCustomFastTable::horizontalHeader_GetRowHeights()
+QList< qint16 >      *PublicCustomFastTable::horizontalHeader_GetRowHeights()
 {
     return &mHorizontalHeader_RowHeights;
 }
@@ -302,7 +302,7 @@ QList< QStringList > *PublicCustomFastTable::verticalHeader_GetData()
     return &mVerticalHeader_Data;
 }
 
-QList< quint16 >     *PublicCustomFastTable::verticalHeader_GetColumnWidths()
+QList< qint16 >      *PublicCustomFastTable::verticalHeader_GetColumnWidths()
 {
     return &mVerticalHeader_ColumnWidths;
 }

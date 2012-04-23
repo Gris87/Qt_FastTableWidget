@@ -57,17 +57,17 @@ class TestFrame : public QWidget
 
 public:
     QList< QStringList >     *mData;
-    QList< quint16 >         *mRowHeights;
-    QList< quint16 >         *mColumnWidths;
+    QList< qint16 >          *mRowHeights;
+    QList< qint16 >          *mColumnWidths;
     QList< int >             *mOffsetX;
     QList< int >             *mOffsetY;
 
     QList< QStringList >     *mHorizontalHeader_Data;
-    QList< quint16 >         *mHorizontalHeader_RowHeights;
+    QList< qint16 >          *mHorizontalHeader_RowHeights;
     QList< int >             *mHorizontalHeader_OffsetY;
 
     QList< QStringList >     *mVerticalHeader_Data;
-    QList< quint16 >         *mVerticalHeader_ColumnWidths;
+    QList< qint16 >          *mVerticalHeader_ColumnWidths;
     QList< int >             *mVerticalHeader_OffsetX;
 
     QList< QList<bool> >     *mSelectedCells;

@@ -16,7 +16,7 @@ ViewDialog::ViewDialog(int aValue, QWidget *parent) :
     mFastTableWidget->setText(0, 0, valueToString(aValue));
 }
 
-ViewDialog::ViewDialog(QList<quint16> *aValues, bool isVertical, QWidget *parent) :
+ViewDialog::ViewDialog(QList<qint16> *aValues, bool isVertical, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ViewDialog)
 {

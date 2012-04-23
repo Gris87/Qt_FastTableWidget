@@ -13,47 +13,7 @@
 
 #include "qdebug.h"
 
-// Asserting
-#if 1
-    #define FASTTABLE_ASSERT(condition)  Q_ASSERT(condition)
-#else
-    #define FASTTABLE_ASSERT(condition)
-#endif
-
-// Debuging
-#if 0
-    #define FASTTABLE_DEBUG  qDebug()<<"Debug:"<<Q_FUNC_INFO;
-#else
-    #define FASTTABLE_DEBUG
-#endif
-
-// Frequent debuging
-#if 0
-    #define FASTTABLE_FREQUENT_DEBUG  FASTTABLE_DEBUG
-#else
-    #define FASTTABLE_FREQUENT_DEBUG
-#endif
-
-// Profiling
-#if 0
-    #define START_PROFILE  qint64 profileStart=QDateTime::currentMSecsSinceEpoch();
-    #define END_PROFILE    qDebug()<<Q_FUNC_INFO<<":"<<QDateTime::currentMSecsSinceEpoch()-profileStart<<"ms";
-#else
-    #define START_PROFILE
-    #define END_PROFILE
-#endif
-
-// Frequent profiling
-#if 0
-    #define START_FREQUENT_PROFILE  START_PROFILE
-    #define END_FREQUENT_PROFILE    END_PROFILE
-#else
-    #define START_FREQUENT_PROFILE
-    #define END_FREQUENT_PROFILE
-#endif
-
-#define FASTTABLE_DEFAULT_TEXT_FLAG Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap
-#define FASTTABLE_HEADER_DEFAULT_TEXT_FLAG Qt::AlignCenter | Qt::TextWordWrap
+#include "fastdefines.h"
 
 //------------------------------------------------------------------------------
 
@@ -179,16 +139,16 @@ public:
     void setDefaultHeight(quint16 height);
 
     quint16 columnWidth(const int column);
-    void setColumnWidth(const int column, const quint16 width);
+    void setColumnWidth(const int column, quint16 width);
 
     quint16 rowHeight(const int row);
-    void setRowHeight(const int row, const quint16 height);
+    void setRowHeight(const int row, quint16 height);
 
     quint16 verticalHeader_ColumnWidth(const int column);
-    void verticalHeader_SetColumnWidth(const int column, const quint16 width);
+    void verticalHeader_SetColumnWidth(const int column, quint16 width);
 
     quint16 horizontalHeader_RowHeight(const int row);
-    void horizontalHeader_SetRowHeight(const int row, const quint16 height);
+    void horizontalHeader_SetRowHeight(const int row, quint16 height);
 
     int totalWidth();
     int totalHeight();
@@ -262,17 +222,17 @@ protected:
     int mVerticalHeader_VisibleRight;
 
     QList< QStringList > mData;
-    QList< quint16 >     mRowHeights;
-    QList< quint16 >     mColumnWidths;
+    QList< qint16 >      mRowHeights;
+    QList< qint16 >      mColumnWidths;
     QList< int >         mOffsetX;
     QList< int >         mOffsetY;
 
     QList< QStringList > mHorizontalHeader_Data;
-    QList< quint16 >     mHorizontalHeader_RowHeights;
+    QList< qint16 >      mHorizontalHeader_RowHeights;
     QList< int >         mHorizontalHeader_OffsetY;
 
     QList< QStringList > mVerticalHeader_Data;
-    QList< quint16 >     mVerticalHeader_ColumnWidths;
+    QList< qint16 >      mVerticalHeader_ColumnWidths;
     QList< int >         mVerticalHeader_OffsetX;
 
     QList< QList<bool> > mSelectedCells;

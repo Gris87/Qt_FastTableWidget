@@ -74,17 +74,17 @@ public:
     int verticalHeader_GetVisibleRight();
 
     QList< QStringList > *getData();
-    QList< quint16 >     *getRowHeights();
-    QList< quint16 >     *getColumnWidths();
+    QList< qint16 >      *getRowHeights();
+    QList< qint16 >      *getColumnWidths();
     QList< int >         *getOffsetX();
     QList< int >         *getOffsetY();
 
     QList< QStringList > *horizontalHeader_GetData();
-    QList< quint16 >     *horizontalHeader_GetRowHeights();
+    QList< qint16 >      *horizontalHeader_GetRowHeights();
     QList< int >         *horizontalHeader_GetOffsetY();
 
     QList< QStringList > *verticalHeader_GetData();
-    QList< quint16 >     *verticalHeader_GetColumnWidths();
+    QList< qint16 >      *verticalHeader_GetColumnWidths();
     QList< int >         *verticalHeader_GetOffsetX();
 
     QList< QList<bool> > *getSelectedCells();

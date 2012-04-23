@@ -31,7 +31,8 @@ HEADERS  += src/main/mainwindow.h \
             src/tests/publictablewidget.h \
             src/controller/controllerdialog.h \
             src/controller/viewdialog.h \
-            src/controller/aligndialog.h
+            src/controller/aligndialog.h \
+    src/fasttable/fastdefines.h
 
 FORMS    += src/main/mainwindow.ui \
             src/tests/testdialog.ui \
@@ -42,3 +43,4 @@ FORMS    += src/main/mainwindow.ui \
 
 OTHER_FILES += \
     TODO.txt
+
