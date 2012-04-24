@@ -1998,7 +1998,14 @@ quint16 CustomFastTableWidget::columnWidth(const int column)
     FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(column<mColumnWidths.length());
 
-    return mColumnWidths.at(column);
+    if (mColumnWidths.at(column)<0)
+    {
+        return -mColumnWidths.at(column);
+    }
+    else
+    {
+        return mColumnWidths.at(column);
+    }
 }
 
 void CustomFastTableWidget::setColumnWidth(const int column, quint16 width)
@@ -2014,6 +2021,11 @@ void CustomFastTableWidget::setColumnWidth(const int column, quint16 width)
         width=32767;
     }
 
+    if (mColumnWidths.at(column)<0)
+    {
+        mColumnWidths[column]=-width;
+    }
+    else
     if (mColumnWidths.at(column)!=width)
     {
         int aDiff=width-mColumnWidths.at(column);
@@ -2047,7 +2059,14 @@ quint16 CustomFastTableWidget::rowHeight(const int row)
     FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(row<mRowHeights.length());
 
-    return mRowHeights.at(row);
+    if (mRowHeights.at(row)<0)
+    {
+        return -mRowHeights.at(row);
+    }
+    else
+    {
+        return mRowHeights.at(row);
+    }
 }
 
 void CustomFastTableWidget::setRowHeight(const int row, quint16 height)
@@ -2063,6 +2082,11 @@ void CustomFastTableWidget::setRowHeight(const int row, quint16 height)
         height=32767;
     }
 
+    if (mRowHeights.at(row)<0)
+    {
+        mRowHeights[row]=-height;
+    }
+    else
     if (mRowHeights.at(row)!=height)
     {
         int aDiff=height-mRowHeights.at(row);
@@ -2096,7 +2120,14 @@ quint16 CustomFastTableWidget::verticalHeader_ColumnWidth(const int column)
     FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(column<mVerticalHeader_ColumnWidths.length());
 
-    return mVerticalHeader_ColumnWidths.at(column);
+    if (mVerticalHeader_ColumnWidths.at(column)<0)
+    {
+        return -mVerticalHeader_ColumnWidths.at(column);
+    }
+    else
+    {
+        return mVerticalHeader_ColumnWidths.at(column);
+    }
 }
 
 void CustomFastTableWidget::verticalHeader_SetColumnWidth(const int column, quint16 width)
@@ -2112,6 +2143,11 @@ void CustomFastTableWidget::verticalHeader_SetColumnWidth(const int column, quin
         width=32767;
     }
 
+    if (mVerticalHeader_ColumnWidths.at(column)<0)
+    {
+        mVerticalHeader_ColumnWidths[column]=-width;
+    }
+    else
     if (mVerticalHeader_ColumnWidths.at(column)!=width)
     {
         int aDiff=width-mVerticalHeader_ColumnWidths.at(column);
@@ -2156,7 +2192,14 @@ quint16 CustomFastTableWidget::horizontalHeader_RowHeight(const int row)
     FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(row<mHorizontalHeader_RowHeights.length());
 
-    return mHorizontalHeader_RowHeights.at(row);
+    if (mHorizontalHeader_RowHeights.at(row)<0)
+    {
+        return -mHorizontalHeader_RowHeights.at(row);
+    }
+    else
+    {
+        return mHorizontalHeader_RowHeights.at(row);
+    }
 }
 
 void CustomFastTableWidget::horizontalHeader_SetRowHeight(const int row, quint16 height)
@@ -2172,6 +2215,11 @@ void CustomFastTableWidget::horizontalHeader_SetRowHeight(const int row, quint16
         height=32767;
     }
 
+    if (mHorizontalHeader_RowHeights.at(row)<0)
+    {
+        mHorizontalHeader_RowHeights[row]=-height;
+    }
+    else
     if (mHorizontalHeader_RowHeights.at(row)!=height)
     {
         int aDiff=height-mHorizontalHeader_RowHeights.at(row);
@@ -2233,6 +2281,170 @@ int CustomFastTableWidget::horizontalHeader_TotalHeight()
 {
     FASTTABLE_DEBUG;
     return mHorizontalHeader_TotalHeight;
+}
+
+bool CustomFastTableWidget::columnVisible(const int column)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_ASSERT(column<mColumnWidths.length());
+
+    return mColumnWidths.at(column)>=0;
+}
+
+void CustomFastTableWidget::setColumnVisible(const int column, bool visible)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    FASTTABLE_ASSERT(column<mColumnWidths.length());
+
+    qint16 prevWidth=mColumnWidths.at(column);
+    bool wasVisible=prevWidth>=0;
+
+    if (wasVisible!=visible)
+    {
+        if (visible)
+        {
+            mColumnWidths[column]=0;
+
+            if (prevWidth==0)
+            {
+                prevWidth=-10;
+            }
+
+            setColumnWidth(column, -prevWidth);
+        }
+        else
+        {
+            setColumnWidth(column, 0);
+            mColumnWidths[column]=-prevWidth;
+        }
+    }
+
+    END_PROFILE;
+}
+
+bool CustomFastTableWidget::rowVisible(const int row)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_ASSERT(row<mRowHeights.length());
+
+    return mRowHeights.at(row)>=0;
+}
+
+void CustomFastTableWidget::setRowVisible(const int row, bool visible)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    FASTTABLE_ASSERT(row<mRowHeights.length());
+
+    qint16 prevHeight=mRowHeights.at(row);
+    bool wasVisible=prevHeight>=0;
+
+    if (wasVisible!=visible)
+    {
+        if (visible)
+        {
+            mRowHeights[row]=0;
+
+            if (prevHeight==0)
+            {
+                prevHeight=-10;
+            }
+
+            setRowHeight(row, -prevHeight);
+        }
+        else
+        {
+            setRowHeight(row, 0);
+            mRowHeights[row]=-prevHeight;
+        }
+    }
+
+    END_PROFILE;
+}
+
+bool CustomFastTableWidget::verticalHeader_ColumnVisible(const int column)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_ASSERT(column<mVerticalHeader_ColumnWidths.length());
+
+    return mVerticalHeader_ColumnWidths.at(column)>=0;
+}
+
+void CustomFastTableWidget::verticalHeader_SetColumnVisible(const int column, bool visible)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    FASTTABLE_ASSERT(column<mVerticalHeader_ColumnWidths.length());
+
+    qint16 prevWidth=mVerticalHeader_ColumnWidths.at(column);
+    bool wasVisible=prevWidth>=0;
+
+    if (wasVisible!=visible)
+    {
+        if (visible)
+        {
+            mVerticalHeader_ColumnWidths[column]=0;
+
+            if (prevWidth==0)
+            {
+                prevWidth=-10;
+            }
+
+            verticalHeader_SetColumnWidth(column, -prevWidth);
+        }
+        else
+        {
+            verticalHeader_SetColumnWidth(column, 0);
+            mVerticalHeader_ColumnWidths[column]=-prevWidth;
+        }
+    }
+
+    END_PROFILE;
+}
+
+bool CustomFastTableWidget::horizontalHeader_RowVisible(const int row)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_ASSERT(row<mHorizontalHeader_RowHeights.length());
+
+    return mHorizontalHeader_RowHeights.at(row)>=0;
+}
+
+void CustomFastTableWidget::horizontalHeader_SetRowVisible(const int row, bool visible)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    FASTTABLE_ASSERT(row<mHorizontalHeader_RowHeights.length());
+
+    qint16 prevHeight=mHorizontalHeader_RowHeights.at(row);
+    bool wasVisible=prevHeight>=0;
+
+    if (wasVisible!=visible)
+    {
+        if (visible)
+        {
+            mHorizontalHeader_RowHeights[row]=0;
+
+            if (prevHeight==0)
+            {
+                prevHeight=-10;
+            }
+
+            horizontalHeader_SetRowHeight(row, -prevHeight);
+        }
+        else
+        {
+            horizontalHeader_SetRowHeight(row, 0);
+            mHorizontalHeader_RowHeights[row]=-prevHeight;
+        }
+    }
+
+    END_PROFILE;
 }
 
 QRect CustomFastTableWidget::visibleRange()

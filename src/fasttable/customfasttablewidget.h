@@ -155,6 +155,18 @@ public:
     int verticalHeader_TotalWidth();
     int horizontalHeader_TotalHeight();
 
+    bool columnVisible(const int column);
+    void setColumnVisible(const int column, bool visible);
+
+    bool rowVisible(const int row);
+    void setRowVisible(const int row, bool visible);
+
+    bool verticalHeader_ColumnVisible(const int column);
+    void verticalHeader_SetColumnVisible(const int column, bool visible);
+
+    bool horizontalHeader_RowVisible(const int row);
+    void horizontalHeader_SetRowVisible(const int row, bool visible);
+
     QRect visibleRange();
     QRect horizontalHeader_VisibleRange();
     QRect verticalHeader_VisibleRange();

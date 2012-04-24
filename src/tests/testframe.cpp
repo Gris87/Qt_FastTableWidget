@@ -58,6 +58,10 @@ TestFrame::TestFrame(CustomFastTableWidget* aFastTable, QWidget *parent) :
     addTestLabel("setRowHeight");
     addTestLabel("verticalHeader_SetColumnWidth");
     addTestLabel("horizontalHeader_SetRowHeight");
+    addTestLabel("setColumnVisible");
+    addTestLabel("setRowVisible");
+    addTestLabel("verticalHeader_SetColumnVisible");
+    addTestLabel("horizontalHeader_SetRowVisible");
     addTestLabel("setText");
     addTestLabel("horizontalHeader_SetText");
     addTestLabel("verticalHeader_SetText");
@@ -900,7 +904,216 @@ void TestFrame::startTest()
         testCompleted(success, "horizontalHeader_SetRowHeight");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 37: horizontalHeader_SetText";
+    qDebug()<<"TEST 37: setColumnVisible";
+    // ----------------------------------------------------------------
+    {
+        success=true;
+
+        int     aTotalWidth=((PublicCustomFastTable*)mFastTable)->getTotalWidth();
+        quint16 aColumnWidth=mColumnWidths->at(18);
+
+        mFastTable->setColumnVisible(18, false);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth-aColumnWidth);
+        TEST_STEP(mOffsetX->at(19)==aTotalWidth-aColumnWidth*2);
+        TEST_STEP(mColumnWidths->at(18)==-aColumnWidth);
+        TEST_STEP(mFastTable->columnWidth(18)==aColumnWidth);
+
+        mFastTable->setColumnWidth(18, aColumnWidth+100);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth-aColumnWidth);
+        TEST_STEP(mOffsetX->at(19)==aTotalWidth-aColumnWidth*2);
+        TEST_STEP(mColumnWidths->at(18)==-aColumnWidth-100);
+        TEST_STEP(mFastTable->columnWidth(18)==aColumnWidth+100);
+
+        mFastTable->setColumnWidth(18, aColumnWidth);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth-aColumnWidth);
+        TEST_STEP(mOffsetX->at(19)==aTotalWidth-aColumnWidth*2);
+        TEST_STEP(mColumnWidths->at(18)==-aColumnWidth);
+        TEST_STEP(mFastTable->columnWidth(18)==aColumnWidth);
+
+        mFastTable->setColumnVisible(18, true);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth);
+        TEST_STEP(mOffsetX->at(19)==aTotalWidth-aColumnWidth);
+        TEST_STEP(mColumnWidths->at(18)==aColumnWidth);
+        TEST_STEP(mFastTable->columnWidth(18)==aColumnWidth);
+
+        testCompleted(success, "setColumnVisible");
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 38: setRowVisible";
+    // ----------------------------------------------------------------
+    {
+        success=true;
+
+        int     aTotalHeight=((PublicCustomFastTable*)mFastTable)->getTotalHeight();
+        quint16 aRowHeight=mRowHeights->at(48);
+
+        mFastTable->setRowVisible(48, false);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight-aRowHeight);
+        TEST_STEP(mOffsetY->at(49)==aTotalHeight-aRowHeight*2);
+        TEST_STEP(mRowHeights->at(48)==-aRowHeight);
+        TEST_STEP(mFastTable->rowHeight(48)==aRowHeight);
+
+        mFastTable->setRowHeight(48, aRowHeight+100);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight-aRowHeight);
+        TEST_STEP(mOffsetY->at(49)==aTotalHeight-aRowHeight*2);
+        TEST_STEP(mRowHeights->at(48)==-aRowHeight-100);
+        TEST_STEP(mFastTable->rowHeight(48)==aRowHeight+100);
+
+        mFastTable->setRowHeight(48, aRowHeight);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight-aRowHeight);
+        TEST_STEP(mOffsetY->at(49)==aTotalHeight-aRowHeight*2);
+        TEST_STEP(mRowHeights->at(48)==-aRowHeight);
+        TEST_STEP(mFastTable->rowHeight(48)==aRowHeight);
+
+        mFastTable->setRowVisible(48, true);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight);
+        TEST_STEP(mOffsetY->at(49)==aTotalHeight-aRowHeight);
+        TEST_STEP(mRowHeights->at(48)==aRowHeight);
+        TEST_STEP(mFastTable->rowHeight(48)==aRowHeight);
+
+        testCompleted(success, "setRowVisible");
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 39: verticalHeader_SetColumnVisible";
+    // ----------------------------------------------------------------
+    {
+        success=true;
+
+        mFastTable->verticalHeader_SetColumnCount(3);
+
+        int     aTotalWidth=((PublicCustomFastTable*)mFastTable)->getTotalWidth();
+        int     aHeaderTotalWidth=((PublicCustomFastTable*)mFastTable)->verticalHeader_GetTotalWidth();
+        quint16 aColumnWidth=mVerticalHeader_ColumnWidths->at(1);
+
+        mFastTable->verticalHeader_SetColumnVisible(1, false);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth-aColumnWidth);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->verticalHeader_GetTotalWidth()==aHeaderTotalWidth-aColumnWidth);
+        TEST_STEP(mVerticalHeader_OffsetX->at(2)==aHeaderTotalWidth-aColumnWidth*2);
+        TEST_STEP(mVerticalHeader_ColumnWidths->at(1)==-aColumnWidth);
+        TEST_STEP(mFastTable->verticalHeader_ColumnWidth(1)==aColumnWidth);
+
+        mFastTable->verticalHeader_SetColumnWidth(1, aColumnWidth+100);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth-aColumnWidth);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->verticalHeader_GetTotalWidth()==aHeaderTotalWidth-aColumnWidth);
+        TEST_STEP(mVerticalHeader_OffsetX->at(2)==aHeaderTotalWidth-aColumnWidth*2);
+        TEST_STEP(mVerticalHeader_ColumnWidths->at(1)==-aColumnWidth-100);
+        TEST_STEP(mFastTable->verticalHeader_ColumnWidth(1)==aColumnWidth+100);
+
+        mFastTable->verticalHeader_SetColumnWidth(1, aColumnWidth);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth-aColumnWidth);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->verticalHeader_GetTotalWidth()==aHeaderTotalWidth-aColumnWidth);
+        TEST_STEP(mVerticalHeader_OffsetX->at(2)==aHeaderTotalWidth-aColumnWidth*2);
+        TEST_STEP(mVerticalHeader_ColumnWidths->at(1)==-aColumnWidth);
+        TEST_STEP(mFastTable->verticalHeader_ColumnWidth(1)==aColumnWidth);
+
+        mFastTable->verticalHeader_SetColumnVisible(1, true);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalWidth()==aTotalWidth);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->verticalHeader_GetTotalWidth()==aHeaderTotalWidth);
+        TEST_STEP(mVerticalHeader_OffsetX->at(2)==aHeaderTotalWidth-aColumnWidth);
+        TEST_STEP(mVerticalHeader_ColumnWidths->at(1)==aColumnWidth);
+        TEST_STEP(mFastTable->verticalHeader_ColumnWidth(1)==aColumnWidth);
+
+        mFastTable->verticalHeader_SetColumnCount(1);
+
+        testCompleted(success, "verticalHeader_SetColumnVisible");
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 40: horizontalHeader_SetRowVisible";
+    // ----------------------------------------------------------------
+    {
+        success=true;
+
+        mFastTable->horizontalHeader_SetRowCount(3);
+
+        int     aTotalHeight=((PublicCustomFastTable*)mFastTable)->getTotalHeight();
+        int     aHeaderTotalWidth=((PublicCustomFastTable*)mFastTable)->horizontalHeader_GetTotalHeight();
+        quint16 aRowHeight=mHorizontalHeader_RowHeights->at(1);
+
+        mFastTable->horizontalHeader_SetRowVisible(1, false);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight-aRowHeight);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->horizontalHeader_GetTotalHeight()==aHeaderTotalWidth-aRowHeight);
+        TEST_STEP(mHorizontalHeader_OffsetY->at(2)==aHeaderTotalWidth-aRowHeight*2);
+        TEST_STEP(mHorizontalHeader_RowHeights->at(1)==-aRowHeight);
+        TEST_STEP(mFastTable->horizontalHeader_RowHeight(1)==aRowHeight);
+
+        mFastTable->horizontalHeader_SetRowHeight(1, aRowHeight+100);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight-aRowHeight);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->horizontalHeader_GetTotalHeight()==aHeaderTotalWidth-aRowHeight);
+        TEST_STEP(mHorizontalHeader_OffsetY->at(2)==aHeaderTotalWidth-aRowHeight*2);
+        TEST_STEP(mHorizontalHeader_RowHeights->at(1)==-aRowHeight-100);
+        TEST_STEP(mFastTable->horizontalHeader_RowHeight(1)==aRowHeight+100);
+
+        mFastTable->horizontalHeader_SetRowHeight(1, aRowHeight);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight-aRowHeight);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->horizontalHeader_GetTotalHeight()==aHeaderTotalWidth-aRowHeight);
+        TEST_STEP(mHorizontalHeader_OffsetY->at(2)==aHeaderTotalWidth-aRowHeight*2);
+        TEST_STEP(mHorizontalHeader_RowHeights->at(1)==-aRowHeight);
+        TEST_STEP(mFastTable->horizontalHeader_RowHeight(1)==aRowHeight);
+
+        mFastTable->horizontalHeader_SetRowVisible(1, true);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getTotalHeight()==aTotalHeight);
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->horizontalHeader_GetTotalHeight()==aHeaderTotalWidth);
+        TEST_STEP(mHorizontalHeader_OffsetY->at(2)==aHeaderTotalWidth-aRowHeight);
+        TEST_STEP(mHorizontalHeader_RowHeights->at(1)==aRowHeight);
+        TEST_STEP(mFastTable->horizontalHeader_RowHeight(1)==aRowHeight);
+
+        mFastTable->horizontalHeader_SetRowCount(2);
+
+        testCompleted(success, "horizontalHeader_SetRowVisible");
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 41: setText";
+    // ----------------------------------------------------------------
+    {
+        success=true;
+
+        for (int i=0; i<mFastTable->rowCount(); ++i)
+        {
+            for (int j=0; j<mFastTable->columnCount(); ++j)
+            {
+                mFastTable->setText(i, j, QString::number(i*mFastTable->columnCount()+j));
+            }
+        }
+
+        for (int i=0; i<((PublicCustomFastTable*)mFastTable)->getRowCount(); ++i)
+        {
+            for (int j=0; j<((PublicCustomFastTable*)mFastTable)->getColumnCount(); ++j)
+            {
+                TEST_STEP(mData->at(i).at(j)==QString::number(i*((PublicCustomFastTable*)mFastTable)->getColumnCount()+j));
+                TEST_STEP(mFastTable->text(i, j)==QString::number(i*((PublicCustomFastTable*)mFastTable)->getColumnCount()+j));
+
+                if (!success)
+                {
+                    break;
+                }
+            }
+
+            if (!success)
+            {
+                break;
+            }
+        }
+
+        testCompleted(success, "setText");
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST 42: horizontalHeader_SetText";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -935,7 +1148,7 @@ void TestFrame::startTest()
         testCompleted(success, "horizontalHeader_SetText");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 38: verticalHeader_SetText";
+    qDebug()<<"TEST 43: verticalHeader_SetText";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -975,42 +1188,7 @@ void TestFrame::startTest()
         testCompleted(success, "verticalHeader_SetText");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 39: setText";
-    // ----------------------------------------------------------------
-    {
-        success=true;
-
-        for (int i=0; i<mFastTable->rowCount(); ++i)
-        {
-            for (int j=0; j<mFastTable->columnCount(); ++j)
-            {
-                mFastTable->setText(i, j, QString::number(i*mFastTable->columnCount()+j));
-            }
-        }
-
-        for (int i=0; i<((PublicCustomFastTable*)mFastTable)->getRowCount(); ++i)
-        {
-            for (int j=0; j<((PublicCustomFastTable*)mFastTable)->getColumnCount(); ++j)
-            {
-                TEST_STEP(mData->at(i).at(j)==QString::number(i*((PublicCustomFastTable*)mFastTable)->getColumnCount()+j));
-                TEST_STEP(mFastTable->text(i, j)==QString::number(i*((PublicCustomFastTable*)mFastTable)->getColumnCount()+j));
-
-                if (!success)
-                {
-                    break;
-                }
-            }
-
-            if (!success)
-            {
-                break;
-            }
-        }
-
-        testCompleted(success, "setText");
-    }
-    // ----------------------------------------------------------------
-    qDebug()<<"TEST 40: setCellSelected";
+    qDebug()<<"TEST 44: setCellSelected";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -1158,7 +1336,7 @@ void TestFrame::startTest()
         testCompleted(success, "setCellSelected");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 41: setBackgroundBrush";
+    qDebug()<<"TEST 45: setBackgroundBrush";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1229,7 +1407,7 @@ void TestFrame::startTest()
         testNotSupported("setBackgroundBrush");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 42: horizontalHeader_SetBackgroundBrush";
+    qDebug()<<"TEST 46: horizontalHeader_SetBackgroundBrush";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1300,7 +1478,7 @@ void TestFrame::startTest()
         testNotSupported("horizontalHeader_SetBackgroundBrush");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 43: verticalHeader_SetBackgroundBrush";
+    qDebug()<<"TEST 47: verticalHeader_SetBackgroundBrush";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1371,7 +1549,7 @@ void TestFrame::startTest()
         testNotSupported("verticalHeader_SetBackgroundBrush");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 44: setForegroundColor";
+    qDebug()<<"TEST 48: setForegroundColor";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1442,7 +1620,7 @@ void TestFrame::startTest()
         testNotSupported("setForegroundColor");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 45: horizontalHeader_SetForegroundColor";
+    qDebug()<<"TEST 49: horizontalHeader_SetForegroundColor";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1513,7 +1691,7 @@ void TestFrame::startTest()
         testNotSupported("horizontalHeader_SetForegroundColor");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 46: verticalHeader_SetForegroundColor";
+    qDebug()<<"TEST 50: verticalHeader_SetForegroundColor";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1584,7 +1762,7 @@ void TestFrame::startTest()
         testNotSupported("verticalHeader_SetForegroundColor");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 47: setCellFont";
+    qDebug()<<"TEST 51: setCellFont";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1655,7 +1833,7 @@ void TestFrame::startTest()
         testNotSupported("setCellFont");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 48: horizontalHeader_SetCellFont";
+    qDebug()<<"TEST 52: horizontalHeader_SetCellFont";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1726,7 +1904,7 @@ void TestFrame::startTest()
         testNotSupported("horizontalHeader_SetCellFont");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 49: verticalHeader_SetCellFont";
+    qDebug()<<"TEST 53: verticalHeader_SetCellFont";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1797,7 +1975,7 @@ void TestFrame::startTest()
         testNotSupported("verticalHeader_SetCellFont");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 50: setCellTextFlags";
+    qDebug()<<"TEST 54: setCellTextFlags";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1869,7 +2047,7 @@ void TestFrame::startTest()
         testNotSupported("setCellTextFlags");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 51: horizontalHeader_SetCellTextFlags";
+    qDebug()<<"TEST 55: horizontalHeader_SetCellTextFlags";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1941,7 +2119,7 @@ void TestFrame::startTest()
         testNotSupported("horizontalHeader_SetCellTextFlags");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 52: verticalHeader_SetCellTextFlags";
+    qDebug()<<"TEST 56: verticalHeader_SetCellTextFlags";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -2013,7 +2191,7 @@ void TestFrame::startTest()
         testNotSupported("verticalHeader_SetCellTextFlags");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 53: setSpan";
+    qDebug()<<"TEST 57: setSpan";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -2097,7 +2275,7 @@ void TestFrame::startTest()
         testNotSupported("setSpan");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 54: horizontalHeader_SetSpan";
+    qDebug()<<"TEST 58: horizontalHeader_SetSpan";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -2181,7 +2359,7 @@ void TestFrame::startTest()
         testNotSupported("horizontalHeader_SetSpan");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 55: verticalHeader_SetSpan";
+    qDebug()<<"TEST 59: verticalHeader_SetSpan";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
