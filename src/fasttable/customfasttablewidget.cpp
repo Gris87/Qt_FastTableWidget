@@ -568,12 +568,12 @@ void CustomFastTableWidget::updateVisibleRange()
             FASTTABLE_ASSERT(mVerticalHeader_VisibleRight<mVerticalHeader_OffsetX.length());
             FASTTABLE_ASSERT(mVerticalHeader_VisibleRight<mVerticalHeader_ColumnWidths.length());
 
-            while (mVerticalHeader_VisibleRight<mVerticalHeader_ColumnCount-1 && mVerticalHeader_OffsetX.at(mVerticalHeader_VisibleRight)<maxX && mVerticalHeader_OffsetX.at(mVerticalHeader_VisibleRight)+mVerticalHeader_ColumnWidths.at(mVerticalHeader_VisibleRight)<maxX)
+            while (mVerticalHeader_VisibleRight<mVerticalHeader_ColumnCount-1 && mVerticalHeader_OffsetX.at(mVerticalHeader_VisibleRight)<maxX && (mVerticalHeader_ColumnWidths.at(mVerticalHeader_VisibleRight)<=0 || mVerticalHeader_OffsetX.at(mVerticalHeader_VisibleRight)+mVerticalHeader_ColumnWidths.at(mVerticalHeader_VisibleRight)<maxX))
             {
                 mVerticalHeader_VisibleRight++;
             }
 
-            while (mVerticalHeader_VisibleRight>0 && mVerticalHeader_OffsetX.at(mVerticalHeader_VisibleRight)>maxX && mVerticalHeader_OffsetX.at(mVerticalHeader_VisibleRight)+mVerticalHeader_ColumnWidths.at(mVerticalHeader_VisibleRight)>maxX)
+            while (mVerticalHeader_VisibleRight>0 && mVerticalHeader_OffsetX.at(mVerticalHeader_VisibleRight)>maxX && (mVerticalHeader_ColumnWidths.at(mVerticalHeader_VisibleRight)<=0 || mVerticalHeader_OffsetX.at(mVerticalHeader_VisibleRight)+mVerticalHeader_ColumnWidths.at(mVerticalHeader_VisibleRight)>maxX))
             {
                 mVerticalHeader_VisibleRight--;
             }
@@ -678,7 +678,12 @@ void CustomFastTableWidget::updateVisibleRange()
         if (
             mVerticalHeader_VisibleRight<0
             ||
-            mVerticalHeader_OffsetX.at(mVerticalHeader_VisibleRight)+mVerticalHeader_ColumnWidths.at(mVerticalHeader_VisibleRight)<maxX
+            (
+             mVerticalHeader_ColumnWidths.at(mVerticalHeader_VisibleRight)<=0?
+                (mVerticalHeader_OffsetX.at(mVerticalHeader_VisibleRight)<maxX)
+                :
+                (mVerticalHeader_OffsetX.at(mVerticalHeader_VisibleRight)+mVerticalHeader_ColumnWidths.at(mVerticalHeader_VisibleRight)<maxX)
+            )
            )
         {
             if (
@@ -709,22 +714,22 @@ void CustomFastTableWidget::updateVisibleRange()
             FASTTABLE_ASSERT(mVisibleRight<mOffsetX.length());
             FASTTABLE_ASSERT(mVisibleRight<mColumnWidths.length());
 
-            while (mVisibleLeft<mColumnCount-1 && mOffsetX.at(mVisibleLeft)<minX && mOffsetX.at(mVisibleLeft)+mColumnWidths.at(mVisibleLeft)<minX)
+            while (mVisibleLeft<mColumnCount-1 && mOffsetX.at(mVisibleLeft)<minX && (mColumnWidths.at(mVisibleLeft)<=0 || mOffsetX.at(mVisibleLeft)+mColumnWidths.at(mVisibleLeft)<minX))
             {
                 mVisibleLeft++;
             }
 
-            while (mVisibleLeft>0 && mOffsetX.at(mVisibleLeft)>minX && mOffsetX.at(mVisibleLeft)+mColumnWidths.at(mVisibleLeft)>minX)
+            while (mVisibleLeft>0 && mOffsetX.at(mVisibleLeft)>minX && (mColumnWidths.at(mVisibleLeft)<=0 || mOffsetX.at(mVisibleLeft)+mColumnWidths.at(mVisibleLeft)>minX))
             {
                 mVisibleLeft--;
             }
 
-            while (mVisibleRight<mColumnCount-1 && mOffsetX.at(mVisibleRight)<maxX && mOffsetX.at(mVisibleRight)+mColumnWidths.at(mVisibleRight)<maxX)
+            while (mVisibleRight<mColumnCount-1 && mOffsetX.at(mVisibleRight)<maxX && (mColumnWidths.at(mVisibleRight)<=0 || mOffsetX.at(mVisibleRight)+mColumnWidths.at(mVisibleRight)<maxX))
             {
                 mVisibleRight++;
             }
 
-            while (mVisibleRight>0 && mOffsetX.at(mVisibleRight)>maxX && mOffsetX.at(mVisibleRight)+mColumnWidths.at(mVisibleRight)>maxX)
+            while (mVisibleRight>0 && mOffsetX.at(mVisibleRight)>maxX && (mColumnWidths.at(mVisibleRight)<=0 || mOffsetX.at(mVisibleRight)+mColumnWidths.at(mVisibleRight)>maxX))
             {
                 mVisibleRight--;
             }
@@ -1113,7 +1118,7 @@ void CustomFastTableWidget::insertRow(int row)
 
     mTotalHeight+=mDefaultHeight;
 
-    mOffsetY.insert(row, row==0? mHorizontalHeader_TotalHeight : (mRowHeights.at(row-1)<=0? mOffsetY.at(row-1) : mOffsetY.at(row-1)+mRowHeights.at(row-1)));
+    mOffsetY.insert(row, row==0? mHorizontalHeader_TotalHeight : (mRowHeights.at(row-1)<=0? mOffsetY.at(row-1) : (mOffsetY.at(row-1)+mRowHeights.at(row-1))));
     mRowHeights.insert(row, mDefaultHeight);
 
     for (int i=row+1; i<mRowCount; ++i)
@@ -1160,15 +1165,18 @@ void CustomFastTableWidget::deleteRow(int row)
 
     int diff=mRowHeights.at(row);
 
-    mTotalHeight-=diff;
-
-    FASTTABLE_ASSERT(mTotalHeight>=0);
-
-    for (int i=row+1; i<mRowCount; ++i)
+    if (diff>0)
     {
-        mOffsetY[i]-=diff;
+        mTotalHeight-=diff;
 
-        FASTTABLE_ASSERT(mOffsetY.at(i)>=0);
+        FASTTABLE_ASSERT(mTotalHeight>=0);
+
+        for (int i=row+1; i<mRowCount; ++i)
+        {
+            mOffsetY[i]-=diff;
+
+            FASTTABLE_ASSERT(mOffsetY.at(i)>=0);
+        }
     }
 
     mOffsetY.removeAt(row);
@@ -1231,7 +1239,7 @@ void CustomFastTableWidget::insertColumn(int column)
 
     mTotalWidth+=mDefaultWidth;
 
-    mOffsetX.insert(column, column==0? mVerticalHeader_TotalWidth : (mOffsetX.at(column-1)+mColumnWidths.at(column-1)));
+    mOffsetX.insert(column, column==0? mVerticalHeader_TotalWidth : (mColumnWidths.at(column-1)<=0? mOffsetX.at(column-1) : (mOffsetX.at(column-1)+mColumnWidths.at(column-1))));
     mColumnWidths.insert(column, mDefaultWidth);
 
     for (int i=column+1; i<mColumnCount; ++i)
@@ -1277,16 +1285,18 @@ void CustomFastTableWidget::deleteColumn(int column)
 
     int diff=mColumnWidths.at(column);
 
-    mTotalWidth-=diff;
-
-    FASTTABLE_ASSERT(mTotalWidth>=0);
-
-    for (int i=column+1; i<mColumnCount; ++i)
+    if (diff>0)
     {
-        mOffsetX[i]-=diff;
+        mTotalWidth-=diff;
 
-        FASTTABLE_ASSERT(mOffsetX.at(i)>=0);
+        FASTTABLE_ASSERT(mTotalWidth>=0);
 
+        for (int i=column+1; i<mColumnCount; ++i)
+        {
+            mOffsetX[i]-=diff;
+
+            FASTTABLE_ASSERT(mOffsetX.at(i)>=0);
+        }
     }
 
     mOffsetX.removeAt(column);
@@ -1360,7 +1370,7 @@ void CustomFastTableWidget::horizontalHeader_InsertRow(int row)
     mHorizontalHeader_TotalHeight+=mDefaultHeight;
     mTotalHeight+=mDefaultHeight;
 
-    mHorizontalHeader_OffsetY.insert(row, row==0? 0 : (mHorizontalHeader_OffsetY.at(row-1)+mHorizontalHeader_RowHeights.at(row-1)));
+    mHorizontalHeader_OffsetY.insert(row, row==0? 0 : (mHorizontalHeader_RowHeights.at(row-1)<=0? mHorizontalHeader_OffsetY.at(row-1) : (mHorizontalHeader_OffsetY.at(row-1)+mHorizontalHeader_RowHeights.at(row-1))));
     mHorizontalHeader_RowHeights.insert(row, mDefaultHeight);
 
     for (int i=row+1; i<mHorizontalHeader_RowCount; ++i)
@@ -1402,26 +1412,29 @@ void CustomFastTableWidget::horizontalHeader_DeleteRow(int row)
 
     int diff=mHorizontalHeader_RowHeights.at(row);
 
-    mHorizontalHeader_TotalHeight-=diff;
-    mTotalHeight-=diff;
-
-    FASTTABLE_ASSERT(mHorizontalHeader_TotalHeight>=0);
-    FASTTABLE_ASSERT(mTotalHeight>=0);
-
-    for (int i=row+1; i<mHorizontalHeader_RowCount; ++i)
+    if (diff>0)
     {
-        mHorizontalHeader_OffsetY[i]-=diff;
+        mHorizontalHeader_TotalHeight-=diff;
+        mTotalHeight-=diff;
 
-        FASTTABLE_ASSERT(mHorizontalHeader_OffsetY.at(i)>=0);
-    }
+        FASTTABLE_ASSERT(mHorizontalHeader_TotalHeight>=0);
+        FASTTABLE_ASSERT(mTotalHeight>=0);
 
-    for (int i=0; i<mRowCount; ++i)
-    {
-        FASTTABLE_ASSERT(i<mOffsetY.length());
+        for (int i=row+1; i<mHorizontalHeader_RowCount; ++i)
+        {
+            mHorizontalHeader_OffsetY[i]-=diff;
 
-        mOffsetY[i]-=diff;
+            FASTTABLE_ASSERT(mHorizontalHeader_OffsetY.at(i)>=0);
+        }
 
-        FASTTABLE_ASSERT(mOffsetY.at(i)>=0);
+        for (int i=0; i<mRowCount; ++i)
+        {
+            FASTTABLE_ASSERT(i<mOffsetY.length());
+
+            mOffsetY[i]-=diff;
+
+            FASTTABLE_ASSERT(mOffsetY.at(i)>=0);
+        }
     }
 
     mHorizontalHeader_OffsetY.removeAt(row);
@@ -1462,7 +1475,7 @@ void CustomFastTableWidget::verticalHeader_InsertColumn(int column)
     mVerticalHeader_TotalWidth+=mDefaultWidth;
     mTotalWidth+=mDefaultWidth;
 
-    mVerticalHeader_OffsetX.insert(column, column==0? 0 : (mVerticalHeader_OffsetX.at(column-1)+mVerticalHeader_ColumnWidths.at(column-1)));
+    mVerticalHeader_OffsetX.insert(column, column==0? 0 : (mVerticalHeader_ColumnWidths.at(column-1)<=0? mVerticalHeader_OffsetX.at(column-1) : (mVerticalHeader_OffsetX.at(column-1)+mVerticalHeader_ColumnWidths.at(column-1))));
     mVerticalHeader_ColumnWidths.insert(column, mDefaultWidth);
 
     for (int i=column+1; i<mVerticalHeader_ColumnCount; ++i)
@@ -1503,26 +1516,29 @@ void CustomFastTableWidget::verticalHeader_DeleteColumn(int column)
 
     int diff=mVerticalHeader_ColumnWidths.at(column);
 
-    mVerticalHeader_TotalWidth-=diff;
-    mTotalWidth-=diff;
-
-    FASTTABLE_ASSERT(mVerticalHeader_TotalWidth>=0);
-    FASTTABLE_ASSERT(mTotalWidth>=0);
-
-    for (int i=column+1; i<mVerticalHeader_ColumnCount; ++i)
+    if (diff>0)
     {
-        mVerticalHeader_OffsetX[i]-=diff;
+        mVerticalHeader_TotalWidth-=diff;
+        mTotalWidth-=diff;
 
-        FASTTABLE_ASSERT(mVerticalHeader_OffsetX.at(i)>=0);
-    }
+        FASTTABLE_ASSERT(mVerticalHeader_TotalWidth>=0);
+        FASTTABLE_ASSERT(mTotalWidth>=0);
 
-    for (int i=0; i<mColumnCount; ++i)
-    {
-        FASTTABLE_ASSERT(i<mOffsetX.length());
+        for (int i=column+1; i<mVerticalHeader_ColumnCount; ++i)
+        {
+            mVerticalHeader_OffsetX[i]-=diff;
 
-        mOffsetX[i]-=diff;
+            FASTTABLE_ASSERT(mVerticalHeader_OffsetX.at(i)>=0);
+        }
 
-        FASTTABLE_ASSERT(mOffsetX.at(i)>=0);
+        for (int i=0; i<mColumnCount; ++i)
+        {
+            FASTTABLE_ASSERT(i<mOffsetX.length());
+
+            mOffsetX[i]-=diff;
+
+            FASTTABLE_ASSERT(mOffsetX.at(i)>=0);
+        }
     }
 
     mVerticalHeader_OffsetX.removeAt(column);
@@ -2304,7 +2320,7 @@ void CustomFastTableWidget::setColumnVisible(const int column, bool visible)
     FASTTABLE_ASSERT(column<mColumnWidths.length());
 
     qint16 prevWidth=mColumnWidths.at(column);
-    bool wasVisible=prevWidth>=0;
+    bool wasVisible=prevWidth>0;
 
     if (wasVisible!=visible)
     {
@@ -2345,7 +2361,7 @@ void CustomFastTableWidget::setRowVisible(const int row, bool visible)
     FASTTABLE_ASSERT(row<mRowHeights.length());
 
     qint16 prevHeight=mRowHeights.at(row);
-    bool wasVisible=prevHeight>=0;
+    bool wasVisible=prevHeight>0;
 
     if (wasVisible!=visible)
     {
@@ -2386,7 +2402,7 @@ void CustomFastTableWidget::verticalHeader_SetColumnVisible(const int column, bo
     FASTTABLE_ASSERT(column<mVerticalHeader_ColumnWidths.length());
 
     qint16 prevWidth=mVerticalHeader_ColumnWidths.at(column);
-    bool wasVisible=prevWidth>=0;
+    bool wasVisible=prevWidth>0;
 
     if (wasVisible!=visible)
     {
@@ -2427,7 +2443,7 @@ void CustomFastTableWidget::horizontalHeader_SetRowVisible(const int row, bool v
     FASTTABLE_ASSERT(row<mHorizontalHeader_RowHeights.length());
 
     qint16 prevHeight=mHorizontalHeader_RowHeights.at(row);
-    bool wasVisible=prevHeight>=0;
+    bool wasVisible=prevHeight>0;
 
     if (wasVisible!=visible)
     {
