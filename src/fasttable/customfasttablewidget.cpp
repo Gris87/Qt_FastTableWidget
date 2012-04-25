@@ -76,6 +76,37 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
     FASTTABLE_DEBUG;
     START_PROFILE;
 
+    QPoint pos;
+
+    pos=cellAt(event->x(), event->y());
+
+    if (pos!=QPoint(-1, -1))
+    {
+
+    }
+    else
+    {
+        pos=horizontalHeader_CellAt(event->x(), event->y());
+
+        if (pos!=QPoint(-1, -1))
+        {
+
+        }
+        else
+        {
+            pos=verticalHeader_CellAt(event->x(), event->y());
+
+            if (pos!=QPoint(-1, -1))
+            {
+
+            }
+            if (atTopLeftCorner(event->x(), event->y()))
+            {
+
+            }
+        }
+    }
+
     QAbstractScrollArea::mousePressEvent(event);
 
     END_PROFILE;
@@ -2758,4 +2789,70 @@ bool CustomFastTableWidget::verticalHeader_RowSelected(const int row)
     FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_SelectedRows.length());
 
     return mVerticalHeader_SelectedRows.at(row);
+}
+
+QPoint CustomFastTableWidget::cellAt(const int x, const int y)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    QSize areaSize=viewport()->size();
+
+    if (x<mVerticalHeader_TotalWidth || y<mHorizontalHeader_TotalHeight || x>=areaSize.width() || y>=areaSize.height())
+    {
+        END_PROFILE;
+        return QPoint(-1, -1);
+    }
+
+    int offsetX=-horizontalScrollBar()->value();
+    int offsetY=-verticalScrollBar()->value();
+
+    END_PROFILE;
+}
+
+QPoint CustomFastTableWidget::horizontalHeader_CellAt(const int x, const int y)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    QSize areaSize=viewport()->size();
+
+    if (x<mVerticalHeader_TotalWidth || y<0 || x>=areaSize.width() || y>=mHorizontalHeader_TotalHeight || y>=areaSize.height())
+    {
+        END_PROFILE;
+        return QPoint(-1, -1);
+    }
+
+    int offsetX=-horizontalScrollBar()->value();
+    int offsetY=-verticalScrollBar()->value();
+
+    END_PROFILE;
+}
+
+QPoint CustomFastTableWidget::verticalHeader_CellAt(const int x, const int y)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    QSize areaSize=viewport()->size();
+
+    if (x<0 || y<mHorizontalHeader_TotalHeight || x>=mVerticalHeader_TotalWidth || x>=areaSize.width() || y>=areaSize.height())
+    {
+        END_PROFILE;
+        return QPoint(-1, -1);
+    }
+
+    int offsetX=-horizontalScrollBar()->value();
+    int offsetY=-verticalScrollBar()->value();
+
+    END_PROFILE;
+}
+
+bool CustomFastTableWidget::atTopLeftCorner(const int x, const int y)
+{
+    FASTTABLE_DEBUG;
+
+    QSize areaSize=viewport()->size();
+
+    return x>=0 && y>=0 && x<mVerticalHeader_TotalWidth && y<mHorizontalHeader_TotalHeight && x<areaSize.width() && y<areaSize.height();
 }

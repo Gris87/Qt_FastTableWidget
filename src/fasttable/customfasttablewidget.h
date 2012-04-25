@@ -10,6 +10,7 @@
 #include <QPainter>
 #include <QScrollBar>
 #include <QDateTime>
+#include <QMouseEvent>
 
 #include "qdebug.h"
 
@@ -190,6 +191,11 @@ public:
     QList<QPoint> currentSelection();
     bool horizontalHeader_ColumnSelected(const int column);
     bool verticalHeader_RowSelected(const int row);
+
+    QPoint cellAt(const int x, const int y);
+    QPoint horizontalHeader_CellAt(const int x, const int y);
+    QPoint verticalHeader_CellAt(const int x, const int y);
+    bool atTopLeftCorner(const int x, const int y);
 
 protected:
     Style mStyle;
