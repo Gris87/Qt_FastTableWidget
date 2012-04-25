@@ -11,8 +11,21 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    statisticsframe.cpp \
+    ../../src/fasttable/fasttablewidget.cpp \
+    ../../src/fasttable/customfasttablewidget.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    statisticsframe.h \
+    ../../src/fasttable/fasttablewidget.h \
+    ../../src/fasttable/fastdefines.h \
+    ../../src/fasttable/customfasttablewidget.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    statisticsframe.ui
+
+
+
+
+
