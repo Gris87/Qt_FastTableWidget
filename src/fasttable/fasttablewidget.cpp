@@ -50,12 +50,18 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
 
                         for (int g=0; g<spanX; ++g)
                         {
-                            aWidth+=mColumnWidths.at(j+g);
+                            if (mColumnWidths.at(j+g)>0)
+                            {
+                                aWidth+=mColumnWidths.at(j+g);
+                            }
                         }
 
                         for (int g=0; g<spanY; ++g)
                         {
-                            aHeight+=mRowHeights.at(i+g);
+                            if (mRowHeights.at(i+g)>0)
+                            {
+                                aHeight+=mRowHeights.at(i+g);
+                            }
                         }
 
                         if (
@@ -122,12 +128,18 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
 
                         for (int g=0; g<spanX; ++g)
                         {
-                            aWidth+=mColumnWidths.at(j+g);
+                            if (mColumnWidths.at(j+g)>0)
+                            {
+                                aWidth+=mColumnWidths.at(j+g);
+                            }
                         }
 
                         for (int g=0; g<spanY; ++g)
                         {
-                            aHeight+=mHorizontalHeader_RowHeights.at(i+g);
+                            if (mHorizontalHeader_RowHeights.at(i+g)>0)
+                            {
+                                aHeight+=mHorizontalHeader_RowHeights.at(i+g);
+                            }
                         }
 
                         if (
@@ -194,12 +206,18 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
 
                         for (int g=0; g<spanX; ++g)
                         {
-                            aWidth+=mVerticalHeader_ColumnWidths.at(j+g);
+                            if (mVerticalHeader_ColumnWidths.at(j+g)>0)
+                            {
+                                aWidth+=mVerticalHeader_ColumnWidths.at(j+g);
+                            }
                         }
 
                         for (int g=0; g<spanY; ++g)
                         {
-                            aHeight+=mRowHeights.at(i+g);
+                            if (mRowHeights.at(i+g)>0)
+                            {
+                                aHeight+=mRowHeights.at(i+g);
+                            }
                         }
 
                         if (

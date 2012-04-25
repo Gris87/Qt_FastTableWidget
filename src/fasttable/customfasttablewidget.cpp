@@ -114,7 +114,7 @@ void CustomFastTableWidget::paintEvent(QPaintEvent *event)
         {
             for (int j=mVisibleLeft; j<=mVisibleRight; ++j)
             {
-                if (mColumnWidths.at(j)>=0 && mRowHeights.at(i)>=0)
+                if (mColumnWidths.at(j)>0 && mRowHeights.at(i)>0)
                 {
                     paintCell(painter, offsetX+mOffsetX.at(j), offsetY+mOffsetY.at(i), mColumnWidths.at(j), mRowHeights.at(i), i, j, DrawCell);
                 }
@@ -133,7 +133,7 @@ void CustomFastTableWidget::paintEvent(QPaintEvent *event)
         {
             for (int j=mVisibleLeft; j<=mVisibleRight; ++j)
             {
-                if (mColumnWidths.at(j)>=0 && mHorizontalHeader_RowHeights.at(i)>=0)
+                if (mColumnWidths.at(j)>0 && mHorizontalHeader_RowHeights.at(i)>0)
                 {
                     paintCell(painter, offsetX+mOffsetX.at(j), mHorizontalHeader_OffsetY.at(i), mColumnWidths.at(j), mHorizontalHeader_RowHeights.at(i), i, j, DrawHorizontalHeaderCell);
                 }
@@ -152,7 +152,7 @@ void CustomFastTableWidget::paintEvent(QPaintEvent *event)
         {
             for (int j=0; j<=mVerticalHeader_VisibleRight; ++j)
             {
-                if (mVerticalHeader_ColumnWidths.at(j)>=0 && mRowHeights.at(i)>=0)
+                if (mVerticalHeader_ColumnWidths.at(j)>0 && mRowHeights.at(i)>0)
                 {
                     paintCell(painter, mVerticalHeader_OffsetX.at(j), offsetY+mOffsetY.at(i), mVerticalHeader_ColumnWidths.at(j), mRowHeights.at(i), i, j, DrawVerticalHeaderCell);
                 }
@@ -599,12 +599,12 @@ void CustomFastTableWidget::updateVisibleRange()
             FASTTABLE_ASSERT(mHorizontalHeader_VisibleBottom<mHorizontalHeader_OffsetY.length());
             FASTTABLE_ASSERT(mHorizontalHeader_VisibleBottom<mHorizontalHeader_RowHeights.length());
 
-            while (mHorizontalHeader_VisibleBottom<mHorizontalHeader_RowCount-1 && mHorizontalHeader_OffsetY.at(mHorizontalHeader_VisibleBottom)<maxY && mHorizontalHeader_OffsetY.at(mHorizontalHeader_VisibleBottom)+mHorizontalHeader_RowHeights.at(mHorizontalHeader_VisibleBottom)<maxY)
+            while (mHorizontalHeader_VisibleBottom<mHorizontalHeader_RowCount-1 && mHorizontalHeader_OffsetY.at(mHorizontalHeader_VisibleBottom)<maxY && (mHorizontalHeader_RowHeights.at(mHorizontalHeader_VisibleBottom)<=0 || mHorizontalHeader_OffsetY.at(mHorizontalHeader_VisibleBottom)+mHorizontalHeader_RowHeights.at(mHorizontalHeader_VisibleBottom)<maxY))
             {
                 mHorizontalHeader_VisibleBottom++;
             }
 
-            while (mHorizontalHeader_VisibleBottom>0 && mHorizontalHeader_OffsetY.at(mHorizontalHeader_VisibleBottom)>maxY && mHorizontalHeader_OffsetY.at(mHorizontalHeader_VisibleBottom)+mHorizontalHeader_RowHeights.at(mHorizontalHeader_VisibleBottom)>maxY)
+            while (mHorizontalHeader_VisibleBottom>0 && mHorizontalHeader_OffsetY.at(mHorizontalHeader_VisibleBottom)>maxY && (mHorizontalHeader_RowHeights.at(mHorizontalHeader_VisibleBottom)<=0 || mHorizontalHeader_OffsetY.at(mHorizontalHeader_VisibleBottom)+mHorizontalHeader_RowHeights.at(mHorizontalHeader_VisibleBottom)>maxY))
             {
                 mHorizontalHeader_VisibleBottom--;
             }
@@ -613,7 +613,12 @@ void CustomFastTableWidget::updateVisibleRange()
         if (
             mHorizontalHeader_VisibleBottom<0
             ||
-            mHorizontalHeader_OffsetY.at(mHorizontalHeader_VisibleBottom)+mHorizontalHeader_RowHeights.at(mHorizontalHeader_VisibleBottom)<maxY
+            (
+             mHorizontalHeader_RowHeights.at(mHorizontalHeader_VisibleBottom)<=0 ?
+                (mHorizontalHeader_OffsetY.at(mHorizontalHeader_VisibleBottom)<maxY)
+                :
+                (mHorizontalHeader_OffsetY.at(mHorizontalHeader_VisibleBottom)+mHorizontalHeader_RowHeights.at(mHorizontalHeader_VisibleBottom)<maxY)
+            )
            )
         {
             if (
@@ -644,22 +649,22 @@ void CustomFastTableWidget::updateVisibleRange()
             FASTTABLE_ASSERT(mVisibleBottom<mOffsetY.length());
             FASTTABLE_ASSERT(mVisibleBottom<mRowHeights.length());
 
-            while (mVisibleTop<mRowCount-1 && mOffsetY.at(mVisibleTop)<minY && mOffsetY.at(mVisibleTop)+mRowHeights.at(mVisibleTop)<minY)
+            while (mVisibleTop<mRowCount-1 && mOffsetY.at(mVisibleTop)<minY && (mRowHeights.at(mVisibleTop)<=0 || mOffsetY.at(mVisibleTop)+mRowHeights.at(mVisibleTop)<minY))
             {
                 mVisibleTop++;
             }
 
-            while (mVisibleTop>0 && mOffsetY.at(mVisibleTop)>minY && mOffsetY.at(mVisibleTop)+mRowHeights.at(mVisibleTop)>minY)
+            while (mVisibleTop>0 && mOffsetY.at(mVisibleTop)>minY && (mRowHeights.at(mVisibleTop)<=0 || mOffsetY.at(mVisibleTop)+mRowHeights.at(mVisibleTop)>minY))
             {
                 mVisibleTop--;
             }
 
-            while (mVisibleBottom<mRowCount-1 && mOffsetY.at(mVisibleBottom)<maxY && mOffsetY.at(mVisibleBottom)+mRowHeights.at(mVisibleBottom)<maxY)
+            while (mVisibleBottom<mRowCount-1 && mOffsetY.at(mVisibleBottom)<maxY && (mRowHeights.at(mVisibleBottom)<=0 || mOffsetY.at(mVisibleBottom)+mRowHeights.at(mVisibleBottom)<maxY))
             {
                 mVisibleBottom++;
             }
 
-            while (mVisibleBottom>0 && mOffsetY.at(mVisibleBottom)>maxY && mOffsetY.at(mVisibleBottom)+mRowHeights.at(mVisibleBottom)>maxY)
+            while (mVisibleBottom>0 && mOffsetY.at(mVisibleBottom)>maxY && (mRowHeights.at(mVisibleBottom)<=0 || mOffsetY.at(mVisibleBottom)+mRowHeights.at(mVisibleBottom)>maxY))
             {
                 mVisibleBottom--;
             }
@@ -1108,7 +1113,7 @@ void CustomFastTableWidget::insertRow(int row)
 
     mTotalHeight+=mDefaultHeight;
 
-    mOffsetY.insert(row, row==0? mHorizontalHeader_TotalHeight : (mOffsetY.at(row-1)+mRowHeights.at(row-1)));
+    mOffsetY.insert(row, row==0? mHorizontalHeader_TotalHeight : (mRowHeights.at(row-1)<=0? mOffsetY.at(row-1) : mOffsetY.at(row-1)+mRowHeights.at(row-1)));
     mRowHeights.insert(row, mDefaultHeight);
 
     for (int i=row+1; i<mRowCount; ++i)
