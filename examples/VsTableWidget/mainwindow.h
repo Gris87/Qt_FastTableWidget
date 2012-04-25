@@ -25,8 +25,11 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void compareLabels(QLabel *label1, QLabel *label2, bool lessBetter);
+
 public slots:
     void startComparing();
+    void tabChanged(int index);
 };
 
 #endif // MAINWINDOW_H

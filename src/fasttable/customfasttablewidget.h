@@ -268,6 +268,10 @@ protected:
     void updateBarsRanges();
     virtual void updateVisibleRange();
 
+public slots:
+    void scrollToTop();
+    void scrollToBottom();
+
 protected slots:
     void horizontalScrollBarValueChanged(int value);
     void verticalScrollBarValueChanged(int value);

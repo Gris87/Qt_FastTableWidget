@@ -2523,6 +2523,26 @@ QRect CustomFastTableWidget::verticalHeader_VisibleRange()
     return aRect;
 }
 
+void CustomFastTableWidget::scrollToTop()
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    verticalScrollBar()->setValue(0);
+
+    END_PROFILE;
+}
+
+void CustomFastTableWidget::scrollToBottom()
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    verticalScrollBar()->setValue(verticalScrollBar()->maximum());
+
+    END_PROFILE;
+}
+
 QString CustomFastTableWidget::text(const int row, const int column)
 {
     FASTTABLE_DEBUG;
