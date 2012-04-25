@@ -24,8 +24,9 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     mVisibleBottom=-1;
 
     mHorizontalHeader_VisibleBottom=-1;
-
     mVerticalHeader_VisibleRight=-1;
+
+    mStyle=StyleSimple;
 
 #ifdef Q_OS_LINUX
     setStyle(StyleLinux);
@@ -765,7 +766,6 @@ void CustomFastTableWidget::clear()
     mVisibleBottom=-1;
 
     mHorizontalHeader_VisibleBottom=-1;
-
     mVerticalHeader_VisibleRight=-1;
 
     mData.clear();
