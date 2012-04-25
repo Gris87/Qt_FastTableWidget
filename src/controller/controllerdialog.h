@@ -75,6 +75,16 @@ private slots:
     void on_defaultHeightSpinBox_valueChanged(int value);
     void on_columnWidthButton_clicked();
     void on_rowHeightButton_clicked();
+    void on_headerColumnWidthButton_clicked();
+    void on_headerRowHeightButton_clicked();
+    void on_showColumnButton_clicked();
+    void on_hideColumnButton_clicked();
+    void on_showRowButton_clicked();
+    void on_hideRowButton_clicked();
+    void on_headerShowColumnButton_clicked();
+    void on_headerHideColumnButton_clicked();
+    void on_headerShowRowButton_clicked();
+    void on_headerHideRowButton_clicked();
     void on_textButton_clicked();
     void on_horizontalTextButton_clicked();
     void on_verticalTextButton_clicked();
@@ -131,8 +141,6 @@ private slots:
     void on_verticalHeaderColumnCountViewButton_clicked();
     void on_defaultWidthViewButton_clicked();
     void on_defaultHeightViewButton_clicked();
-    void on_headerColumnWidthButton_clicked();
-    void on_headerRowHeightButton_clicked();
     void on_columnWidthViewButton_clicked();
     void on_rowHeightViewButton_clicked();
     void on_headerColumnWidthViewButton_clicked();
@@ -144,6 +152,10 @@ private slots:
     void on_visibleRangesViewButton_clicked();
     void on_horizontalVisibleRangesViewButton_clicked();
     void on_verticalVisibleRangesViewButton_clicked();
+    void on_columnVisibleViewButton_clicked();
+    void on_rowVisibleViewButton_clicked();
+    void on_headerColumnVisibleViewButton_clicked();
+    void on_headerRowVisibleViewButton_clicked();
     void on_textViewButton_clicked();
     void on_horizontalTextViewButton_clicked();
     void on_verticalTextViewButton_clicked();

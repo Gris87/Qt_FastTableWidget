@@ -1,4 +1,3 @@
-Negative width or height means that row/column is hidden
 Mouse handler
 Action queue to remove unnecessary function calls
 Cell flags (Selection, Editing, Enabled)

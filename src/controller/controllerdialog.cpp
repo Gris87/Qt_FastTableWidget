@@ -642,6 +642,150 @@ void ControllerDialog::on_headerRowHeightButton_clicked()
     }
 }
 
+void ControllerDialog::on_showColumnButton_clicked()
+{
+    if (mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
+
+        dialog.setWindowTitle("Select column");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->columnCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            mFastTableWidget->setColumnVisible(dialog.intValue(), true);
+        }
+    }
+}
+
+void ControllerDialog::on_hideColumnButton_clicked()
+{
+    if (mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
+
+        dialog.setWindowTitle("Select column");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->columnCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            mFastTableWidget->setColumnVisible(dialog.intValue(), false);
+        }
+    }
+}
+
+void ControllerDialog::on_showRowButton_clicked()
+{
+    if (mFastTableWidget->rowCount()>0)
+    {
+        QInputDialog dialog(this);
+
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            mFastTableWidget->setRowVisible(dialog.intValue(), true);
+        }
+    }
+}
+
+void ControllerDialog::on_hideRowButton_clicked()
+{
+    if (mFastTableWidget->rowCount()>0)
+    {
+        QInputDialog dialog(this);
+
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            mFastTableWidget->setRowVisible(dialog.intValue(), false);
+        }
+    }
+}
+
+void ControllerDialog::on_headerShowColumnButton_clicked()
+{
+    if (mFastTableWidget->verticalHeader_ColumnCount()>0)
+    {
+        QInputDialog dialog(this);
+
+        dialog.setWindowTitle("Select column");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->verticalHeader_ColumnCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            mFastTableWidget->verticalHeader_SetColumnVisible(dialog.intValue(), true);
+        }
+    }
+}
+
+void ControllerDialog::on_headerHideColumnButton_clicked()
+{
+    if (mFastTableWidget->verticalHeader_ColumnCount()>0)
+    {
+        QInputDialog dialog(this);
+
+        dialog.setWindowTitle("Select column");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->verticalHeader_ColumnCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            mFastTableWidget->verticalHeader_SetColumnVisible(dialog.intValue(), false);
+        }
+    }
+}
+
+void ControllerDialog::on_headerShowRowButton_clicked()
+{
+    if (mFastTableWidget->horizontalHeader_RowCount()>0)
+    {
+        QInputDialog dialog(this);
+
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->horizontalHeader_RowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            mFastTableWidget->horizontalHeader_SetRowVisible(dialog.intValue(), true);
+        }
+    }
+}
+
+void ControllerDialog::on_headerHideRowButton_clicked()
+{
+    if (mFastTableWidget->horizontalHeader_RowCount()>0)
+    {
+        QInputDialog dialog(this);
+
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->horizontalHeader_RowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            mFastTableWidget->horizontalHeader_SetRowVisible(dialog.intValue(), false);
+        }
+    }
+}
+
 void ControllerDialog::on_textButton_clicked()
 {
     if (mFastTableWidget->rowCount()>0 && mFastTableWidget->columnCount()>0)
@@ -1904,6 +2048,26 @@ void ControllerDialog::on_verticalVisibleRangesViewButton_clicked()
 
     ViewDialog dialog(&aList, false, this);
     dialog.exec();
+}
+
+void ControllerDialog::on_columnVisibleViewButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_rowVisibleViewButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_headerColumnVisibleViewButton_clicked()
+{
+
+}
+
+void ControllerDialog::on_headerRowVisibleViewButton_clicked()
+{
+
 }
 
 void ControllerDialog::on_textViewButton_clicked()

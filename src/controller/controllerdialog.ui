@@ -72,9 +72,9 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-600</y>
             <width>387</width>
-            <height>1931</height>
+            <height>2052</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
@@ -934,7 +934,7 @@
             </layout>
            </item>
            <item>
-            <widget class="Line" name="line_3">
+            <widget class="Line" name="line_9">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
@@ -1180,6 +1180,180 @@
            </item>
            <item>
             <widget class="Line" name="line_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QGridLayout" name="gridLayout_19">
+             <property name="spacing">
+              <number>4</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QPushButton" name="showColumnButton">
+               <property name="text">
+                <string>Show column</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QPushButton" name="headerShowColumnButton">
+               <property name="text">
+                <string>Show column in vertical header</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QPushButton" name="headerShowRowButton">
+               <property name="text">
+                <string>Show row in horizontal header</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QPushButton" name="showRowButton">
+               <property name="text">
+                <string>Show row</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QPushButton" name="columnVisibleViewButton">
+               <property name="maximumSize">
+                <size>
+                 <width>25</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../Resources.qrc">
+                 <normaloff>:/images/Find.png</normaloff>:/images/Find.png</iconset>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QPushButton" name="rowVisibleViewButton">
+               <property name="maximumSize">
+                <size>
+                 <width>25</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../Resources.qrc">
+                 <normaloff>:/images/Find.png</normaloff>:/images/Find.png</iconset>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QPushButton" name="headerColumnVisibleViewButton">
+               <property name="maximumSize">
+                <size>
+                 <width>25</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../Resources.qrc">
+                 <normaloff>:/images/Find.png</normaloff>:/images/Find.png</iconset>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="2">
+              <widget class="QPushButton" name="headerRowVisibleViewButton">
+               <property name="maximumSize">
+                <size>
+                 <width>25</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../../Resources.qrc">
+                 <normaloff>:/images/Find.png</normaloff>:/images/Find.png</iconset>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="hideColumnButton">
+               <property name="text">
+                <string>Hide column</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QPushButton" name="hideRowButton">
+               <property name="text">
+                <string>Hide row</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QPushButton" name="headerHideColumnButton">
+               <property name="text">
+                <string>Hide column in vertical header</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QPushButton" name="headerHideRowButton">
+               <property name="text">
+                <string>Hide row in horizontal header</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="Line" name="line_3">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
