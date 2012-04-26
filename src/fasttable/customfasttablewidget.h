@@ -49,6 +49,7 @@ public:
 
     enum DrawComponent {DrawCell, DrawHorizontalHeaderCell, DrawVerticalHeaderCell, DrawTopLeftCorner};
     enum Style {StyleSimple, StyleLinux, StyleWinXP, StyleWin7};
+    enum MouseLocation {InMiddleWorld, InCell, InHorizontalHeaderCell, InVerticalHeaderCell, InTopLeftCorner};
 
     explicit CustomFastTableWidget(QWidget *parent = 0);
     ~CustomFastTableWidget();
@@ -192,6 +193,15 @@ public:
     bool horizontalHeader_ColumnSelected(const int column);
     bool verticalHeader_RowSelected(const int row);
 
+    QPoint currentCell();
+    virtual void setCurrentCell(int row, int column, const bool keepSelection=false);
+
+    int currentRow();
+    void setCurrentRow(const int row, const bool keepSelection=false);
+
+    int currentColumn();
+    void setCurrentColumn(const int column, const bool keepSelection=false);
+
     QPoint cellAt(const int x, const int y);
     QPoint horizontalHeader_CellAt(const int x, const int y);
     QPoint verticalHeader_CellAt(const int x, const int y);
@@ -258,7 +268,17 @@ protected:
     QList< bool >        mHorizontalHeader_SelectedColumns;
     QList< bool >        mVerticalHeader_SelectedRows;
 
+    int mCurrentRow;
+    int mCurrentColumn;
+
+    int mLastX;
+    int mLastY;
+    bool mMousePressed;
+    MouseLocation mMouseLocation;
+
     void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
     void resizeEvent(QResizeEvent *event);
     void paintEvent(QPaintEvent *event);
     virtual void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent);

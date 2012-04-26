@@ -26,6 +26,14 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     mHorizontalHeader_VisibleBottom=-1;
     mVerticalHeader_VisibleRight=-1;
 
+    mCurrentRow=-1;
+    mCurrentColumn=-1;
+
+    mMousePressed=false;
+    mMouseLocation=InMiddleWorld;
+    mLastX=-1;
+    mLastY=-1;
+
     mStyle=StyleSimple;
 
 #ifdef Q_OS_LINUX
@@ -82,7 +90,12 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
 
     if (pos!=QPoint(-1, -1))
     {
+        mMousePressed=true;
+        mMouseLocation=InCell;
+        mLastX=pos.x();
+        mLastY=pos.y();
 
+        setCurrentCell(mLastY, mLastX);
     }
     else
     {
@@ -90,7 +103,10 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
 
         if (pos!=QPoint(-1, -1))
         {
-
+            mMousePressed=true;
+            mMouseLocation=InHorizontalHeaderCell;
+            mLastX=pos.x();
+            mLastY=pos.y();
         }
         else
         {
@@ -98,16 +114,132 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
 
             if (pos!=QPoint(-1, -1))
             {
-
+                mMousePressed=true;
+                mMouseLocation=InVerticalHeaderCell;
+                mLastX=pos.x();
+                mLastY=pos.y();
             }
+            else
             if (atTopLeftCorner(event->x(), event->y()))
             {
-
+                mMousePressed=true;
+                mMouseLocation=InTopLeftCorner;
+                mLastX=0;
+                mLastY=0;
             }
         }
     }
 
     QAbstractScrollArea::mousePressEvent(event);
+
+    END_PROFILE;
+}
+
+void CustomFastTableWidget::mouseMoveEvent(QMouseEvent *event)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    if (mMousePressed)
+    {
+        int x=event->x();
+        int y=event->y();
+
+        int offsetX=-horizontalScrollBar()->value();
+        int offsetY=-verticalScrollBar()->value();
+
+        int resX=mVisibleLeft;
+        int resY=mVisibleTop;
+
+        while (resX>0 && x>offsetX+mOffsetX.at(resX) && (mColumnWidths.at(resX)<=0 || x>offsetX+mOffsetX.at(resX)+mColumnWidths.at(resX)))
+        {
+            resX--;
+        }
+
+        while (resX<mColumnCount-1 && x<offsetX+mOffsetX.at(resX) && (mColumnWidths.at(resX)<=0 || x<offsetX+mOffsetX.at(resX)+mColumnWidths.at(resX)))
+        {
+            resX++;
+        }
+
+        while (resY>0 && y>offsetY+mOffsetY.at(resY) && (mRowHeights.at(resY)<=0 || y>offsetY+mOffsetY.at(resY)+mRowHeights.at(resY)))
+        {
+            resY--;
+        }
+
+        while (resY<mRowCount-1 && y<offsetY+mOffsetY.at(resY) && (mRowHeights.at(resY)<=0 || y<offsetY+mOffsetY.at(resY)+mRowHeights.at(resY)))
+        {
+            resY++;
+        }
+
+        setCurrentCell(resY, resX);
+
+        int minX=qMin(resX, mLastX);
+        int minY=qMin(resY, mLastY);
+        int maxX=qMax(resX, mLastX);
+        int maxY=qMax(resY, mLastY);
+
+        for (int i=minY; i<=maxY; i++)
+        {
+            for (int j=minX; j<=maxX; j++)
+            {
+                setCellSelected(i, j, true);
+            }
+        }
+    }
+    else
+    {
+        QPoint pos;
+
+        pos=horizontalHeader_CellAt(event->x(), event->y());
+
+        if (pos!=QPoint(-1, -1))
+        {
+            mMouseLocation=InHorizontalHeaderCell;
+            mLastX=pos.x();
+            mLastY=pos.y();
+        }
+        else
+        {
+            pos=verticalHeader_CellAt(event->x(), event->y());
+
+            if (pos!=QPoint(-1, -1))
+            {
+                mMouseLocation=InVerticalHeaderCell;
+                mLastX=pos.x();
+                mLastY=pos.y();
+            }
+            else
+            if (atTopLeftCorner(event->x(), event->y()))
+            {
+                mMouseLocation=InTopLeftCorner;
+                mLastX=0;
+                mLastY=0;
+            }
+            else
+            {
+                mMouseLocation=InMiddleWorld;
+                mLastX=-1;
+                mLastY=-1;
+            }
+        }
+    }
+
+    QAbstractScrollArea::mouseMoveEvent(event);
+
+    END_PROFILE;
+}
+
+void CustomFastTableWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    mMousePressed=false;
+    mMouseLocation=InMiddleWorld;
+    mLastX=-1;
+    mLastY=-1;
+
+    QAbstractScrollArea::mouseReleaseEvent(event);
 
     END_PROFILE;
 }
@@ -798,6 +930,9 @@ void CustomFastTableWidget::clear()
 
     mHorizontalHeader_VisibleBottom=-1;
     mVerticalHeader_VisibleRight=-1;
+
+    mCurrentRow=-1;
+    mCurrentColumn=-1;
 
     mData.clear();
     mRowHeights.clear();
@@ -2791,6 +2926,94 @@ bool CustomFastTableWidget::verticalHeader_RowSelected(const int row)
     return mVerticalHeader_SelectedRows.at(row);
 }
 
+QPoint CustomFastTableWidget::currentCell()
+{
+    FASTTABLE_DEBUG;
+    return QPoint(mCurrentColumn, mCurrentRow);
+}
+
+void CustomFastTableWidget::setCurrentCell(int row, int column, const bool keepSelection)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    if (row<0 || column<0 || row>=mRowCount || column>=mColumnCount)
+    {
+        row=-1;
+        column=-1;
+    }
+
+    if (
+        mCurrentRow!=row
+        ||
+        mCurrentColumn!=column
+        ||
+        (
+         !keepSelection
+         &&
+         (
+          mCurSelection.length()>1
+          ||
+          (
+           row>=0
+           &&
+           !mSelectedCells.at(row).at(column)
+          )
+         )
+        )
+       )
+    {
+        mCurrentRow=row;
+        mCurrentColumn=column;
+
+        if (!keepSelection)
+        {
+            unselectAll();
+
+            if (row>=0)
+            {
+                setCellSelected(row, column, true);
+            }
+        }
+
+        viewport()->update();
+    }
+
+    END_PROFILE;
+}
+
+int CustomFastTableWidget::currentRow()
+{
+    FASTTABLE_DEBUG;
+    return mCurrentRow;
+}
+
+void CustomFastTableWidget::setCurrentRow(const int row, const bool keepSelection)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    setCurrentCell(row, mCurrentColumn, keepSelection)
+
+    END_PROFILE;
+}
+
+int CustomFastTableWidget::currentColumn()
+{
+    FASTTABLE_DEBUG;
+    return mCurrentColumn;
+}
+
+void CustomFastTableWidget::setCurrentColumn(const int column, const bool keepSelection)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    setCurrentCell(mCurrentRow, column, keepSelection)
+
+    END_PROFILE;
+}
+
 QPoint CustomFastTableWidget::cellAt(const int x, const int y)
 {
     FASTTABLE_DEBUG;
@@ -2798,16 +3021,58 @@ QPoint CustomFastTableWidget::cellAt(const int x, const int y)
 
     QSize areaSize=viewport()->size();
 
-    if (x<mVerticalHeader_TotalWidth || y<mHorizontalHeader_TotalHeight || x>=areaSize.width() || y>=areaSize.height())
+    if (x<mVerticalHeader_TotalWidth || y<mHorizontalHeader_TotalHeight || x>=areaSize.width() || y>=areaSize.height() || mVisibleLeft<0 || mVisibleTop<0)
     {
         END_PROFILE;
         return QPoint(-1, -1);
     }
 
+    FASTTABLE_ASSERT(mVisibleBottom<mOffsetY.length());
+    FASTTABLE_ASSERT(mVisibleBottom<mRowHeights.length());
+    FASTTABLE_ASSERT(mVisibleRight<mOffsetX.length());
+    FASTTABLE_ASSERT(mVisibleRight<mColumnWidths.length());
+
     int offsetX=-horizontalScrollBar()->value();
     int offsetY=-verticalScrollBar()->value();
 
+    int resX=-1;
+
+    for (int i=mVisibleLeft; i<=mVisibleRight; ++i)
+    {
+        if (x>=offsetX+mOffsetX.at(i) && (mColumnWidths.at(i)<=0 || x<offsetX+mOffsetX.at(i)+mColumnWidths.at(i)))
+        {
+            resX=i;
+            break;
+        }
+    }
+
+    if (resX<0)
+    {
+        END_PROFILE;
+        return QPoint(-1, -1);
+    }
+
+
+
+    int resY=-1;
+
+    for (int i=mVisibleTop; i<=mVisibleBottom; ++i)
+    {
+        if (y>=offsetY+mOffsetY.at(i) && (mRowHeights.at(i)<=0 || y<offsetY+mOffsetY.at(i)+mRowHeights.at(i)))
+        {
+            resY=i;
+            break;
+        }
+    }
+
+    if (resY<0)
+    {
+        END_PROFILE;
+        return QPoint(-1, -1);
+    }
+
     END_PROFILE;
+    return QPoint(resX, resY);
 }
 
 QPoint CustomFastTableWidget::horizontalHeader_CellAt(const int x, const int y)
