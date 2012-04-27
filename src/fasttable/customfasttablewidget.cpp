@@ -36,6 +36,8 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     mMouseLocation=InMiddleWorld;
     mLastX=-1;
     mLastY=-1;
+    mMouseXForShift=-1;
+    mMouseYForShift=-1;
 
     mStyle=StyleSimple;
 
@@ -104,7 +106,7 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
 
         if (mShiftPressed && event->button()==Qt::LeftButton)
         {
-            if (mLastX<0)
+            if (mMouseXForShift<0)
             {
                 mMouseSelectedCells.clear();
 
@@ -113,9 +115,15 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                     setCurrentCell(0, 0);
                 }
 
-                mLastX=mCurrentColumn;
-                mLastY=mCurrentRow;
+                mMouseXForShift=mCurrentColumn;
+                mMouseYForShift=mCurrentRow;
+            }
 
+            mLastX=mMouseXForShift;
+            mLastY=mMouseYForShift;
+
+            if (mMouseSelectedCells.length()==0)
+            {
                 QList<bool> aRow;
                 aRow.append(mSelectedCells.at(mLastY).at(mLastX));
 
@@ -130,6 +138,9 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
 
             mLastX=pos.x();
             mLastY=pos.y();
+
+            mMouseXForShift=mLastX;
+            mMouseYForShift=mLastY;
 
             if (mCtrlPressed && event->button()==Qt::LeftButton)
             {
@@ -386,8 +397,12 @@ void CustomFastTableWidget::selectRangeByMouse(int resX, int resY)
 
     for (int i=lastMinY; i<=lastMaxY; i++)
     {
+        FASTTABLE_ASSERT(i-lastMinY>=0 && i-lastMinY<mMouseSelectedCells.length());
+
         for (int j=lastMinX; j<=lastMaxX; j++)
         {
+            FASTTABLE_ASSERT(j-lastMinX>=0 && j-lastMinX<mMouseSelectedCells.at(i-lastMinY).length());
+
             setCellSelected(i, j, mMouseSelectedCells.at(i-lastMinY).at(j-lastMinX));
         }
     }
@@ -432,16 +447,12 @@ void CustomFastTableWidget::mouseReleaseEvent(QMouseEvent *event)
     FASTTABLE_DEBUG;
     START_PROFILE;
 
-    if (!mShiftPressed)
-    {
-        mLastX=-1;
-        mLastY=-1;
-    }
-
     mMousePressed=false;
     mCtrlPressed=false;
     mShiftPressed=false;
     mMouseLocation=InMiddleWorld;
+    mLastX=-1;
+    mLastY=-1;
 
     mMouseHoldTimer.stop();
 
@@ -1158,6 +1169,9 @@ void CustomFastTableWidget::clear()
     mCurSelection.clear();
     mHorizontalHeader_SelectedColumns.clear();
     mVerticalHeader_SelectedRows.clear();
+
+    mMouseXForShift=-1;
+    mMouseYForShift=-1;
 
     mMouseSelectedCells.clear();
 

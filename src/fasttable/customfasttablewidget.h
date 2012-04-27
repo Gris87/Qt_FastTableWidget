@@ -274,6 +274,8 @@ protected:
 
     int mLastX;
     int mLastY;
+    int mMouseXForShift;
+    int mMouseYForShift;
     bool mMousePressed;
     bool mCtrlPressed;
     bool mShiftPressed;
