@@ -570,6 +570,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
 
     QColor  *aGridColor;
     QBrush  *aBackgroundBrush;
+    QColor  *aBorderColor;
     QColor  *aTextColor;
     QString *aText;
     QString aVerticalText;
@@ -599,6 +600,15 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
                 aTextColor=&mDefaultForegroundColor;
             }
 
+            if (row==mCurrentRow && column==mCurrentColumn)
+            {
+                aBorderColor=&mCellBorderColor;
+            }
+            else
+            {
+                aBorderColor=0;
+            }
+
             aText=&mData[row][column];
 
             aTextFont=font();
@@ -615,6 +625,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
 
             aGridColor=&mHorizontalHeader_GridColor;
             aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
+            aBorderColor=0;
             aTextColor=&mHorizontalHeader_DefaultForegroundColor;
             aText=&mHorizontalHeader_Data[row][column];
 
@@ -640,6 +651,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
 
             aGridColor=&mVerticalHeader_GridColor;
             aBackgroundBrush=&mVerticalHeader_DefaultBackgroundBrush;
+            aBorderColor=0;
             aTextColor=&mVerticalHeader_DefaultForegroundColor;
             aText=&mVerticalHeader_Data[row][column];
 
@@ -665,6 +677,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
         {
             aGridColor=&mHorizontalHeader_GridColor;
             aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
+            aBorderColor=0;
             aTextColor=0;
             aText=0;
             aFont=0;
@@ -675,6 +688,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
         {
             aGridColor=0;
             aBackgroundBrush=0;
+            aBorderColor=0;
             aTextColor=0;
             aText=0;
             aFont=0;
@@ -683,24 +697,24 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
         break;
     }
 
-    paintCell(painter, x ,y, width, height, row, column, drawComponent, aGridColor, aBackgroundBrush, aTextColor, aText, aFont, textFlags);
+    paintCell(painter, x ,y, width, height, drawComponent, aGridColor, aBackgroundBrush, aBorderColor, aTextColor, aText, aFont, textFlags);
 
     END_FREQUENT_PROFILE;
 }
 
-void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent,
-                                      QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aTextColor, QString *aText, QFont *aFont, int aTextFlags)
+void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const DrawComponent drawComponent, QColor *aGridColor,
+                                      QBrush *aBackgroundBrush, QColor *aBorderColor, QColor *aTextColor, QString *aText, QFont *aFont, int aTextFlags)
 {
     FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
 
     if (drawComponent==DrawCell || height<=8)
     {
-        (*mDrawCellFunction)(painter, x, y, width, height, row, column, aGridColor, aBackgroundBrush);
+        (*mDrawCellFunction)(painter, x, y, width, height, aGridColor, aBackgroundBrush, aBorderColor);
     }
     else
     {
-        (*mDrawHeaderCellFunction)(painter, x, y, width, height, row, column, aGridColor, aBackgroundBrush);
+        (*mDrawHeaderCellFunction)(painter, x, y, width, height, aGridColor, aBackgroundBrush, aBorderColor);
     }
 
     if (width>8 && height>8 && aText)
@@ -713,7 +727,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
     END_FREQUENT_PROFILE;
 }
 
-void CustomFastTableWidget::paintCellLinux(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, QColor *aGridColor, QBrush *aBackgroundBrush)
+void CustomFastTableWidget::paintCellLinux(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
 {
     FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
@@ -755,7 +769,7 @@ void CustomFastTableWidget::paintCellLinux(QPainter &painter, const int x, const
     END_FREQUENT_PROFILE;
 }
 
-void CustomFastTableWidget::paintCellDefault(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, QColor *aGridColor, QBrush *aBackgroundBrush)
+void CustomFastTableWidget::paintCellDefault(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
 {
     FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
@@ -768,7 +782,7 @@ void CustomFastTableWidget::paintCellDefault(QPainter &painter, const int x, con
     END_FREQUENT_PROFILE;
 }
 
-void CustomFastTableWidget::paintHeaderCellLinux(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, QColor *aGridColor, QBrush *aBackgroundBrush)
+void CustomFastTableWidget::paintHeaderCellLinux(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
 {
     FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
@@ -810,7 +824,7 @@ void CustomFastTableWidget::paintHeaderCellLinux(QPainter &painter, const int x,
     END_FREQUENT_PROFILE;
 }
 
-void CustomFastTableWidget::paintHeaderCellWinXP(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, QColor *aGridColor, QBrush *aBackgroundBrush)
+void CustomFastTableWidget::paintHeaderCellWinXP(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
 {
     FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
@@ -836,7 +850,7 @@ void CustomFastTableWidget::paintHeaderCellWinXP(QPainter &painter, const int x,
     END_FREQUENT_PROFILE;
 }
 
-void CustomFastTableWidget::paintHeaderCellWin7(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, QColor *aGridColor, QBrush *aBackgroundBrush)
+void CustomFastTableWidget::paintHeaderCellWin7(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
 {
     FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
@@ -1281,16 +1295,19 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                     mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
                     mDefaultForegroundColor.setRgb(0, 0, 0);
                     mGridColor.setRgb(200, 200, 200);
+                    mCellBorderColor.setRgb(180, 180, 180);
 
                     mHorizontalHeader_DefaultBackgroundBrush.setColor(QColor(220, 220, 220));
                     mHorizontalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
                     mHorizontalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
                     mHorizontalHeader_GridColor.setRgb(200, 200, 200);
+                    mHorizontalHeader_CellBorderColor.setRgb(240, 240, 240);
 
                     mVerticalHeader_DefaultBackgroundBrush.setColor(QColor(220, 220, 220));
                     mVerticalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
                     mVerticalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
                     mVerticalHeader_GridColor.setRgb(200, 200, 200);
+                    mVerticalHeader_CellBorderColor.setRgb(240, 240, 240);
 
                     mSelectionBrush.setColor(QColor(49, 106, 197));
                     mSelectionBrush.setStyle(Qt::SolidPattern);
@@ -1303,16 +1320,19 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                     mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
                     mDefaultForegroundColor.setRgb(0, 0, 0);
                     mGridColor.setRgb(202, 201, 200);
+                    mCellBorderColor.setRgb(206, 149, 58);
 
                     mHorizontalHeader_DefaultBackgroundBrush.setColor(QColor(234, 233, 231));
                     mHorizontalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
                     mHorizontalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
                     mHorizontalHeader_GridColor.setRgb(210, 207, 204);
+                    mHorizontalHeader_CellBorderColor.setRgb(252, 194, 71);
 
                     mVerticalHeader_DefaultBackgroundBrush.setColor(QColor(233, 232, 231));
                     mVerticalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
                     mVerticalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
                     mVerticalHeader_GridColor.setRgb(190, 186, 182);
+                    mVerticalHeader_CellBorderColor.setRgb(252, 194, 71);
 
                     mSelectionBrush.setColor(QColor(235, 110, 60));
                     mSelectionBrush.setStyle(Qt::SolidPattern);
@@ -1325,16 +1345,19 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                     mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
                     mDefaultForegroundColor.setRgb(0, 0, 0);
                     mGridColor.setRgb(192, 192, 192);
+                    mCellBorderColor.setRgb(206, 149, 58);
 
                     mHorizontalHeader_DefaultBackgroundBrush.setColor(QColor(235, 234, 219));
                     mHorizontalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
                     mHorizontalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
                     mHorizontalHeader_GridColor.setRgb(199, 197, 178);
+                    mHorizontalHeader_CellBorderColor.setRgb(252, 194, 71);
 
                     mVerticalHeader_DefaultBackgroundBrush.setColor(QColor(235, 234, 219));
                     mVerticalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
                     mVerticalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
                     mVerticalHeader_GridColor.setRgb(199, 197, 178);
+                    mVerticalHeader_CellBorderColor.setRgb(252, 194, 71);
 
                     mSelectionBrush.setColor(QColor(49, 106, 197));
                     mSelectionBrush.setStyle(Qt::SolidPattern);
@@ -1347,16 +1370,19 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                     mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
                     mDefaultForegroundColor.setRgb(0, 0, 0);
                     mGridColor.setRgb(216, 216, 216);
+                    mCellBorderColor.setRgb(206, 149, 58);
 
                     mHorizontalHeader_DefaultBackgroundBrush.setColor(QColor(241, 242, 244));
                     mHorizontalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
                     mHorizontalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
                     mHorizontalHeader_GridColor.setRgb(213, 213, 213);
+                    mHorizontalHeader_CellBorderColor.setRgb(252, 194, 71);
 
                     mVerticalHeader_DefaultBackgroundBrush.setColor(QColor(241, 242, 244));
                     mVerticalHeader_DefaultBackgroundBrush.setStyle(Qt::SolidPattern);
                     mVerticalHeader_DefaultForegroundColor.setRgb(0, 0, 0);
                     mVerticalHeader_GridColor.setRgb(213, 213, 213);
+                    mVerticalHeader_CellBorderColor.setRgb(252, 194, 71);
 
                     mSelectionBrush.setColor(QColor(51, 153, 255));
                     mSelectionBrush.setStyle(Qt::SolidPattern);
@@ -2218,6 +2244,24 @@ void CustomFastTableWidget::setGridColor(QColor color)
     END_PROFILE;
 }
 
+QColor CustomFastTableWidget::cellBorderColor()
+{
+    FASTTABLE_DEBUG;
+    return mCellBorderColor;
+}
+
+void CustomFastTableWidget::setCellBorderColor(QColor color)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    mCellBorderColor=color;
+
+    viewport()->update();
+
+    END_PROFILE;
+}
+
 QBrush CustomFastTableWidget::horizontalHeader_DefaultBackgroundBrush()
 {
     FASTTABLE_DEBUG;
@@ -2272,6 +2316,24 @@ void CustomFastTableWidget::horizontalHeader_SetGridColor(QColor color)
     END_PROFILE;
 }
 
+QColor CustomFastTableWidget::horizontalHeader_CellBorderColor()
+{
+    FASTTABLE_DEBUG;
+    return mHorizontalHeader_CellBorderColor;
+}
+
+void CustomFastTableWidget::horizontalHeader_SetCellBorderColor(QColor color)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    mHorizontalHeader_CellBorderColor=color;
+
+    viewport()->update();
+
+    END_PROFILE;
+}
+
 QBrush CustomFastTableWidget::verticalHeader_DefaultBackgroundBrush()
 {
     FASTTABLE_DEBUG;
@@ -2320,6 +2382,24 @@ void CustomFastTableWidget::verticalHeader_SetGridColor(QColor color)
     START_PROFILE;
 
     mVerticalHeader_GridColor=color;
+
+    viewport()->update();
+
+    END_PROFILE;
+}
+
+QColor CustomFastTableWidget::verticalHeader_CellBorderColor()
+{
+    FASTTABLE_DEBUG;
+    return mVerticalHeader_CellBorderColor;
+}
+
+void CustomFastTableWidget::verticalHeader_SetCellBorderColor(QColor color)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    mVerticalHeader_CellBorderColor=color;
 
     viewport()->update();
 

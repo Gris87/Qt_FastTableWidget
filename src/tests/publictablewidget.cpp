@@ -157,6 +157,11 @@ QColor PublicCustomFastTable::getGridColor()
     return mGridColor;
 }
 
+QColor PublicCustomFastTable::getCellBorderColor()
+{
+    return mCellBorderColor;
+}
+
 QBrush PublicCustomFastTable::horizontalHeader_GetDefaultBackgroundBrush()
 {
     return mHorizontalHeader_DefaultBackgroundBrush;
@@ -172,6 +177,11 @@ QColor PublicCustomFastTable::horizontalHeader_GetGridColor()
     return mHorizontalHeader_GridColor;
 }
 
+QColor PublicCustomFastTable::horizontalHeader_GetCellBorderColor()
+{
+    return mHorizontalHeader_CellBorderColor;
+}
+
 QBrush PublicCustomFastTable::verticalHeader_GetDefaultBackgroundBrush()
 {
     return mVerticalHeader_DefaultBackgroundBrush;
@@ -185,6 +195,11 @@ QColor PublicCustomFastTable::verticalHeader_GetDefaultForegroundColor()
 QColor PublicCustomFastTable::verticalHeader_GetGridColor()
 {
     return mVerticalHeader_GridColor;
+}
+
+QColor PublicCustomFastTable::verticalHeader_GetCellBorderColor()
+{
+    return mVerticalHeader_CellBorderColor;
 }
 
 QBrush PublicCustomFastTable::getSelectionBrush()

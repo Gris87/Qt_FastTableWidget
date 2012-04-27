@@ -416,6 +416,19 @@ void ControllerDialog::on_gridColorButton_clicked()
     }
 }
 
+void ControllerDialog::on_cellBorderColorButton_clicked()
+{
+    QColorDialog dialog(this);
+
+    dialog.setWindowTitle("Cell border color");
+    dialog.setCurrentColor(mFastTableWidget->cellBorderColor());
+
+    if (dialog.exec())
+    {
+        mFastTableWidget->setCellBorderColor(dialog.selectedColor());
+    }
+}
+
 void ControllerDialog::on_horizontalDefaultBackgroundButton_clicked()
 {
     QColorDialog dialog(this);
@@ -455,6 +468,19 @@ void ControllerDialog::on_horizontalGridColorButton_clicked()
     }
 }
 
+void ControllerDialog::on_horizontalCellBorderColorButton_clicked()
+{
+    QColorDialog dialog(this);
+
+    dialog.setWindowTitle("Cell border color");
+    dialog.setCurrentColor(mFastTableWidget->horizontalHeader_CellBorderColor());
+
+    if (dialog.exec())
+    {
+        mFastTableWidget->horizontalHeader_SetCellBorderColor(dialog.selectedColor());
+    }
+}
+
 void ControllerDialog::on_verticalDefaultBackgroundButton_clicked()
 {
     QColorDialog dialog(this);
@@ -491,6 +517,19 @@ void ControllerDialog::on_verticalGridColorButton_clicked()
     if (dialog.exec())
     {
         mFastTableWidget->verticalHeader_SetGridColor(dialog.selectedColor());
+    }
+}
+
+void ControllerDialog::on_verticalCellBorderColorButton_clicked()
+{
+    QColorDialog dialog(this);
+
+    dialog.setWindowTitle("Cell border color");
+    dialog.setCurrentColor(mFastTableWidget->verticalHeader_CellBorderColor());
+
+    if (dialog.exec())
+    {
+        mFastTableWidget->verticalHeader_SetCellBorderColor(dialog.selectedColor());
     }
 }
 

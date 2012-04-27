@@ -276,6 +276,7 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 
     QColor  *aGridColor;
     QBrush  *aBackgroundBrush;
+    QColor  *aBorderColor;
     QColor  *aTextColor;
     QString *aText;
     QString aVerticalText;
@@ -324,6 +325,15 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
                 }
             }
 
+            if (row==mCurrentRow && column==mCurrentColumn)
+            {
+                aBorderColor=&mCellBorderColor;
+            }
+            else
+            {
+                aBorderColor=0;
+            }
+
             aText=&mData[row][column];
 
             aFont=mCellFonts.at(row).at(column);
@@ -360,6 +370,8 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
             {
                 aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
             }
+
+            aBorderColor=0;
 
             aTextColor=mHorizontalHeader_ForegroundColors.at(row).at(column);
 
@@ -430,6 +442,8 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
                 aBackgroundBrush=&mVerticalHeader_DefaultBackgroundBrush;
             }
 
+            aBorderColor=0;
+
             aTextColor=mVerticalHeader_ForegroundColors.at(row).at(column);
 
             if (aTextColor==0)
@@ -485,6 +499,7 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
         {
             aGridColor=&mHorizontalHeader_GridColor;
             aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
+            aBorderColor=0;
             aTextColor=0;
             aText=0;
             aFont=0;
@@ -495,6 +510,7 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
         {
             aGridColor=0;
             aBackgroundBrush=0;
+            aBorderColor=0;
             aTextColor=0;
             aText=0;
             aFont=0;
@@ -503,7 +519,7 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
         break;
     }
 
-    CustomFastTableWidget::paintCell(painter, x ,y, width, height, row, column, drawComponent, aGridColor, aBackgroundBrush, aTextColor, aText, aFont, textFlags);
+    CustomFastTableWidget::paintCell(painter, x ,y, width, height, drawComponent, aGridColor, aBackgroundBrush, aBorderColor, aTextColor, aText, aFont, textFlags);
 
     END_FREQUENT_PROFILE;
 }

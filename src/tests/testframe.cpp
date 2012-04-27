@@ -44,12 +44,15 @@ TestFrame::TestFrame(CustomFastTableWidget* aFastTable, QWidget *parent) :
     addTestLabel("setDefaultBackgroundBrush");
     addTestLabel("setDefaultForegroundColor");
     addTestLabel("setGridColor");
+    addTestLabel("setCellBorderColor");
     addTestLabel("horizontalHeader_SetDefaultBackgroundBrush");
     addTestLabel("horizontalHeader_SetDefaultForegroundColor");
     addTestLabel("horizontalHeader_SetGridColor");
+    addTestLabel("horizontalHeader_SetCellBorderColor");
     addTestLabel("verticalHeader_SetDefaultBackgroundBrush");
     addTestLabel("verticalHeader_SetDefaultForegroundColor");
     addTestLabel("verticalHeader_SetGridColor");
+    addTestLabel("verticalHeader_SetCellBorderColor");
     addTestLabel("setSelectionBrush");
     addTestLabel("setSelectionTextColor");
     addTestLabel("setDefaultWidth");
@@ -170,10 +173,11 @@ TestFrame::~TestFrame()
 
 void TestFrame::startTest()
 {
+    int testNumber=1;
     bool success;
 
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 1: Initial state";
+    qDebug()<<"TEST"<<(testNumber++)<<": Initial state";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -188,7 +192,7 @@ void TestFrame::startTest()
         testCompleted(success, "Initial state");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 2: setRowCount(50)";
+    qDebug()<<"TEST"<<(testNumber++)<<": setRowCount(50)";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -205,7 +209,7 @@ void TestFrame::startTest()
         testCompleted(success, "setRowCount(50)");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 3: setColumnCount(20)";
+    qDebug()<<"TEST"<<(testNumber++)<<": setColumnCount(20)";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -223,7 +227,7 @@ void TestFrame::startTest()
         testCompleted(success, "setColumnCount(20)");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 4: setRowCount(2)";
+    qDebug()<<"TEST"<<(testNumber++)<<": setRowCount(2)";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -241,7 +245,7 @@ void TestFrame::startTest()
         testCompleted(success, "setRowCount(2)");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 5: setColumnCount(1)";
+    qDebug()<<"TEST"<<(testNumber++)<<": setColumnCount(1)";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -259,7 +263,7 @@ void TestFrame::startTest()
         testCompleted(success, "setColumnCount(1)");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 6: clear()";
+    qDebug()<<"TEST"<<(testNumber++)<<": clear()";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -275,7 +279,7 @@ void TestFrame::startTest()
         testCompleted(success, "clear()");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 7: setRowCount(50)_2";
+    qDebug()<<"TEST"<<(testNumber++)<<": setRowCount(50)_2";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -292,7 +296,7 @@ void TestFrame::startTest()
         testCompleted(success, "setRowCount(50)_2");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 8: setColumnCount(20)_2";
+    qDebug()<<"TEST"<<(testNumber++)<<": setColumnCount(20)_2";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -310,7 +314,7 @@ void TestFrame::startTest()
         testCompleted(success, "setColumnCount(20)_2");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 9: horizontalHeader_SetRowCount(2)";
+    qDebug()<<"TEST"<<(testNumber++)<<": horizontalHeader_SetRowCount(2)";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -329,7 +333,7 @@ void TestFrame::startTest()
         testCompleted(success, "horizontalHeader_SetRowCount(2)");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 10: verticalHeader_SetColumnCount(1)";
+    qDebug()<<"TEST"<<(testNumber++)<<": verticalHeader_SetColumnCount(1)";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -349,7 +353,7 @@ void TestFrame::startTest()
         testCompleted(success, "verticalHeader_SetColumnCount(1)");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 11: setRowCount(2)";
+    qDebug()<<"TEST"<<(testNumber++)<<": setRowCount(2)";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -369,7 +373,7 @@ void TestFrame::startTest()
         testCompleted(success, "setRowCount(2)_2");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 12: setColumnCount(1)_2";
+    qDebug()<<"TEST"<<(testNumber++)<<": setColumnCount(1)_2";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -389,7 +393,7 @@ void TestFrame::startTest()
         testCompleted(success, "setColumnCount(1)_2");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 13: horizontalHeader_SetRowCount(50)";
+    qDebug()<<"TEST"<<(testNumber++)<<": horizontalHeader_SetRowCount(50)";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -409,7 +413,7 @@ void TestFrame::startTest()
         testCompleted(success, "horizontalHeader_SetRowCount(50)");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 14: verticalHeader_SetColumnCount(20)";
+    qDebug()<<"TEST"<<(testNumber++)<<": verticalHeader_SetColumnCount(20)";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -429,7 +433,7 @@ void TestFrame::startTest()
         testCompleted(success, "verticalHeader_SetColumnCount(20)");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 15: clear()_2";
+    qDebug()<<"TEST"<<(testNumber++)<<": clear()_2";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -445,7 +449,7 @@ void TestFrame::startTest()
         testCompleted(success, "clear()_2");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 16: setRowCount(50)_3";
+    qDebug()<<"TEST"<<(testNumber++)<<": setRowCount(50)_3";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -462,7 +466,7 @@ void TestFrame::startTest()
         testCompleted(success, "setRowCount(50)_3");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 17: setColumnCount(20)_3";
+    qDebug()<<"TEST"<<(testNumber++)<<": setColumnCount(20)_3";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -480,7 +484,7 @@ void TestFrame::startTest()
         testCompleted(success, "setColumnCount(20)_3");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 18: horizontalHeader_SetRowCount(2)_2";
+    qDebug()<<"TEST"<<(testNumber++)<<": horizontalHeader_SetRowCount(2)_2";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -499,7 +503,7 @@ void TestFrame::startTest()
         testCompleted(success, "horizontalHeader_SetRowCount(2)_2");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 19: verticalHeader_SetColumnCount(1)_2";
+    qDebug()<<"TEST"<<(testNumber++)<<": verticalHeader_SetColumnCount(1)_2";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -519,7 +523,7 @@ void TestFrame::startTest()
         testCompleted(success, "verticalHeader_SetColumnCount(1)_2");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 20: setDefaultBackgroundBrush";
+    qDebug()<<"TEST"<<(testNumber++)<<": setDefaultBackgroundBrush";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -538,7 +542,7 @@ void TestFrame::startTest()
         testCompleted(success, "setDefaultBackgroundBrush");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 21: setDefaultForegroundColor";
+    qDebug()<<"TEST"<<(testNumber++)<<": setDefaultForegroundColor";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -557,7 +561,7 @@ void TestFrame::startTest()
         testCompleted(success, "setDefaultForegroundColor");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 22: setGridColor";
+    qDebug()<<"TEST"<<(testNumber++)<<": setGridColor";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -576,7 +580,26 @@ void TestFrame::startTest()
         testCompleted(success, "setGridColor");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 23: horizontalHeader_SetDefaultBackgroundBrush";
+    qDebug()<<"TEST"<<(testNumber++)<<": setCellBorderColor";
+    // ----------------------------------------------------------------
+    {
+        success=true;
+
+        QColor aOldColor=((PublicCustomFastTable*)mFastTable)->getCellBorderColor();
+        QColor aNewColor=QColor(1, 2, 3);
+
+        mFastTable->setCellBorderColor(aNewColor);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getCellBorderColor()==aNewColor);
+
+        mFastTable->setCellBorderColor(aOldColor);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getCellBorderColor()==aOldColor);
+
+        testCompleted(success, "setCellBorderColor");
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST"<<(testNumber++)<<": horizontalHeader_SetDefaultBackgroundBrush";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -595,7 +618,7 @@ void TestFrame::startTest()
         testCompleted(success, "horizontalHeader_SetDefaultBackgroundBrush");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 24: horizontalHeader_SetDefaultForegroundColor";
+    qDebug()<<"TEST"<<(testNumber++)<<": horizontalHeader_SetDefaultForegroundColor";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -614,7 +637,7 @@ void TestFrame::startTest()
         testCompleted(success, "horizontalHeader_SetDefaultForegroundColor");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 25: horizontalHeader_SetGridColor";
+    qDebug()<<"TEST"<<(testNumber++)<<": horizontalHeader_SetGridColor";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -633,7 +656,26 @@ void TestFrame::startTest()
         testCompleted(success, "horizontalHeader_SetGridColor");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 26: verticalHeader_SetDefaultBackgroundBrush";
+    qDebug()<<"TEST"<<(testNumber++)<<": horizontalHeader_SetCellBorderColor";
+    // ----------------------------------------------------------------
+    {
+        success=true;
+
+        QColor aOldColor=((PublicCustomFastTable*)mFastTable)->horizontalHeader_GetCellBorderColor();
+        QColor aNewColor=QColor(1, 2, 3);
+
+        mFastTable->horizontalHeader_SetCellBorderColor(aNewColor);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->horizontalHeader_GetCellBorderColor()==aNewColor);
+
+        mFastTable->horizontalHeader_SetCellBorderColor(aOldColor);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->horizontalHeader_GetCellBorderColor()==aOldColor);
+
+        testCompleted(success, "horizontalHeader_SetCellBorderColor");
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST"<<(testNumber++)<<": verticalHeader_SetDefaultBackgroundBrush";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -652,7 +694,7 @@ void TestFrame::startTest()
         testCompleted(success, "verticalHeader_SetDefaultBackgroundBrush");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 27: verticalHeader_SetDefaultForegroundColor";
+    qDebug()<<"TEST"<<(testNumber++)<<": verticalHeader_SetDefaultForegroundColor";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -671,7 +713,7 @@ void TestFrame::startTest()
         testCompleted(success, "verticalHeader_SetDefaultForegroundColor");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 28: verticalHeader_SetGridColor";
+    qDebug()<<"TEST"<<(testNumber++)<<": verticalHeader_SetGridColor";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -690,7 +732,26 @@ void TestFrame::startTest()
         testCompleted(success, "verticalHeader_SetGridColor");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 29: setSelectionBrush";
+    qDebug()<<"TEST"<<(testNumber++)<<": verticalHeader_SetCellBorderColor";
+    // ----------------------------------------------------------------
+    {
+        success=true;
+
+        QColor aOldColor=((PublicCustomFastTable*)mFastTable)->verticalHeader_GetCellBorderColor();
+        QColor aNewColor=QColor(1, 2, 3);
+
+        mFastTable->verticalHeader_SetCellBorderColor(aNewColor);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->verticalHeader_GetCellBorderColor()==aNewColor);
+
+        mFastTable->verticalHeader_SetCellBorderColor(aOldColor);
+
+        TEST_STEP(((PublicCustomFastTable*)mFastTable)->verticalHeader_GetCellBorderColor()==aOldColor);
+
+        testCompleted(success, "verticalHeader_SetCellBorderColor");
+    }
+    // ----------------------------------------------------------------
+    qDebug()<<"TEST"<<(testNumber++)<<": setSelectionBrush";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -709,7 +770,7 @@ void TestFrame::startTest()
         testCompleted(success, "setSelectionBrush");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 30: setSelectionTextColor";
+    qDebug()<<"TEST"<<(testNumber++)<<": setSelectionTextColor";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -728,7 +789,7 @@ void TestFrame::startTest()
         testCompleted(success, "setSelectionTextColor");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 31: setDefaultWidth";
+    qDebug()<<"TEST"<<(testNumber++)<<": setDefaultWidth";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -767,7 +828,7 @@ void TestFrame::startTest()
         testCompleted(success, "setDefaultWidth");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 32: setDefaultHeight";
+    qDebug()<<"TEST"<<(testNumber++)<<": setDefaultHeight";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -806,7 +867,7 @@ void TestFrame::startTest()
         testCompleted(success, "setDefaultHeight");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 33: setColumnWidth";
+    qDebug()<<"TEST"<<(testNumber++)<<": setColumnWidth";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -829,7 +890,7 @@ void TestFrame::startTest()
         testCompleted(success, "setColumnWidth");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 34: setRowHeight";
+    qDebug()<<"TEST"<<(testNumber++)<<": setRowHeight";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -852,7 +913,7 @@ void TestFrame::startTest()
         testCompleted(success, "setRowHeight");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 35: verticalHeader_SetColumnWidth";
+    qDebug()<<"TEST"<<(testNumber++)<<": verticalHeader_SetColumnWidth";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -878,7 +939,7 @@ void TestFrame::startTest()
         testCompleted(success, "verticalHeader_SetColumnWidth");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 36: horizontalHeader_SetRowHeight";
+    qDebug()<<"TEST"<<(testNumber++)<<": horizontalHeader_SetRowHeight";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -904,7 +965,7 @@ void TestFrame::startTest()
         testCompleted(success, "horizontalHeader_SetRowHeight");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 37: setColumnVisible";
+    qDebug()<<"TEST"<<(testNumber++)<<": setColumnVisible";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -943,7 +1004,7 @@ void TestFrame::startTest()
         testCompleted(success, "setColumnVisible");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 38: setRowVisible";
+    qDebug()<<"TEST"<<(testNumber++)<<": setRowVisible";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -982,7 +1043,7 @@ void TestFrame::startTest()
         testCompleted(success, "setRowVisible");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 39: verticalHeader_SetColumnVisible";
+    qDebug()<<"TEST"<<(testNumber++)<<": verticalHeader_SetColumnVisible";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -1030,7 +1091,7 @@ void TestFrame::startTest()
         testCompleted(success, "verticalHeader_SetColumnVisible");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 40: horizontalHeader_SetRowVisible";
+    qDebug()<<"TEST"<<(testNumber++)<<": horizontalHeader_SetRowVisible";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -1078,7 +1139,7 @@ void TestFrame::startTest()
         testCompleted(success, "horizontalHeader_SetRowVisible");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 41: setText";
+    qDebug()<<"TEST"<<(testNumber++)<<": setText";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -1113,7 +1174,7 @@ void TestFrame::startTest()
         testCompleted(success, "setText");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 42: horizontalHeader_SetText";
+    qDebug()<<"TEST"<<(testNumber++)<<": horizontalHeader_SetText";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -1148,7 +1209,7 @@ void TestFrame::startTest()
         testCompleted(success, "horizontalHeader_SetText");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 43: verticalHeader_SetText";
+    qDebug()<<"TEST"<<(testNumber++)<<": verticalHeader_SetText";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -1188,7 +1249,7 @@ void TestFrame::startTest()
         testCompleted(success, "verticalHeader_SetText");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 44: setCellSelected";
+    qDebug()<<"TEST"<<(testNumber++)<<": setCellSelected";
     // ----------------------------------------------------------------
     {
         success=true;
@@ -1336,7 +1397,7 @@ void TestFrame::startTest()
         testCompleted(success, "setCellSelected");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 45: setBackgroundBrush";
+    qDebug()<<"TEST"<<(testNumber++)<<": setBackgroundBrush";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1407,7 +1468,7 @@ void TestFrame::startTest()
         testNotSupported("setBackgroundBrush");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 46: horizontalHeader_SetBackgroundBrush";
+    qDebug()<<"TEST"<<(testNumber++)<<": horizontalHeader_SetBackgroundBrush";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1478,7 +1539,7 @@ void TestFrame::startTest()
         testNotSupported("horizontalHeader_SetBackgroundBrush");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 47: verticalHeader_SetBackgroundBrush";
+    qDebug()<<"TEST"<<(testNumber++)<<": verticalHeader_SetBackgroundBrush";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1549,7 +1610,7 @@ void TestFrame::startTest()
         testNotSupported("verticalHeader_SetBackgroundBrush");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 48: setForegroundColor";
+    qDebug()<<"TEST"<<(testNumber++)<<": setForegroundColor";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1620,7 +1681,7 @@ void TestFrame::startTest()
         testNotSupported("setForegroundColor");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 49: horizontalHeader_SetForegroundColor";
+    qDebug()<<"TEST"<<(testNumber++)<<": horizontalHeader_SetForegroundColor";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1691,7 +1752,7 @@ void TestFrame::startTest()
         testNotSupported("horizontalHeader_SetForegroundColor");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 50: verticalHeader_SetForegroundColor";
+    qDebug()<<"TEST"<<(testNumber++)<<": verticalHeader_SetForegroundColor";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1762,7 +1823,7 @@ void TestFrame::startTest()
         testNotSupported("verticalHeader_SetForegroundColor");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 51: setCellFont";
+    qDebug()<<"TEST"<<(testNumber++)<<": setCellFont";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1833,7 +1894,7 @@ void TestFrame::startTest()
         testNotSupported("setCellFont");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 52: horizontalHeader_SetCellFont";
+    qDebug()<<"TEST"<<(testNumber++)<<": horizontalHeader_SetCellFont";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1904,7 +1965,7 @@ void TestFrame::startTest()
         testNotSupported("horizontalHeader_SetCellFont");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 53: verticalHeader_SetCellFont";
+    qDebug()<<"TEST"<<(testNumber++)<<": verticalHeader_SetCellFont";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -1975,7 +2036,7 @@ void TestFrame::startTest()
         testNotSupported("verticalHeader_SetCellFont");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 54: setCellTextFlags";
+    qDebug()<<"TEST"<<(testNumber++)<<": setCellTextFlags";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -2047,7 +2108,7 @@ void TestFrame::startTest()
         testNotSupported("setCellTextFlags");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 55: horizontalHeader_SetCellTextFlags";
+    qDebug()<<"TEST"<<(testNumber++)<<": horizontalHeader_SetCellTextFlags";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -2119,7 +2180,7 @@ void TestFrame::startTest()
         testNotSupported("horizontalHeader_SetCellTextFlags");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 56: verticalHeader_SetCellTextFlags";
+    qDebug()<<"TEST"<<(testNumber++)<<": verticalHeader_SetCellTextFlags";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -2191,7 +2252,7 @@ void TestFrame::startTest()
         testNotSupported("verticalHeader_SetCellTextFlags");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 57: setSpan";
+    qDebug()<<"TEST"<<(testNumber++)<<": setSpan";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -2275,7 +2336,7 @@ void TestFrame::startTest()
         testNotSupported("setSpan");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 58: horizontalHeader_SetSpan";
+    qDebug()<<"TEST"<<(testNumber++)<<": horizontalHeader_SetSpan";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {
@@ -2359,7 +2420,7 @@ void TestFrame::startTest()
         testNotSupported("horizontalHeader_SetSpan");
     }
     // ----------------------------------------------------------------
-    qDebug()<<"TEST 59: verticalHeader_SetSpan";
+    qDebug()<<"TEST"<<(testNumber++)<<": verticalHeader_SetSpan";
     // ----------------------------------------------------------------
     if (mFastTable->inherits("FastTableWidget"))
     {

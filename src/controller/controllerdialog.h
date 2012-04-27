@@ -63,12 +63,15 @@ private slots:
     void on_defaultBackgroundButton_clicked();
     void on_defaultForegroundButton_clicked();
     void on_gridColorButton_clicked();
+    void on_cellBorderColorButton_clicked();
     void on_horizontalDefaultBackgroundButton_clicked();
     void on_horizontalDefaultForegroundButton_clicked();
     void on_horizontalGridColorButton_clicked();
+    void on_horizontalCellBorderColorButton_clicked();
     void on_verticalDefaultBackgroundButton_clicked();
     void on_verticalDefaultForegroundButton_clicked();
     void on_verticalGridColorButton_clicked();
+    void on_verticalCellBorderColorButton_clicked();
     void on_selectionColorButton_clicked();
     void on_selectionTextColorButton_clicked();
     void on_defaultWidthSpinBox_valueChanged(int value);

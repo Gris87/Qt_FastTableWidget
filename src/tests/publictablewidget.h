@@ -45,14 +45,17 @@ public:
     QBrush getDefaultBackgroundBrush();
     QColor getDefaultForegroundColor();
     QColor getGridColor();
+    QColor getCellBorderColor();
 
     QBrush horizontalHeader_GetDefaultBackgroundBrush();
     QColor horizontalHeader_GetDefaultForegroundColor();
     QColor horizontalHeader_GetGridColor();
+    QColor horizontalHeader_GetCellBorderColor();
 
     QBrush verticalHeader_GetDefaultBackgroundBrush();
     QColor verticalHeader_GetDefaultForegroundColor();
     QColor verticalHeader_GetGridColor();
+    QColor verticalHeader_GetCellBorderColor();
 
     QBrush getSelectionBrush();
     QColor getSelectionTextColor();

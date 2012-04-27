@@ -35,22 +35,25 @@ class CustomFastTableWidget : public QAbstractScrollArea
     Q_PROPERTY(QBrush  defaultBackgroundBrush                  READ defaultBackgroundBrush                  WRITE setDefaultBackgroundBrush)
     Q_PROPERTY(QColor  defaultForegroundColor                  READ defaultForegroundColor                  WRITE setDefaultForegroundColor)
     Q_PROPERTY(QColor  gridColor                               READ gridColor                               WRITE setGridColor)
+    Q_PROPERTY(QColor  cellBorderColor                         READ cellBorderColor                         WRITE setCellBorderColor)
     Q_PROPERTY(QBrush  horizontalHeader_DefaultBackgroundBrush READ horizontalHeader_DefaultBackgroundBrush WRITE horizontalHeader_SetDefaultBackgroundBrush)
     Q_PROPERTY(QColor  horizontalHeader_DefaultForegroundColor READ horizontalHeader_DefaultForegroundColor WRITE horizontalHeader_SetDefaultForegroundColor)
     Q_PROPERTY(QColor  horizontalHeader_GridColor              READ horizontalHeader_GridColor              WRITE horizontalHeader_SetGridColor)
+    Q_PROPERTY(QColor  horizontalHeader_CellBorderColor        READ horizontalHeader_CellBorderColor        WRITE horizontalHeader_SetCellBorderColor)
     Q_PROPERTY(QBrush  verticalHeader_DefaultBackgroundBrush   READ verticalHeader_DefaultBackgroundBrush   WRITE verticalHeader_SetDefaultBackgroundBrush)
     Q_PROPERTY(QColor  verticalHeader_DefaultForegroundColor   READ verticalHeader_DefaultForegroundColor   WRITE verticalHeader_SetDefaultForegroundColor)
     Q_PROPERTY(QColor  verticalHeader_GridColor                READ verticalHeader_GridColor                WRITE verticalHeader_SetGridColor)
+    Q_PROPERTY(QColor  verticalHeader_CellBorderColor          READ verticalHeader_CellBorderColor          WRITE verticalHeader_SetCellBorderColor)
     Q_PROPERTY(QBrush  selectionBrush                          READ selectionBrush                          WRITE setSelectionBrush)
     Q_PROPERTY(QColor  selectionTextColor                      READ selectionTextColor                      WRITE setSelectionTextColor)
 
 public:
 
-    typedef void (*DrawFunction)(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, QColor *aGridColor, QBrush *aBackgroundBrush);
-
     enum DrawComponent {DrawCell, DrawHorizontalHeaderCell, DrawVerticalHeaderCell, DrawTopLeftCorner};
     enum Style {StyleSimple, StyleLinux, StyleWinXP, StyleWin7};
     enum MouseLocation {InMiddleWorld, InCell, InHorizontalHeaderCell, InVerticalHeaderCell, InTopLeftCorner};
+
+    typedef void (*DrawFunction)(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor);
 
     explicit CustomFastTableWidget(QWidget *parent = 0);
     ~CustomFastTableWidget();
@@ -111,6 +114,9 @@ public:
     QColor gridColor();
     void setGridColor(QColor color);
 
+    QColor cellBorderColor();
+    void setCellBorderColor(QColor color);
+
     QBrush horizontalHeader_DefaultBackgroundBrush();
     void horizontalHeader_SetDefaultBackgroundBrush(QBrush brush);
 
@@ -120,6 +126,9 @@ public:
     QColor horizontalHeader_GridColor();
     void horizontalHeader_SetGridColor(QColor color);
 
+    QColor horizontalHeader_CellBorderColor();
+    void horizontalHeader_SetCellBorderColor(QColor color);
+
     QBrush verticalHeader_DefaultBackgroundBrush();
     void verticalHeader_SetDefaultBackgroundBrush(QBrush brush);
 
@@ -128,6 +137,9 @@ public:
 
     QColor verticalHeader_GridColor();
     void verticalHeader_SetGridColor(QColor color);
+
+    QColor verticalHeader_CellBorderColor();
+    void verticalHeader_SetCellBorderColor(QColor color);
 
     QBrush selectionBrush();
     void setSelectionBrush(QBrush brush);
@@ -222,14 +234,17 @@ protected:
     QBrush mDefaultBackgroundBrush;
     QColor mDefaultForegroundColor;
     QColor mGridColor;
+    QColor mCellBorderColor;
 
     QBrush mHorizontalHeader_DefaultBackgroundBrush;
     QColor mHorizontalHeader_DefaultForegroundColor;
     QColor mHorizontalHeader_GridColor;
+    QColor mHorizontalHeader_CellBorderColor;
 
     QBrush mVerticalHeader_DefaultBackgroundBrush;
     QColor mVerticalHeader_DefaultForegroundColor;
     QColor mVerticalHeader_GridColor;
+    QColor mVerticalHeader_CellBorderColor;
 
     QBrush mSelectionBrush;
     QColor mSelectionTextColor;
@@ -293,14 +308,14 @@ protected:
     virtual void selectRangeByMouse(int resX, int resY);
 
     virtual void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent);
-    virtual void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent,
-                           QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aTextColor, QString *aText, QFont *aFont, int aTextFlags);
+    virtual void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const DrawComponent drawComponent, QColor *aGridColor,
+                           QBrush *aBackgroundBrush, QColor *aBorderColor, QColor *aTextColor, QString *aText, QFont *aFont, int aTextFlags);
 
-    static void paintCellLinux(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, QColor *aGridColor, QBrush *aBackgroundBrush);
-    static void paintCellDefault(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, QColor *aGridColor, QBrush *aBackgroundBrush);
-    static void paintHeaderCellLinux(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, QColor *aGridColor, QBrush *aBackgroundBrush);
-    static void paintHeaderCellWinXP(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, QColor *aGridColor, QBrush *aBackgroundBrush);
-    static void paintHeaderCellWin7(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, QColor *aGridColor, QBrush *aBackgroundBrush);
+    static void paintCellLinux(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor);
+    static void paintCellDefault(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor);
+    static void paintHeaderCellLinux(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor);
+    static void paintHeaderCellWinXP(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor);
+    static void paintHeaderCellWin7(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor);
 
     void updateBarsRanges();
     virtual void updateVisibleRange();
