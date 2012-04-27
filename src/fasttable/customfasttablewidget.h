@@ -11,6 +11,7 @@
 #include <QScrollBar>
 #include <QDateTime>
 #include <QMouseEvent>
+#include <QTimer>
 
 #include "qdebug.h"
 
@@ -274,7 +275,11 @@ protected:
     int mLastX;
     int mLastY;
     bool mMousePressed;
+    bool mCtrlPressed;
     MouseLocation mMouseLocation;
+    QList< QList<bool> > mMouseSelectedCells;
+    QTimer mMouseHoldTimer;
+    QMouseEvent mMouseEvent;
 
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -301,6 +306,8 @@ public slots:
 protected slots:
     void horizontalScrollBarValueChanged(int value);
     void verticalScrollBarValueChanged(int value);
+
+    void mouseHoldTick();
 };
 
 #endif // CUSTOMCustomFastTableWidget_H
