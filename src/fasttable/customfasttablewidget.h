@@ -276,6 +276,7 @@ protected:
     int mLastY;
     bool mMousePressed;
     bool mCtrlPressed;
+    bool mShiftPressed;
     MouseLocation mMouseLocation;
     QList< QList<bool> > mMouseSelectedCells;
     QTimer mMouseHoldTimer;
@@ -286,6 +287,9 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event);
     void resizeEvent(QResizeEvent *event);
     void paintEvent(QPaintEvent *event);
+
+    virtual void selectRangeByMouse(int resX, int resY);
+
     virtual void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent);
     virtual void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent,
                            QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aTextColor, QString *aText, QFont *aFont, int aTextFlags);

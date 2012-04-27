@@ -32,6 +32,7 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
 
     mMousePressed=false;
     mCtrlPressed=false;
+    mShiftPressed=false;
     mMouseLocation=InMiddleWorld;
     mLastX=-1;
     mLastY=-1;
@@ -98,23 +99,47 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
     {
         mMousePressed=true;
         mMouseLocation=InCell;
-        mLastX=pos.x();
-        mLastY=pos.y();
         mCtrlPressed=event->modifiers() & Qt::ControlModifier;
+        mShiftPressed=event->modifiers() & Qt::ShiftModifier;
 
-        setCurrentCell(mLastY, mLastX, mCtrlPressed);
-
-        if (mCtrlPressed)
+        if (mShiftPressed)
         {
-            FASTTABLE_ASSERT(mLastY>=0 && mLastY<mSelectedCells.length());
-            FASTTABLE_ASSERT(mLastX>=0 && mLastX<mSelectedCells.at(mLastY).length());
+            if (mLastX<0)
+            {
+                mMouseSelectedCells.clear();
 
-            setCellSelected(mLastY, mLastX, !mSelectedCells.at(mLastY).at(mLastX));
+                mLastX=mCurrentColumn;
+                mLastY=mCurrentRow;
 
-            QList<bool> aRow;
-            aRow.append(mSelectedCells.at(mLastY).at(mLastX));
+                QList<bool> aRow;
+                aRow.append(mSelectedCells.at(mLastY).at(mLastX));
 
-            mMouseSelectedCells.append(aRow);
+                mMouseSelectedCells.append(aRow);
+            }
+
+            selectRangeByMouse(pos.x(), pos.y());
+        }
+        else
+        {
+            mMouseSelectedCells.clear();
+
+            mLastX=pos.x();
+            mLastY=pos.y();
+
+            setCurrentCell(mLastY, mLastX, mCtrlPressed);
+
+            if (mCtrlPressed)
+            {
+                FASTTABLE_ASSERT(mLastY>=0 && mLastY<mSelectedCells.length());
+                FASTTABLE_ASSERT(mLastX>=0 && mLastX<mSelectedCells.at(mLastY).length());
+
+                setCellSelected(mLastY, mLastX, !mSelectedCells.at(mLastY).at(mLastX));
+
+                QList<bool> aRow;
+                aRow.append(mSelectedCells.at(mLastY).at(mLastX));
+
+                mMouseSelectedCells.append(aRow);
+            }
         }
     }
     else
@@ -128,6 +153,7 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
             mLastX=pos.x();
             mLastY=pos.y();
             mCtrlPressed=event->modifiers() & Qt::ControlModifier;
+            mShiftPressed=event->modifiers() & Qt::ShiftModifier;
         }
         else
         {
@@ -140,6 +166,7 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                 mLastX=pos.x();
                 mLastY=pos.y();
                 mCtrlPressed=event->modifiers() & Qt::ControlModifier;
+                mShiftPressed=event->modifiers() & Qt::ShiftModifier;
             }
             else
             if (atTopLeftCorner(event->x(), event->y()))
@@ -149,6 +176,7 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                 mLastX=0;
                 mLastY=0;
                 mCtrlPressed=event->modifiers() & Qt::ControlModifier;
+                mShiftPressed=event->modifiers() & Qt::ShiftModifier;
             }
         }
     }
@@ -236,62 +264,18 @@ void CustomFastTableWidget::mouseMoveEvent(QMouseEvent *event)
 
                 if (resX!=mCurrentColumn || resY!=mCurrentRow)
                 {
-                    int minX=qMin(resX, mLastX);
-                    int minY=qMin(resY, mLastY);
-                    int maxX=qMax(resX, mLastX);
-                    int maxY=qMax(resY, mLastY);
 
-                    if (mCtrlPressed)
+                    if (mCtrlPressed || mShiftPressed)
                     {
-                        int lastMinX=qMin(mCurrentColumn, mLastX);
-                        int lastMinY=qMin(mCurrentRow, mLastY);
-                        int lastMaxX=qMax(mCurrentColumn, mLastX);
-                        int lastMaxY=qMax(mCurrentRow, mLastY);
-
-                        for (int i=lastMinY; i<=lastMaxY; i++)
-                        {
-                            for (int j=lastMinX; j<=lastMaxX; j++)
-                            {
-                                setCellSelected(i, j, mMouseSelectedCells.at(i-lastMinY).at(j-lastMinX));
-                            }
-                        }
-
-                        while (mMouseSelectedCells.length()>maxY-minY+1)
-                        {
-                            mMouseSelectedCells.removeLast();
-                        }
-
-                        while (mMouseSelectedCells.length()<maxY-minY+1)
-                        {
-                            mMouseSelectedCells.append(QList<bool>());
-                        }
-
-                        setCurrentCell(resY, resX, mCtrlPressed);
-
-                        bool aSelected=mSelectedCells.at(mLastY).at(mLastX);
-
-                        for (int i=minY; i<=maxY; i++)
-                        {
-                            while (mMouseSelectedCells.at(i-minY).length()>maxX-minX+1)
-                            {
-                                mMouseSelectedCells[i-minY].removeLast();
-                            }
-
-                            while (mMouseSelectedCells.at(i-minY).length()<maxX-minX+1)
-                            {
-                                mMouseSelectedCells[i-minY].append(false);
-                            }
-
-                            for (int j=minX; j<=maxX; j++)
-                            {
-                                mMouseSelectedCells[i-minY][j-minX]=mSelectedCells.at(i).at(j);
-
-                                setCellSelected(i, j, aSelected);
-                            }
-                        }
+                        selectRangeByMouse(resX, resY);
                     }
                     else
                     {
+                        int minX=qMin(resX, mLastX);
+                        int minY=qMin(resY, mLastY);
+                        int maxX=qMax(resX, mLastX);
+                        int maxY=qMax(resY, mLastY);
+
                         setCurrentCell(resY, resX, mCtrlPressed);
 
                         for (int i=minY; i<=maxY; i++)
@@ -376,20 +360,78 @@ void CustomFastTableWidget::mouseHoldTick()
     END_PROFILE;
 }
 
+void CustomFastTableWidget::selectRangeByMouse(int resX, int resY)
+{
+    int minX=qMin(resX, mLastX);
+    int minY=qMin(resY, mLastY);
+    int maxX=qMax(resX, mLastX);
+    int maxY=qMax(resY, mLastY);
+
+    int lastMinX=qMin(mCurrentColumn, mLastX);
+    int lastMinY=qMin(mCurrentRow, mLastY);
+    int lastMaxX=qMax(mCurrentColumn, mLastX);
+    int lastMaxY=qMax(mCurrentRow, mLastY);
+
+    for (int i=lastMinY; i<=lastMaxY; i++)
+    {
+        for (int j=lastMinX; j<=lastMaxX; j++)
+        {
+            setCellSelected(i, j, mMouseSelectedCells.at(i-lastMinY).at(j-lastMinX));
+        }
+    }
+
+    while (mMouseSelectedCells.length()>maxY-minY+1)
+    {
+        mMouseSelectedCells.removeLast();
+    }
+
+    while (mMouseSelectedCells.length()<maxY-minY+1)
+    {
+        mMouseSelectedCells.append(QList<bool>());
+    }
+
+    setCurrentCell(resY, resX, true);
+
+    bool aSelected=mSelectedCells.at(mLastY).at(mLastX);
+
+    for (int i=minY; i<=maxY; i++)
+    {
+        while (mMouseSelectedCells.at(i-minY).length()>maxX-minX+1)
+        {
+            mMouseSelectedCells[i-minY].removeLast();
+        }
+
+        while (mMouseSelectedCells.at(i-minY).length()<maxX-minX+1)
+        {
+            mMouseSelectedCells[i-minY].append(false);
+        }
+
+        for (int j=minX; j<=maxX; j++)
+        {
+            mMouseSelectedCells[i-minY][j-minX]=mSelectedCells.at(i).at(j);
+
+            setCellSelected(i, j, aSelected);
+        }
+    }
+}
+
 void CustomFastTableWidget::mouseReleaseEvent(QMouseEvent *event)
 {
     FASTTABLE_DEBUG;
     START_PROFILE;
 
+    if (!mShiftPressed)
+    {
+        mLastX=-1;
+        mLastY=-1;
+    }
+
     mMousePressed=false;
     mCtrlPressed=false;
+    mShiftPressed=false;
     mMouseLocation=InMiddleWorld;
-    mLastX=-1;
-    mLastY=-1;
 
     mMouseHoldTimer.stop();
-
-    mMouseSelectedCells.clear();
 
     QAbstractScrollArea::mouseReleaseEvent(event);
 
@@ -1104,6 +1146,8 @@ void CustomFastTableWidget::clear()
     mCurSelection.clear();
     mHorizontalHeader_SelectedColumns.clear();
     mVerticalHeader_SelectedRows.clear();
+
+    mMouseSelectedCells.clear();
 
     updateBarsRanges();
 
