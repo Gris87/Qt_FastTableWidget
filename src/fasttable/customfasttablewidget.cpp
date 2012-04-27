@@ -779,6 +779,19 @@ void CustomFastTableWidget::paintCellDefault(QPainter &painter, const int x, con
     painter.setPen(QPen(*aGridColor));
     painter.drawRect(x, y, width, height);
 
+    if (aBorderColor && width>2 && height>2)
+    {
+        QPen aPen(*aBorderColor);
+
+        QVector<qreal> aDashes;
+        aDashes.append(1);
+        aDashes.append(1);
+        aPen.setDashPattern(aDashes);
+
+        painter.setPen(aPen);
+        painter.drawRect(x+1, y+1, width-2, height-2);
+    }
+
     END_FREQUENT_PROFILE;
 }
 
