@@ -371,7 +371,14 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
                 aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
             }
 
-            aBorderColor=0;
+            if (!mMousePressed && mMouseLocation==InHorizontalHeaderCell && row==mLastY && column==mLastX)
+            {
+                aBorderColor=&mHorizontalHeader_CellBorderColor;
+            }
+            else
+            {
+                aBorderColor=0;
+            }
 
             aTextColor=mHorizontalHeader_ForegroundColors.at(row).at(column);
 
@@ -442,7 +449,14 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
                 aBackgroundBrush=&mVerticalHeader_DefaultBackgroundBrush;
             }
 
-            aBorderColor=0;
+            if (!mMousePressed && mMouseLocation==InVerticalHeaderCell && row==mLastY && column==mLastX)
+            {
+                aBorderColor=&mVerticalHeader_CellBorderColor;
+            }
+            else
+            {
+                aBorderColor=0;
+            }
 
             aTextColor=mVerticalHeader_ForegroundColors.at(row).at(column);
 
@@ -499,7 +513,16 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
         {
             aGridColor=&mHorizontalHeader_GridColor;
             aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
-            aBorderColor=0;
+
+            if (!mMousePressed && mMouseLocation==InTopLeftCorner)
+            {
+                aBorderColor=&mHorizontalHeader_CellBorderColor;
+            }
+            else
+            {
+                aBorderColor=0;
+            }
+
             aTextColor=0;
             aText=0;
             aFont=0;

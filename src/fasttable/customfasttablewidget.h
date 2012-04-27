@@ -291,11 +291,15 @@ protected:
     int mLastY;
     int mMouseXForShift;
     int mMouseYForShift;
+
     bool mMousePressed;
     bool mCtrlPressed;
     bool mShiftPressed;
+
     MouseLocation mMouseLocation;
+
     QList< QList<bool> > mMouseSelectedCells;
+
     QTimer mMouseHoldTimer;
     QMouseEvent mMouseEvent;
 
@@ -316,6 +320,7 @@ protected:
     static void paintHeaderCellLinux(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor);
     static void paintHeaderCellWinXP(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor);
     static void paintHeaderCellWin7(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor);
+    static void paintHeaderCellDefault(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor);
 
     void updateBarsRanges();
     virtual void updateVisibleRange();
