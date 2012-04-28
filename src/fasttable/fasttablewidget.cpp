@@ -621,11 +621,15 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 
             if (mMouseLocation==InTopLeftCorner)
             {
-                aHeaderPressed=mMousePressed && mMouseResizeCell<0;
-
-                if (!mMousePressed && mMouseResizeCell<0)
+                if (mMouseResizeCell<0)
                 {
+                    aHeaderPressed=mMousePressed;
                     aBorderColor=&mHorizontalHeader_CellBorderColor;
+                }
+                else
+                {
+                    aHeaderPressed=false;
+                    aBorderColor=0;
                 }
             }
             else

@@ -1451,11 +1451,15 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
 
             if (mMouseLocation==InTopLeftCorner)
             {
-                aHeaderPressed=mMousePressed && mMouseResizeCell<0;
-
-                if (!mMousePressed && mMouseResizeCell<0)
+                if (mMouseResizeCell<0)
                 {
+                    aHeaderPressed=mMousePressed;
                     aBorderColor=&mHorizontalHeader_CellBorderColor;
+                }
+                else
+                {
+                    aHeaderPressed=false;
+                    aBorderColor=0;
                 }
             }
             else
@@ -1800,9 +1804,18 @@ void CustomFastTableWidget::paintHeaderCellWin7(QPainter &painter, const int x, 
 
     if (aBorderColor)
     {
-        r=aBorderColor->red()+80;
-        g=aBorderColor->green()+50;
-        b=aBorderColor->blue()+20;
+        if (headerPressed)
+        {
+            r=aBorderColor->red()+30;
+            g=aBorderColor->green()+20;
+            b=aBorderColor->blue()+20;
+        }
+        else
+        {
+            r=aBorderColor->red()+80;
+            g=aBorderColor->green()+50;
+            b=aBorderColor->blue()+20;
+        }
 
         if (r>255)
         {
@@ -1856,7 +1869,33 @@ void CustomFastTableWidget::paintHeaderCellWin7(QPainter &painter, const int x, 
 
     if (aBorderColor)
     {
-        painter.setPen(QPen(*aBorderColor));
+        if (headerPressed)
+        {
+            r=aBorderColor->red()-30;
+            g=aBorderColor->green()-40;
+            b=aBorderColor->blue()-50;
+
+            if (r<0)
+            {
+                r=0;
+            }
+
+            if (g<0)
+            {
+                g=0;
+            }
+
+            if (b<0)
+            {
+                b=0;
+            }
+
+            painter.setPen(QPen(QColor(r, g, b)));
+        }
+        else
+        {
+            painter.setPen(QPen(*aBorderColor));
+        }
     }
     else
     {
