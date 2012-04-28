@@ -286,6 +286,7 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
     FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
 
+    bool    aHeaderPressed;
     QColor  *aGridColor;
     QBrush  *aBackgroundBrush;
     QColor  *aBorderColor;
@@ -337,6 +338,8 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
                 }
             }
 
+            aHeaderPressed=false;
+
             if (row==mCurrentRow && column==mCurrentColumn)
             {
                 aBorderColor=&mCellBorderColor;
@@ -383,12 +386,57 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
                 aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
             }
 
-            if (!mMousePressed && mMouseLocation==InHorizontalHeaderCell && row==mLastY && column==mLastX)
+            if (mMouseLocation==InHorizontalHeaderCell)
             {
-                aBorderColor=&mHorizontalHeader_CellBorderColor;
+                if (mMousePressed)
+                {
+                    int minX=qMin(mCurrentColumn, mLastX);
+                    int maxX=qMax(mCurrentColumn, mLastX);
+
+                    if (
+                        mMouseResizeCell<0
+                        &&
+                        (
+                         (
+                          column>=minX
+                          &&
+                          column<=maxX
+                         )
+                         ||
+                         (
+                          column<minX
+                          &&
+                          column+mHorizontalHeader_CellMergeX.at(row).at(column)-1>=minX
+                         )
+                        )
+                       )
+                    {
+                        aHeaderPressed=true;
+                        aBorderColor=&mHorizontalHeader_CellBorderColor;
+                    }
+                    else
+                    {
+                        aHeaderPressed=false;
+                        aBorderColor=0;
+                    }
+                }
+                else
+                {
+                    aHeaderPressed=false;
+
+                    if (row==mLastY && column==mLastX)
+                    {
+                        aBorderColor=&mHorizontalHeader_CellBorderColor;
+                    }
+                    else
+                    {
+                        aBorderColor=0;
+                    }
+                }
             }
             else
             {
+                aHeaderPressed=false;
                 aBorderColor=0;
             }
 
@@ -461,12 +509,57 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
                 aBackgroundBrush=&mVerticalHeader_DefaultBackgroundBrush;
             }
 
-            if (!mMousePressed && mMouseLocation==InVerticalHeaderCell && row==mLastY && column==mLastX)
+            if (mMouseLocation==InVerticalHeaderCell)
             {
-                aBorderColor=&mVerticalHeader_CellBorderColor;
+                if (mMousePressed)
+                {
+                    int minY=qMin(mCurrentRow, mLastY);
+                    int maxY=qMax(mCurrentRow, mLastY);
+
+                    if (
+                        mMouseResizeCell<0
+                        &&
+                        (
+                         (
+                          row>=minY
+                          &&
+                          row<=maxY
+                         )
+                         ||
+                         (
+                          row<minY
+                          &&
+                          row+mVerticalHeader_CellMergeY.at(row).at(column)-1>=minY
+                         )
+                        )
+                       )
+                    {
+                        aHeaderPressed=true;
+                        aBorderColor=&mVerticalHeader_CellBorderColor;
+                    }
+                    else
+                    {
+                        aHeaderPressed=false;
+                        aBorderColor=0;
+                    }
+                }
+                else
+                {
+                    aHeaderPressed=false;
+
+                    if (row==mLastY && column==mLastX)
+                    {
+                        aBorderColor=&mVerticalHeader_CellBorderColor;
+                    }
+                    else
+                    {
+                        aBorderColor=0;
+                    }
+                }
             }
             else
             {
+                aHeaderPressed=false;
                 aBorderColor=0;
             }
 
@@ -526,12 +619,18 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
             aGridColor=&mHorizontalHeader_GridColor;
             aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
 
-            if (!mMousePressed && mMouseLocation==InTopLeftCorner)
+            if (mMouseLocation==InTopLeftCorner)
             {
-                aBorderColor=&mHorizontalHeader_CellBorderColor;
+                aHeaderPressed=mMousePressed && mMouseResizeCell<0;
+
+                if (!mMousePressed && mMouseResizeCell<0)
+                {
+                    aBorderColor=&mHorizontalHeader_CellBorderColor;
+                }
             }
             else
             {
+                aHeaderPressed=false;
                 aBorderColor=0;
             }
 
@@ -543,6 +642,7 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
         break;
         default:
         {
+            aHeaderPressed=false;
             aGridColor=0;
             aBackgroundBrush=0;
             aBorderColor=0;
@@ -554,7 +654,7 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
         break;
     }
 
-    CustomFastTableWidget::paintCell(painter, x ,y, width, height, drawComponent, aGridColor, aBackgroundBrush, aBorderColor, aTextColor, aText, aFont, textFlags);
+    CustomFastTableWidget::paintCell(painter, x ,y, width, height, drawComponent, aHeaderPressed, aGridColor, aBackgroundBrush, aBorderColor, aTextColor, aText, aFont, textFlags);
 
     END_FREQUENT_PROFILE;
 }

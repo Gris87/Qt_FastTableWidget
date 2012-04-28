@@ -1,4 +1,5 @@
 Mouse handler
+Merge and mouse
 Action queue to remove unnecessary function calls
 Cell flags (Selection, Editing, Enabled)
 Use setCapacity on clear and setRowCount...

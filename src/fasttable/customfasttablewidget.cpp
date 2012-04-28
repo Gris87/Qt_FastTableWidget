@@ -867,7 +867,21 @@ void CustomFastTableWidget::mouseReleaseEvent(QMouseEvent *event)
                 selectAll();
             }
         }
+    }
 
+    if (mMouseResizeCell>=0)
+    {
+        mMouseResizeCell=-1;
+        mMouseResizeLineX=-1;
+        mMouseResizeLineY=-1;
+
+        viewport()->update();
+
+        setCursor(Qt::ArrowCursor);
+    }
+    else
+    if (mMouseLocation!=InCell)
+    {
         viewport()->update();
     }
 
@@ -878,16 +892,7 @@ void CustomFastTableWidget::mouseReleaseEvent(QMouseEvent *event)
     mLastX=-1;
     mLastY=-1;
 
-    if (mMouseResizeLineX>=0 || mMouseResizeLineY>=0)
-    {
-        mMouseResizeCell=-1;
-        mMouseResizeLineX=-1;
-        mMouseResizeLineY=-1;
 
-        viewport()->update();
-
-        setCursor(Qt::ArrowCursor);
-    }
 
     mMouseHoldTimer.stop();
 
@@ -1002,6 +1007,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
     FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
 
+    bool    aHeaderPressed;
     QColor  *aGridColor;
     QBrush  *aBackgroundBrush;
     QColor  *aBorderColor;
@@ -1034,6 +1040,8 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
                 aTextColor=&mDefaultForegroundColor;
             }
 
+            aHeaderPressed=false;
+
             if (row==mCurrentRow && column==mCurrentColumn)
             {
                 aBorderColor=&mCellBorderColor;
@@ -1060,12 +1068,41 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
             aGridColor=&mHorizontalHeader_GridColor;
             aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
 
-            if (!mMousePressed && mMouseLocation==InHorizontalHeaderCell && row==mLastY && column==mLastX)
+            if (mMouseLocation==InHorizontalHeaderCell)
             {
-                aBorderColor=&mHorizontalHeader_CellBorderColor;
+                if (mMousePressed)
+                {
+                    int minX=qMin(mCurrentColumn, mLastX);
+                    int maxX=qMax(mCurrentColumn, mLastX);
+
+                    if (column>=minX && column<=maxX && mMouseResizeCell<0)
+                    {
+                        aHeaderPressed=true;
+                        aBorderColor=&mHorizontalHeader_CellBorderColor;
+                    }
+                    else
+                    {
+                        aHeaderPressed=false;
+                        aBorderColor=0;
+                    }
+                }
+                else
+                {
+                    aHeaderPressed=false;
+
+                    if (row==mLastY && column==mLastX)
+                    {
+                        aBorderColor=&mHorizontalHeader_CellBorderColor;
+                    }
+                    else
+                    {
+                        aBorderColor=0;
+                    }
+                }
             }
             else
             {
+                aHeaderPressed=false;
                 aBorderColor=0;
             }
 
@@ -1095,12 +1132,41 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
             aGridColor=&mVerticalHeader_GridColor;
             aBackgroundBrush=&mVerticalHeader_DefaultBackgroundBrush;
 
-            if (!mMousePressed && mMouseLocation==InVerticalHeaderCell && row==mLastY && column==mLastX)
+            if (mMouseLocation==InVerticalHeaderCell)
             {
-                aBorderColor=&mVerticalHeader_CellBorderColor;
+                if (mMousePressed)
+                {
+                    int minY=qMin(mCurrentRow, mLastY);
+                    int maxY=qMax(mCurrentRow, mLastY);
+
+                    if (row>=minY && row<=maxY && mMouseResizeCell<0)
+                    {
+                        aHeaderPressed=true;
+                        aBorderColor=&mVerticalHeader_CellBorderColor;
+                    }
+                    else
+                    {
+                        aHeaderPressed=false;
+                        aBorderColor=0;
+                    }
+                }
+                else
+                {
+                    aHeaderPressed=false;
+
+                    if (row==mLastY && column==mLastX)
+                    {
+                        aBorderColor=&mVerticalHeader_CellBorderColor;
+                    }
+                    else
+                    {
+                        aBorderColor=0;
+                    }
+                }
             }
             else
             {
+                aHeaderPressed=false;
                 aBorderColor=0;
             }
 
@@ -1130,12 +1196,18 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
             aGridColor=&mHorizontalHeader_GridColor;
             aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
 
-            if (!mMousePressed && mMouseLocation==InTopLeftCorner)
+            if (mMouseLocation==InTopLeftCorner)
             {
-                aBorderColor=&mHorizontalHeader_CellBorderColor;
+                aHeaderPressed=mMousePressed && mMouseResizeCell<0;
+
+                if (!mMousePressed && mMouseResizeCell<0)
+                {
+                    aBorderColor=&mHorizontalHeader_CellBorderColor;
+                }
             }
             else
             {
+                aHeaderPressed=false;
                 aBorderColor=0;
             }
 
@@ -1147,6 +1219,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
         break;
         default:
         {
+            aHeaderPressed=false;
             aGridColor=0;
             aBackgroundBrush=0;
             aBorderColor=0;
@@ -1158,12 +1231,12 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
         break;
     }
 
-    paintCell(painter, x ,y, width, height, drawComponent, aGridColor, aBackgroundBrush, aBorderColor, aTextColor, aText, aFont, textFlags);
+    paintCell(painter, x ,y, width, height, drawComponent, aHeaderPressed, aGridColor, aBackgroundBrush, aBorderColor, aTextColor, aText, aFont, textFlags);
 
     END_FREQUENT_PROFILE;
 }
 
-void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const DrawComponent drawComponent, QColor *aGridColor,
+void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const DrawComponent drawComponent, bool headerPressed, QColor *aGridColor,
                                       QBrush *aBackgroundBrush, QColor *aBorderColor, QColor *aTextColor, QString *aText, QFont *aFont, int aTextFlags)
 {
     FASTTABLE_FREQUENT_DEBUG;
@@ -1171,11 +1244,12 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
 
     if (drawComponent==DrawCell)
     {
-        (*mDrawCellFunction)(painter, x, y, width, height, aGridColor, aBackgroundBrush, aBorderColor);
+        headerPressed=false;
+        (*mDrawCellFunction)(painter, x, y, width, height, headerPressed, aGridColor, aBackgroundBrush, aBorderColor);
     }
     else
     {
-        (*mDrawHeaderCellFunction)(painter, x, y, width, height, aGridColor, aBackgroundBrush, aBorderColor);
+        (*mDrawHeaderCellFunction)(painter, x, y, width, height, headerPressed, aGridColor, aBackgroundBrush, aBorderColor);
     }
 
     if (width>8 && height>8 && aText)
@@ -1188,7 +1262,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
     END_FREQUENT_PROFILE;
 }
 
-void CustomFastTableWidget::paintCellLinux(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
+void CustomFastTableWidget::paintCellLinux(QPainter &painter, const int x, const int y, const int width, const int height, const bool headerPressed, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
 {
     FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
@@ -1243,7 +1317,7 @@ void CustomFastTableWidget::paintCellLinux(QPainter &painter, const int x, const
     END_FREQUENT_PROFILE;
 }
 
-void CustomFastTableWidget::paintCellDefault(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
+void CustomFastTableWidget::paintCellDefault(QPainter &painter, const int x, const int y, const int width, const int height, const bool headerPressed, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
 {
     FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
@@ -1269,7 +1343,7 @@ void CustomFastTableWidget::paintCellDefault(QPainter &painter, const int x, con
     END_FREQUENT_PROFILE;
 }
 
-void CustomFastTableWidget::paintHeaderCellLinux(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
+void CustomFastTableWidget::paintHeaderCellLinux(QPainter &painter, const int x, const int y, const int width, const int height, const bool headerPressed, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
 {
     FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
@@ -1311,94 +1385,156 @@ void CustomFastTableWidget::paintHeaderCellLinux(QPainter &painter, const int x,
     END_FREQUENT_PROFILE;
 }
 
-void CustomFastTableWidget::paintHeaderCellWinXP(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
+void CustomFastTableWidget::paintHeaderCellWinXP(QPainter &painter, const int x, const int y, const int width, const int height, const bool headerPressed, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
 {
     FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
 
-    QColor backColor=aBackgroundBrush->color();
-
-    if (aBorderColor)
+    if (headerPressed)
     {
-        int r=backColor.red()+20;
-        int g=backColor.green()+20;
-        int b=backColor.blue()+20;
+        QColor backColor=aBackgroundBrush->color();
 
-        if (r>255)
+        int r=backColor.red()-15;
+        int g=backColor.green()-10;
+        int b=backColor.blue()-5;
+
+        if (r<0)
         {
-            r=255;
+            r=0;
         }
 
-        if (g>255)
+        if (g<0)
         {
-            g=255;
+            g=0;
         }
 
-        if (b>255)
+        if (b<0)
         {
-            b=255;
-        }
-
-        backColor.setRgb(r, g, b);
-    }
-
-    painter.fillRect(x+1, y+1, width, height-3, backColor);
-
-    painter.setPen(QPen(QColor(255, 255, 255)));
-    painter.drawLine(x+width, y+4, x+width, y+height-4);
-    painter.drawLine(x, y+4, x, y+height-4);
-
-    painter.setPen(QPen(*aGridColor));
-    painter.drawLine(x+width-1, y+4, x+width-1, y+height-4);
-
-    if (y==0)
-    {
-        painter.drawLine(x, y, x+width, y);
-    }
-
-    if (aBorderColor)
-    {
-        int r=aBorderColor->red()+5;
-        int g=aBorderColor->green()+20;
-        int b=aBorderColor->blue()+60;
-
-        if (r>255)
-        {
-            r=255;
-        }
-
-        if (g>255)
-        {
-            g=255;
-        }
-
-        if (b>255)
-        {
-            b=255;
+            b=0;
         }
 
         backColor.setRgb(r, g, b);
 
-        painter.setPen(QPen(*aBorderColor));
-        painter.drawLine(x, y+height-2, x+width, y+height-2);
-        painter.drawLine(x, y+height, x+width, y+height);
+        r=aGridColor->red()-40;
+        g=aGridColor->green()-40;
+        b=aGridColor->blue()-30;
 
-        painter.setPen(QPen(backColor));
-        painter.drawLine(x, y+height-1, x+width, y+height-1);
+        if (r<0)
+        {
+            r=0;
+        }
+
+        if (g<0)
+        {
+            g=0;
+        }
+
+        if (b<0)
+        {
+            b=0;
+        }
+
+        QColor gridColor(r, g, b);
+
+        painter.fillRect(x+3, y+3, width-3, height-3, backColor);
+
+        painter.setPen(QPen(gridColor));
+        painter.drawRect(x, y, width, height);
+
+        painter.setPen(QPen(QColor(backColor.red()+(gridColor.red()-backColor.red())*2/3, backColor.green()+(gridColor.green()-backColor.green())*2/3, backColor.blue()+(gridColor.blue()-backColor.blue())*2/3)));
+        painter.drawLine(x+1, y+height-1, x+1, y+1);
+        painter.drawLine(x+1, y+1, x+width-1, y+1);
+
+        painter.setPen(QPen(QColor(backColor.red()+(gridColor.red()-backColor.red())/3, backColor.green()+(gridColor.green()-backColor.green())/3, backColor.blue()+(gridColor.blue()-backColor.blue())/3)));
+        painter.drawLine(x+2, y+height-1, x+2, y+2);
+        painter.drawLine(x+2, y+2, x+width-1, y+2);
     }
     else
     {
-        painter.drawLine(x, y+height, x+width, y+height);
-        painter.setPen(QPen(QColor(backColor.red()+(aGridColor->red()-backColor.red())*2/3, backColor.green()+(aGridColor->green()-backColor.green())*2/3, backColor.blue()+(aGridColor->blue()-backColor.blue())*2/3)));
-        painter.drawLine(x, y+height-1, x+width, y+height-1);
-        painter.setPen(QPen(QColor(backColor.red()+(aGridColor->red()-backColor.red())/3, backColor.green()+(aGridColor->green()-backColor.green())/3, backColor.blue()+(aGridColor->blue()-backColor.blue())/3)));
-        painter.drawLine(x, y+height-2, x+width, y+height-2);
+        QColor backColor=aBackgroundBrush->color();
+
+        if (aBorderColor)
+        {
+            int r=backColor.red()+20;
+            int g=backColor.green()+20;
+            int b=backColor.blue()+20;
+
+            if (r>255)
+            {
+                r=255;
+            }
+
+            if (g>255)
+            {
+                g=255;
+            }
+
+            if (b>255)
+            {
+                b=255;
+            }
+
+            backColor.setRgb(r, g, b);
+        }
+
+        painter.fillRect(x+1, y+1, width, height-3, backColor);
+
+        painter.setPen(QPen(QColor(255, 255, 255)));
+        painter.drawLine(x+width, y+4, x+width, y+height-4);
+        painter.drawLine(x, y+4, x, y+height-4);
+
+        painter.setPen(QPen(*aGridColor));
+        painter.drawLine(x+width-1, y+4, x+width-1, y+height-4);
+
+        if (y==0)
+        {
+            painter.drawLine(x, y, x+width, y);
+        }
+
+        if (aBorderColor)
+        {
+            int r=aBorderColor->red()+5;
+            int g=aBorderColor->green()+20;
+            int b=aBorderColor->blue()+60;
+
+            if (r>255)
+            {
+                r=255;
+            }
+
+            if (g>255)
+            {
+                g=255;
+            }
+
+            if (b>255)
+            {
+                b=255;
+            }
+
+            backColor.setRgb(r, g, b);
+
+            painter.setPen(QPen(*aBorderColor));
+            painter.drawLine(x, y+height-2, x+width, y+height-2);
+            painter.drawLine(x, y+height, x+width, y+height);
+
+            painter.setPen(QPen(backColor));
+            painter.drawLine(x, y+height-1, x+width, y+height-1);
+        }
+        else
+        {
+            painter.drawLine(x, y+height, x+width, y+height);
+            painter.setPen(QPen(QColor(backColor.red()+(aGridColor->red()-backColor.red())*2/3, backColor.green()+(aGridColor->green()-backColor.green())*2/3, backColor.blue()+(aGridColor->blue()-backColor.blue())*2/3)));
+            painter.drawLine(x, y+height-1, x+width, y+height-1);
+            painter.setPen(QPen(QColor(backColor.red()+(aGridColor->red()-backColor.red())/3, backColor.green()+(aGridColor->green()-backColor.green())/3, backColor.blue()+(aGridColor->blue()-backColor.blue())/3)));
+            painter.drawLine(x, y+height-2, x+width, y+height-2);
+        }
     }
 
     END_FREQUENT_PROFILE;
 }
 
-void CustomFastTableWidget::paintHeaderCellWin7(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
+void CustomFastTableWidget::paintHeaderCellWin7(QPainter &painter, const int x, const int y, const int width, const int height, const bool headerPressed, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
 {
     FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
@@ -1490,7 +1626,7 @@ void CustomFastTableWidget::paintHeaderCellWin7(QPainter &painter, const int x, 
     END_FREQUENT_PROFILE;
 }
 
-void CustomFastTableWidget::paintHeaderCellDefault(QPainter &painter, const int x, const int y, const int width, const int height, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
+void CustomFastTableWidget::paintHeaderCellDefault(QPainter &painter, const int x, const int y, const int width, const int height, const bool headerPressed, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
 {
     FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
