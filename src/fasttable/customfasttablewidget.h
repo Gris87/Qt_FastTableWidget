@@ -293,6 +293,7 @@ protected:
     int mMouseYForShift;
     int mMouseResizeLineX;
     int mMouseResizeLineY;
+    int mMouseResizeCell;
 
     bool mMousePressed;
     bool mCtrlPressed;
