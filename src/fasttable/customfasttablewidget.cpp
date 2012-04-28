@@ -100,6 +100,9 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
     int x=event->x();
     int y=event->y();
 
+    int offsetX=-horizontalScrollBar()->value();
+    int offsetY=-verticalScrollBar()->value();
+
     QPoint pos;
 
     pos=cellAt(x, y);
@@ -202,16 +205,16 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                 !mShiftPressed
                 &&
                 (
-                 x<mOffsetX.at(mLastX)+FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                 x<offsetX+mOffsetX.at(mLastX)+FASTTABLE_MOUSE_RESIZE_THRESHOLD
                  ||
-                 x>mOffsetX.at(mLastX)+mColumnWidths.at(mLastX)-FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                 x>offsetX+mOffsetX.at(mLastX)+mColumnWidths.at(mLastX)-FASTTABLE_MOUSE_RESIZE_THRESHOLD
                 )
                )
             {
                 mMouseXForShift=mVerticalHeader_ColumnCount+mLastX;
                 mMouseYForShift=-1;
 
-                if (x<mOffsetX.at(mLastX)+FASTTABLE_MOUSE_RESIZE_THRESHOLD)
+                if (x<offsetX+mOffsetX.at(mLastX)+FASTTABLE_MOUSE_RESIZE_THRESHOLD)
                 {
                     mMouseXForShift--;
 
@@ -312,16 +315,16 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                     !mShiftPressed
                     &&
                     (
-                     y<mOffsetY.at(mLastY)+FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                     y<offsetY+mOffsetY.at(mLastY)+FASTTABLE_MOUSE_RESIZE_THRESHOLD
                      ||
-                     y>mOffsetY.at(mLastY)+mRowHeights.at(mLastY)-FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                     y>offsetY+mOffsetY.at(mLastY)+mRowHeights.at(mLastY)-FASTTABLE_MOUSE_RESIZE_THRESHOLD
                     )
                    )
                 {
                     mMouseXForShift=-1;
                     mMouseYForShift=mHorizontalHeader_RowCount+mLastY;
 
-                    if (y<mOffsetY.at(mLastY)+FASTTABLE_MOUSE_RESIZE_THRESHOLD)
+                    if (y<offsetY+mOffsetY.at(mLastY)+FASTTABLE_MOUSE_RESIZE_THRESHOLD)
                     {
                         mMouseYForShift--;
 
@@ -408,11 +411,11 @@ void CustomFastTableWidget::mouseMoveEvent(QMouseEvent *event)
     int x=event->x();
     int y=event->y();
 
+    int offsetX=-horizontalScrollBar()->value();
+    int offsetY=-verticalScrollBar()->value();
+
     if (mMousePressed && event->buttons() & Qt::LeftButton)
     {
-        int offsetX=-horizontalScrollBar()->value();
-        int offsetY=-verticalScrollBar()->value();
-
         QSize areaSize=viewport()->size();
 
         bool needHold=false;
@@ -601,9 +604,9 @@ void CustomFastTableWidget::mouseMoveEvent(QMouseEvent *event)
                 }
 
                 if (
-                    x<mOffsetX.at(mLastX)+FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                    x<offsetX+mOffsetX.at(mLastX)+FASTTABLE_MOUSE_RESIZE_THRESHOLD
                     ||
-                    x>mOffsetX.at(mLastX)+mColumnWidths.at(mLastX)-FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                    x>offsetX+mOffsetX.at(mLastX)+mColumnWidths.at(mLastX)-FASTTABLE_MOUSE_RESIZE_THRESHOLD
                    )
                 {
                     setCursor(Qt::SplitHCursor);
@@ -651,9 +654,9 @@ void CustomFastTableWidget::mouseMoveEvent(QMouseEvent *event)
                     }
                     else
                     if (
-                        y<mOffsetY.at(mLastY)+FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                        y<offsetY+mOffsetY.at(mLastY)+FASTTABLE_MOUSE_RESIZE_THRESHOLD
                         ||
-                        y>mOffsetY.at(mLastY)+mRowHeights.at(mLastY)-FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                        y>offsetY+mOffsetY.at(mLastY)+mRowHeights.at(mLastY)-FASTTABLE_MOUSE_RESIZE_THRESHOLD
                        )
                     {
                         setCursor(Qt::SplitVCursor);
