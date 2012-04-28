@@ -92,8 +92,8 @@ public:
 
     QList< QList<bool> > *getSelectedCells();
     QList< QPoint >      *getCurSelection();
-    QList< bool >        *horizontalHeader_GetSelectedColumns();
-    QList< bool >        *verticalHeader_GetSelectedRows();
+    QList< int >         *horizontalHeader_GetSelectedColumns();
+    QList< int >         *verticalHeader_GetSelectedRows();
 };
 
 #endif // PUBLICTABLEWIDGET_H

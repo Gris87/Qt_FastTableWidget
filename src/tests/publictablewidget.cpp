@@ -337,12 +337,12 @@ QList< QPoint >      *PublicCustomFastTable::getCurSelection()
     return &mCurSelection;
 }
 
-QList< bool >        *PublicCustomFastTable::horizontalHeader_GetSelectedColumns()
+QList< int >         *PublicCustomFastTable::horizontalHeader_GetSelectedColumns()
 {
     return &mHorizontalHeader_SelectedColumns;
 }
 
-QList< bool >        *PublicCustomFastTable::verticalHeader_GetSelectedRows()
+QList< int >         *PublicCustomFastTable::verticalHeader_GetSelectedRows()
 {
     return &mVerticalHeader_SelectedRows;
 }

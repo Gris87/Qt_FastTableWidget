@@ -1278,7 +1278,7 @@ void TestFrame::startTest()
         {
             for (int i=0; i<((PublicCustomFastTable*)mFastTable)->getRowCount(); ++i)
             {
-                TEST_STEP(mVerticalHeader_SelectedRows->at(i));
+                TEST_STEP(mVerticalHeader_SelectedRows->at(i)==((PublicCustomFastTable*)mFastTable)->getColumnCount());
 
                 if (!success)
                 {
@@ -1291,7 +1291,7 @@ void TestFrame::startTest()
         {
             for (int i=0; i<((PublicCustomFastTable*)mFastTable)->getColumnCount(); ++i)
             {
-                TEST_STEP(mHorizontalHeader_SelectedColumns->at(i));
+                TEST_STEP(mHorizontalHeader_SelectedColumns->at(i)==((PublicCustomFastTable*)mFastTable)->getRowCount());
 
                 if (!success)
                 {
@@ -1322,7 +1322,7 @@ void TestFrame::startTest()
             }
         }
 
-        TEST_STEP(!mVerticalHeader_SelectedRows->at(10));
+        TEST_STEP(mVerticalHeader_SelectedRows->at(10)==0);
         TEST_STEP(mCurSelection->length()==49*20);
 
         mFastTable->unselectColumn(5);
@@ -1340,7 +1340,7 @@ void TestFrame::startTest()
             }
         }
 
-        TEST_STEP(!mHorizontalHeader_SelectedColumns->at(5));
+        TEST_STEP(mHorizontalHeader_SelectedColumns->at(5)==0);
         TEST_STEP(mCurSelection->length()==49*19);
 
         mFastTable->unselectAll();
@@ -1370,7 +1370,7 @@ void TestFrame::startTest()
         {
             for (int i=0; i<((PublicCustomFastTable*)mFastTable)->getRowCount(); ++i)
             {
-                TEST_STEP(!mVerticalHeader_SelectedRows->at(i));
+                TEST_STEP(mVerticalHeader_SelectedRows->at(i)==0);
 
                 if (!success)
                 {
@@ -1383,7 +1383,7 @@ void TestFrame::startTest()
         {
             for (int i=0; i<((PublicCustomFastTable*)mFastTable)->getColumnCount(); ++i)
             {
-                TEST_STEP(!mHorizontalHeader_SelectedColumns->at(i));
+                TEST_STEP(mHorizontalHeader_SelectedColumns->at(i)==0);
 
                 if (!success)
                 {

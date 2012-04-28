@@ -72,8 +72,8 @@ public:
 
     QList< QList<bool> >     *mSelectedCells;
     QList< QPoint >          *mCurSelection;
-    QList< bool >            *mHorizontalHeader_SelectedColumns;
-    QList< bool >            *mVerticalHeader_SelectedRows;
+    QList< int >             *mHorizontalHeader_SelectedColumns;
+    QList< int >             *mVerticalHeader_SelectedRows;
 
     QList< QList<QBrush *> > *mBackgroundBrushes;
     QList< QList<QColor *> > *mForegroundColors;

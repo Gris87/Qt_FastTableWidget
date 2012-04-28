@@ -2564,14 +2564,14 @@ void CustomFastTableWidget::selectAll()
     {
         FASTTABLE_ASSERT(i<mVerticalHeader_SelectedRows.length());
 
-        mVerticalHeader_SelectedRows[i]=true;
+        mVerticalHeader_SelectedRows[i]=mColumnCount;
     }
 
     for (int i=0; i<mColumnCount; ++i)
     {
         FASTTABLE_ASSERT(i<mHorizontalHeader_SelectedColumns.length());
 
-        mHorizontalHeader_SelectedColumns[i]=true;
+        mHorizontalHeader_SelectedColumns[i]=mRowCount;
     }
 
     viewport()->update();
@@ -2598,14 +2598,14 @@ void CustomFastTableWidget::unselectAll()
     {
         FASTTABLE_ASSERT(i<mVerticalHeader_SelectedRows.length());
 
-        mVerticalHeader_SelectedRows[i]=false;
+        mVerticalHeader_SelectedRows[i]=0;
     }
 
     for (int i=0; i<mColumnCount; ++i)
     {
         FASTTABLE_ASSERT(i<mHorizontalHeader_SelectedColumns.length());
 
-        mHorizontalHeader_SelectedColumns[i]=false;
+        mHorizontalHeader_SelectedColumns[i]=0;
     }
 
     viewport()->update();
@@ -2654,7 +2654,7 @@ void CustomFastTableWidget::insertRow(int row)
     mData.insert(row, aNewRow);
     mVerticalHeader_Data.insert(row, aNewRow);
     mSelectedCells.insert(row, aNewRowbool);
-    mVerticalHeader_SelectedRows.insert(row, false);
+    mVerticalHeader_SelectedRows.insert(row, 0);
 
     for (int i=0; i<mVerticalHeader_ColumnCount; ++i)
     {
@@ -2788,7 +2788,7 @@ void CustomFastTableWidget::insertColumn(int column)
         mSelectedCells[i].insert(column, false);
     }
 
-    mHorizontalHeader_SelectedColumns.insert(column, false);
+    mHorizontalHeader_SelectedColumns.insert(column, 0);
 
     updateBarsRanges();
     updateVisibleRange();
@@ -4276,14 +4276,11 @@ void CustomFastTableWidget::setCellSelected(const int row, const int column, con
         {
             mCurSelection.append(QPoint(column, row));
 
-            mVerticalHeader_SelectedRows[row]=true;
-            mHorizontalHeader_SelectedColumns[column]=true;
+            mVerticalHeader_SelectedRows[row]++;
+            mHorizontalHeader_SelectedColumns[column]++;
         }
         else
         {
-            bool rowFound=false;
-            bool columnFound=false;
-
             for (int i=0; i<mCurSelection.length(); ++i)
             {
                 if (mCurSelection.at(i).y()==row)
@@ -4291,24 +4288,13 @@ void CustomFastTableWidget::setCellSelected(const int row, const int column, con
                     if (mCurSelection.at(i).x()==column)
                     {
                         mCurSelection.removeAt(i);
-                        --i;
-
-                        continue;
-                    }
-
-                    rowFound=true;
-                }
-                else
-                {
-                    if (mCurSelection.at(i).x()==column)
-                    {
-                        columnFound=true;
+                        break;
                     }
                 }
             }
 
-            mVerticalHeader_SelectedRows[row]=rowFound;
-            mHorizontalHeader_SelectedColumns[column]=columnFound;
+            mVerticalHeader_SelectedRows[row]--;
+            mHorizontalHeader_SelectedColumns[column]--;
         }
 
         viewport()->update();
@@ -4328,7 +4314,7 @@ bool CustomFastTableWidget::horizontalHeader_ColumnSelected(const int column)
     FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_SelectedColumns.length());
 
-    return mHorizontalHeader_SelectedColumns.at(column);
+    return mHorizontalHeader_SelectedColumns.at(column)!=0;
 }
 
 bool CustomFastTableWidget::verticalHeader_RowSelected(const int row)
@@ -4336,7 +4322,7 @@ bool CustomFastTableWidget::verticalHeader_RowSelected(const int row)
     FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_SelectedRows.length());
 
-    return mVerticalHeader_SelectedRows.at(row);
+    return mVerticalHeader_SelectedRows.at(row)!=0;
 }
 
 QPoint CustomFastTableWidget::currentCell()
