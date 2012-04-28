@@ -266,6 +266,18 @@ void FastTableWidget::paintEvent(QPaintEvent *event)
         paintCell(painter, 0, 0, mVerticalHeader_TotalWidth, mHorizontalHeader_TotalHeight, -1, -1, DrawTopLeftCorner);
     }
 
+    if (mMouseResizeLineX>=0)
+    {
+        painter.setPen(QPen(QColor(0, 0, 0)));
+        painter.drawLine(offsetX+mMouseResizeLineX, 0, offsetX+mMouseResizeLineX, mTotalHeight);
+    }
+
+    if (mMouseResizeLineY>=0)
+    {
+        painter.setPen(QPen(QColor(0, 0, 0)));
+        painter.drawLine(0, offsetY+mMouseResizeLineY, mTotalWidth, offsetY+mMouseResizeLineY);
+    }
+
     END_FREQUENT_PROFILE;
 }
 

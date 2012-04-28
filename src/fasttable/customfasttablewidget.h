@@ -291,6 +291,8 @@ protected:
     int mLastY;
     int mMouseXForShift;
     int mMouseYForShift;
+    int mMouseResizeLineX;
+    int mMouseResizeLineY;
 
     bool mMousePressed;
     bool mCtrlPressed;

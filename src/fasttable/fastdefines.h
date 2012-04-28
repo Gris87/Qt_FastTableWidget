@@ -122,9 +122,13 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Constants
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define FASTTABLE_DEFAULT_TEXT_FLAG Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap
+#define FASTTABLE_DEFAULT_TEXT_FLAG        Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap
 #define FASTTABLE_HEADER_DEFAULT_TEXT_FLAG Qt::AlignCenter | Qt::TextWordWrap
 
 #define FASTTABLE_MOUSE_HOLD_SCROLL_SPEED 15
+
+#define FASTTABLE_MOUSE_RESIZE_THRESHOLD 3
+#define FASTTABLE_MOUSE_RESIZE_MINIMUM_WIDTH 20
+#define FASTTABLE_MOUSE_RESIZE_MINIMUM_HEIGHT 8
 
 #endif // FASTDEFINES_H

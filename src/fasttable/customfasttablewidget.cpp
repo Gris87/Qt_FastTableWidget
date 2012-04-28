@@ -38,6 +38,8 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     mLastY=-1;
     mMouseXForShift=-1;
     mMouseYForShift=-1;
+    mMouseResizeLineX=-1;
+    mMouseResizeLineY=-1;
 
     mStyle=StyleSimple;
 
@@ -95,9 +97,12 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
     FASTTABLE_DEBUG;
     START_PROFILE;
 
+    int x=event->x();
+    int y=event->y();
+
     QPoint pos;
 
-    pos=cellAt(event->x(), event->y());
+    pos=cellAt(x, y);
 
     if (pos!=QPoint(-1, -1))
     {
@@ -180,7 +185,7 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
     }
     else
     {
-        pos=horizontalHeader_CellAt(event->x(), event->y());
+        pos=horizontalHeader_CellAt(x, y);
 
         if (pos!=QPoint(-1, -1))
         {
@@ -190,10 +195,80 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
             mLastY=pos.y();
             mCtrlPressed=event->modifiers() & Qt::ControlModifier;
             mShiftPressed=event->modifiers() & Qt::ShiftModifier;
+
+            if (
+                !mCtrlPressed
+                &&
+                !mShiftPressed
+                &&
+                (
+                 x<mOffsetX.at(mLastX)+FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                 ||
+                 x>mOffsetX.at(mLastX)+mColumnWidths.at(mLastX)-FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                )
+               )
+            {
+                mMouseXForShift=mVerticalHeader_ColumnCount+mLastX;
+                mMouseYForShift=-1;
+
+                if (x<mOffsetX.at(mLastX)+FASTTABLE_MOUSE_RESIZE_THRESHOLD)
+                {
+                    mMouseXForShift--;
+
+                    if (mLastX==0)
+                    {
+                        mMouseResizeLineX=mVerticalHeader_TotalWidth;
+                    }
+                    else
+                    {
+                        mMouseResizeLineX=mOffsetX.at(mLastX-1)+mColumnWidths.at(mLastX-1);
+                    }
+                }
+                else
+                {
+                    mMouseResizeLineX=mOffsetX.at(mLastX)+mColumnWidths.at(mLastX);
+                }
+
+                viewport()->update();
+            }
+            else
+            if (
+                !mCtrlPressed
+                &&
+                !mShiftPressed
+                &&
+                (
+                 (
+                  mLastY>0
+                  &&
+                  y<mHorizontalHeader_OffsetY.at(mLastY)+FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                 )
+                 ||
+                 y>mHorizontalHeader_OffsetY.at(mLastY)+mHorizontalHeader_RowHeights.at(mLastY)-FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                )
+               )
+            {
+                mMouseXForShift=-1;
+                mMouseYForShift=mLastY;
+
+                if (y<mHorizontalHeader_OffsetY.at(mLastY)+FASTTABLE_MOUSE_RESIZE_THRESHOLD)
+                {
+                    mMouseYForShift--;
+                }
+
+                mMouseResizeLineY=mHorizontalHeader_OffsetY.at(mMouseYForShift)+mHorizontalHeader_RowHeights.at(mMouseYForShift);
+
+                viewport()->update();
+            }
+            else
+            {
+                mMouseXForShift=-1;
+                mMouseYForShift=-1;
+            }
         }
         else
         {
-            pos=verticalHeader_CellAt(event->x(), event->y());
+            pos=verticalHeader_CellAt(x, y);
 
             if (pos!=QPoint(-1, -1))
             {
@@ -203,9 +278,77 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                 mLastY=pos.y();
                 mCtrlPressed=event->modifiers() & Qt::ControlModifier;
                 mShiftPressed=event->modifiers() & Qt::ShiftModifier;
+
+                if (
+                    !mCtrlPressed
+                    &&
+                    !mShiftPressed
+                    &&
+                    (
+                     (
+                      mLastX>0 && x<mVerticalHeader_OffsetX.at(mLastX)+FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                     )
+                     ||
+                     x>mVerticalHeader_OffsetX.at(mLastX)+mVerticalHeader_ColumnWidths.at(mLastX)-FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                    )
+                   )
+                {
+                    mMouseXForShift=mLastX;
+                    mMouseYForShift=-1;
+
+                    if (x<mVerticalHeader_OffsetX.at(mLastX)+FASTTABLE_MOUSE_RESIZE_THRESHOLD)
+                    {
+                        mMouseXForShift--;
+                    }
+
+                    mMouseResizeLineX=mVerticalHeader_OffsetX.at(mMouseXForShift)+mVerticalHeader_ColumnWidths.at(mMouseXForShift);
+
+                    viewport()->update();
+                }
+                else
+                if (
+                    !mCtrlPressed
+                    &&
+                    !mShiftPressed
+                    &&
+                    (
+                     y<mOffsetY.at(mLastY)+FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                     ||
+                     y>mOffsetY.at(mLastY)+mRowHeights.at(mLastY)-FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                    )
+                   )
+                {
+                    mMouseXForShift=-1;
+                    mMouseYForShift=mHorizontalHeader_RowCount+mLastY;
+
+                    if (y<mOffsetY.at(mLastY)+FASTTABLE_MOUSE_RESIZE_THRESHOLD)
+                    {
+                        mMouseYForShift--;
+
+                        if (mLastY==0)
+                        {
+                            mMouseResizeLineY=mHorizontalHeader_TotalHeight;
+                        }
+                        else
+                        {
+                            mMouseResizeLineY=mOffsetY.at(mLastY-1)+mRowHeights.at(mLastY-1);
+                        }
+                    }
+                    else
+                    {
+                        mMouseResizeLineY=mOffsetY.at(mLastY)+mRowHeights.at(mLastY);
+                    }
+
+                    viewport()->update();
+                }
+                else
+                {
+                    mMouseXForShift=-1;
+                    mMouseYForShift=-1;
+                }
             }
             else
-            if (atTopLeftCorner(event->x(), event->y()))
+            if (atTopLeftCorner(x, y))
             {
                 mMousePressed=true;
                 mMouseLocation=InTopLeftCorner;
@@ -213,6 +356,41 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                 mLastY=0;
                 mCtrlPressed=event->modifiers() & Qt::ControlModifier;
                 mShiftPressed=event->modifiers() & Qt::ShiftModifier;
+
+                if (
+                    !mCtrlPressed
+                    &&
+                    !mShiftPressed
+                    &&
+                    x>mVerticalHeader_TotalWidth-FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                   )
+                {
+                    mMouseXForShift=mVerticalHeader_ColumnCount-1;
+                    mMouseYForShift=-1;
+                    mMouseResizeLineX=mVerticalHeader_TotalWidth;
+
+                    viewport()->update();
+                }
+                else
+                if (
+                    !mCtrlPressed
+                    &&
+                    !mShiftPressed
+                    &&
+                    y>mHorizontalHeader_TotalHeight-FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                   )
+                {
+                    mMouseXForShift=-1;
+                    mMouseYForShift=mHorizontalHeader_RowCount-1;
+                    mMouseResizeLineY=mHorizontalHeader_TotalHeight;
+
+                    viewport()->update();
+                }
+                else
+                {
+                    mMouseXForShift=-1;
+                    mMouseYForShift=-1;
+                }
             }
         }
     }
@@ -227,11 +405,11 @@ void CustomFastTableWidget::mouseMoveEvent(QMouseEvent *event)
     FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
 
+    int x=event->x();
+    int y=event->y();
+
     if (mMousePressed && event->buttons() & Qt::LeftButton)
     {
-        int x=event->x();
-        int y=event->y();
-
         int offsetX=-horizontalScrollBar()->value();
         int offsetY=-verticalScrollBar()->value();
 
@@ -271,76 +449,136 @@ void CustomFastTableWidget::mouseMoveEvent(QMouseEvent *event)
             mMouseEvent=*event;
         }
 
-        switch (mMouseLocation)
+        if (mMouseLocation==InCell)
         {
-            case InCell:
+            int resX=mCurrentColumn;
+            int resY=mCurrentRow;
+
+            while (resX>0 && x<offsetX+mOffsetX.at(resX) && (mColumnWidths.at(resX)<=0 || x<offsetX+mOffsetX.at(resX)+mColumnWidths.at(resX)))
             {
-                int resX=mCurrentColumn;
-                int resY=mCurrentRow;
+                resX--;
+            }
 
-                while (resX>0 && x<offsetX+mOffsetX.at(resX) && (mColumnWidths.at(resX)<=0 || x<offsetX+mOffsetX.at(resX)+mColumnWidths.at(resX)))
+            while (resX<mColumnCount-1 && x>offsetX+mOffsetX.at(resX) && (mColumnWidths.at(resX)<=0 || x>offsetX+mOffsetX.at(resX)+mColumnWidths.at(resX)))
+            {
+                resX++;
+            }
+
+            while (resY>0 && y<offsetY+mOffsetY.at(resY) && (mRowHeights.at(resY)<=0 || y<offsetY+mOffsetY.at(resY)+mRowHeights.at(resY)))
+            {
+                resY--;
+            }
+
+            while (resY<mRowCount-1 && y>offsetY+mOffsetY.at(resY) && (mRowHeights.at(resY)<=0 || y>offsetY+mOffsetY.at(resY)+mRowHeights.at(resY)))
+            {
+                resY++;
+            }
+
+            if (resX!=mCurrentColumn || resY!=mCurrentRow)
+            {
+
+                if (mCtrlPressed || mShiftPressed)
                 {
-                    resX--;
+                    selectRangeByMouse(resX, resY);
                 }
-
-                while (resX<mColumnCount-1 && x>offsetX+mOffsetX.at(resX) && (mColumnWidths.at(resX)<=0 || x>offsetX+mOffsetX.at(resX)+mColumnWidths.at(resX)))
+                else
                 {
-                    resX++;
-                }
+                    int minX=qMin(resX, mLastX);
+                    int minY=qMin(resY, mLastY);
+                    int maxX=qMax(resX, mLastX);
+                    int maxY=qMax(resY, mLastY);
 
-                while (resY>0 && y<offsetY+mOffsetY.at(resY) && (mRowHeights.at(resY)<=0 || y<offsetY+mOffsetY.at(resY)+mRowHeights.at(resY)))
-                {
-                    resY--;
-                }
+                    setCurrentCell(resY, resX, mCtrlPressed);
 
-                while (resY<mRowCount-1 && y>offsetY+mOffsetY.at(resY) && (mRowHeights.at(resY)<=0 || y>offsetY+mOffsetY.at(resY)+mRowHeights.at(resY)))
-                {
-                    resY++;
-                }
-
-                if (resX!=mCurrentColumn || resY!=mCurrentRow)
-                {
-
-                    if (mCtrlPressed || mShiftPressed)
+                    for (int i=minY; i<=maxY; i++)
                     {
-                        selectRangeByMouse(resX, resY);
-                    }
-                    else
-                    {
-                        int minX=qMin(resX, mLastX);
-                        int minY=qMin(resY, mLastY);
-                        int maxX=qMax(resX, mLastX);
-                        int maxY=qMax(resY, mLastY);
-
-                        setCurrentCell(resY, resX, mCtrlPressed);
-
-                        for (int i=minY; i<=maxY; i++)
+                        for (int j=minX; j<=maxX; j++)
                         {
-                            for (int j=minX; j<=maxX; j++)
-                            {
-                                setCellSelected(i, j, true);
-                            }
+                            setCellSelected(i, j, true);
                         }
                     }
                 }
             }
-            break;
-            case InHorizontalHeaderCell:
+        }
+        else
+        {
+            if (mMouseResizeLineX>=0)
             {
+                mMouseResizeLineX=-offsetX+x;
 
-            }
-            break;
-            case InVerticalHeaderCell:
-            {
+                int newWidth;
 
+                if (mMouseXForShift>=mVerticalHeader_ColumnCount)
+                {
+                    newWidth=mMouseResizeLineX-mOffsetX.at(mMouseXForShift-mVerticalHeader_ColumnCount);
+                }
+                else
+                {
+                    newWidth=-offsetX+mMouseResizeLineX-mVerticalHeader_OffsetX.at(mMouseXForShift);
+                }
+
+                if (newWidth<FASTTABLE_MOUSE_RESIZE_MINIMUM_WIDTH)
+                {
+                    mMouseResizeLineX-=newWidth-FASTTABLE_MOUSE_RESIZE_MINIMUM_WIDTH;
+                    newWidth=FASTTABLE_MOUSE_RESIZE_MINIMUM_WIDTH;
+                }
+                else
+                if (newWidth>32767)
+                {
+                    mMouseResizeLineX-=newWidth-32767;
+                    newWidth=32767;
+                }
+
+                if (mMouseXForShift>=mVerticalHeader_ColumnCount)
+                {
+                    setColumnWidth(mMouseXForShift-mVerticalHeader_ColumnCount, newWidth);
+                }
+                else
+                {
+                    verticalHeader_SetColumnWidth(mMouseXForShift, newWidth);
+                }
+
+                viewport()->update();
             }
-            break;
-            case InTopLeftCorner:
-            case InMiddleWorld:
+            else
+            if (mMouseResizeLineY>=0)
             {
-                // Nothing
+                mMouseResizeLineY=-offsetY+y;
+
+                int newHeight;
+
+                if (mMouseYForShift>=mHorizontalHeader_RowCount)
+                {
+                    newHeight=mMouseResizeLineY-mOffsetY.at(mMouseYForShift-mHorizontalHeader_RowCount);
+                }
+                else
+                {
+                    newHeight=-offsetY+mMouseResizeLineY-mHorizontalHeader_OffsetY.at(mMouseYForShift);
+                }
+
+                if (newHeight<FASTTABLE_MOUSE_RESIZE_MINIMUM_HEIGHT)
+                {
+                    mMouseResizeLineY-=newHeight-FASTTABLE_MOUSE_RESIZE_MINIMUM_HEIGHT;
+                    newHeight=FASTTABLE_MOUSE_RESIZE_MINIMUM_HEIGHT;
+                }
+                else
+                if (newHeight>32767)
+                {
+                    mMouseResizeLineY-=newHeight-32767;
+                    newHeight=32767;
+                }
+
+                if (mMouseYForShift>=mHorizontalHeader_RowCount)
+                {
+                    setRowHeight(mMouseYForShift-mHorizontalHeader_RowCount, newHeight);
+                }
+                else
+                {
+                    horizontalHeader_SetRowHeight(mMouseYForShift, newHeight);
+                }
+
+                viewport()->update();
             }
-            break;
         }
     }
     else
@@ -349,36 +587,107 @@ void CustomFastTableWidget::mouseMoveEvent(QMouseEvent *event)
         {
             QPoint pos;
 
-            pos=horizontalHeader_CellAt(event->x(), event->y());
+            pos=horizontalHeader_CellAt(x, y);
 
             if (pos!=QPoint(-1, -1))
             {
-                mMouseLocation=InHorizontalHeaderCell;
-                mLastX=pos.x();
-                mLastY=pos.y();
-
-                viewport()->update();
-            }
-            else
-            {
-                pos=verticalHeader_CellAt(event->x(), event->y());
-
-                if (pos!=QPoint(-1, -1))
+                if (mMouseLocation!=InHorizontalHeaderCell || mLastX!=pos.x() || mLastY!=pos.y())
                 {
-                    mMouseLocation=InVerticalHeaderCell;
+                    mMouseLocation=InHorizontalHeaderCell;
                     mLastX=pos.x();
                     mLastY=pos.y();
 
                     viewport()->update();
                 }
-                else
-                if (atTopLeftCorner(event->x(), event->y()))
-                {
-                    mMouseLocation=InTopLeftCorner;
-                    mLastX=0;
-                    mLastY=0;
 
-                    viewport()->update();
+                if (
+                    x<mOffsetX.at(mLastX)+FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                    ||
+                    x>mOffsetX.at(mLastX)+mColumnWidths.at(mLastX)-FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                   )
+                {
+                    setCursor(Qt::SplitHCursor);
+                }
+                else
+                if (
+                    (
+                     mLastY>0 && y<mHorizontalHeader_OffsetY.at(mLastY)+FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                    )
+                    ||
+                    y>mHorizontalHeader_OffsetY.at(mLastY)+mHorizontalHeader_RowHeights.at(mLastY)-FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                   )
+                {
+                    setCursor(Qt::SplitVCursor);
+                }
+                else
+                {
+                    setCursor(Qt::ArrowCursor);
+                }
+            }
+            else
+            {
+                pos=verticalHeader_CellAt(x, y);
+
+                if (pos!=QPoint(-1, -1))
+                {
+                    if (mMouseLocation!=InVerticalHeaderCell || mLastX!=pos.x() || mLastY!=pos.y())
+                    {
+                        mMouseLocation=InVerticalHeaderCell;
+                        mLastX=pos.x();
+                        mLastY=pos.y();
+
+                        viewport()->update();
+                    }
+
+                    if (
+                        (
+                         mLastX>0 && x<mVerticalHeader_OffsetX.at(mLastX)+FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                        )
+                        ||
+                        x>mVerticalHeader_OffsetX.at(mLastX)+mVerticalHeader_ColumnWidths.at(mLastX)-FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                       )
+                    {
+                        setCursor(Qt::SplitHCursor);
+                    }
+                    else
+                    if (
+                        y<mOffsetY.at(mLastY)+FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                        ||
+                        y>mOffsetY.at(mLastY)+mRowHeights.at(mLastY)-FASTTABLE_MOUSE_RESIZE_THRESHOLD
+                       )
+                    {
+                        setCursor(Qt::SplitVCursor);
+                    }
+                    else
+                    {
+                        setCursor(Qt::ArrowCursor);
+                    }
+                }
+                else
+                if (atTopLeftCorner(x, y))
+                {
+                    if (mMouseLocation!=InTopLeftCorner)
+                    {
+                        mMouseLocation=InTopLeftCorner;
+                        mLastX=0;
+                        mLastY=0;
+
+                        viewport()->update();
+                    }
+
+                    if (x>mVerticalHeader_TotalWidth-FASTTABLE_MOUSE_RESIZE_THRESHOLD)
+                    {
+                        setCursor(Qt::SplitHCursor);
+                    }
+                    else
+                    if (y>mHorizontalHeader_TotalHeight-FASTTABLE_MOUSE_RESIZE_THRESHOLD)
+                    {
+                        setCursor(Qt::SplitVCursor);
+                    }
+                    else
+                    {
+                        setCursor(Qt::ArrowCursor);
+                    }
                 }
                 else
                 {
@@ -390,6 +699,8 @@ void CustomFastTableWidget::mouseMoveEvent(QMouseEvent *event)
                         mLastY=-1;
 
                         viewport()->update();
+
+                        setCursor(Qt::ArrowCursor);
                     }
                 }
             }
@@ -482,8 +793,21 @@ void CustomFastTableWidget::mouseReleaseEvent(QMouseEvent *event)
     mLastX=-1;
     mLastY=-1;
 
+    if (mMouseResizeLineX>=0 || mMouseResizeLineY>=0)
+    {
+        mMouseXForShift=-1;
+        mMouseYForShift=-1;
+        mMouseResizeLineX=-1;
+        mMouseResizeLineY=-1;
+
+        viewport()->update();
+    }
+
     mMouseHoldTimer.stop();
 
+    setCursor(Qt::ArrowCursor);
+
+    mouseMoveEvent(event);
     QAbstractScrollArea::mouseReleaseEvent(event);
 
     END_PROFILE;
@@ -572,6 +896,18 @@ void CustomFastTableWidget::paintEvent(QPaintEvent *event)
     if (mVerticalHeader_VisibleRight>=0 && mHorizontalHeader_VisibleBottom>=0 && mVerticalHeader_TotalWidth>0 && mHorizontalHeader_TotalHeight>0)
     {
         paintCell(painter, 0, 0, mVerticalHeader_TotalWidth, mHorizontalHeader_TotalHeight, -1, -1, DrawTopLeftCorner);
+    }
+
+    if (mMouseResizeLineX>=0)
+    {
+        painter.setPen(QPen(QColor(0, 0, 0)));
+        painter.drawLine(offsetX+mMouseResizeLineX, 0, offsetX+mMouseResizeLineX, mTotalHeight);
+    }
+
+    if (mMouseResizeLineY>=0)
+    {
+        painter.setPen(QPen(QColor(0, 0, 0)));
+        painter.drawLine(0, offsetY+mMouseResizeLineY, mTotalWidth, offsetY+mMouseResizeLineY);
     }
 
     END_FREQUENT_PROFILE;
@@ -749,7 +1085,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
     FASTTABLE_FREQUENT_DEBUG;
     START_FREQUENT_PROFILE;
 
-    if (drawComponent==DrawCell || height<=8)
+    if (drawComponent==DrawCell)
     {
         (*mDrawCellFunction)(painter, x, y, width, height, aGridColor, aBackgroundBrush, aBorderColor);
     }
@@ -1394,6 +1730,8 @@ void CustomFastTableWidget::clear()
 
     mMouseXForShift=-1;
     mMouseYForShift=-1;
+    mMouseResizeLineX=-1;
+    mMouseResizeLineY=-1;
 
     mMouseSelectedCells.clear();
 
