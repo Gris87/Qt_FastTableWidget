@@ -1607,9 +1607,37 @@ void CustomFastTableWidget::paintHeaderCellLinux(QPainter &painter, const int x,
 
     QColor backColorDown=aBorderColor ? *aBorderColor : aBackgroundBrush->color();
 
-    int r=backColorDown.red()+20;
-    int g=backColorDown.green()+20;
-    int b=backColorDown.blue()+20;
+    int r;
+    int g;
+    int b;
+
+    if (headerPressed)
+    {
+        r=backColorDown.red()-40;
+        g=backColorDown.green()-40;
+        b=backColorDown.blue()-40;
+
+        if (r<0)
+        {
+            r=0;
+        }
+
+        if (g<0)
+        {
+            g=0;
+        }
+
+        if (b<0)
+        {
+            b=0;
+        }
+
+        backColorDown.setRgb(r, g, b);
+    }
+
+    r=backColorDown.red()+20;
+    g=backColorDown.green()+20;
+    b=backColorDown.blue()+20;
 
     if (r>255)
     {
@@ -1924,6 +1952,30 @@ void CustomFastTableWidget::paintHeaderCellDefault(QPainter &painter, const int 
     START_FREQUENT_PROFILE;
 
     QColor backColor=aBorderColor? *aBorderColor : aBackgroundBrush->color();
+
+    if (headerPressed)
+    {
+        int r=backColor.red()-40;
+        int g=backColor.green()-40;
+        int b=backColor.blue()-40;
+
+        if (r<0)
+        {
+            r=0;
+        }
+
+        if (g<0)
+        {
+            g=0;
+        }
+
+        if (b<0)
+        {
+            b=0;
+        }
+
+        backColor.setRgb(r, g, b);
+    }
 
     painter.fillRect(x, y, width, height, backColor);
 
