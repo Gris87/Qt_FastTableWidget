@@ -313,6 +313,8 @@ protected:
     void paintEvent(QPaintEvent *event);
 
     virtual void selectRangeByMouse(int resX, int resY);
+    virtual void horizontalHeader_SelectRangeByMouse(int resX);
+    virtual void verticalHeader_SelectRangeByMouse(int resY);
 
     virtual void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent);
     virtual void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const DrawComponent drawComponent, bool headerPressed, QColor *aGridColor,

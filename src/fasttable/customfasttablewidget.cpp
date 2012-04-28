@@ -544,7 +544,7 @@ void CustomFastTableWidget::mouseMoveEvent(QMouseEvent *event)
                     int maxX=qMax(resX, mLastX);
                     int maxY=qMax(resY, mLastY);
 
-                    setCurrentCell(resY, resX, mCtrlPressed);
+                    setCurrentCell(resY, resX);
 
                     for (int i=minY; i<=maxY; i++)
                     {
@@ -639,12 +639,73 @@ void CustomFastTableWidget::mouseMoveEvent(QMouseEvent *event)
             {
                 if (mMouseLocation==InHorizontalHeaderCell)
                 {
+                    int resX=mCurrentColumn;
 
+                    while (resX>0 && x<offsetX+mOffsetX.at(resX) && (mColumnWidths.at(resX)<=0 || x<offsetX+mOffsetX.at(resX)+mColumnWidths.at(resX)))
+                    {
+                        resX--;
+                    }
+
+                    while (resX<mColumnCount-1 && x>offsetX+mOffsetX.at(resX) && (mColumnWidths.at(resX)<=0 || x>offsetX+mOffsetX.at(resX)+mColumnWidths.at(resX)))
+                    {
+                        resX++;
+                    }
+
+                    if (resX!=mCurrentColumn)
+                    {
+                        if (mCtrlPressed || mShiftPressed)
+                        {
+                            horizontalHeader_SelectRangeByMouse(resX);
+                        }
+                        else
+                        {
+                            int minX=qMin(resX, mLastX);
+                            int maxX=qMax(resX, mLastX);
+
+                            setCurrentCell(mRowCount-1, resX);
+
+                            for (int i=minX; i<=maxX; i++)
+                            {
+                                selectColumn(i);
+                            }
+                        }
+                    }
                 }
                 else
                 if (mMouseLocation==InVerticalHeaderCell)
                 {
+                    int resY=mCurrentRow;
 
+                    while (resY>0 && y<offsetY+mOffsetY.at(resY) && (mRowHeights.at(resY)<=0 || y<offsetY+mOffsetY.at(resY)+mRowHeights.at(resY)))
+                    {
+                        resY--;
+                    }
+
+                    while (resY<mRowCount-1 && y>offsetY+mOffsetY.at(resY) && (mRowHeights.at(resY)<=0 || y>offsetY+mOffsetY.at(resY)+mRowHeights.at(resY)))
+                    {
+                        resY++;
+                    }
+
+                    if (resY!=mCurrentRow)
+                    {
+
+                        if (mCtrlPressed || mShiftPressed)
+                        {
+                            verticalHeader_SelectRangeByMouse(resY);
+                        }
+                        else
+                        {
+                            int minY=qMin(resY, mLastY);
+                            int maxY=qMax(resY, mLastY);
+
+                            setCurrentCell(resY, mColumnCount-1);
+
+                            for (int i=minY; i<=maxY; i++)
+                            {
+                                selectRow(i);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -792,6 +853,9 @@ void CustomFastTableWidget::mouseHoldTick()
 
 void CustomFastTableWidget::selectRangeByMouse(int resX, int resY)
 {
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
     int minX=qMin(resX, mLastX);
     int minY=qMin(resY, mLastY);
     int maxX=qMax(resX, mLastX);
@@ -847,6 +911,113 @@ void CustomFastTableWidget::selectRangeByMouse(int resX, int resY)
             setCellSelected(i, j, aSelected);
         }
     }
+
+    END_PROFILE;
+}
+
+void CustomFastTableWidget::horizontalHeader_SelectRangeByMouse(int resX)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    int minX=qMin(resX, mLastX);
+    int maxX=qMax(resX, mLastX);
+
+    int lastMinX=qMin(mCurrentColumn, mLastX);
+    int lastMaxX=qMax(mCurrentColumn, mLastX);
+
+    FASTTABLE_ASSERT(mMouseSelectedCells.length()==mRowCount);
+
+    for (int i=0; i<mRowCount; i++)
+    {
+        FASTTABLE_ASSERT(lastMaxX-lastMinX+1==mMouseSelectedCells.at(i).length());
+
+        for (int j=lastMinX; j<=lastMaxX; j++)
+        {
+            setCellSelected(i, j, mMouseSelectedCells.at(i).at(j-lastMinX));
+        }
+    }
+
+    setCurrentCell(mRowCount-1, resX, true);
+
+    bool aSelected=mSelectedCells.at(0).at(mLastX);
+
+    for (int i=0; i<mRowCount; i++)
+    {
+        while (mMouseSelectedCells.at(i).length()>maxX-minX+1)
+        {
+            mMouseSelectedCells[i].removeLast();
+        }
+
+        while (mMouseSelectedCells.at(i).length()<maxX-minX+1)
+        {
+            mMouseSelectedCells[i].append(false);
+        }
+
+        for (int j=minX; j<=maxX; j++)
+        {
+            mMouseSelectedCells[i][j-minX]=mSelectedCells.at(i).at(j);
+
+            setCellSelected(i, j, aSelected);
+        }
+    }
+
+    END_PROFILE;
+}
+
+void CustomFastTableWidget::verticalHeader_SelectRangeByMouse(int resY)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    int minY=qMin(resY, mLastY);
+    int maxY=qMax(resY, mLastY);
+
+    int lastMinY=qMin(mCurrentRow, mLastY);
+    int lastMaxY=qMax(mCurrentRow, mLastY);
+
+    FASTTABLE_ASSERT(lastMaxY-lastMinY+1==mMouseSelectedCells.length());
+
+    for (int i=lastMinY; i<=lastMaxY; i++)
+    {
+        FASTTABLE_ASSERT(mMouseSelectedCells.at(i-lastMinY).length()==mColumnCount);
+
+        for (int j=0; j<mColumnCount; j++)
+        {
+            setCellSelected(i, j, mMouseSelectedCells.at(i-lastMinY).at(j));
+        }
+    }
+
+    while (mMouseSelectedCells.length()>maxY-minY+1)
+    {
+        mMouseSelectedCells.removeLast();
+    }
+
+    while (mMouseSelectedCells.length()<maxY-minY+1)
+    {
+        mMouseSelectedCells.append(QList<bool>());
+    }
+
+    setCurrentCell(resY, mColumnCount-1, true);
+
+    bool aSelected=mSelectedCells.at(mLastY).at(0);
+
+    for (int i=minY; i<=maxY; i++)
+    {
+        while (mMouseSelectedCells.at(i-minY).length()<mColumnCount)
+        {
+            mMouseSelectedCells[i-minY].append(false);
+        }
+
+        for (int j=0; j<mColumnCount; j++)
+        {
+            mMouseSelectedCells[i-minY][j]=mSelectedCells.at(i).at(j);
+
+            setCellSelected(i, j, aSelected);
+        }
+    }
+
+    END_PROFILE;
 }
 
 void CustomFastTableWidget::mouseReleaseEvent(QMouseEvent *event)
