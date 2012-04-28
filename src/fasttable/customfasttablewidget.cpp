@@ -1328,7 +1328,17 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
                     int minX=qMin(mCurrentColumn, mLastX);
                     int maxX=qMax(mCurrentColumn, mLastX);
 
-                    if (column>=minX && column<=maxX && mMouseResizeCell<0)
+                    if (
+                        mHorizontalHeader_SelectedColumns.at(column)==mRowCount
+                        ||
+                        (
+                         mMouseResizeCell<0
+                         &&
+                         column>=minX
+                         &&
+                         column<=maxX
+                        )
+                       )
                     {
                         aHeaderPressed=true;
                         aBorderColor=&mHorizontalHeader_CellBorderColor;
@@ -1349,14 +1359,30 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
                     }
                     else
                     {
-                        aBorderColor=0;
+                        if (mHorizontalHeader_SelectedColumns.at(column)==mRowCount)
+                        {
+                            aHeaderPressed=true;
+                            aBorderColor=&mHorizontalHeader_CellBorderColor;
+                        }
+                        else
+                        {
+                            aBorderColor=0;
+                        }
                     }
                 }
             }
             else
             {
-                aHeaderPressed=false;
-                aBorderColor=0;
+                if (mHorizontalHeader_SelectedColumns.at(column)==mRowCount)
+                {
+                    aHeaderPressed=true;
+                    aBorderColor=&mHorizontalHeader_CellBorderColor;
+                }
+                else
+                {
+                    aHeaderPressed=false;
+                    aBorderColor=0;
+                }
             }
 
             aTextColor=&mHorizontalHeader_DefaultForegroundColor;
@@ -1392,7 +1418,17 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
                     int minY=qMin(mCurrentRow, mLastY);
                     int maxY=qMax(mCurrentRow, mLastY);
 
-                    if (row>=minY && row<=maxY && mMouseResizeCell<0)
+                    if (
+                        mVerticalHeader_SelectedRows.at(row)==mColumnCount
+                        ||
+                        (
+                         mMouseResizeCell<0
+                         &&
+                         row>=minY
+                         &&
+                         row<=maxY
+                        )
+                       )
                     {
                         aHeaderPressed=true;
                         aBorderColor=&mVerticalHeader_CellBorderColor;
@@ -1413,14 +1449,30 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
                     }
                     else
                     {
-                        aBorderColor=0;
+                        if (mVerticalHeader_SelectedRows.at(row)==mColumnCount)
+                        {
+                            aHeaderPressed=true;
+                            aBorderColor=&mVerticalHeader_CellBorderColor;
+                        }
+                        else
+                        {
+                            aBorderColor=0;
+                        }
                     }
                 }
             }
             else
             {
-                aHeaderPressed=false;
-                aBorderColor=0;
+                if (mVerticalHeader_SelectedRows.at(row)==mColumnCount)
+                {
+                    aHeaderPressed=true;
+                    aBorderColor=&mVerticalHeader_CellBorderColor;
+                }
+                else
+                {
+                    aHeaderPressed=false;
+                    aBorderColor=0;
+                }
             }
 
             aTextColor=&mVerticalHeader_DefaultForegroundColor;

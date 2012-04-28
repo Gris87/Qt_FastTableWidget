@@ -394,19 +394,23 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
                     int maxX=qMax(mCurrentColumn, mLastX);
 
                     if (
-                        mMouseResizeCell<0
-                        &&
+                        mHorizontalHeader_SelectedColumns.at(column)==mRowCount
+                        ||
                         (
+                         mMouseResizeCell<0
+                         &&
                          (
-                          column>=minX
-                          &&
-                          column<=maxX
-                         )
-                         ||
-                         (
-                          column<minX
-                          &&
-                          column+mHorizontalHeader_CellMergeX.at(row).at(column)-1>=minX
+                          (
+                           column>=minX
+                           &&
+                           column<=maxX
+                          )
+                          ||
+                          (
+                           column<minX
+                           &&
+                           column+mHorizontalHeader_CellMergeX.at(row).at(column)-1>=minX
+                          )
                          )
                         )
                        )
@@ -430,14 +434,30 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
                     }
                     else
                     {
-                        aBorderColor=0;
+                        if (mHorizontalHeader_SelectedColumns.at(column)==mRowCount)
+                        {
+                            aHeaderPressed=true;
+                            aBorderColor=&mHorizontalHeader_CellBorderColor;
+                        }
+                        else
+                        {
+                            aBorderColor=0;
+                        }
                     }
                 }
             }
             else
             {
-                aHeaderPressed=false;
-                aBorderColor=0;
+                if (mHorizontalHeader_SelectedColumns.at(column)==mRowCount)
+                {
+                    aHeaderPressed=true;
+                    aBorderColor=&mHorizontalHeader_CellBorderColor;
+                }
+                else
+                {
+                    aHeaderPressed=false;
+                    aBorderColor=0;
+                }
             }
 
             aTextColor=mHorizontalHeader_ForegroundColors.at(row).at(column);
@@ -517,19 +537,23 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
                     int maxY=qMax(mCurrentRow, mLastY);
 
                     if (
-                        mMouseResizeCell<0
-                        &&
+                        mVerticalHeader_SelectedRows.at(row)==mColumnCount
+                        ||
                         (
+                         mMouseResizeCell<0
+                         &&
                          (
-                          row>=minY
-                          &&
-                          row<=maxY
-                         )
-                         ||
-                         (
-                          row<minY
-                          &&
-                          row+mVerticalHeader_CellMergeY.at(row).at(column)-1>=minY
+                          (
+                           row>=minY
+                           &&
+                           row<=maxY
+                          )
+                          ||
+                          (
+                           row<minY
+                           &&
+                           row+mVerticalHeader_CellMergeY.at(row).at(column)-1>=minY
+                          )
                          )
                         )
                        )
@@ -553,14 +577,30 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
                     }
                     else
                     {
-                        aBorderColor=0;
+                        if (mVerticalHeader_SelectedRows.at(row)==mColumnCount)
+                        {
+                            aHeaderPressed=true;
+                            aBorderColor=&mVerticalHeader_CellBorderColor;
+                        }
+                        else
+                        {
+                            aBorderColor=0;
+                        }
                     }
                 }
             }
             else
             {
-                aHeaderPressed=false;
-                aBorderColor=0;
+                if (mVerticalHeader_SelectedRows.at(row)==mColumnCount)
+                {
+                    aHeaderPressed=true;
+                    aBorderColor=&mVerticalHeader_CellBorderColor;
+                }
+                else
+                {
+                    aHeaderPressed=false;
+                    aBorderColor=0;
+                }
             }
 
             aTextColor=mVerticalHeader_ForegroundColors.at(row).at(column);
