@@ -186,6 +186,11 @@ public:
     QRect horizontalHeader_VisibleRange();
     QRect verticalHeader_VisibleRange();
 
+    virtual QRect cellRectangle(const int row, const int column);
+    virtual QRect horizontalHeader_CellRectangle(const int row, const int column);
+    virtual QRect verticalHeader_CellRectangle(const int row, const int column);
+    void scrollToCell(const int row, const int column);
+
     QString text(const int row, const int column);
     void setText(const int row, const int column, const QString text);
 
@@ -306,15 +311,17 @@ protected:
     QTimer mMouseHoldTimer;
     QMouseEvent mMouseEvent;
 
+    void keyPressEvent(QKeyEvent *event);
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
+    void leaveEvent(QEvent *event);
     void resizeEvent(QResizeEvent *event);
     void paintEvent(QPaintEvent *event);
 
-    virtual void selectRangeByMouse(int resX, int resY);
-    virtual void horizontalHeader_SelectRangeByMouse(int resX);
-    virtual void verticalHeader_SelectRangeByMouse(int resY);
+    virtual void selectRangeForHandlers(int resX, int resY);
+    virtual void horizontalHeader_SelectRangeForHandlers(int resX);
+    virtual void verticalHeader_SelectRangeForHandlers(int resY);
 
     virtual void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent);
     virtual void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const DrawComponent drawComponent, bool headerPressed, QColor *aGridColor,
@@ -329,10 +336,14 @@ protected:
 
     void updateBarsRanges();
     virtual void updateVisibleRange();
+    void initShiftSelectionForKeyboard();
+    void initShiftSelection();
+    void fillShiftSelection();
 
 public slots:
     void scrollToTop();
     void scrollToBottom();
+    void scrollToCurrentCell();
 
 protected slots:
     void horizontalScrollBarValueChanged(int value);

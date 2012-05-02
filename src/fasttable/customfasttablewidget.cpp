@@ -93,6 +93,290 @@ CustomFastTableWidget::~CustomFastTableWidget()
     END_PROFILE;
 }
 
+void CustomFastTableWidget::keyPressEvent(QKeyEvent *event)
+{
+    FASTTABLE_FREQUENT_DEBUG;
+    START_FREQUENT_PROFILE;
+
+    if (event->key()==Qt::Key_Up)
+    {
+        if (mCurrentRow<0 || mCurrentColumn<0)
+        {
+            setCurrentCell(0, 0);
+
+            initShiftSelection();
+        }
+        else
+        {
+            if (mCurrentRow>0)
+            {
+                if (event->modifiers() & Qt::ShiftModifier)
+                {
+                    initShiftSelectionForKeyboard();
+
+                    selectRangeForHandlers(mCurrentColumn, mCurrentRow-1);
+                }
+                else
+                {
+                    setCurrentCell(mCurrentRow-1, mCurrentColumn);
+
+                    initShiftSelection();
+                }
+            }
+        }
+
+        scrollToCurrentCell();
+    }
+    else
+    if (event->key()==Qt::Key_Down)
+    {
+        if (mCurrentRow<0 || mCurrentColumn<0)
+        {
+            setCurrentCell(0, 0);
+
+            initShiftSelection();
+        }
+        else
+        {
+            if (mCurrentRow<mRowCount-1)
+            {
+                if (event->modifiers() & Qt::ShiftModifier)
+                {
+                    initShiftSelectionForKeyboard();
+
+                    selectRangeForHandlers(mCurrentColumn, mCurrentRow+1);
+                }
+                else
+                {
+                    setCurrentCell(mCurrentRow+1, mCurrentColumn);
+
+                    initShiftSelection();
+                }
+            }
+        }
+
+        scrollToCurrentCell();
+    }
+    else
+    if (event->key()==Qt::Key_Left)
+    {
+        if (mCurrentRow<0 || mCurrentColumn<0)
+        {
+            setCurrentCell(0, 0);
+
+            initShiftSelection();
+        }
+        else
+        {
+            if (mCurrentColumn>0)
+            {
+                if (event->modifiers() & Qt::ShiftModifier)
+                {
+                    initShiftSelectionForKeyboard();
+
+                    selectRangeForHandlers(mCurrentColumn-1, mCurrentRow);
+                }
+                else
+                {
+                    setCurrentCell(mCurrentRow, mCurrentColumn-1);
+
+                    initShiftSelection();
+                }
+            }
+        }
+
+        scrollToCurrentCell();
+    }
+    else
+    if (event->key()==Qt::Key_Right)
+    {
+        if (mCurrentRow<0 || mCurrentColumn<0)
+        {
+            setCurrentCell(0, 0);
+
+            initShiftSelection();
+        }
+        else
+        {
+            if (mCurrentColumn<mColumnCount-1)
+            {
+                if (event->modifiers() & Qt::ShiftModifier)
+                {
+                    initShiftSelectionForKeyboard();
+
+                    selectRangeForHandlers(mCurrentColumn+1, mCurrentRow);
+                }
+                else
+                {
+                    setCurrentCell(mCurrentRow, mCurrentColumn+1);
+
+                    initShiftSelection();
+                }
+            }
+        }
+
+        scrollToCurrentCell();
+    }
+    else
+    if (event->key()==Qt::Key_PageUp)
+    {
+        if (mCurrentRow<0 || mCurrentColumn<0)
+        {
+            setCurrentCell(0, 0);
+
+            initShiftSelection();
+        }
+        else
+        {
+            if (mCurrentRow>0)
+            {
+                if (event->modifiers() & Qt::ShiftModifier)
+                {
+                    initShiftSelectionForKeyboard();
+
+                    if (mCurrentRow>10)
+                    {
+                        selectRangeForHandlers(mCurrentColumn, mCurrentRow-10);
+                    }
+                    else
+                    {
+                        selectRangeForHandlers(mCurrentColumn, 0);
+                    }
+                }
+                else
+                {
+                    if (mCurrentRow>10)
+                    {
+                        setCurrentCell(mCurrentRow-10, mCurrentColumn);
+                    }
+                    else
+                    {
+                        setCurrentCell(0, mCurrentColumn);
+                    }
+
+                    initShiftSelection();
+                }
+            }
+        }
+
+        scrollToCurrentCell();
+    }
+    else
+    if (event->key()==Qt::Key_PageDown)
+    {
+        if (mCurrentRow<0 || mCurrentColumn<0)
+        {
+            setCurrentCell(0, 0);
+
+            initShiftSelection();
+        }
+        else
+        {
+            if (mCurrentRow<mRowCount-1)
+            {
+                if (event->modifiers() & Qt::ShiftModifier)
+                {
+                    initShiftSelectionForKeyboard();
+
+                    if (mCurrentRow<mRowCount-10)
+                    {
+                        selectRangeForHandlers(mCurrentColumn, mCurrentRow+10);
+                    }
+                    else
+                    {
+                        selectRangeForHandlers(mCurrentColumn, mRowCount-1);
+                    }
+                }
+                else
+                {
+                    if (mCurrentRow<mRowCount-10)
+                    {
+                        setCurrentCell(mCurrentRow+10, mCurrentColumn);
+                    }
+                    else
+                    {
+                        setCurrentCell(mRowCount-1, mCurrentColumn);
+                    }
+
+                    initShiftSelection();
+                }
+            }
+        }
+
+        scrollToCurrentCell();
+    }
+    else
+    if (event->key()==Qt::Key_Home)
+    {
+        if (mCurrentRow<0 || mCurrentColumn<0)
+        {
+            setCurrentCell(0, 0);
+
+            initShiftSelection();
+        }
+        else
+        {
+            if (event->modifiers() & Qt::ShiftModifier)
+            {
+                initShiftSelectionForKeyboard();
+
+                selectRangeForHandlers(mCurrentColumn, 0);
+            }
+            else
+            {
+                setCurrentCell(0, mCurrentColumn);
+
+                initShiftSelection();
+            }
+        }
+
+        scrollToTop();
+    }
+    else
+    if (event->key()==Qt::Key_End)
+    {
+        if (mCurrentRow<0 || mCurrentColumn<0)
+        {
+            setCurrentCell(mRowCount-1, 0);
+
+            initShiftSelection();
+        }
+        else
+        {
+            if (event->modifiers() & Qt::ShiftModifier)
+            {
+                initShiftSelectionForKeyboard();
+
+                selectRangeForHandlers(mCurrentColumn, mRowCount-1);
+            }
+            else
+            {
+                setCurrentCell(mRowCount-1, mCurrentColumn);
+
+                initShiftSelection();
+            }
+        }
+
+        scrollToBottom();
+    }
+    else
+    if (event==QKeySequence::SelectAll)
+    {
+        selectAll();
+    }
+    else
+    if (event==QKeySequence::Copy)
+    {
+
+    }
+    else
+    {
+        QAbstractScrollArea::keyPressEvent(event);
+    }
+
+    END_FREQUENT_PROFILE;
+}
+
 void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
 {
     FASTTABLE_DEBUG;
@@ -119,43 +403,20 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
         {
             if (mMouseXForShift<0 || mMouseYForShift<0)
             {
-                mMouseSelectedCells.clear();
-
                 if (mCurrentColumn<0 || mCurrentRow<0)
                 {
                     setCurrentCell(0, 0);
                 }
 
-                mMouseXForShift=mCurrentColumn;
-                mMouseYForShift=mCurrentRow;
+                initShiftSelection();
             }
 
             mLastX=mMouseXForShift;
             mLastY=mMouseYForShift;
 
-            if (mMouseSelectedCells.length()==0)
-            {
-                int minX=qMin(mCurrentColumn, mLastX);
-                int minY=qMin(mCurrentRow, mLastY);
-                int maxX=qMax(mCurrentColumn, mLastX);
-                int maxY=qMax(mCurrentRow, mLastY);
+            fillShiftSelection();
 
-                for (int i=minY; i<=maxY; i++)
-                {
-                    QList<bool> aRow;
-
-                    for (int j=minX; j<=maxX; j++)
-                    {
-                        aRow.append(false);
-                    }
-
-                    mMouseSelectedCells.append(aRow);
-                }
-
-                mMouseSelectedCells[mMouseYForShift-minY][mMouseXForShift-minX]=mSelectedCells.at(mMouseYForShift).at(mMouseXForShift);
-            }
-
-            selectRangeByMouse(pos.x(), pos.y());
+            selectRangeForHandlers(pos.x(), pos.y());
         }
         else
         {
@@ -300,7 +561,7 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                         }
                     }
 
-                    horizontalHeader_SelectRangeByMouse(pos.x());
+                    horizontalHeader_SelectRangeForHandlers(pos.x());
                 }
                 else
                 {
@@ -449,7 +710,7 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                             }
                         }
 
-                        verticalHeader_SelectRangeByMouse(pos.y());
+                        verticalHeader_SelectRangeForHandlers(pos.y());
                     }
                     else
                     {
@@ -617,7 +878,7 @@ void CustomFastTableWidget::mouseMoveEvent(QMouseEvent *event)
 
                 if (mCtrlPressed || mShiftPressed)
                 {
-                    selectRangeByMouse(resX, resY);
+                    selectRangeForHandlers(resX, resY);
                 }
                 else
                 {
@@ -737,7 +998,7 @@ void CustomFastTableWidget::mouseMoveEvent(QMouseEvent *event)
                     {
                         if (mCtrlPressed || mShiftPressed)
                         {
-                            horizontalHeader_SelectRangeByMouse(resX);
+                            horizontalHeader_SelectRangeForHandlers(resX);
                         }
                         else
                         {
@@ -773,7 +1034,7 @@ void CustomFastTableWidget::mouseMoveEvent(QMouseEvent *event)
 
                         if (mCtrlPressed || mShiftPressed)
                         {
-                            verticalHeader_SelectRangeByMouse(resY);
+                            verticalHeader_SelectRangeForHandlers(resY);
                         }
                         else
                         {
@@ -933,7 +1194,68 @@ void CustomFastTableWidget::mouseHoldTick()
     END_PROFILE;
 }
 
-void CustomFastTableWidget::selectRangeByMouse(int resX, int resY)
+void CustomFastTableWidget::initShiftSelectionForKeyboard()
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    if (mMouseXForShift<0 || mMouseYForShift<0)
+    {
+        mMouseXForShift=mCurrentColumn;
+        mMouseYForShift=mCurrentRow;
+    }
+
+    mLastX=mMouseXForShift;
+    mLastY=mMouseYForShift;
+
+    fillShiftSelection();
+
+    END_PROFILE;
+}
+
+void CustomFastTableWidget::initShiftSelection()
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    mMouseSelectedCells.clear();
+    mMouseXForShift=mCurrentColumn;
+    mMouseYForShift=mCurrentRow;
+
+    END_PROFILE;
+}
+
+void CustomFastTableWidget::fillShiftSelection()
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    if (mMouseSelectedCells.length()==0)
+    {
+        int minX=qMin(mCurrentColumn, mLastX);
+        int minY=qMin(mCurrentRow, mLastY);
+        int maxX=qMax(mCurrentColumn, mLastX);
+        int maxY=qMax(mCurrentRow, mLastY);
+
+        for (int i=minY; i<=maxY; i++)
+        {
+            QList<bool> aRow;
+
+            for (int j=minX; j<=maxX; j++)
+            {
+                aRow.append(false);
+            }
+
+            mMouseSelectedCells.append(aRow);
+        }
+
+        mMouseSelectedCells[mMouseYForShift-minY][mMouseXForShift-minX]=mSelectedCells.at(mMouseYForShift).at(mMouseXForShift);
+    }
+
+    END_PROFILE;
+}
+
+void CustomFastTableWidget::selectRangeForHandlers(int resX, int resY)
 {
     FASTTABLE_DEBUG;
     START_PROFILE;
@@ -997,7 +1319,7 @@ void CustomFastTableWidget::selectRangeByMouse(int resX, int resY)
     END_PROFILE;
 }
 
-void CustomFastTableWidget::horizontalHeader_SelectRangeByMouse(int resX)
+void CustomFastTableWidget::horizontalHeader_SelectRangeForHandlers(int resX)
 {
     FASTTABLE_DEBUG;
     START_PROFILE;
@@ -1047,7 +1369,7 @@ void CustomFastTableWidget::horizontalHeader_SelectRangeByMouse(int resX)
     END_PROFILE;
 }
 
-void CustomFastTableWidget::verticalHeader_SelectRangeByMouse(int resY)
+void CustomFastTableWidget::verticalHeader_SelectRangeForHandlers(int resY)
 {
     FASTTABLE_DEBUG;
     START_PROFILE;
@@ -1133,9 +1455,14 @@ void CustomFastTableWidget::mouseReleaseEvent(QMouseEvent *event)
         setCursor(Qt::ArrowCursor);
     }
     else
-    if (mMouseLocation!=InCell)
+    if (mMouseLocation!=InCell && mMouseLocation!=InMiddleWorld)
     {
         viewport()->update();
+    }
+
+    if (mMouseLocation==InCell && mMouseXForShift==mCurrentColumn && mMouseYForShift==mCurrentRow)
+    {
+        scrollToCurrentCell();
     }
 
     mMousePressed=false;
@@ -1145,12 +1472,33 @@ void CustomFastTableWidget::mouseReleaseEvent(QMouseEvent *event)
     mLastX=-1;
     mLastY=-1;
 
-
-
     mMouseHoldTimer.stop();
 
     mouseMoveEvent(event);
     QAbstractScrollArea::mouseReleaseEvent(event);
+
+    END_PROFILE;
+}
+
+void CustomFastTableWidget::leaveEvent(QEvent *event)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    if (!mMousePressed)
+    {
+        if (mMouseLocation!=InCell && mMouseLocation!=InMiddleWorld)
+        {
+            viewport()->update();
+        }
+
+        mMouseLocation=InMiddleWorld;
+        mLastX=-1;
+        mLastY=-1;
+        setCursor(Qt::ArrowCursor);
+    }
+
+    QAbstractScrollArea::leaveEvent(event);
 
     END_PROFILE;
 }
@@ -4154,6 +4502,42 @@ QRect CustomFastTableWidget::verticalHeader_VisibleRange()
     return aRect;
 }
 
+QRect CustomFastTableWidget::cellRectangle(const int row, const int column)
+{
+    FASTTABLE_DEBUG;
+
+    FASTTABLE_ASSERT(column>=0 && column<mOffsetX.length());
+    FASTTABLE_ASSERT(row>=0    && row<mOffsetY.length());
+    FASTTABLE_ASSERT(column>=0 && column<mColumnWidths.length());
+    FASTTABLE_ASSERT(row>=0    && row<mRowHeights.length());
+
+    return QRect(mOffsetX.at(column), mOffsetY.at(row), mColumnWidths.at(column), mRowHeights.at(row));
+}
+
+QRect CustomFastTableWidget::horizontalHeader_CellRectangle(const int row, const int column)
+{
+    FASTTABLE_DEBUG;
+
+    FASTTABLE_ASSERT(column>=0 && column<mOffsetX.length());
+    FASTTABLE_ASSERT(row>=0    && row<mHorizontalHeader_OffsetY.length());
+    FASTTABLE_ASSERT(column>=0 && column<mColumnWidths.length());
+    FASTTABLE_ASSERT(row>=0    && row<mHorizontalHeader_RowHeights.length());
+
+    return QRect(mOffsetX.at(column), mHorizontalHeader_OffsetY.at(row), mColumnWidths.at(column), mHorizontalHeader_RowHeights.at(row));
+}
+
+QRect CustomFastTableWidget::verticalHeader_CellRectangle(const int row, const int column)
+{
+    FASTTABLE_DEBUG;
+
+    FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_OffsetX.length());
+    FASTTABLE_ASSERT(row>=0    && row<mOffsetY.length());
+    FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_ColumnWidths.length());
+    FASTTABLE_ASSERT(row>=0    && row<mRowHeights.length());
+
+    return QRect(mVerticalHeader_OffsetX.at(column), mOffsetY.at(row), mVerticalHeader_ColumnWidths.at(column), mRowHeights.at(row));
+}
+
 void CustomFastTableWidget::scrollToTop()
 {
     FASTTABLE_DEBUG;
@@ -4170,6 +4554,55 @@ void CustomFastTableWidget::scrollToBottom()
     START_PROFILE;
 
     verticalScrollBar()->setValue(verticalScrollBar()->maximum());
+
+    END_PROFILE;
+}
+
+void CustomFastTableWidget::scrollToCell(const int row, const int column)
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    if (row<0 || column<0)
+    {
+        horizontalScrollBar()->setValue(0);
+        verticalScrollBar()->setValue(0);
+    }
+    else
+    {
+        QSize areaSize=viewport()->size();
+        QRect aCellRect=cellRectangle(row, column);
+
+        if (aCellRect.left()-mVerticalHeader_TotalWidth<horizontalScrollBar()->value())
+        {
+            horizontalScrollBar()->setValue(aCellRect.left()-mVerticalHeader_TotalWidth);
+        }
+        else
+        if (aCellRect.right()>horizontalScrollBar()->value()+areaSize.width())
+        {
+            horizontalScrollBar()->setValue(aCellRect.right()-areaSize.width());
+        }
+
+        if (aCellRect.top()-mHorizontalHeader_TotalHeight<verticalScrollBar()->value())
+        {
+            verticalScrollBar()->setValue(aCellRect.top()-mHorizontalHeader_TotalHeight);
+        }
+        else
+        if (aCellRect.bottom()>verticalScrollBar()->value()+areaSize.height())
+        {
+            verticalScrollBar()->setValue(aCellRect.bottom()-areaSize.height());
+        }
+    }
+
+    END_PROFILE;
+}
+
+void CustomFastTableWidget::scrollToCurrentCell()
+{
+    FASTTABLE_DEBUG;
+    START_PROFILE;
+
+    scrollToCell(mCurrentRow, mCurrentColumn);
 
     END_PROFILE;
 }
