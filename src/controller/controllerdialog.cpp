@@ -2291,6 +2291,21 @@ void ControllerDialog::on_verticalMergeXYViewButton_clicked()
     dialog.exec();
 }
 
+void ControllerDialog::tableDoSomething()
+{
+
+}
+
+void ControllerDialog::tableContextMenuRequested(QPoint pos)
+{
+    QMenu *contextMenu=new QMenu;
+
+    contextMenu->addAction("Something",this,SLOT(tableDoSomething()));
+
+    contextMenu->setGeometry(cursor().pos().x(),cursor().pos().y(),contextMenu->sizeHint().width(),contextMenu->sizeHint().height());
+    contextMenu->show();
+}
+
 void ControllerDialog::on_createCustomTableButton_clicked()
 {
     mFastTableWidget=new CustomFastTableWidget(this);
@@ -2321,6 +2336,9 @@ void ControllerDialog::on_createCustomTableButton_clicked()
     {
         mFastTableWidget->horizontalHeader_SetText(i, "Header");
     }
+
+    mFastTableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(mFastTableWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(tableContextMenuRequested(QPoint)));
 
     ui->fastTableControlWidget->setVisible(false);
 
@@ -2359,6 +2377,9 @@ void ControllerDialog::on_createFastTableButton_clicked()
     {
         mFastTableWidget->horizontalHeader_SetText(i, "Header");
     }
+
+    mFastTableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(mFastTableWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(tableContextMenuRequested(QPoint)));
 
     ui->fastTableControlWidget->setVisible(true);
 

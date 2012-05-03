@@ -448,31 +448,46 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
         }
         else
         {
-            mMouseSelectedCells.clear();
-
             mLastX=pos.x();
             mLastY=pos.y();
 
-            mMouseXForShift=mLastX;
-            mMouseYForShift=mLastY;
-
-            if (mCtrlPressed && event->button()==Qt::LeftButton)
+            if (event->button()==Qt::LeftButton)
             {
-                setCurrentCell(mLastY, mLastX, true);
+                mMouseSelectedCells.clear();
 
-                FASTTABLE_ASSERT(mLastY>=0 && mLastY<mSelectedCells.length());
-                FASTTABLE_ASSERT(mLastX>=0 && mLastX<mSelectedCells.at(mLastY).length());
+                mMouseXForShift=mLastX;
+                mMouseYForShift=mLastY;
 
-                setCellSelected(mLastY, mLastX, !mSelectedCells.at(mLastY).at(mLastX));
+                if (mCtrlPressed)
+                {
+                    setCurrentCell(mLastY, mLastX, true);
 
-                QList<bool> aRow;
-                aRow.append(mSelectedCells.at(mLastY).at(mLastX));
+                    FASTTABLE_ASSERT(mLastY>=0 && mLastY<mSelectedCells.length());
+                    FASTTABLE_ASSERT(mLastX>=0 && mLastX<mSelectedCells.at(mLastY).length());
 
-                mMouseSelectedCells.append(aRow);
+                    setCellSelected(mLastY, mLastX, !mSelectedCells.at(mLastY).at(mLastX));
+
+                    QList<bool> aRow;
+                    aRow.append(mSelectedCells.at(mLastY).at(mLastX));
+
+                    mMouseSelectedCells.append(aRow);
+                }
+                else
+                {
+                    setCurrentCell(mLastY, mLastX);
+                }
             }
             else
             {
-                setCurrentCell(mLastY, mLastX);
+                if (!mSelectedCells.at(mLastY).at(mLastX))
+                {
+                    mMouseSelectedCells.clear();
+
+                    mMouseXForShift=mLastX;
+                    mMouseYForShift=mLastY;
+
+                    setCurrentCell(mLastY, mLastX);
+                }
             }
         }
     }
@@ -4890,6 +4905,12 @@ QPoint CustomFastTableWidget::topLeftSelectedCell()
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
+
+    if (mCurSelection.length()==0)
+    {
+        FASTTABLE_END_PROFILE;
+        return QPoint(-1, -1);
+    }
 
     for (int i=0; i<mRowCount; i++)
     {

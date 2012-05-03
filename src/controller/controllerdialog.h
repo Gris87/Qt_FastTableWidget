@@ -7,6 +7,7 @@
 #include <QInputDialog>
 #include <QColorDialog>
 #include <QFontDialog>
+#include <QMenu>
 #include "qdebug.h"
 
 #include "src/controller/viewdialog.h"
@@ -31,6 +32,9 @@ public:
     void setStyleButtonsFlat();
 
 private slots:
+    void tableDoSomething();
+    void tableContextMenuRequested(QPoint pos);
+
     void on_deleteButton_clicked();
     void on_styleSimpleButton_clicked();
     void on_styleLinuxButton_clicked();
