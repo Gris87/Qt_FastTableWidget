@@ -79,19 +79,19 @@ public:
 
     void addRow();
     virtual void insertRow(int row);
-    virtual void deleteRow(int row);
+    virtual void removeRow(int row);
 
     void addColumn();
     virtual void insertColumn(int column);
-    virtual void deleteColumn(int column);
+    virtual void removeColumn(int column);
 
     void horizontalHeader_AddRow();
     virtual void horizontalHeader_InsertRow(int row);
-    virtual void horizontalHeader_DeleteRow(int row);
+    virtual void horizontalHeader_RemoveRow(int row);
 
     void verticalHeader_AddColumn();
     virtual void verticalHeader_InsertColumn(int column);
-    virtual void verticalHeader_DeleteColumn(int column);
+    virtual void verticalHeader_RemoveColumn(int column);
 
     int rowCount();
     void setRowCount(int count);

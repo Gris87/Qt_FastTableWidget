@@ -1403,7 +1403,7 @@ void FastTableWidget::insertRow(int row)
     FASTTABLE_END_PROFILE;
 }
 
-void FastTableWidget::deleteRow(int row)
+void FastTableWidget::removeRow(int row)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
@@ -1480,7 +1480,7 @@ void FastTableWidget::deleteRow(int row)
     mVerticalHeader_CellMergeParentRow.removeAt(row);
     mVerticalHeader_CellMergeParentColumn.removeAt(row);
 
-    CustomFastTableWidget::deleteRow(row);
+    CustomFastTableWidget::removeRow(row);
 
     FASTTABLE_END_PROFILE;
 }
@@ -1537,7 +1537,7 @@ void FastTableWidget::insertColumn(int column)
     FASTTABLE_END_PROFILE;
 }
 
-void FastTableWidget::deleteColumn(int column)
+void FastTableWidget::removeColumn(int column)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
@@ -1614,7 +1614,7 @@ void FastTableWidget::deleteColumn(int column)
         mHorizontalHeader_CellMergeParentColumn[i].removeAt(column);
     }
 
-    CustomFastTableWidget::deleteColumn(column);
+    CustomFastTableWidget::removeColumn(column);
 
     FASTTABLE_END_PROFILE;
 }
@@ -1665,7 +1665,7 @@ void FastTableWidget::horizontalHeader_InsertRow(int row)
     FASTTABLE_END_PROFILE;
 }
 
-void FastTableWidget::horizontalHeader_DeleteRow(int row)
+void FastTableWidget::horizontalHeader_RemoveRow(int row)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
@@ -1706,7 +1706,7 @@ void FastTableWidget::horizontalHeader_DeleteRow(int row)
     mHorizontalHeader_CellMergeParentRow.removeAt(row);
     mHorizontalHeader_CellMergeParentColumn.removeAt(row);
 
-    CustomFastTableWidget::horizontalHeader_DeleteRow(row);
+    CustomFastTableWidget::horizontalHeader_RemoveRow(row);
 
     FASTTABLE_END_PROFILE;
 }
@@ -1742,7 +1742,7 @@ void FastTableWidget::verticalHeader_InsertColumn(int column)
     FASTTABLE_END_PROFILE;
 }
 
-void FastTableWidget::verticalHeader_DeleteColumn(int column)
+void FastTableWidget::verticalHeader_RemoveColumn(int column)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
@@ -1783,7 +1783,7 @@ void FastTableWidget::verticalHeader_DeleteColumn(int column)
         mVerticalHeader_CellMergeParentColumn[i].removeAt(column);
     }
 
-    CustomFastTableWidget::verticalHeader_DeleteColumn(column);
+    CustomFastTableWidget::verticalHeader_RemoveColumn(column);
 
     FASTTABLE_END_PROFILE;
 }

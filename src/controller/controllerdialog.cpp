@@ -117,7 +117,7 @@ void ControllerDialog::on_deleteRowButton_clicked()
 
         if (dialog.exec())
         {
-            mFastTableWidget->deleteRow(dialog.intValue());
+            mFastTableWidget->removeRow(dialog.intValue());
 
             disconnect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
             ui->rowCountSpinBox->setValue(mFastTableWidget->rowCount());
@@ -167,7 +167,7 @@ void ControllerDialog::on_deleteColumnButton_clicked()
 
         if (dialog.exec())
         {
-            mFastTableWidget->deleteColumn(dialog.intValue());
+            mFastTableWidget->removeColumn(dialog.intValue());
 
             disconnect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
             ui->columnCountSpinBox->setValue(mFastTableWidget->columnCount());
@@ -217,7 +217,7 @@ void ControllerDialog::on_deleteHeaderRowButton_clicked()
 
         if (dialog.exec())
         {
-            mFastTableWidget->horizontalHeader_DeleteRow(dialog.intValue());
+            mFastTableWidget->horizontalHeader_RemoveRow(dialog.intValue());
 
             disconnect(ui->horizontalHeaderRowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalHeaderRowCountSpinBox_valueChanged(int)));
             ui->horizontalHeaderRowCountSpinBox->setValue(mFastTableWidget->horizontalHeader_RowCount());
@@ -267,7 +267,7 @@ void ControllerDialog::on_deleteHeaderColumnButton_clicked()
 
         if (dialog.exec())
         {
-            mFastTableWidget->verticalHeader_DeleteColumn(dialog.intValue());
+            mFastTableWidget->verticalHeader_RemoveColumn(dialog.intValue());
 
             disconnect(ui->verticalHeaderColumnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_verticalHeaderColumnCountSpinBox_valueChanged(int)));
             ui->verticalHeaderColumnCountSpinBox->setValue(mFastTableWidget->verticalHeader_ColumnCount());
@@ -2313,7 +2313,7 @@ void ControllerDialog::tableDeleteRow()
 
     for (int i=0; i<rows.length(); i++)
     {
-        mFastTableWidget->deleteRow(rows.at(i));
+        mFastTableWidget->removeRow(rows.at(i));
     }
 }
 
@@ -2339,7 +2339,7 @@ void ControllerDialog::tableDeleteColumn()
 
     for (int i=0; i<columns.length(); i++)
     {
-        mFastTableWidget->deleteColumn(columns.at(i));
+        mFastTableWidget->removeColumn(columns.at(i));
     }
 }
 

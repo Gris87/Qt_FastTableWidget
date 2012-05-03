@@ -46,16 +46,16 @@ public:
     void verticalHeader_ResetCellTextFlag(const int row, const int column);
 
     void insertRow(int row);
-    void deleteRow(int row);
+    void removeRow(int row);
 
     void insertColumn(int column);
-    void deleteColumn(int column);
+    void removeColumn(int column);
 
     void horizontalHeader_InsertRow(int row);
-    void horizontalHeader_DeleteRow(int row);
+    void horizontalHeader_RemoveRow(int row);
 
     void verticalHeader_InsertColumn(int column);
-    void verticalHeader_DeleteColumn(int column);
+    void verticalHeader_RemoveColumn(int column);
 
     QBrush backgroundBrush(const int row, const int column);
     void setBackgroundBrush(const int row, const int column, const QBrush brush);

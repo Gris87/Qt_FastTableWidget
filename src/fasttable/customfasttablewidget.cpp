@@ -3095,7 +3095,7 @@ void CustomFastTableWidget::insertRow(int row)
     FASTTABLE_END_PROFILE;
 }
 
-void CustomFastTableWidget::deleteRow(int row)
+void CustomFastTableWidget::removeRow(int row)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
@@ -3218,7 +3218,7 @@ void CustomFastTableWidget::insertColumn(int column)
     FASTTABLE_END_PROFILE;
 }
 
-void CustomFastTableWidget::deleteColumn(int column)
+void CustomFastTableWidget::removeColumn(int column)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
@@ -3345,7 +3345,7 @@ void CustomFastTableWidget::horizontalHeader_InsertRow(int row)
     FASTTABLE_END_PROFILE;
 }
 
-void CustomFastTableWidget::horizontalHeader_DeleteRow(int row)
+void CustomFastTableWidget::horizontalHeader_RemoveRow(int row)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
@@ -3450,7 +3450,7 @@ void CustomFastTableWidget::verticalHeader_InsertColumn(int column)
     FASTTABLE_END_PROFILE;
 }
 
-void CustomFastTableWidget::verticalHeader_DeleteColumn(int column)
+void CustomFastTableWidget::verticalHeader_RemoveColumn(int column)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
@@ -3538,7 +3538,7 @@ void CustomFastTableWidget::setRowCount(int count)
 
         while (mRowCount>count)
         {
-            deleteRow(mRowCount-1);
+            removeRow(mRowCount-1);
         }
 
         if (wasAllowUpdates)
@@ -3582,7 +3582,7 @@ void CustomFastTableWidget::setColumnCount(int count)
 
         while (mColumnCount>count)
         {
-            deleteColumn(mColumnCount-1);
+            removeColumn(mColumnCount-1);
         }
 
         if (wasAllowUpdates)
@@ -3626,7 +3626,7 @@ void CustomFastTableWidget::horizontalHeader_SetRowCount(qint16 count)
 
         while (mHorizontalHeader_RowCount>count)
         {
-            horizontalHeader_DeleteRow(mHorizontalHeader_RowCount-1);
+            horizontalHeader_RemoveRow(mHorizontalHeader_RowCount-1);
         }
 
         if (wasAllowUpdates)
@@ -3670,7 +3670,7 @@ void CustomFastTableWidget::verticalHeader_SetColumnCount(qint16 count)
 
         while (mVerticalHeader_ColumnCount>count)
         {
-            verticalHeader_DeleteColumn(mVerticalHeader_ColumnCount-1);
+            verticalHeader_RemoveColumn(mVerticalHeader_ColumnCount-1);
         }
 
         if (wasAllowUpdates)
