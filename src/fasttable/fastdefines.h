@@ -104,19 +104,19 @@
 // Profiling
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #if 0
-    #define START_PROFILE  qint64 profileStart=QDateTime::currentMSecsSinceEpoch();
-    #define END_PROFILE    qDebug()<<Q_FUNC_INFO<<":"<<QDateTime::currentMSecsSinceEpoch()-profileStart<<"ms";
+    #define FASTTABLE_START_PROFILE  qint64 profileStart=QDateTime::currentMSecsSinceEpoch();
+    #define FASTTABLE_END_PROFILE    qDebug()<<Q_FUNC_INFO<<":"<<QDateTime::currentMSecsSinceEpoch()-profileStart<<"ms";
 #else
-    #define START_PROFILE
-    #define END_PROFILE
+    #define FASTTABLE_START_PROFILE
+    #define FASTTABLE_END_PROFILE
 #endif
 
 #if 0
-    #define START_FREQUENT_PROFILE  START_PROFILE
-    #define END_FREQUENT_PROFILE    END_PROFILE
+    #define FASTTABLE_FREQUENT_START_PROFILE  FASTTABLE_START_PROFILE
+    #define FASTTABLE_FREQUENT_END_PROFILE    FASTTABLE_END_PROFILE
 #else
-    #define START_FREQUENT_PROFILE
-    #define END_FREQUENT_PROFILE
+    #define FASTTABLE_FREQUENT_START_PROFILE
+    #define FASTTABLE_FREQUENT_END_PROFILE
 #endif
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

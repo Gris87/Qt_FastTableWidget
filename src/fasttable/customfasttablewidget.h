@@ -12,6 +12,8 @@
 #include <QDateTime>
 #include <QMouseEvent>
 #include <QTimer>
+#include <QApplication>
+#include <QClipboard>
 
 #include "qdebug.h"
 
@@ -207,7 +209,9 @@ public:
     virtual bool cellSelected(const int row, const int column);
     virtual void setCellSelected(const int row, const int column, const bool selected);
 
-    QList<QPoint> currentSelection();
+    QList<QPoint> selectedCells();
+    QList<QRect> selectedRanges();
+    QPoint topLeftSelectedCell();
     bool horizontalHeader_ColumnSelected(const int column);
     bool verticalHeader_RowSelected(const int row);
 
