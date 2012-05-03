@@ -1,8 +1,10 @@
 Problem with using shift and several cell types
 Inserting/removing rows and some properties
 Check for asserts
+Cell editing
 Merge and mouse
 Merge and keyboard
+Merge and cell editing
 Action queue to remove unnecessary function calls
 Cell flags (Selection, Editing, Enabled)
 Selection types: Select row, column, cell
