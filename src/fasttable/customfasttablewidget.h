@@ -309,6 +309,7 @@ protected:
     bool mShiftPressed;
 
     MouseLocation mMouseLocation;
+    MouseLocation mMouseLocationForShift;
 
     QList< QList<bool> > mMouseSelectedCells;
 
@@ -350,8 +351,7 @@ public slots:
     void scrollToCurrentCell();
 
 protected slots:
-    void horizontalScrollBarValueChanged(int value);
-    void verticalScrollBarValueChanged(int value);
+    void scrollBarValueChanged(int value);
 
     void mouseHoldTick();
 };

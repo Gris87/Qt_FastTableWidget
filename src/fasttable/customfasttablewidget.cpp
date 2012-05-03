@@ -34,6 +34,7 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     mCtrlPressed=false;
     mShiftPressed=false;
     mMouseLocation=InMiddleWorld;
+    mMouseLocationForShift=InMiddleWorld;
     mLastX=-1;
     mLastY=-1;
     mMouseXForShift=-1;
@@ -75,8 +76,8 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
 
     mMouseHoldTimer.setInterval(5);
 
-    connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(horizontalScrollBarValueChanged(int)));
-    connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(verticalScrollBarValueChanged(int)));
+    connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(scrollBarValueChanged(int)));
+    connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(scrollBarValueChanged(int)));
 
     connect(&mMouseHoldTimer, SIGNAL(timeout()), this, SLOT(mouseHoldTick()));
 
@@ -429,6 +430,13 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
 
         if (mShiftPressed && event->button()==Qt::LeftButton)
         {
+            if (mMouseLocationForShift!=mMouseLocation)
+            {
+                mMouseLocationForShift=mMouseLocation;
+                unselectAll();
+                mMouseSelectedCells.clear();
+            }
+
             if (mMouseXForShift<0 || mMouseYForShift<0)
             {
                 if (mCurrentColumn<0 || mCurrentRow<0)
@@ -458,6 +466,8 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                 mMouseXForShift=mLastX;
                 mMouseYForShift=mLastY;
 
+                mMouseLocationForShift=mMouseLocation;
+
                 if (mCtrlPressed)
                 {
                     setCurrentCell(mLastY, mLastX, true);
@@ -466,16 +476,16 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                     FASTTABLE_ASSERT(mLastX>=0 && mLastX<mSelectedCells.at(mLastY).length());
 
                     setCellSelected(mLastY, mLastX, !mSelectedCells.at(mLastY).at(mLastX));
-
-                    QList<bool> aRow;
-                    aRow.append(mSelectedCells.at(mLastY).at(mLastX));
-
-                    mMouseSelectedCells.append(aRow);
                 }
                 else
                 {
                     setCurrentCell(mLastY, mLastX);
                 }
+
+                QList<bool> aRow;
+                aRow.append(mSelectedCells.at(mLastY).at(mLastX));
+
+                mMouseSelectedCells.append(aRow);
             }
             else
             {
@@ -485,6 +495,8 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
 
                     mMouseXForShift=mLastX;
                     mMouseYForShift=mLastY;
+
+                    mMouseLocationForShift=mMouseLocation;
 
                     setCurrentCell(mLastY, mLastX);
                 }
@@ -570,17 +582,21 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
             {
                 if (mShiftPressed && event->button()==Qt::LeftButton)
                 {
+                    if (mMouseLocationForShift!=mMouseLocation)
+                    {
+                        mMouseLocationForShift=mMouseLocation;
+                        unselectAll();
+                        mMouseSelectedCells.clear();
+                    }
+
                     if (mMouseXForShift<0 || mMouseYForShift<0)
                     {
-                        mMouseSelectedCells.clear();
-
                         if (mCurrentColumn<0 || mCurrentRow<0)
                         {
                             setCurrentCell(0, 0);
                         }
 
-                        mMouseXForShift=mCurrentColumn;
-                        mMouseYForShift=mCurrentRow;
+                        initShiftSelection();
                     }
 
                     mLastX=mMouseXForShift;
@@ -613,6 +629,8 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                     mMouseXForShift=mLastX;
                     mMouseYForShift=mLastY;
 
+                    mMouseLocationForShift=mMouseLocation;
+
                     if (mCtrlPressed && event->button()==Qt::LeftButton)
                     {
                         setCurrentCell(mRowCount-1, mLastX, true);
@@ -620,22 +638,27 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                         FASTTABLE_ASSERT(mSelectedCells.length()>0);
                         FASTTABLE_ASSERT(mLastX>=0 && mLastX<mSelectedCells.at(0).length());
 
-                        bool selected=!mSelectedCells.at(0).at(mLastX);
-
-                        for (int i=0; i<mRowCount; i++)
+                        if (mSelectedCells.at(0).at(mLastX))
                         {
-                            setCellSelected(i, mLastX, selected);
-
-                            QList<bool> aRow;
-                            aRow.append(selected);
-
-                            mMouseSelectedCells.append(aRow);
+                            unselectColumn(mLastX);
+                        }
+                        else
+                        {
+                            selectColumn(mLastX);
                         }
                     }
                     else
                     {
                         setCurrentCell(mRowCount-1, mLastX);
                         selectColumn(mLastX);
+                    }
+
+                    for (int i=0; i<mRowCount; i++)
+                    {
+                        QList<bool> aRow;
+                        aRow.append(mSelectedCells.at(i).at(mLastX));
+
+                        mMouseSelectedCells.append(aRow);
                     }
 
                     viewport()->update();
@@ -719,17 +742,21 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                 {
                     if (mShiftPressed && event->button()==Qt::LeftButton)
                     {
+                        if (mMouseLocationForShift!=mMouseLocation)
+                        {
+                            mMouseLocationForShift=mMouseLocation;
+                            unselectAll();
+                            mMouseSelectedCells.clear();
+                        }
+
                         if (mMouseXForShift<0 || mMouseYForShift<0)
                         {
-                            mMouseSelectedCells.clear();
-
                             if (mCurrentColumn<0 || mCurrentRow<0)
                             {
                                 setCurrentCell(0, 0);
                             }
 
-                            mMouseXForShift=mCurrentColumn;
-                            mMouseYForShift=mCurrentRow;
+                            initShiftSelection();
                         }
 
                         mLastX=mMouseXForShift;
@@ -762,6 +789,8 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                         mMouseXForShift=mLastX;
                         mMouseYForShift=mLastY;
 
+                        mMouseLocationForShift=mMouseLocation;
+
                         if (mCtrlPressed && event->button()==Qt::LeftButton)
                         {
                             setCurrentCell(mLastY, mColumnCount-1, true);
@@ -769,24 +798,29 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                             FASTTABLE_ASSERT(mLastY>=0 && mLastY<mSelectedCells.length());
                             FASTTABLE_ASSERT(mSelectedCells.at(mLastY).length()>0);
 
-                            bool selected=!mSelectedCells.at(mLastY).at(0);
-
-                            QList<bool> aRow;
-
-                            for (int i=0; i<mColumnCount; i++)
+                            if (mSelectedCells.at(mLastY).at(0))
                             {
-                                setCellSelected(mLastY, i, selected);
-
-                                aRow.append(selected);
+                                unselectRow(mLastY);
                             }
-
-                            mMouseSelectedCells.append(aRow);
+                            else
+                            {
+                                selectRow(mLastY);
+                            }
                         }
                         else
                         {
                             setCurrentCell(mLastY, mColumnCount-1);
                             selectRow(mLastY);
                         }
+
+                        QList<bool> aRow;
+
+                        for (int i=0; i<mColumnCount; i++)
+                        {
+                            aRow.append(mSelectedCells.at(mLastY).at(i));
+                        }
+
+                        mMouseSelectedCells.append(aRow);
 
                         viewport()->update();
                     }
@@ -918,28 +952,7 @@ void CustomFastTableWidget::mouseMoveEvent(QMouseEvent *event)
 
             if (resX!=mCurrentColumn || resY!=mCurrentRow)
             {
-
-                if (mCtrlPressed || mShiftPressed)
-                {
-                    selectRangeForHandlers(resX, resY);
-                }
-                else
-                {
-                    int minX=qMin(resX, mLastX);
-                    int minY=qMin(resY, mLastY);
-                    int maxX=qMax(resX, mLastX);
-                    int maxY=qMax(resY, mLastY);
-
-                    setCurrentCell(resY, resX);
-
-                    for (int i=minY; i<=maxY; i++)
-                    {
-                        for (int j=minX; j<=maxX; j++)
-                        {
-                            setCellSelected(i, j, true);
-                        }
-                    }
-                }
+                selectRangeForHandlers(resX, resY);
             }
         }
         else
@@ -1039,22 +1052,7 @@ void CustomFastTableWidget::mouseMoveEvent(QMouseEvent *event)
 
                     if (resX!=mCurrentColumn)
                     {
-                        if (mCtrlPressed || mShiftPressed)
-                        {
-                            horizontalHeader_SelectRangeForHandlers(resX);
-                        }
-                        else
-                        {
-                            int minX=qMin(resX, mLastX);
-                            int maxX=qMax(resX, mLastX);
-
-                            setCurrentCell(mRowCount-1, resX);
-
-                            for (int i=minX; i<=maxX; i++)
-                            {
-                                selectColumn(i);
-                            }
-                        }
+                        horizontalHeader_SelectRangeForHandlers(resX);
                     }
                 }
                 else
@@ -1074,23 +1072,7 @@ void CustomFastTableWidget::mouseMoveEvent(QMouseEvent *event)
 
                     if (resY!=mCurrentRow)
                     {
-
-                        if (mCtrlPressed || mShiftPressed)
-                        {
-                            verticalHeader_SelectRangeForHandlers(resY);
-                        }
-                        else
-                        {
-                            int minY=qMin(resY, mLastY);
-                            int maxY=qMax(resY, mLastY);
-
-                            setCurrentCell(resY, mColumnCount-1);
-
-                            for (int i=minY; i<=maxY; i++)
-                            {
-                                selectRow(i);
-                            }
-                        }
+                        verticalHeader_SelectRangeForHandlers(resY);
                     }
                 }
             }
@@ -2428,17 +2410,7 @@ void CustomFastTableWidget::paintHeaderCellDefault(QPainter &painter, const int 
     FASTTABLE_FREQUENT_END_PROFILE;
 }
 
-void CustomFastTableWidget::horizontalScrollBarValueChanged(int value)
-{
-    FASTTABLE_FREQUENT_DEBUG;
-    FASTTABLE_FREQUENT_START_PROFILE;
-
-    updateVisibleRange();
-
-    FASTTABLE_FREQUENT_END_PROFILE;
-}
-
-void CustomFastTableWidget::verticalScrollBarValueChanged(int value)
+void CustomFastTableWidget::scrollBarValueChanged(int value)
 {
     FASTTABLE_FREQUENT_DEBUG;
     FASTTABLE_FREQUENT_START_PROFILE;
