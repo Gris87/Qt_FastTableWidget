@@ -4928,7 +4928,7 @@ QPoint CustomFastTableWidget::topLeftSelectedCell()
     return QPoint(-1, -1);
 }
 
-bool CustomFastTableWidget::horizontalHeader_ColumnSelected(const int column)
+bool CustomFastTableWidget::columnHasSelection(const int column)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_SelectedColumns.length());
@@ -4936,7 +4936,7 @@ bool CustomFastTableWidget::horizontalHeader_ColumnSelected(const int column)
     return mHorizontalHeader_SelectedColumns.at(column)!=0;
 }
 
-bool CustomFastTableWidget::verticalHeader_RowSelected(const int row)
+bool CustomFastTableWidget::rowHasSelection(const int row)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_SelectedRows.length());

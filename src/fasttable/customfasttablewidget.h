@@ -212,8 +212,8 @@ public:
     QList<QPoint> selectedCells();
     QList<QRect> selectedRanges();
     QPoint topLeftSelectedCell();
-    bool horizontalHeader_ColumnSelected(const int column);
-    bool verticalHeader_RowSelected(const int row);
+    bool columnHasSelection(const int column);
+    bool rowHasSelection(const int row);
 
     QPoint currentCell();
     virtual void setCurrentCell(int row, int column, const bool keepSelection=false);

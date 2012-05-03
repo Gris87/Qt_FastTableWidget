@@ -2291,16 +2291,68 @@ void ControllerDialog::on_verticalMergeXYViewButton_clicked()
     dialog.exec();
 }
 
-void ControllerDialog::tableDoSomething()
+void ControllerDialog::tableInsertRow()
 {
+    if (mFastTableWidget->currentRow()>=0)
+    {
+        mFastTableWidget->insertRow(mFastTableWidget->currentRow());
+    }
+}
 
+void ControllerDialog::tableDeleteRow()
+{
+    QList<int> rows;
+
+    for (int i=mFastTableWidget->rowCount()-1; i>=0; i--)
+    {
+        if (mFastTableWidget->rowHasSelection(i))
+        {
+            rows.append(i);
+        }
+    }
+
+    for (int i=0; i<rows.length(); i++)
+    {
+        mFastTableWidget->deleteRow(rows.at(i));
+    }
+}
+
+void ControllerDialog::tableInsertColumn()
+{
+    if (mFastTableWidget->currentColumn()>=0)
+    {
+        mFastTableWidget->insertColumn(mFastTableWidget->currentColumn());
+    }
+}
+
+void ControllerDialog::tableDeleteColumn()
+{
+    QList<int> columns;
+
+    for (int i=mFastTableWidget->columnCount()-1; i>=0; i--)
+    {
+        if (mFastTableWidget->columnHasSelection(i))
+        {
+            columns.append(i);
+        }
+    }
+
+    for (int i=0; i<columns.length(); i++)
+    {
+        mFastTableWidget->deleteColumn(columns.at(i));
+    }
 }
 
 void ControllerDialog::tableContextMenuRequested(QPoint pos)
 {
     QMenu *contextMenu=new QMenu;
 
-    contextMenu->addAction("Something",this,SLOT(tableDoSomething()));
+    contextMenu->addAction("Insert row",this,SLOT(tableInsertRow()));
+    contextMenu->addAction("Delete row(s)",this,SLOT(tableDeleteRow()));
+    contextMenu->addAction("Insert column",this,SLOT(tableInsertColumn()));
+    contextMenu->addAction("Delete column(s)",this,SLOT(tableDeleteColumn()));
+
+    contextMenu->addSeparator();
 
     contextMenu->setGeometry(cursor().pos().x(),cursor().pos().y(),contextMenu->sizeHint().width(),contextMenu->sizeHint().height());
     contextMenu->show();

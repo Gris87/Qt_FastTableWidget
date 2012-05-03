@@ -32,7 +32,10 @@ public:
     void setStyleButtonsFlat();
 
 private slots:
-    void tableDoSomething();
+    void tableInsertRow();
+    void tableDeleteRow();
+    void tableInsertColumn();
+    void tableDeleteColumn();
     void tableContextMenuRequested(QPoint pos);
 
     void on_deleteButton_clicked();
