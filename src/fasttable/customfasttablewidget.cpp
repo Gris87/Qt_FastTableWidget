@@ -3181,11 +3181,11 @@ void CustomFastTableWidget::removeRow(int row)
     if (mCurrentRow>row || mCurrentRow>mRowCount-2)
     {
         mCurrentRow--;
+    }
 
-        if (mCurrentRow>=0 && mCurrentColumn>=0)
-        {
-            setCellSelected(mCurrentRow, mCurrentColumn, true);
-        }
+    if (mCurrentRow>=0 && mCurrentColumn>=0)
+    {
+        setCellSelected(mCurrentRow, mCurrentColumn, true);
     }
 
     mMouseXForShift=-1;
@@ -3349,11 +3349,11 @@ void CustomFastTableWidget::removeColumn(int column)
     if (mCurrentColumn>column || mCurrentColumn>mColumnCount-2)
     {
         mCurrentColumn--;
+    }
 
-        if (mCurrentRow>=0 && mCurrentColumn>=0)
-        {
-            setCellSelected(mCurrentRow, mCurrentColumn, true);
-        }
+    if (mCurrentRow>=0 && mCurrentColumn>=0)
+    {
+        setCellSelected(mCurrentRow, mCurrentColumn, true);
     }
 
     mMouseXForShift=-1;

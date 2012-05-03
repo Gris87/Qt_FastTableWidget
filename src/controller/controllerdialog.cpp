@@ -2296,6 +2296,10 @@ void ControllerDialog::tableInsertRow()
     if (mFastTableWidget->currentRow()>=0)
     {
         mFastTableWidget->insertRow(mFastTableWidget->currentRow());
+
+        disconnect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
+        ui->rowCountSpinBox->setValue(mFastTableWidget->rowCount());
+        connect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
     }
 }
 
@@ -2315,6 +2319,10 @@ void ControllerDialog::tableDeleteRow()
     {
         mFastTableWidget->removeRow(rows.at(i));
     }
+
+    disconnect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
+    ui->rowCountSpinBox->setValue(mFastTableWidget->rowCount());
+    connect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
 }
 
 void ControllerDialog::tableInsertColumn()
@@ -2322,6 +2330,10 @@ void ControllerDialog::tableInsertColumn()
     if (mFastTableWidget->currentColumn()>=0)
     {
         mFastTableWidget->insertColumn(mFastTableWidget->currentColumn());
+
+        disconnect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
+        ui->columnCountSpinBox->setValue(mFastTableWidget->columnCount());
+        connect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
     }
 }
 
@@ -2341,6 +2353,10 @@ void ControllerDialog::tableDeleteColumn()
     {
         mFastTableWidget->removeColumn(columns.at(i));
     }
+
+    disconnect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
+    ui->columnCountSpinBox->setValue(mFastTableWidget->columnCount());
+    connect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
 }
 
 void ControllerDialog::tableContextMenuRequested(QPoint pos)
