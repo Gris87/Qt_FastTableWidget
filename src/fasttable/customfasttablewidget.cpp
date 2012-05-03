@@ -7,6 +7,32 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
+    mStyle=StyleSimple;
+
+#ifdef Q_OS_LINUX
+    setStyle(StyleLinux);
+#endif
+#ifdef Q_OS_WIN
+    switch (QSysInfo::windowsVersion())
+    {
+        case QSysInfo::WV_XP:
+        {
+            setStyle(StyleWinXP);
+        }
+        break;
+        case QSysInfo::WV_WINDOWS7:
+        {
+            setStyle(StyleWin7);
+        }
+        break;
+        default:
+        {
+            setStyle(StyleWinXP);
+        }
+        break;
+    }
+#endif
+
     mRowCount=0;
     mColumnCount=0;
     mHorizontalHeader_RowCount=0;
@@ -43,43 +69,16 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     mMouseResizeLineY=-1;
     mMouseResizeCell=-1;
 
-    mStyle=StyleSimple;
-
-#ifdef Q_OS_LINUX
-    setStyle(StyleLinux);
-#endif
-#ifdef Q_OS_WIN
-    switch (QSysInfo::windowsVersion())
-    {
-        case QSysInfo::WV_XP:
-        {
-            setStyle(StyleWinXP);
-        }
-        break;
-        case QSysInfo::WV_WINDOWS7:
-        {
-            setStyle(StyleWin7);
-        }
-        break;
-        default:
-        {
-            setStyle(StyleWinXP);
-        }
-        break;
-    }
-#endif
+    mMouseHoldTimer.setInterval(5);
+    connect(&mMouseHoldTimer, SIGNAL(timeout()), this, SLOT(mouseHoldTick()));
 
     setMouseTracking(true);
 
     horizontalScrollBar()->setSingleStep(100);
     verticalScrollBar()->setSingleStep(100);
 
-    mMouseHoldTimer.setInterval(5);
-
     connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(scrollBarValueChanged(int)));
     connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(scrollBarValueChanged(int)));
-
-    connect(&mMouseHoldTimer, SIGNAL(timeout()), this, SLOT(mouseHoldTick()));
 
     FASTTABLE_END_PROFILE;
 }
@@ -927,7 +926,11 @@ void CustomFastTableWidget::mouseMoveEvent(QMouseEvent *event)
         if (needHold)
         {
             mMouseHoldTimer.start();
-            mMouseEvent=*event;
+
+            if (event!=&mMouseEvent)
+            {
+                mMouseEvent=*event;
+            }
         }
 
         if (mMouseLocation==InCell)

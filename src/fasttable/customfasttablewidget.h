@@ -235,11 +235,6 @@ protected:
     DrawFunction mDrawCellFunction;
     DrawFunction mDrawHeaderCellFunction;
 
-    int mRowCount;
-    int mColumnCount;
-    qint16 mHorizontalHeader_RowCount;
-    qint16 mVerticalHeader_ColumnCount;
-
     QBrush mDefaultBackgroundBrush;
     QColor mDefaultForegroundColor;
     QColor mGridColor;
@@ -257,6 +252,11 @@ protected:
 
     QBrush mSelectionBrush;
     QColor mSelectionTextColor;
+
+    int mRowCount;
+    int mColumnCount;
+    qint16 mHorizontalHeader_RowCount;
+    qint16 mVerticalHeader_ColumnCount;
 
     quint16 mDefaultWidth;
     quint16 mDefaultHeight;
