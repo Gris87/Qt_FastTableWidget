@@ -435,6 +435,11 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                 mMouseLocationForShift=mMouseLocation;
                 unselectAll();
                 mMouseSelectedCells.clear();
+
+                if (mMouseXForShift>=0 && mMouseYForShift>=0)
+                {
+                    setCurrentCell(mMouseYForShift, mMouseXForShift);
+                }
             }
 
             if (mMouseXForShift<0 || mMouseYForShift<0)

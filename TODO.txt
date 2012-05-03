@@ -1,4 +1,3 @@
-Problem with using shift and several cell types
 Inserting/removing rows and some properties
 Check for asserts
 Cell editing
