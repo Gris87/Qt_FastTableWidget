@@ -3090,6 +3090,24 @@ void CustomFastTableWidget::insertRow(int row)
         mSelectedCells[row].append(false);
     }
 
+    for (int i=0; i<mCurSelection.length(); ++i)
+    {
+        if (mCurSelection.at(i).y()>=row)
+        {
+            mCurSelection[i].setY(mCurSelection.at(i).y()+1);
+        }
+    }
+
+    if (mCurrentRow>=row)
+    {
+        mCurrentRow++;
+    }
+
+    mMouseXForShift=-1;
+    mMouseYForShift=-1;
+    mMouseLocationForShift=InMiddleWorld;
+    mMouseSelectedCells.clear();
+
     updateBarsRanges();
     updateVisibleRange();
 
@@ -3139,19 +3157,41 @@ void CustomFastTableWidget::removeRow(int row)
 
         if (mSelectedCells.at(row).at(i))
         {
-            for (int j=0; j<mCurSelection.length(); ++j)
-            {
-                if (mCurSelection.at(j).y()==row && mCurSelection.at(j).x()==i)
-                {
-                    mCurSelection.removeAt(j);
-                    break;
-                }
-            }
+            mHorizontalHeader_SelectedColumns[i]--;
         }
     }
 
     mSelectedCells.removeAt(row);
     mVerticalHeader_SelectedRows.removeAt(row);
+
+    for (int i=0; i<mCurSelection.length(); ++i)
+    {
+        if (mCurSelection.at(i).y()>row)
+        {
+            mCurSelection[i].setY(mCurSelection.at(i).y()-1);
+        }
+        else
+        if (mCurSelection.at(i).y()==row)
+        {
+            mCurSelection.removeAt(i);
+            --i;
+        }
+    }
+
+    if (mCurrentRow>row || mCurrentRow>mRowCount-2)
+    {
+        mCurrentRow--;
+
+        if (mCurrentRow>=0 && mCurrentColumn>=0)
+        {
+            setCellSelected(mCurrentRow, mCurrentColumn, true);
+        }
+    }
+
+    mMouseXForShift=-1;
+    mMouseYForShift=-1;
+    mMouseLocationForShift=InMiddleWorld;
+    mMouseSelectedCells.clear();
 
     mRowCount--;
 
@@ -3213,6 +3253,24 @@ void CustomFastTableWidget::insertColumn(int column)
 
     mHorizontalHeader_SelectedColumns.insert(column, 0);
 
+    for (int i=0; i<mCurSelection.length(); ++i)
+    {
+        if (mCurSelection.at(i).x()>=column)
+        {
+            mCurSelection[i].setX(mCurSelection.at(i).x()+1);
+        }
+    }
+
+    if (mCurrentColumn>=column)
+    {
+        mCurrentColumn++;
+    }
+
+    mMouseXForShift=-1;
+    mMouseYForShift=-1;
+    mMouseLocationForShift=InMiddleWorld;
+    mMouseSelectedCells.clear();
+
     updateBarsRanges();
     updateVisibleRange();
 
@@ -3266,20 +3324,42 @@ void CustomFastTableWidget::removeColumn(int column)
 
         if (mSelectedCells.at(i).at(column))
         {
-            for (int j=0; j<mCurSelection.length(); ++j)
-            {
-                if (mCurSelection.at(j).y()==i && mCurSelection.at(j).x()==column)
-                {
-                    mCurSelection.removeAt(j);
-                    break;
-                }
-            }
+            mVerticalHeader_SelectedRows[i]--;
         }
 
         mSelectedCells[i].removeAt(column);
     }
 
     mHorizontalHeader_SelectedColumns.removeAt(column);
+
+    for (int i=0; i<mCurSelection.length(); ++i)
+    {
+        if (mCurSelection.at(i).x()>column)
+        {
+            mCurSelection[i].setX(mCurSelection.at(i).x()-1);
+        }
+        else
+        if (mCurSelection.at(i).x()==column)
+        {
+            mCurSelection.removeAt(i);
+            --i;
+        }
+    }
+
+    if (mCurrentColumn>column || mCurrentColumn>mColumnCount-2)
+    {
+        mCurrentColumn--;
+
+        if (mCurrentRow>=0 && mCurrentColumn>=0)
+        {
+            setCellSelected(mCurrentRow, mCurrentColumn, true);
+        }
+    }
+
+    mMouseXForShift=-1;
+    mMouseYForShift=-1;
+    mMouseLocationForShift=InMiddleWorld;
+    mMouseSelectedCells.clear();
 
     mColumnCount--;
 
