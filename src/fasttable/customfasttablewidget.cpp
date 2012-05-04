@@ -405,6 +405,61 @@ void CustomFastTableWidget::keyPressEvent(QKeyEvent *event)
     FASTTABLE_FREQUENT_END_PROFILE;
 }
 
+bool CustomFastTableWidget::focusNextPrevChild(bool next)
+{
+    if (mCurrentRow<0 || mCurrentColumn<0)
+    {
+        setCurrentCell(0, 0);
+
+        initShiftSelection();
+    }
+    else
+    {
+        if (next)
+        {
+            if (mCurrentColumn<mColumnCount-1)
+            {
+                setCurrentCell(mCurrentRow, mCurrentColumn+1);
+            }
+            else
+            {
+                if (mCurrentRow<mRowCount-1)
+                {
+                    setCurrentCell(mCurrentRow+1, 0);
+                }
+                else
+                {
+                    setCurrentCell(0, 0);
+                }
+            }
+        }
+        else
+        {
+            if (mCurrentColumn>0)
+            {
+                setCurrentCell(mCurrentRow, mCurrentColumn-1);
+            }
+            else
+            {
+                if (mCurrentRow>0)
+                {
+                    setCurrentCell(mCurrentRow-1, mColumnCount-1);
+                }
+                else
+                {
+                    setCurrentCell(mRowCount-1, mColumnCount-1);
+                }
+            }
+        }
+
+        initShiftSelection();
+    }
+
+    scrollToCurrentCell();
+
+    return true;
+}
+
 void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
 {
     FASTTABLE_DEBUG;

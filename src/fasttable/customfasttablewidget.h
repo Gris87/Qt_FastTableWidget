@@ -317,6 +317,7 @@ protected:
     QMouseEvent mMouseEvent;
 
     void keyPressEvent(QKeyEvent *event);
+    bool focusNextPrevChild(bool next);
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);

@@ -2,6 +2,7 @@ Inserting/removing rows and some properties
 Check for asserts
 Cell editing
 Sort
+Cell widgets
 Merge and mouse
 Merge and keyboard
 Merge and cell editing
