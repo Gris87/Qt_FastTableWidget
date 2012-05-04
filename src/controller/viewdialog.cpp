@@ -31,6 +31,8 @@ ViewDialog::ViewDialog(CustomFastTableWidget::MouseLocation aValue, QWidget *par
 {
     VIEWDIALOG_BASE_CONSTRUCTOR;
 
+    mFastTableWidget->horizontalHeader_SetText(0, "MouseLocation");
+
     mFastTableWidget->setText(0, 0, valueToString(aValue));
 }
 
@@ -41,6 +43,9 @@ ViewDialog::ViewDialog(QPoint aValue, QWidget *parent) :
     VIEWDIALOG_BASE_CONSTRUCTOR;
 
     mFastTableWidget->setColumnCount(2);
+
+    mFastTableWidget->horizontalHeader_SetText(0, "X");
+    mFastTableWidget->horizontalHeader_SetText(1, "Y");
 
     mFastTableWidget->setText(0, 0, valueToString(aValue.x()));
     mFastTableWidget->setText(0, 1, valueToString(aValue.y()));
@@ -53,6 +58,11 @@ ViewDialog::ViewDialog(QRect aValue, QWidget *parent) :
     VIEWDIALOG_BASE_CONSTRUCTOR;
 
     mFastTableWidget->setColumnCount(4);
+
+    mFastTableWidget->horizontalHeader_SetText(0, "Left");
+    mFastTableWidget->horizontalHeader_SetText(1, "Top");
+    mFastTableWidget->horizontalHeader_SetText(2, "Right");
+    mFastTableWidget->horizontalHeader_SetText(3, "Bottom");
 
     mFastTableWidget->setText(0, 0, valueToString(aValue.left()));
     mFastTableWidget->setText(0, 1, valueToString(aValue.top()));
@@ -147,6 +157,9 @@ ViewDialog::ViewDialog(QList<QPoint> *aValues, QWidget *parent) :
     mFastTableWidget->setRowCount(aValues->length());
     mFastTableWidget->setColumnCount(2);
 
+    mFastTableWidget->horizontalHeader_SetText(0, "X");
+    mFastTableWidget->horizontalHeader_SetText(1, "Y");
+
     for (int i=0; i<aValues->length(); i++)
     {
          mFastTableWidget->setText(i, 0, valueToString(aValues->at(i).x()));
@@ -162,6 +175,11 @@ ViewDialog::ViewDialog(QList<QRect> *aValues, QWidget *parent) :
 
     mFastTableWidget->setRowCount(aValues->length());
     mFastTableWidget->setColumnCount(4);
+
+    mFastTableWidget->horizontalHeader_SetText(0, "Left");
+    mFastTableWidget->horizontalHeader_SetText(1, "Top");
+    mFastTableWidget->horizontalHeader_SetText(2, "Right");
+    mFastTableWidget->horizontalHeader_SetText(3, "Bottom");
 
     for (int i=0; i<aValues->length(); i++)
     {
@@ -310,7 +328,10 @@ int ViewDialog::exec()
 
     for (int i=0; i<mFastTableWidget->columnCount(); i++)
     {
-        mFastTableWidget->horizontalHeader_SetText(i, QString::number(i+1));
+        if (mFastTableWidget->horizontalHeader_Text(i)=="")
+        {
+            mFastTableWidget->horizontalHeader_SetText(i, QString::number(i+1));
+        }
     }
 
     return QDialog::exec();
