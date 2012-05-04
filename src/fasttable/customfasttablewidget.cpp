@@ -367,9 +367,11 @@ void CustomFastTableWidget::keyPressEvent(QKeyEvent *event)
     else
     if (event==QKeySequence::Copy)
     {
-        if (mCurSelection.length()>0)
+        QList<QRect> aRanges=selectedRanges();
+
+        if (aRanges.length()>0)
         {
-            QRect aCopyRect=selectedRanges().at(0);
+            QRect aCopyRect=aRanges.at(0);
             QString toClipboard="";
 
             for (int i=aCopyRect.top(); i<=aCopyRect.bottom(); i++)
@@ -4958,6 +4960,12 @@ QList<QRect> CustomFastTableWidget::selectedRanges()
     FASTTABLE_START_PROFILE;
 
     QList<QRect> res;
+
+    if (mCurSelection.length()==0)
+    {
+        FASTTABLE_END_PROFILE;
+        return res;
+    }
 
     for (int i=0; i<mRowCount; i++)
     {

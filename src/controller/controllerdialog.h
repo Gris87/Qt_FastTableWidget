@@ -36,6 +36,7 @@ private slots:
     void tableDeleteRow();
     void tableInsertColumn();
     void tableDeleteColumn();
+    void tableMergeCells();
     void tableContextMenuRequested(QPoint pos);
 
     void on_deleteButton_clicked();

@@ -95,18 +95,21 @@ public:
 
     void clearSpans();
     void setSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan);
+    void setSpan(QRect range);
     quint16 rowSpan(const int row, const int column);
     quint16 columnSpan(const int row, const int column);
     QPoint spanParent(const int row, const int column);
 
     void horizontalHeader_ClearSpans();
     void horizontalHeader_SetSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan);
+    void horizontalHeader_SetSpan(QRect range);
     quint16 horizontalHeader_RowSpan(const int row, const int column);
     quint16 horizontalHeader_ColumnSpan(const int row, const int column);
     QPoint horizontalHeader_SpanParent(const int row, const int column);
 
     void verticalHeader_ClearSpans();
     void verticalHeader_SetSpan(const int row, const int column, quint16 rowSpan, quint16 columnSpan);
+    void verticalHeader_SetSpan(QRect range);
     quint16 verticalHeader_RowSpan(const int row, const int column);
     quint16 verticalHeader_ColumnSpan(const int row, const int column);
     QPoint verticalHeader_SpanParent(const int row, const int column);

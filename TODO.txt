@@ -1,4 +1,4 @@
-Inserting/removing rows and some properties
+Full column selection and merged headers cells
 Check for asserts
 Cell editing
 Sort

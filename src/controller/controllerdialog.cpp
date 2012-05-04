@@ -2536,6 +2536,16 @@ void ControllerDialog::tableDeleteColumn()
     connect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
 }
 
+void ControllerDialog::tableMergeCells()
+{
+     QList<QRect> aRanges=mFastTableWidget->selectedRanges();
+
+     if (aRanges.length()>0)
+     {
+         ((FastTableWidget*)mFastTableWidget)->setSpan(aRanges.at(0));
+     }
+}
+
 void ControllerDialog::tableContextMenuRequested(QPoint pos)
 {
     QMenu *contextMenu=new QMenu;
@@ -2545,7 +2555,11 @@ void ControllerDialog::tableContextMenuRequested(QPoint pos)
     contextMenu->addAction("Insert column",this,SLOT(tableInsertColumn()));
     contextMenu->addAction("Delete column(s)",this,SLOT(tableDeleteColumn()));
 
-    contextMenu->addSeparator();
+    if (ui->fastTableControlWidget->isVisible())
+    {
+        contextMenu->addSeparator();
+        contextMenu->addAction("Merge cells",this,SLOT(tableMergeCells()));
+    }
 
     contextMenu->setGeometry(cursor().pos().x(),cursor().pos().y(),contextMenu->sizeHint().width(),contextMenu->sizeHint().height());
     contextMenu->show();

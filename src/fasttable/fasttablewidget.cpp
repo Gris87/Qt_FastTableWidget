@@ -1403,6 +1403,64 @@ void FastTableWidget::insertRow(int row)
         mVerticalHeader_CellMergeParentColumn[row].append(-1);
     }
 
+    for (int i=0; i<mMerges.length(); i++)
+    {
+        if (mMerges.at(i).top()>=row)
+        {
+            mMerges[i].moveTop(mMerges.at(i).top()+1);
+
+            for (int j=mMerges.at(i).top(); j<=mMerges.at(i).bottom(); j++)
+            {
+                for (int k=mMerges.at(i).left(); k<=mMerges.at(i).right(); k++)
+                {
+                    mCellMergeParentRow[j][k]++;
+                }
+            }
+        }
+        else
+        if (mMerges.at(i).bottom()>=row)
+        {
+            mMerges[i].setHeight(mMerges.at(i).height()+1);
+
+            for (int j=mMerges.at(i).left(); j<=mMerges.at(i).right(); j++)
+            {
+                mCellMergeParentRow[row][j]=mMerges.at(i).top();
+                mCellMergeParentColumn[row][j]=mMerges.at(i).left();
+            }
+
+            mCellMergeY[mMerges.at(i).top()][mMerges.at(i).left()]++;
+        }
+    }
+
+    for (int i=0; i<mVerticalHeader_Merges.length(); i++)
+    {
+        if (mVerticalHeader_Merges.at(i).top()>=row)
+        {
+            mVerticalHeader_Merges[i].moveTop(mVerticalHeader_Merges.at(i).top()+1);
+
+            for (int j=mVerticalHeader_Merges.at(i).top(); j<=mVerticalHeader_Merges.at(i).bottom(); j++)
+            {
+                for (int k=mVerticalHeader_Merges.at(i).left(); k<=mVerticalHeader_Merges.at(i).right(); k++)
+                {
+                    mVerticalHeader_CellMergeParentRow[j][k]++;
+                }
+            }
+        }
+        else
+        if (mVerticalHeader_Merges.at(i).bottom()>=row)
+        {
+            mVerticalHeader_Merges[i].setHeight(mVerticalHeader_Merges.at(i).height()+1);
+
+            for (int j=mVerticalHeader_Merges.at(i).left(); j<=mVerticalHeader_Merges.at(i).right(); j++)
+            {
+                mVerticalHeader_CellMergeParentRow[row][j]=mVerticalHeader_Merges.at(i).top();
+                mVerticalHeader_CellMergeParentColumn[row][j]=mVerticalHeader_Merges.at(i).left();
+            }
+
+            mVerticalHeader_CellMergeY[mVerticalHeader_Merges.at(i).top()][mVerticalHeader_Merges.at(i).left()]++;
+        }
+    }
+
     FASTTABLE_END_PROFILE;
 }
 
@@ -1462,6 +1520,112 @@ void FastTableWidget::removeRow(int row)
         if (mVerticalHeader_CellFonts.at(row).at(i))
         {
             delete mVerticalHeader_CellFonts.at(row).at(i);
+        }
+    }
+
+    for (int i=0; i<mMerges.length(); i++)
+    {
+        if (mMerges.at(i).top()>row)
+        {
+            for (int j=mMerges.at(i).top(); j<=mMerges.at(i).bottom(); j++)
+            {
+                for (int k=mMerges.at(i).left(); k<=mMerges.at(i).right(); k++)
+                {
+                    mCellMergeParentRow[j][k]--;
+                }
+            }
+
+            mMerges[i].moveTop(mMerges.at(i).top()-1);
+        }
+        else
+        if (mMerges.at(i).bottom()>=row)
+        {
+            if (mMerges.at(i).top()==row)
+            {
+                if (mMerges.at(i).height()>1)
+                {
+                    mCellMergeX[mMerges.at(i).top()+1][mMerges.at(i).left()]=mCellMergeX.at(mMerges.at(i).top()).at(mMerges.at(i).left());
+                    mCellMergeY[mMerges.at(i).top()+1][mMerges.at(i).left()]=mCellMergeY.at(mMerges.at(i).top()).at(mMerges.at(i).left())-1;
+                }
+            }
+            else
+            {
+                mCellMergeY[mMerges.at(i).top()][mMerges.at(i).left()]--;
+            }
+
+            if (mMerges.at(i).height()==1)
+            {
+                mMerges.removeAt(i);
+                --i;
+            }
+            else
+            {
+                mMerges[i].setHeight(mMerges.at(i).height()-1);
+
+                if (mMerges.at(i).width()==1 && mMerges.at(i).height()==1)
+                {
+                    mCellMergeParentRow[mMerges.at(i).top()][mMerges.at(i).left()]=-1;
+                    mCellMergeParentColumn[mMerges.at(i).top()][mMerges.at(i).left()]=-1;
+                    mCellMergeParentRow[mMerges.at(i).top()+1][mMerges.at(i).left()]=-1;
+                    mCellMergeParentColumn[mMerges.at(i).top()+1][mMerges.at(i).left()]=-1;
+
+                    mMerges.removeAt(i);
+                    --i;
+                }
+            }
+        }
+    }
+
+    for (int i=0; i<mVerticalHeader_Merges.length(); i++)
+    {
+        if (mVerticalHeader_Merges.at(i).top()>row)
+        {
+            for (int j=mVerticalHeader_Merges.at(i).top(); j<=mVerticalHeader_Merges.at(i).bottom(); j++)
+            {
+                for (int k=mVerticalHeader_Merges.at(i).left(); k<=mVerticalHeader_Merges.at(i).right(); k++)
+                {
+                    mVerticalHeader_CellMergeParentRow[j][k]--;
+                }
+            }
+
+            mVerticalHeader_Merges[i].moveTop(mVerticalHeader_Merges.at(i).top()-1);
+        }
+        else
+        if (mVerticalHeader_Merges.at(i).bottom()>=row)
+        {
+            if (mVerticalHeader_Merges.at(i).top()==row)
+            {
+                if (mVerticalHeader_Merges.at(i).height()>1)
+                {
+                    mVerticalHeader_CellMergeX[mVerticalHeader_Merges.at(i).top()+1][mVerticalHeader_Merges.at(i).left()]=mVerticalHeader_CellMergeX.at(mVerticalHeader_Merges.at(i).top()).at(mVerticalHeader_Merges.at(i).left());
+                    mVerticalHeader_CellMergeY[mVerticalHeader_Merges.at(i).top()+1][mVerticalHeader_Merges.at(i).left()]=mVerticalHeader_CellMergeY.at(mVerticalHeader_Merges.at(i).top()).at(mVerticalHeader_Merges.at(i).left())-1;
+                }
+            }
+            else
+            {
+                mVerticalHeader_CellMergeY[mVerticalHeader_Merges.at(i).top()][mVerticalHeader_Merges.at(i).left()]--;
+            }
+
+            if (mVerticalHeader_Merges.at(i).height()==1)
+            {
+                mVerticalHeader_Merges.removeAt(i);
+                --i;
+            }
+            else
+            {
+                mVerticalHeader_Merges[i].setHeight(mVerticalHeader_Merges.at(i).height()-1);
+
+                if (mVerticalHeader_Merges.at(i).width()==1 && mVerticalHeader_Merges.at(i).height()==1)
+                {
+                    mVerticalHeader_CellMergeParentRow[mVerticalHeader_Merges.at(i).top()][mVerticalHeader_Merges.at(i).left()]=-1;
+                    mVerticalHeader_CellMergeParentColumn[mVerticalHeader_Merges.at(i).top()][mVerticalHeader_Merges.at(i).left()]=-1;
+                    mVerticalHeader_CellMergeParentRow[mVerticalHeader_Merges.at(i).top()+1][mVerticalHeader_Merges.at(i).left()]=-1;
+                    mVerticalHeader_CellMergeParentColumn[mVerticalHeader_Merges.at(i).top()+1][mVerticalHeader_Merges.at(i).left()]=-1;
+
+                    mVerticalHeader_Merges.removeAt(i);
+                    --i;
+                }
+            }
         }
     }
 
@@ -1537,6 +1701,64 @@ void FastTableWidget::insertColumn(int column)
         mHorizontalHeader_CellMergeParentColumn[i].insert(column, -1);
     }
 
+    for (int i=0; i<mMerges.length(); i++)
+    {
+        if (mMerges.at(i).left()>=column)
+        {
+            mMerges[i].moveLeft(mMerges.at(i).left()+1);
+
+            for (int j=mMerges.at(i).top(); j<=mMerges.at(i).bottom(); j++)
+            {
+                for (int k=mMerges.at(i).left(); k<=mMerges.at(i).right(); k++)
+                {
+                    mCellMergeParentColumn[j][k]++;
+                }
+            }
+        }
+        else
+        if (mMerges.at(i).right()>=column)
+        {
+            mMerges[i].setWidth(mMerges.at(i).width()+1);
+
+            for (int j=mMerges.at(i).top(); j<=mMerges.at(i).bottom(); j++)
+            {
+                mCellMergeParentRow[j][column]=mMerges.at(i).top();
+                mCellMergeParentColumn[j][column]=mMerges.at(i).left();
+            }
+
+            mCellMergeX[mMerges.at(i).top()][mMerges.at(i).left()]++;
+        }
+    }
+
+    for (int i=0; i<mHorizontalHeader_Merges.length(); i++)
+    {
+        if (mHorizontalHeader_Merges.at(i).left()>=column)
+        {
+            mHorizontalHeader_Merges[i].moveLeft(mHorizontalHeader_Merges.at(i).left()+1);
+
+            for (int j=mHorizontalHeader_Merges.at(i).top(); j<=mHorizontalHeader_Merges.at(i).bottom(); j++)
+            {
+                for (int k=mHorizontalHeader_Merges.at(i).left(); k<=mHorizontalHeader_Merges.at(i).right(); k++)
+                {
+                    mHorizontalHeader_CellMergeParentColumn[j][k]++;
+                }
+            }
+        }
+        else
+        if (mHorizontalHeader_Merges.at(i).right()>=column)
+        {
+            mHorizontalHeader_Merges[i].setWidth(mHorizontalHeader_Merges.at(i).width()+1);
+
+            for (int j=mHorizontalHeader_Merges.at(i).top(); j<=mHorizontalHeader_Merges.at(i).bottom(); j++)
+            {
+                mHorizontalHeader_CellMergeParentRow[j][column]=mHorizontalHeader_Merges.at(i).top();
+                mHorizontalHeader_CellMergeParentColumn[j][column]=mHorizontalHeader_Merges.at(i).left();
+            }
+
+            mHorizontalHeader_CellMergeX[mHorizontalHeader_Merges.at(i).top()][mHorizontalHeader_Merges.at(i).left()]++;
+        }
+    }
+
     FASTTABLE_END_PROFILE;
 }
 
@@ -1544,6 +1766,112 @@ void FastTableWidget::removeColumn(int column)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
+
+    for (int i=0; i<mMerges.length(); i++)
+    {
+        if (mMerges.at(i).left()>column)
+        {
+            for (int j=mMerges.at(i).top(); j<=mMerges.at(i).bottom(); j++)
+            {
+                for (int k=mMerges.at(i).left(); k<=mMerges.at(i).right(); k++)
+                {
+                    mCellMergeParentColumn[j][k]--;
+                }
+            }
+
+            mMerges[i].moveLeft(mMerges.at(i).left()-1);
+        }
+        else
+        if (mMerges.at(i).right()>=column)
+        {
+            if (mMerges.at(i).left()==column)
+            {
+                if (mMerges.at(i).width()>1)
+                {
+                    mCellMergeX[mMerges.at(i).top()][mMerges.at(i).left()+1]=mCellMergeX.at(mMerges.at(i).top()).at(mMerges.at(i).left())-1;
+                    mCellMergeY[mMerges.at(i).top()][mMerges.at(i).left()+1]=mCellMergeY.at(mMerges.at(i).top()).at(mMerges.at(i).left());
+                }
+            }
+            else
+            {
+                mCellMergeX[mMerges.at(i).top()][mMerges.at(i).left()]--;
+            }
+
+            if (mMerges.at(i).width()==1)
+            {
+                mMerges.removeAt(i);
+                --i;
+            }
+            else
+            {
+                mMerges[i].setWidth(mMerges.at(i).width()-1);
+
+                if (mMerges.at(i).width()==1 && mMerges.at(i).height()==1)
+                {
+                    mCellMergeParentRow[mMerges.at(i).top()][mMerges.at(i).left()]=-1;
+                    mCellMergeParentColumn[mMerges.at(i).top()][mMerges.at(i).left()]=-1;
+                    mCellMergeParentRow[mMerges.at(i).top()][mMerges.at(i).left()+1]=-1;
+                    mCellMergeParentColumn[mMerges.at(i).top()][mMerges.at(i).left()+1]=-1;
+
+                    mMerges.removeAt(i);
+                    --i;
+                }
+            }
+        }
+    }
+
+    for (int i=0; i<mHorizontalHeader_Merges.length(); i++)
+    {
+        if (mHorizontalHeader_Merges.at(i).left()>column)
+        {
+            for (int j=mHorizontalHeader_Merges.at(i).top(); j<=mHorizontalHeader_Merges.at(i).bottom(); j++)
+            {
+                for (int k=mHorizontalHeader_Merges.at(i).left(); k<=mHorizontalHeader_Merges.at(i).right(); k++)
+                {
+                    mHorizontalHeader_CellMergeParentColumn[j][k]--;
+                }
+            }
+
+            mHorizontalHeader_Merges[i].moveLeft(mHorizontalHeader_Merges.at(i).left()-1);
+        }
+        else
+        if (mHorizontalHeader_Merges.at(i).right()>=column)
+        {
+            if (mHorizontalHeader_Merges.at(i).left()==column)
+            {
+                if (mHorizontalHeader_Merges.at(i).width()>1)
+                {
+                    mHorizontalHeader_CellMergeX[mHorizontalHeader_Merges.at(i).top()][mHorizontalHeader_Merges.at(i).left()+1]=mHorizontalHeader_CellMergeX.at(mHorizontalHeader_Merges.at(i).top()).at(mHorizontalHeader_Merges.at(i).left())-1;
+                    mHorizontalHeader_CellMergeY[mHorizontalHeader_Merges.at(i).top()][mHorizontalHeader_Merges.at(i).left()+1]=mHorizontalHeader_CellMergeY.at(mHorizontalHeader_Merges.at(i).top()).at(mHorizontalHeader_Merges.at(i).left());
+                }
+            }
+            else
+            {
+                mHorizontalHeader_CellMergeX[mHorizontalHeader_Merges.at(i).top()][mHorizontalHeader_Merges.at(i).left()]--;
+            }
+
+            if (mHorizontalHeader_Merges.at(i).width()==1)
+            {
+                mHorizontalHeader_Merges.removeAt(i);
+                --i;
+            }
+            else
+            {
+                mHorizontalHeader_Merges[i].setWidth(mHorizontalHeader_Merges.at(i).width()-1);
+
+                if (mHorizontalHeader_Merges.at(i).width()==1 && mHorizontalHeader_Merges.at(i).height()==1)
+                {
+                    mHorizontalHeader_CellMergeParentRow[mHorizontalHeader_Merges.at(i).top()][mHorizontalHeader_Merges.at(i).left()]=-1;
+                    mHorizontalHeader_CellMergeParentColumn[mHorizontalHeader_Merges.at(i).top()][mHorizontalHeader_Merges.at(i).left()]=-1;
+                    mHorizontalHeader_CellMergeParentRow[mHorizontalHeader_Merges.at(i).top()][mHorizontalHeader_Merges.at(i).left()+1]=-1;
+                    mHorizontalHeader_CellMergeParentColumn[mHorizontalHeader_Merges.at(i).top()][mHorizontalHeader_Merges.at(i).left()+1]=-1;
+
+                    mHorizontalHeader_Merges.removeAt(i);
+                    --i;
+                }
+            }
+        }
+    }
 
     for (int i=0; i<mData.length(); ++i)
     {
@@ -1665,6 +1993,35 @@ void FastTableWidget::horizontalHeader_InsertRow(int row)
         mHorizontalHeader_CellMergeParentColumn[row].append(-1);
     }
 
+    for (int i=0; i<mHorizontalHeader_Merges.length(); i++)
+    {
+        if (mHorizontalHeader_Merges.at(i).top()>=row)
+        {
+            mHorizontalHeader_Merges[i].moveTop(mHorizontalHeader_Merges.at(i).top()+1);
+
+            for (int j=mHorizontalHeader_Merges.at(i).top(); j<=mHorizontalHeader_Merges.at(i).bottom(); j++)
+            {
+                for (int k=mHorizontalHeader_Merges.at(i).left(); k<=mHorizontalHeader_Merges.at(i).right(); k++)
+                {
+                    mHorizontalHeader_CellMergeParentRow[j][k]++;
+                }
+            }
+        }
+        else
+        if (mHorizontalHeader_Merges.at(i).bottom()>=row)
+        {
+            mHorizontalHeader_Merges[i].setHeight(mHorizontalHeader_Merges.at(i).height()+1);
+
+            for (int j=mHorizontalHeader_Merges.at(i).left(); j<=mHorizontalHeader_Merges.at(i).right(); j++)
+            {
+                mHorizontalHeader_CellMergeParentRow[row][j]=mHorizontalHeader_Merges.at(i).top();
+                mHorizontalHeader_CellMergeParentColumn[row][j]=mHorizontalHeader_Merges.at(i).left();
+            }
+
+            mHorizontalHeader_CellMergeY[mHorizontalHeader_Merges.at(i).top()][mHorizontalHeader_Merges.at(i).left()]++;
+        }
+    }
+
     FASTTABLE_END_PROFILE;
 }
 
@@ -1697,6 +2054,59 @@ void FastTableWidget::horizontalHeader_RemoveRow(int row)
         if (mHorizontalHeader_CellFonts.at(row).at(i))
         {
             delete mHorizontalHeader_CellFonts.at(row).at(i);
+        }
+    }
+
+    for (int i=0; i<mHorizontalHeader_Merges.length(); i++)
+    {
+        if (mHorizontalHeader_Merges.at(i).top()>row)
+        {
+            for (int j=mHorizontalHeader_Merges.at(i).top(); j<=mHorizontalHeader_Merges.at(i).bottom(); j++)
+            {
+                for (int k=mHorizontalHeader_Merges.at(i).left(); k<=mHorizontalHeader_Merges.at(i).right(); k++)
+                {
+                    mHorizontalHeader_CellMergeParentRow[j][k]--;
+                }
+            }
+
+            mHorizontalHeader_Merges[i].moveTop(mHorizontalHeader_Merges.at(i).top()-1);
+        }
+        else
+        if (mHorizontalHeader_Merges.at(i).bottom()>=row)
+        {
+            if (mHorizontalHeader_Merges.at(i).top()==row)
+            {
+                if (mHorizontalHeader_Merges.at(i).height()>1)
+                {
+                    mHorizontalHeader_CellMergeX[mHorizontalHeader_Merges.at(i).top()+1][mHorizontalHeader_Merges.at(i).left()]=mHorizontalHeader_CellMergeX.at(mHorizontalHeader_Merges.at(i).top()).at(mHorizontalHeader_Merges.at(i).left());
+                    mHorizontalHeader_CellMergeY[mHorizontalHeader_Merges.at(i).top()+1][mHorizontalHeader_Merges.at(i).left()]=mHorizontalHeader_CellMergeY.at(mHorizontalHeader_Merges.at(i).top()).at(mHorizontalHeader_Merges.at(i).left())-1;
+                }
+            }
+            else
+            {
+                mHorizontalHeader_CellMergeY[mHorizontalHeader_Merges.at(i).top()][mHorizontalHeader_Merges.at(i).left()]--;
+            }
+
+            if (mHorizontalHeader_Merges.at(i).height()==1)
+            {
+                mHorizontalHeader_Merges.removeAt(i);
+                --i;
+            }
+            else
+            {
+                mHorizontalHeader_Merges[i].setHeight(mHorizontalHeader_Merges.at(i).height()-1);
+
+                if (mHorizontalHeader_Merges.at(i).width()==1 && mHorizontalHeader_Merges.at(i).height()==1)
+                {
+                    mHorizontalHeader_CellMergeParentRow[mHorizontalHeader_Merges.at(i).top()][mHorizontalHeader_Merges.at(i).left()]=-1;
+                    mHorizontalHeader_CellMergeParentColumn[mHorizontalHeader_Merges.at(i).top()][mHorizontalHeader_Merges.at(i).left()]=-1;
+                    mHorizontalHeader_CellMergeParentRow[mHorizontalHeader_Merges.at(i).top()+1][mHorizontalHeader_Merges.at(i).left()]=-1;
+                    mHorizontalHeader_CellMergeParentColumn[mHorizontalHeader_Merges.at(i).top()+1][mHorizontalHeader_Merges.at(i).left()]=-1;
+
+                    mHorizontalHeader_Merges.removeAt(i);
+                    --i;
+                }
+            }
         }
     }
 
@@ -1742,6 +2152,36 @@ void FastTableWidget::verticalHeader_InsertColumn(int column)
         mVerticalHeader_CellMergeParentColumn[i].insert(column, -1);
     }
 
+    for (int i=0; i<mVerticalHeader_Merges.length(); i++)
+    {
+        if (mVerticalHeader_Merges.at(i).left()>=column)
+        {
+            mVerticalHeader_Merges[i].moveLeft(mVerticalHeader_Merges.at(i).left()+1);
+
+            for (int j=mVerticalHeader_Merges.at(i).top(); j<=mVerticalHeader_Merges.at(i).bottom(); j++)
+            {
+                for (int k=mVerticalHeader_Merges.at(i).left(); k<=mVerticalHeader_Merges.at(i).right(); k++)
+                {
+                    mVerticalHeader_CellMergeParentColumn[j][k]++;
+                }
+            }
+        }
+        else
+        if (mVerticalHeader_Merges.at(i).right()>=column)
+        {
+            mVerticalHeader_Merges[i].setWidth(mVerticalHeader_Merges.at(i).width()+1);
+
+            for (int j=mVerticalHeader_Merges.at(i).top(); j<=mVerticalHeader_Merges.at(i).bottom(); j++)
+            {
+                mVerticalHeader_CellMergeParentRow[j][column]=mVerticalHeader_Merges.at(i).top();
+                mVerticalHeader_CellMergeParentColumn[j][column]=mVerticalHeader_Merges.at(i).left();
+            }
+
+            mVerticalHeader_CellMergeX[mVerticalHeader_Merges.at(i).top()][mVerticalHeader_Merges.at(i).left()]++;
+        }
+    }
+
+
     FASTTABLE_END_PROFILE;
 }
 
@@ -1749,6 +2189,59 @@ void FastTableWidget::verticalHeader_RemoveColumn(int column)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
+
+    for (int i=0; i<mVerticalHeader_Merges.length(); i++)
+    {
+        if (mVerticalHeader_Merges.at(i).left()>column)
+        {
+            for (int j=mVerticalHeader_Merges.at(i).top(); j<=mVerticalHeader_Merges.at(i).bottom(); j++)
+            {
+                for (int k=mVerticalHeader_Merges.at(i).left(); k<=mVerticalHeader_Merges.at(i).right(); k++)
+                {
+                    mVerticalHeader_CellMergeParentColumn[j][k]--;
+                }
+            }
+
+            mVerticalHeader_Merges[i].moveLeft(mVerticalHeader_Merges.at(i).left()-1);
+        }
+        else
+        if (mVerticalHeader_Merges.at(i).right()>=column)
+        {
+            if (mVerticalHeader_Merges.at(i).left()==column)
+            {
+                if (mVerticalHeader_Merges.at(i).width()>1)
+                {
+                    mVerticalHeader_CellMergeX[mVerticalHeader_Merges.at(i).top()][mVerticalHeader_Merges.at(i).left()+1]=mVerticalHeader_CellMergeX.at(mVerticalHeader_Merges.at(i).top()).at(mVerticalHeader_Merges.at(i).left())-1;
+                    mVerticalHeader_CellMergeY[mVerticalHeader_Merges.at(i).top()][mVerticalHeader_Merges.at(i).left()+1]=mVerticalHeader_CellMergeY.at(mVerticalHeader_Merges.at(i).top()).at(mVerticalHeader_Merges.at(i).left());
+                }
+            }
+            else
+            {
+                mVerticalHeader_CellMergeX[mVerticalHeader_Merges.at(i).top()][mVerticalHeader_Merges.at(i).left()]--;
+            }
+
+            if (mVerticalHeader_Merges.at(i).width()==1)
+            {
+                mVerticalHeader_Merges.removeAt(i);
+                --i;
+            }
+            else
+            {
+                mVerticalHeader_Merges[i].setWidth(mVerticalHeader_Merges.at(i).width()-1);
+
+                if (mVerticalHeader_Merges.at(i).width()==1 && mVerticalHeader_Merges.at(i).height()==1)
+                {
+                    mVerticalHeader_CellMergeParentRow[mVerticalHeader_Merges.at(i).top()][mVerticalHeader_Merges.at(i).left()]=-1;
+                    mVerticalHeader_CellMergeParentColumn[mVerticalHeader_Merges.at(i).top()][mVerticalHeader_Merges.at(i).left()]=-1;
+                    mVerticalHeader_CellMergeParentRow[mVerticalHeader_Merges.at(i).top()][mVerticalHeader_Merges.at(i).left()+1]=-1;
+                    mVerticalHeader_CellMergeParentColumn[mVerticalHeader_Merges.at(i).top()][mVerticalHeader_Merges.at(i).left()+1]=-1;
+
+                    mVerticalHeader_Merges.removeAt(i);
+                    --i;
+                }
+            }
+        }
+    }
 
     for (int i=0; i<mData.length(); ++i)
     {
@@ -2369,6 +2862,16 @@ void FastTableWidget::setSpan(const int row, const int column, quint16 rowSpan, 
     FASTTABLE_END_PROFILE;
 }
 
+void FastTableWidget::setSpan(QRect range)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    setSpan(range.top(), range.left(), range.height(), range.width());
+
+    FASTTABLE_END_PROFILE;
+}
+
 quint16 FastTableWidget::rowSpan(const int row, const int column)
 {
     FASTTABLE_DEBUG;
@@ -2556,6 +3059,16 @@ void FastTableWidget::horizontalHeader_SetSpan(const int row, const int column, 
     FASTTABLE_END_PROFILE;
 }
 
+void FastTableWidget::horizontalHeader_SetSpan(QRect range)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    horizontalHeader_SetSpan(range.top(), range.left(), range.height(), range.width());
+
+    FASTTABLE_END_PROFILE;
+}
+
 quint16 FastTableWidget::horizontalHeader_RowSpan(const int row, const int column)
 {
     FASTTABLE_DEBUG;
@@ -2739,6 +3252,16 @@ void FastTableWidget::verticalHeader_SetSpan(const int row, const int column, qu
     }
 
     viewport()->update();
+
+    FASTTABLE_END_PROFILE;
+}
+
+void FastTableWidget::verticalHeader_SetSpan(QRect range)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    verticalHeader_SetSpan(range.top(), range.left(), range.height(), range.width());
 
     FASTTABLE_END_PROFILE;
 }
