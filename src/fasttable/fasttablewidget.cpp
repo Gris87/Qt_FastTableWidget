@@ -340,7 +340,7 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 
             aHeaderPressed=false;
 
-            if (row==mCurrentRow && column==mCurrentColumn)
+            if (mCurrentRow>=row && mCurrentRow<row+mCellMergeY.at(row).at(column) && mCurrentColumn>=column && mCurrentColumn<column+mCellMergeX.at(row).at(column))
             {
                 aBorderColor=&mCellBorderColor;
             }
@@ -799,6 +799,7 @@ void FastTableWidget::clear()
     mCellMergeY.clear();
     mCellMergeParentRow.clear();
     mCellMergeParentColumn.clear();
+    mMerges.clear();
 
     mHorizontalHeader_BackgroundBrushes.clear();
     mHorizontalHeader_ForegroundColors.clear();
@@ -808,6 +809,7 @@ void FastTableWidget::clear()
     mHorizontalHeader_CellMergeY.clear();
     mHorizontalHeader_CellMergeParentRow.clear();
     mHorizontalHeader_CellMergeParentColumn.clear();
+    mHorizontalHeader_Merges.clear();
 
     mVerticalHeader_BackgroundBrushes.clear();
     mVerticalHeader_ForegroundColors.clear();
@@ -817,6 +819,7 @@ void FastTableWidget::clear()
     mVerticalHeader_CellMergeY.clear();
     mVerticalHeader_CellMergeParentRow.clear();
     mVerticalHeader_CellMergeParentColumn.clear();
+    mVerticalHeader_Merges.clear();
 
     CustomFastTableWidget::clear();
 
@@ -2225,25 +2228,30 @@ void FastTableWidget::clearSpans()
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
-    for (int i=0; i<mRowCount; ++i)
+    for (int i=0; i<mMerges.length(); ++i)
     {
-        for (int j=0; j<mColumnCount; ++j)
+        for (int j=mMerges.at(i).top(); j<=mMerges.at(i).bottom(); ++j)
         {
-            FASTTABLE_ASSERT(i>=0 && i<mCellMergeX.length());
-            FASTTABLE_ASSERT(j>=0 && j<mCellMergeX.at(i).length());
-            FASTTABLE_ASSERT(i>=0 && i<mCellMergeY.length());
-            FASTTABLE_ASSERT(j>=0 && j<mCellMergeY.at(i).length());
-            FASTTABLE_ASSERT(i>=0 && i<mCellMergeParentRow.length());
-            FASTTABLE_ASSERT(j>=0 && j<mCellMergeParentRow.at(i).length());
-            FASTTABLE_ASSERT(i>=0 && i<mCellMergeParentColumn.length());
-            FASTTABLE_ASSERT(j>=0 && j<mCellMergeParentColumn.at(i).length());
+            for (int k=mMerges.at(i).left(); k<=mMerges.at(i).right(); ++k)
+            {
+                FASTTABLE_ASSERT(j>=0 && j<mCellMergeX.length());
+                FASTTABLE_ASSERT(k>=0 && k<mCellMergeX.at(j).length());
+                FASTTABLE_ASSERT(j>=0 && j<mCellMergeY.length());
+                FASTTABLE_ASSERT(k>=0 && k<mCellMergeY.at(j).length());
+                FASTTABLE_ASSERT(j>=0 && j<mCellMergeParentRow.length());
+                FASTTABLE_ASSERT(k>=0 && k<mCellMergeParentRow.at(j).length());
+                FASTTABLE_ASSERT(j>=0 && j<mCellMergeParentColumn.length());
+                FASTTABLE_ASSERT(k>=0 && k<mCellMergeParentColumn.at(j).length());
 
-            mCellMergeX[i][j]=1;
-            mCellMergeY[i][j]=1;
-            mCellMergeParentRow[i][j]=-1;
-            mCellMergeParentColumn[i][j]=-1;
+                mCellMergeX[j][k]=1;
+                mCellMergeY[j][k]=1;
+                mCellMergeParentRow[j][k]=-1;
+                mCellMergeParentColumn[j][k]=-1;
+            }
         }
     }
+
+    mMerges.clear();
 
     viewport()->update();
 
@@ -2309,6 +2317,17 @@ void FastTableWidget::setSpan(const int row, const int column, quint16 rowSpan, 
                 int parentSpanX=mCellMergeX.at(parentRow).at(parentColumn);
                 int parentSpanY=mCellMergeY.at(parentRow).at(parentColumn);
 
+                QRect oldMerge(parentColumn, parentRow, parentSpanX, parentSpanY);
+
+                for (int g=0; g<mMerges.length(); ++g)
+                {
+                    if (mMerges.at(g)==oldMerge)
+                    {
+                        mMerges.removeAt(g);
+                        break;
+                    }
+                }
+
                 for (int g=0; g<parentSpanY; ++g)
                 {
                     for (int h=0; h<parentSpanX; ++h)
@@ -2339,6 +2358,10 @@ void FastTableWidget::setSpan(const int row, const int column, quint16 rowSpan, 
     {
         mCellMergeParentRow[row][column]=-1;
         mCellMergeParentColumn[row][column]=-1;
+    }
+    else
+    {
+        mMerges.append(QRect(column, row, columnSpan, rowSpan));
     }
 
     viewport()->update();
@@ -2392,25 +2415,30 @@ void FastTableWidget::horizontalHeader_ClearSpans()
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
-    for (int i=0; i<mHorizontalHeader_RowCount; ++i)
+    for (int i=0; i<mHorizontalHeader_Merges.length(); ++i)
     {
-        for (int j=0; j<mColumnCount; ++j)
+        for (int j=mHorizontalHeader_Merges.at(i).top(); j<=mHorizontalHeader_Merges.at(i).bottom(); ++j)
         {
-            FASTTABLE_ASSERT(i>=0 && i<mHorizontalHeader_CellMergeX.length());
-            FASTTABLE_ASSERT(j>=0 && j<mHorizontalHeader_CellMergeX.at(i).length());
-            FASTTABLE_ASSERT(i>=0 && i<mHorizontalHeader_CellMergeY.length());
-            FASTTABLE_ASSERT(j>=0 && j<mHorizontalHeader_CellMergeY.at(i).length());
-            FASTTABLE_ASSERT(i>=0 && i<mHorizontalHeader_CellMergeParentRow.length());
-            FASTTABLE_ASSERT(j>=0 && j<mHorizontalHeader_CellMergeParentRow.at(i).length());
-            FASTTABLE_ASSERT(i>=0 && i<mHorizontalHeader_CellMergeParentColumn.length());
-            FASTTABLE_ASSERT(j>=0 && j<mHorizontalHeader_CellMergeParentColumn.at(i).length());
+            for (int k=mHorizontalHeader_Merges.at(i).left(); k<=mHorizontalHeader_Merges.at(i).right(); ++k)
+            {
+                FASTTABLE_ASSERT(j>=0 && j<mHorizontalHeader_CellMergeX.length());
+                FASTTABLE_ASSERT(k>=0 && k<mHorizontalHeader_CellMergeX.at(j).length());
+                FASTTABLE_ASSERT(j>=0 && j<mHorizontalHeader_CellMergeY.length());
+                FASTTABLE_ASSERT(k>=0 && k<mHorizontalHeader_CellMergeY.at(j).length());
+                FASTTABLE_ASSERT(j>=0 && j<mHorizontalHeader_CellMergeParentRow.length());
+                FASTTABLE_ASSERT(k>=0 && k<mHorizontalHeader_CellMergeParentRow.at(j).length());
+                FASTTABLE_ASSERT(j>=0 && j<mHorizontalHeader_CellMergeParentColumn.length());
+                FASTTABLE_ASSERT(k>=0 && k<mHorizontalHeader_CellMergeParentColumn.at(j).length());
 
-            mHorizontalHeader_CellMergeX[i][j]=1;
-            mHorizontalHeader_CellMergeY[i][j]=1;
-            mHorizontalHeader_CellMergeParentRow[i][j]=-1;
-            mHorizontalHeader_CellMergeParentColumn[i][j]=-1;
+                mHorizontalHeader_CellMergeX[j][k]=1;
+                mHorizontalHeader_CellMergeY[j][k]=1;
+                mHorizontalHeader_CellMergeParentRow[j][k]=-1;
+                mHorizontalHeader_CellMergeParentColumn[j][k]=-1;
+            }
         }
     }
+
+    mHorizontalHeader_Merges.clear();
 
     viewport()->update();
 
@@ -2476,6 +2504,17 @@ void FastTableWidget::horizontalHeader_SetSpan(const int row, const int column, 
                 int parentSpanX=mHorizontalHeader_CellMergeX.at(parentRow).at(parentColumn);
                 int parentSpanY=mHorizontalHeader_CellMergeY.at(parentRow).at(parentColumn);
 
+                QRect oldMerge(parentColumn, parentRow, parentSpanX, parentSpanY);
+
+                for (int g=0; g<mHorizontalHeader_Merges.length(); ++g)
+                {
+                    if (mHorizontalHeader_Merges.at(g)==oldMerge)
+                    {
+                        mHorizontalHeader_Merges.removeAt(g);
+                        break;
+                    }
+                }
+
                 for (int g=0; g<parentSpanY; ++g)
                 {
                     for (int h=0; h<parentSpanX; ++h)
@@ -2506,6 +2545,10 @@ void FastTableWidget::horizontalHeader_SetSpan(const int row, const int column, 
     {
         mHorizontalHeader_CellMergeParentRow[row][column]=-1;
         mHorizontalHeader_CellMergeParentColumn[row][column]=-1;
+    }
+    else
+    {
+        mHorizontalHeader_Merges.append(QRect(column, row, columnSpan, rowSpan));
     }
 
     viewport()->update();
@@ -2559,25 +2602,30 @@ void FastTableWidget::verticalHeader_ClearSpans()
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
-    for (int i=0; i<mRowCount; ++i)
+    for (int i=0; i<mVerticalHeader_Merges.length(); ++i)
     {
-        for (int j=0; j<mVerticalHeader_ColumnCount; ++j)
+        for (int j=mVerticalHeader_Merges.at(i).top(); j<=mVerticalHeader_Merges.at(i).bottom(); ++j)
         {
-            FASTTABLE_ASSERT(i>=0 && i<mVerticalHeader_CellMergeX.length());
-            FASTTABLE_ASSERT(j>=0 && j<mVerticalHeader_CellMergeX.at(i).length());
-            FASTTABLE_ASSERT(i>=0 && i<mVerticalHeader_CellMergeY.length());
-            FASTTABLE_ASSERT(j>=0 && j<mVerticalHeader_CellMergeY.at(i).length());
-            FASTTABLE_ASSERT(i>=0 && i<mVerticalHeader_CellMergeParentRow.length());
-            FASTTABLE_ASSERT(j>=0 && j<mVerticalHeader_CellMergeParentRow.at(i).length());
-            FASTTABLE_ASSERT(i>=0 && i<mVerticalHeader_CellMergeParentColumn.length());
-            FASTTABLE_ASSERT(j>=0 && j<mVerticalHeader_CellMergeParentColumn.at(i).length());
+            for (int k=mVerticalHeader_Merges.at(i).left(); k<=mVerticalHeader_Merges.at(i).right(); ++k)
+            {
+                FASTTABLE_ASSERT(j>=0 && j<mVerticalHeader_CellMergeX.length());
+                FASTTABLE_ASSERT(k>=0 && k<mVerticalHeader_CellMergeX.at(j).length());
+                FASTTABLE_ASSERT(j>=0 && j<mVerticalHeader_CellMergeY.length());
+                FASTTABLE_ASSERT(k>=0 && k<mVerticalHeader_CellMergeY.at(j).length());
+                FASTTABLE_ASSERT(j>=0 && j<mVerticalHeader_CellMergeParentRow.length());
+                FASTTABLE_ASSERT(k>=0 && k<mVerticalHeader_CellMergeParentRow.at(j).length());
+                FASTTABLE_ASSERT(j>=0 && j<mVerticalHeader_CellMergeParentColumn.length());
+                FASTTABLE_ASSERT(k>=0 && k<mVerticalHeader_CellMergeParentColumn.at(j).length());
 
-            mVerticalHeader_CellMergeX[i][j]=1;
-            mVerticalHeader_CellMergeY[i][j]=1;
-            mVerticalHeader_CellMergeParentRow[i][j]=-1;
-            mVerticalHeader_CellMergeParentColumn[i][j]=-1;
+                mVerticalHeader_CellMergeX[j][k]=1;
+                mVerticalHeader_CellMergeY[j][k]=1;
+                mVerticalHeader_CellMergeParentRow[j][k]=-1;
+                mVerticalHeader_CellMergeParentColumn[j][k]=-1;
+            }
         }
     }
+
+    mVerticalHeader_Merges.clear();
 
     viewport()->update();
 
@@ -2643,6 +2691,17 @@ void FastTableWidget::verticalHeader_SetSpan(const int row, const int column, qu
                 int parentSpanX=mVerticalHeader_CellMergeX.at(parentRow).at(parentColumn);
                 int parentSpanY=mVerticalHeader_CellMergeY.at(parentRow).at(parentColumn);
 
+                QRect oldMerge(parentColumn, parentRow, parentSpanX, parentSpanY);
+
+                for (int g=0; g<mVerticalHeader_Merges.length(); ++g)
+                {
+                    if (mVerticalHeader_Merges.at(g)==oldMerge)
+                    {
+                        mVerticalHeader_Merges.removeAt(g);
+                        break;
+                    }
+                }
+
                 for (int g=0; g<parentSpanY; ++g)
                 {
                     for (int h=0; h<parentSpanX; ++h)
@@ -2673,6 +2732,10 @@ void FastTableWidget::verticalHeader_SetSpan(const int row, const int column, qu
     {
         mVerticalHeader_CellMergeParentRow[row][column]=-1;
         mVerticalHeader_CellMergeParentColumn[row][column]=-1;
+    }
+    else
+    {
+        mVerticalHeader_Merges.append(QRect(column, row, columnSpan, rowSpan));
     }
 
     viewport()->update();
