@@ -5043,20 +5043,20 @@ QPoint CustomFastTableWidget::topLeftSelectedCell()
     return QPoint(-1, -1);
 }
 
-bool CustomFastTableWidget::columnHasSelection(const int column)
-{
-    FASTTABLE_DEBUG;
-    FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_SelectedColumns.length());
-
-    return mHorizontalHeader_SelectedColumns.at(column)!=0;
-}
-
 bool CustomFastTableWidget::rowHasSelection(const int row)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_SelectedRows.length());
 
     return mVerticalHeader_SelectedRows.at(row)!=0;
+}
+
+bool CustomFastTableWidget::columnHasSelection(const int column)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_SelectedColumns.length());
+
+    return mHorizontalHeader_SelectedColumns.at(column)!=0;
 }
 
 QPoint CustomFastTableWidget::currentCell()
@@ -5126,7 +5126,7 @@ void CustomFastTableWidget::setCurrentRow(const int row, const bool keepSelectio
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
-    setCurrentCell(row, mCurrentColumn, keepSelection)
+    setCurrentCell(row, mCurrentColumn<0? 0 : mCurrentColumn, keepSelection)
 
     FASTTABLE_END_PROFILE;
 }
@@ -5142,7 +5142,7 @@ void CustomFastTableWidget::setCurrentColumn(const int column, const bool keepSe
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
-    setCurrentCell(mCurrentRow, column, keepSelection)
+    setCurrentCell(mCurrentRow<0? 0: mCurrentRow, column, keepSelection)
 
     FASTTABLE_END_PROFILE;
 }

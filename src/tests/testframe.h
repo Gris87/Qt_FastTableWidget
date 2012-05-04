@@ -83,6 +83,7 @@ public:
     QList< QList<quint16> >  *mCellMergeY;
     QList< QList<int> >      *mCellMergeParentRow;
     QList< QList<int> >      *mCellMergeParentColumn;
+    QList< QRect >           *mMerges;
 
     QList< QList<QBrush *> > *mHorizontalHeader_BackgroundBrushes;
     QList< QList<QColor *> > *mHorizontalHeader_ForegroundColors;
@@ -92,6 +93,7 @@ public:
     QList< QList<quint16> >  *mHorizontalHeader_CellMergeY;
     QList< QList<int> >      *mHorizontalHeader_CellMergeParentRow;
     QList< QList<int> >      *mHorizontalHeader_CellMergeParentColumn;
+    QList< QRect >           *mHorizontalHeader_Merges;
 
     QList< QList<QBrush *> > *mVerticalHeader_BackgroundBrushes;
     QList< QList<QColor *> > *mVerticalHeader_ForegroundColors;
@@ -101,6 +103,7 @@ public:
     QList< QList<quint16> >  *mVerticalHeader_CellMergeY;
     QList< QList<int> >      *mVerticalHeader_CellMergeParentRow;
     QList< QList<int> >      *mVerticalHeader_CellMergeParentColumn;
+    QList< QRect >           *mVerticalHeader_Merges;
 
     //---------------------------------------------------------------------------
 

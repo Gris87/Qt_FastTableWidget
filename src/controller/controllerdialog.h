@@ -95,10 +95,15 @@ private slots:
     void on_headerHideColumnButton_clicked();
     void on_headerShowRowButton_clicked();
     void on_headerHideRowButton_clicked();
+    void on_scrollToCellButton_clicked();
+    void on_scrollToCurrentCellButton_clicked();
+    void on_scrollToTopButton_clicked();
+    void on_scrollToBottomButton_clicked();
     void on_textButton_clicked();
     void on_horizontalTextButton_clicked();
     void on_verticalTextButton_clicked();
     void on_cellSelectedButton_clicked();
+    void on_currentCellButton_clicked();
 
     void on_backgroundButton_clicked();
     void on_resetBackgroundButton_clicked();
@@ -170,16 +175,35 @@ private slots:
     void on_horizontalTextViewButton_clicked();
     void on_verticalTextViewButton_clicked();
     void on_cellSelectedViewButton_clicked();
-    void on_currentSelectionViewButton_clicked();
+    void on_selectedCellsViewButton_clicked();
+    void on_selectedRangesViewButton_clicked();
+    void on_topLeftSelectedCellViewButton_clicked();
     void on_rowsSelectedViewButton_clicked();
     void on_columnsSelectedViewButton_clicked();
+    void on_currentCellViewButton_clicked();
+    void on_lastXViewButton_clicked();
+    void on_lastYViewButton_clicked();
+    void on_mouseXForShiftViewButton_clicked();
+    void on_mouseYForShiftViewButton_clicked();
+    void on_mouseResizeLineXViewButton_clicked();
+    void on_mouseResizeLineYViewButton_clicked();
+    void on_mouseResizeCellViewButton_clicked();
+    void on_mousePressedViewButton_clicked();
+    void on_ctrlPressedViewButton_clicked();
+    void on_shiftPressedViewButton_clicked();
+    void on_mouseLocationViewButton_clicked();
+    void on_mouseLocationForShiftViewButton_clicked();
+    void on_mouseSelectedCellsViewButton_clicked();
 
     void on_mergeParentViewButton_clicked();
     void on_mergeXYViewButton_clicked();
+    void on_mergesViewButton_clicked();
     void on_horizontalMergeParentViewButton_clicked();
     void on_horizontalMergeXYViewButton_clicked();
+    void on_horizontalMergesViewButton_clicked();
     void on_verticalMergeParentViewButton_clicked();
     void on_verticalMergeXYViewButton_clicked();
+    void on_verticalMergesViewButton_clicked();
 
     //------------------------------------------------------------------------
 

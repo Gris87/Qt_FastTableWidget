@@ -14,6 +14,7 @@ public:
     QList< QList<quint16> >  *getCellMergeY();
     QList< QList<int> >      *getCellMergeParentRow();
     QList< QList<int> >      *getCellMergeParentColumn();
+    QList< QRect >           *getMerges();
 
     QList< QList<QBrush *> > *horizontalHeader_GetBackgroundBrushes();
     QList< QList<QColor *> > *horizontalHeader_GetForegroundColors();
@@ -23,6 +24,7 @@ public:
     QList< QList<quint16> >  *horizontalHeader_GetCellMergeY();
     QList< QList<int> >      *horizontalHeader_GetCellMergeParentRow();
     QList< QList<int> >      *horizontalHeader_GetCellMergeParentColumn();
+    QList< QRect >           *horizontalHeader_GetMerges();
 
     QList< QList<QBrush *> > *verticalHeader_GetBackgroundBrushes();
     QList< QList<QColor *> > *verticalHeader_GetForegroundColors();
@@ -32,16 +34,12 @@ public:
     QList< QList<quint16> >  *verticalHeader_GetCellMergeY();
     QList< QList<int> >      *verticalHeader_GetCellMergeParentRow();
     QList< QList<int> >      *verticalHeader_GetCellMergeParentColumn();
+    QList< QRect >           *verticalHeader_GetMerges();
 };
 
 class PublicCustomFastTable : public CustomFastTableWidget
 {
 public:
-    int getRowCount();
-    int getColumnCount();
-    qint16 horizontalHeader_GetRowCount();
-    qint16 verticalHeader_GetColumnCount();
-
     QBrush getDefaultBackgroundBrush();
     QColor getDefaultForegroundColor();
     QColor getGridColor();
@@ -59,6 +57,11 @@ public:
 
     QBrush getSelectionBrush();
     QColor getSelectionTextColor();
+
+    int getRowCount();
+    int getColumnCount();
+    qint16 horizontalHeader_GetRowCount();
+    qint16 verticalHeader_GetColumnCount();
 
     quint16 getDefaultWidth();
     quint16 getDefaultHeight();
@@ -94,6 +97,26 @@ public:
     QList< QPoint >      *getCurSelection();
     QList< int >         *horizontalHeader_GetSelectedColumns();
     QList< int >         *verticalHeader_GetSelectedRows();
+
+    int getCurrentRow();
+    int getCurrentColumn();
+
+    int getLastX();
+    int getLastY();
+    int getMouseXForShift();
+    int getMouseYForShift();
+    int getMouseResizeLineX();
+    int getMouseResizeLineY();
+    int getMouseResizeCell();
+
+    bool getMousePressed();
+    bool getCtrlPressed();
+    bool getShiftPressed();
+
+    MouseLocation getMouseLocation();
+    MouseLocation getMouseLocationForShift();
+
+    QList< QList<bool> > *getMouseSelectedCells();
 };
 
 #endif // PUBLICTABLEWIDGET_H

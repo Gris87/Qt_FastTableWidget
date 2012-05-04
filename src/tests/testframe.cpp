@@ -116,6 +116,7 @@ TestFrame::TestFrame(CustomFastTableWidget* aFastTable, QWidget *parent) :
         mCellMergeY                             = (((PublicFastTable*)mFastTable)->getCellMergeY());
         mCellMergeParentRow                     = (((PublicFastTable*)mFastTable)->getCellMergeParentRow());
         mCellMergeParentColumn                  = (((PublicFastTable*)mFastTable)->getCellMergeParentColumn());
+        mMerges                                 = (((PublicFastTable*)mFastTable)->getMerges());
 
         mHorizontalHeader_BackgroundBrushes     = (((PublicFastTable*)mFastTable)->horizontalHeader_GetBackgroundBrushes());
         mHorizontalHeader_ForegroundColors      = (((PublicFastTable*)mFastTable)->horizontalHeader_GetForegroundColors());
@@ -125,6 +126,7 @@ TestFrame::TestFrame(CustomFastTableWidget* aFastTable, QWidget *parent) :
         mHorizontalHeader_CellMergeY            = (((PublicFastTable*)mFastTable)->horizontalHeader_GetCellMergeY());
         mHorizontalHeader_CellMergeParentRow    = (((PublicFastTable*)mFastTable)->horizontalHeader_GetCellMergeParentRow());
         mHorizontalHeader_CellMergeParentColumn = (((PublicFastTable*)mFastTable)->horizontalHeader_GetCellMergeParentColumn());
+        mHorizontalHeader_Merges                = (((PublicFastTable*)mFastTable)->horizontalHeader_GetMerges());
 
         mVerticalHeader_BackgroundBrushes       = (((PublicFastTable*)mFastTable)->verticalHeader_GetBackgroundBrushes());
         mVerticalHeader_ForegroundColors        = (((PublicFastTable*)mFastTable)->verticalHeader_GetForegroundColors());
@@ -134,6 +136,7 @@ TestFrame::TestFrame(CustomFastTableWidget* aFastTable, QWidget *parent) :
         mVerticalHeader_CellMergeY              = (((PublicFastTable*)mFastTable)->verticalHeader_GetCellMergeY());
         mVerticalHeader_CellMergeParentRow      = (((PublicFastTable*)mFastTable)->verticalHeader_GetCellMergeParentRow());
         mVerticalHeader_CellMergeParentColumn   = (((PublicFastTable*)mFastTable)->verticalHeader_GetCellMergeParentColumn());
+        mVerticalHeader_Merges                  = (((PublicFastTable*)mFastTable)->verticalHeader_GetMerges());
     }
     else
     {
@@ -145,6 +148,7 @@ TestFrame::TestFrame(CustomFastTableWidget* aFastTable, QWidget *parent) :
         mCellMergeY                             = 0;
         mCellMergeParentRow                     = 0;
         mCellMergeParentColumn                  = 0;
+        mMerges                                 = 0;
 
         mHorizontalHeader_BackgroundBrushes     = 0;
         mHorizontalHeader_ForegroundColors      = 0;
@@ -154,6 +158,7 @@ TestFrame::TestFrame(CustomFastTableWidget* aFastTable, QWidget *parent) :
         mHorizontalHeader_CellMergeY            = 0;
         mHorizontalHeader_CellMergeParentRow    = 0;
         mHorizontalHeader_CellMergeParentColumn = 0;
+        mHorizontalHeader_Merges                = 0;
 
         mVerticalHeader_BackgroundBrushes       = 0;
         mVerticalHeader_ForegroundColors        = 0;
@@ -163,6 +168,7 @@ TestFrame::TestFrame(CustomFastTableWidget* aFastTable, QWidget *parent) :
         mVerticalHeader_CellMergeY              = 0;
         mVerticalHeader_CellMergeParentRow      = 0;
         mVerticalHeader_CellMergeParentColumn   = 0;
+        mVerticalHeader_Merges                  = 0;
     }
 }
 
@@ -2262,6 +2268,8 @@ void TestFrame::startTest()
 
         aTable->setSpan(1, 2, 2, 3);
 
+        TEST_STEP(mMerges->length()==1 && mMerges->at(0)==QRect(2, 1, 3, 2));
+
         for (int i=1; i<=2; ++i)
         {
             for (int j=2; j<=4; ++j)
@@ -2276,6 +2284,8 @@ void TestFrame::startTest()
         TEST_STEP(mCellMergeY->at(1).at(2)==2);
 
         aTable->setSpan(0, 3, 2, 1);
+
+        TEST_STEP(mMerges->length()==1 && mMerges->at(0)==QRect(3, 0, 1, 2));
 
         for (int i=1; i<=2; ++i)
         {
@@ -2304,6 +2314,8 @@ void TestFrame::startTest()
         TEST_STEP(mCellMergeY->at(0).at(3)==2);
 
         aTable->clearSpans();
+
+        TEST_STEP(mMerges->length()==0);
 
         for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
         {
@@ -2346,6 +2358,8 @@ void TestFrame::startTest()
 
         aTable->horizontalHeader_SetSpan(0, 2, 2, 3);
 
+        TEST_STEP(mHorizontalHeader_Merges->length()==1 && mHorizontalHeader_Merges->at(0)==QRect(2, 0, 3, 2));
+
         for (int i=0; i<=1; ++i)
         {
             for (int j=2; j<=4; ++j)
@@ -2360,6 +2374,8 @@ void TestFrame::startTest()
         TEST_STEP(mHorizontalHeader_CellMergeY->at(0).at(2)==2);
 
         aTable->horizontalHeader_SetSpan(0, 1, 1, 2);
+
+        TEST_STEP(mHorizontalHeader_Merges->length()==1 && mHorizontalHeader_Merges->at(0)==QRect(1, 0, 2, 1));
 
         for (int i=0; i<=1; ++i)
         {
@@ -2388,6 +2404,8 @@ void TestFrame::startTest()
         TEST_STEP(mHorizontalHeader_CellMergeY->at(0).at(1)==1);
 
         aTable->horizontalHeader_ClearSpans();
+
+        TEST_STEP(mHorizontalHeader_Merges->length()==0);
 
         for (int i=0; i<((PublicCustomFastTable*)aTable)->horizontalHeader_GetRowCount(); ++i)
         {
@@ -2430,6 +2448,8 @@ void TestFrame::startTest()
 
         aTable->verticalHeader_SetSpan(2, 0, 3, 1);
 
+        TEST_STEP(mVerticalHeader_Merges->length()==1 && mVerticalHeader_Merges->at(0)==QRect(0, 2, 1, 3));
+
         for (int i=2; i<=4; ++i)
         {
             TEST_STEP(mVerticalHeader_CellMergeParentRow->at(i).at(0)==2);
@@ -2441,6 +2461,8 @@ void TestFrame::startTest()
         TEST_STEP(mVerticalHeader_CellMergeY->at(2).at(0)==3);
 
         aTable->verticalHeader_SetSpan(3, 0, 2, 1);
+
+        TEST_STEP(mVerticalHeader_Merges->length()==1 && mVerticalHeader_Merges->at(0)==QRect(0, 3, 1, 2));
 
         TEST_STEP(mVerticalHeader_CellMergeParentRow->at(2).at(0)==-1);
         TEST_STEP(mVerticalHeader_CellMergeParentColumn->at(2).at(0)==-1);
@@ -2459,6 +2481,8 @@ void TestFrame::startTest()
         TEST_STEP(mVerticalHeader_CellMergeY->at(3).at(0)==2);
 
         aTable->verticalHeader_ClearSpans();
+
+        TEST_STEP(mVerticalHeader_Merges->length()==0);
 
         for (int i=0; i<((PublicCustomFastTable*)aTable)->getRowCount(); ++i)
         {

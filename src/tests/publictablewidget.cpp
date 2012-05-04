@@ -40,6 +40,11 @@ QList< QList<int> >       *PublicFastTable::getCellMergeParentColumn()
     return &mCellMergeParentColumn;
 }
 
+QList< QRect >            *PublicFastTable::getMerges()
+{
+    return &mMerges;
+}
+
 QList< QList<QBrush *> >  *PublicFastTable::horizontalHeader_GetBackgroundBrushes()
 {
     return &mHorizontalHeader_BackgroundBrushes;
@@ -78,6 +83,11 @@ QList< QList<int> >       *PublicFastTable::horizontalHeader_GetCellMergeParentR
 QList< QList<int> >       *PublicFastTable::horizontalHeader_GetCellMergeParentColumn()
 {
     return &mHorizontalHeader_CellMergeParentColumn;
+}
+
+QList< QRect >            *PublicFastTable::horizontalHeader_GetMerges()
+{
+    return &mHorizontalHeader_Merges;
 }
 
 QList< QList<QBrush *> >  *PublicFastTable::verticalHeader_GetBackgroundBrushes()
@@ -120,27 +130,12 @@ QList< QList<int> >       *PublicFastTable::verticalHeader_GetCellMergeParentCol
     return &mVerticalHeader_CellMergeParentColumn;
 }
 
+QList< QRect >            *PublicFastTable::verticalHeader_GetMerges()
+{
+    return &mVerticalHeader_Merges;
+}
+
 // ==============================================================================================================
-
-int PublicCustomFastTable::getRowCount()
-{
-    return mRowCount;
-}
-
-int PublicCustomFastTable::getColumnCount()
-{
-    return mColumnCount;
-}
-
-qint16 PublicCustomFastTable::horizontalHeader_GetRowCount()
-{
-    return mHorizontalHeader_RowCount;
-}
-
-qint16 PublicCustomFastTable::verticalHeader_GetColumnCount()
-{
-    return mVerticalHeader_ColumnCount;
-}
 
 QBrush PublicCustomFastTable::getDefaultBackgroundBrush()
 {
@@ -210,6 +205,26 @@ QBrush PublicCustomFastTable::getSelectionBrush()
 QColor PublicCustomFastTable::getSelectionTextColor()
 {
     return mSelectionTextColor;
+}
+
+int PublicCustomFastTable::getRowCount()
+{
+    return mRowCount;
+}
+
+int PublicCustomFastTable::getColumnCount()
+{
+    return mColumnCount;
+}
+
+qint16 PublicCustomFastTable::horizontalHeader_GetRowCount()
+{
+    return mHorizontalHeader_RowCount;
+}
+
+qint16 PublicCustomFastTable::verticalHeader_GetColumnCount()
+{
+    return mVerticalHeader_ColumnCount;
 }
 
 quint16 PublicCustomFastTable::getDefaultWidth()
@@ -345,4 +360,79 @@ QList< int >         *PublicCustomFastTable::horizontalHeader_GetSelectedColumns
 QList< int >         *PublicCustomFastTable::verticalHeader_GetSelectedRows()
 {
     return &mVerticalHeader_SelectedRows;
+}
+
+int PublicCustomFastTable::getCurrentRow()
+{
+    return mCurrentRow;
+}
+
+int PublicCustomFastTable::getCurrentColumn()
+{
+    return mCurrentColumn;
+}
+
+int PublicCustomFastTable::getLastX()
+{
+    return mLastX;
+}
+
+int PublicCustomFastTable::getLastY()
+{
+    return mLastY;
+}
+
+int PublicCustomFastTable::getMouseXForShift()
+{
+    return mMouseXForShift;
+}
+
+int PublicCustomFastTable::getMouseYForShift()
+{
+    return mMouseYForShift;
+}
+
+int PublicCustomFastTable::getMouseResizeLineX()
+{
+    return mMouseResizeLineX;
+}
+
+int PublicCustomFastTable::getMouseResizeLineY()
+{
+    return mMouseResizeLineY;
+}
+
+int PublicCustomFastTable::getMouseResizeCell()
+{
+    return mMouseResizeCell;
+}
+
+bool PublicCustomFastTable::getMousePressed()
+{
+    return mMousePressed;
+}
+
+bool PublicCustomFastTable::getCtrlPressed()
+{
+    return mCtrlPressed;
+}
+
+bool PublicCustomFastTable::getShiftPressed()
+{
+    return mShiftPressed;
+}
+
+CustomFastTableWidget::MouseLocation PublicCustomFastTable::getMouseLocation()
+{
+    return mMouseLocation;
+}
+
+CustomFastTableWidget::MouseLocation PublicCustomFastTable::getMouseLocationForShift()
+{
+    return mMouseLocationForShift;
+}
+
+QList< QList<bool> > *PublicCustomFastTable::getMouseSelectedCells()
+{
+    return &mMouseSelectedCells;
 }

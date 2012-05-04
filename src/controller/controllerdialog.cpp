@@ -31,7 +31,6 @@ void ControllerDialog::setStyleButtonsFlat()
     ui->styleWin7Button->setFlat  (mFastTableWidget->style()!=CustomFastTableWidget::StyleWin7);
 }
 
-
 void ControllerDialog::on_styleSimpleButton_clicked()
 {
     mFastTableWidget->setStyle(CustomFastTableWidget::StyleSimple);
@@ -825,6 +824,49 @@ void ControllerDialog::on_headerHideRowButton_clicked()
     }
 }
 
+void ControllerDialog::on_scrollToCellButton_clicked()
+{
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
+
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                mFastTableWidget->scrollToCell(dialog.intValue(), dialog2.intValue());
+            }
+        }
+    }
+}
+
+void ControllerDialog::on_scrollToCurrentCellButton_clicked()
+{
+    mFastTableWidget->scrollToCurrentCell();
+}
+
+void ControllerDialog::on_scrollToTopButton_clicked()
+{
+    mFastTableWidget->scrollToTop();
+}
+
+void ControllerDialog::on_scrollToBottomButton_clicked()
+{
+    mFastTableWidget->scrollToBottom();
+}
+
 void ControllerDialog::on_textButton_clicked()
 {
     if (mFastTableWidget->rowCount()>0 && mFastTableWidget->columnCount()>0)
@@ -956,6 +998,34 @@ void ControllerDialog::on_cellSelectedButton_clicked()
             if (dialog2.exec())
             {
                 mFastTableWidget->setCellSelected(dialog.intValue(), dialog2.intValue(), !mFastTableWidget->cellSelected(dialog.intValue(), dialog2.intValue()));
+            }
+        }
+    }
+}
+
+void ControllerDialog::on_currentCellButton_clicked()
+{
+    if (mFastTableWidget->rowCount()>0 && mFastTableWidget->columnCount()>0)
+    {
+        QInputDialog dialog(this);
+
+        dialog.setWindowTitle("Select row");
+        dialog.setIntMinimum(0);
+        dialog.setIntMaximum(mFastTableWidget->rowCount()-1);
+        dialog.setIntValue(0);
+
+        if (dialog.exec())
+        {
+            QInputDialog dialog2(this);
+
+            dialog2.setWindowTitle("Select column");
+            dialog2.setIntMinimum(0);
+            dialog2.setIntMaximum(mFastTableWidget->columnCount()-1);
+            dialog2.setIntValue(0);
+
+            if (dialog2.exec())
+            {
+                mFastTableWidget->setCurrentCell(dialog.intValue(), dialog2.intValue());
             }
         }
     }
@@ -2046,67 +2116,72 @@ void ControllerDialog::on_headerTotalHeightViewButton_clicked()
 
 void ControllerDialog::on_visibleRangesViewButton_clicked()
 {
-    QRect aRect=mFastTableWidget->visibleRange();
-
-    QList<int> aList;
-
-    aList.append(aRect.left());
-    aList.append(aRect.top());
-    aList.append(aRect.right());
-    aList.append(aRect.bottom());
-
-    ViewDialog dialog(&aList, false, this);
+    ViewDialog dialog(mFastTableWidget->visibleRange(), this);
     dialog.exec();
 }
 
 void ControllerDialog::on_horizontalVisibleRangesViewButton_clicked()
 {
-    QRect aRect=mFastTableWidget->horizontalHeader_VisibleRange();
-
-    QList<int> aList;
-
-    aList.append(aRect.left());
-    aList.append(aRect.top());
-    aList.append(aRect.right());
-    aList.append(aRect.bottom());
-
-    ViewDialog dialog(&aList, false, this);
+    ViewDialog dialog(mFastTableWidget->horizontalHeader_VisibleRange(), this);
     dialog.exec();
 }
 
 void ControllerDialog::on_verticalVisibleRangesViewButton_clicked()
 {
-    QRect aRect=mFastTableWidget->verticalHeader_VisibleRange();
-
-    QList<int> aList;
-
-    aList.append(aRect.left());
-    aList.append(aRect.top());
-    aList.append(aRect.right());
-    aList.append(aRect.bottom());
-
-    ViewDialog dialog(&aList, false, this);
+    ViewDialog dialog(mFastTableWidget->verticalHeader_VisibleRange(), this);
     dialog.exec();
 }
 
 void ControllerDialog::on_columnVisibleViewButton_clicked()
 {
+    QList<bool> aList;
 
+    for (int i=0; i<mFastTableWidget->columnCount(); ++i)
+    {
+        aList.append(mFastTableWidget->columnVisible(i));
+    }
+
+    ViewDialog dialog(&aList, false, this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_rowVisibleViewButton_clicked()
 {
+    QList<bool> aList;
 
+    for (int i=0; i<mFastTableWidget->rowCount(); ++i)
+    {
+        aList.append(mFastTableWidget->rowVisible(i));
+    }
+
+    ViewDialog dialog(&aList, true, this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_headerColumnVisibleViewButton_clicked()
 {
+    QList<bool> aList;
 
+    for (int i=0; i<mFastTableWidget->verticalHeader_ColumnCount(); ++i)
+    {
+        aList.append(mFastTableWidget->verticalHeader_ColumnVisible(i));
+    }
+
+    ViewDialog dialog(&aList, false, this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_headerRowVisibleViewButton_clicked()
 {
+    QList<bool> aList;
 
+    for (int i=0; i<mFastTableWidget->horizontalHeader_RowCount(); ++i)
+    {
+        aList.append(mFastTableWidget->horizontalHeader_RowVisible(i));
+    }
+
+    ViewDialog dialog(&aList, true, this);
+    dialog.exec();
 }
 
 void ControllerDialog::on_textViewButton_clicked()
@@ -2133,23 +2208,23 @@ void ControllerDialog::on_cellSelectedViewButton_clicked()
     dialog.exec();
 }
 
-void ControllerDialog::on_currentSelectionViewButton_clicked()
+void ControllerDialog::on_selectedCellsViewButton_clicked()
 {
-    QList<QList<int> > aList;
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getCurSelection(), this);
+    dialog.exec();
+}
 
-    QList<QPoint> *aSelection=((PublicCustomFastTable*)mFastTableWidget)->getCurSelection();
-
-    for (int i=0; i<aSelection->length(); i++)
-    {
-        QList<int> aRow;
-
-        aRow.append(aSelection->at(i).x());
-        aRow.append(aSelection->at(i).y());
-
-        aList.append(aRow);
-    }
+void ControllerDialog::on_selectedRangesViewButton_clicked()
+{
+    QList<QRect> aList=mFastTableWidget->selectedRanges();
 
     ViewDialog dialog(&aList, this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_topLeftSelectedCellViewButton_clicked()
+{
+    ViewDialog dialog(mFastTableWidget->topLeftSelectedCell(), this);
     dialog.exec();
 }
 
@@ -2162,6 +2237,90 @@ void ControllerDialog::on_rowsSelectedViewButton_clicked()
 void ControllerDialog::on_columnsSelectedViewButton_clicked()
 {
     ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->horizontalHeader_GetSelectedColumns(), false, this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_currentCellViewButton_clicked()
+{
+    ViewDialog dialog(mFastTableWidget->currentCell(), this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_lastXViewButton_clicked()
+{
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getLastX(), this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_lastYViewButton_clicked()
+{
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getLastY(), this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_mouseXForShiftViewButton_clicked()
+{
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getMouseXForShift(), this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_mouseYForShiftViewButton_clicked()
+{
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getMouseYForShift(), this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_mouseResizeLineXViewButton_clicked()
+{
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getMouseResizeLineX(), this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_mouseResizeLineYViewButton_clicked()
+{
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getMouseResizeLineY(), this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_mouseResizeCellViewButton_clicked()
+{
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getMouseResizeCell(), this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_mousePressedViewButton_clicked()
+{
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getMousePressed(), this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_ctrlPressedViewButton_clicked()
+{
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getCtrlPressed(), this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_shiftPressedViewButton_clicked()
+{
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getShiftPressed(), this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_mouseLocationViewButton_clicked()
+{
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getMouseLocation(), this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_mouseLocationForShiftViewButton_clicked()
+{
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getMouseLocationForShift(), this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_mouseSelectedCellsViewButton_clicked()
+{
+    ViewDialog dialog(((PublicCustomFastTable*)mFastTableWidget)->getMouseSelectedCells(), this);
     dialog.exec();
 }
 
@@ -2207,6 +2366,12 @@ void ControllerDialog::on_mergeXYViewButton_clicked()
     dialog.exec();
 }
 
+void ControllerDialog::on_mergesViewButton_clicked()
+{
+    ViewDialog dialog(((PublicFastTable*)mFastTableWidget)->getMerges(), this);
+    dialog.exec();
+}
+
 void ControllerDialog::on_horizontalMergeParentViewButton_clicked()
 {
     QList<QStringList> aList;
@@ -2249,6 +2414,12 @@ void ControllerDialog::on_horizontalMergeXYViewButton_clicked()
     dialog.exec();
 }
 
+void ControllerDialog::on_horizontalMergesViewButton_clicked()
+{
+    ViewDialog dialog(((PublicFastTable*)mFastTableWidget)->horizontalHeader_GetMerges(), this);
+    dialog.exec();
+}
+
 void ControllerDialog::on_verticalMergeParentViewButton_clicked()
 {
     QList<QStringList> aList;
@@ -2288,6 +2459,12 @@ void ControllerDialog::on_verticalMergeXYViewButton_clicked()
     }
 
     ViewDialog dialog(&aList, this);
+    dialog.exec();
+}
+
+void ControllerDialog::on_verticalMergesViewButton_clicked()
+{
+    ViewDialog dialog(((PublicFastTable*)mFastTableWidget)->verticalHeader_GetMerges(), this);
     dialog.exec();
 }
 

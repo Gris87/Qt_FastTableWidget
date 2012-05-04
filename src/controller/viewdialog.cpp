@@ -16,6 +16,50 @@ ViewDialog::ViewDialog(int aValue, QWidget *parent) :
     mFastTableWidget->setText(0, 0, valueToString(aValue));
 }
 
+ViewDialog::ViewDialog(bool aValue, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::ViewDialog)
+{
+    VIEWDIALOG_BASE_CONSTRUCTOR;
+
+    mFastTableWidget->setText(0, 0, valueToString(aValue));
+}
+
+ViewDialog::ViewDialog(CustomFastTableWidget::MouseLocation aValue, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::ViewDialog)
+{
+    VIEWDIALOG_BASE_CONSTRUCTOR;
+
+    mFastTableWidget->setText(0, 0, valueToString(aValue));
+}
+
+ViewDialog::ViewDialog(QPoint aValue, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::ViewDialog)
+{
+    VIEWDIALOG_BASE_CONSTRUCTOR;
+
+    mFastTableWidget->setColumnCount(2);
+
+    mFastTableWidget->setText(0, 0, valueToString(aValue.x()));
+    mFastTableWidget->setText(0, 1, valueToString(aValue.y()));
+}
+
+ViewDialog::ViewDialog(QRect aValue, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::ViewDialog)
+{
+    VIEWDIALOG_BASE_CONSTRUCTOR;
+
+    mFastTableWidget->setColumnCount(4);
+
+    mFastTableWidget->setText(0, 0, valueToString(aValue.left()));
+    mFastTableWidget->setText(0, 1, valueToString(aValue.top()));
+    mFastTableWidget->setText(0, 2, valueToString(aValue.right()));
+    mFastTableWidget->setText(0, 3, valueToString(aValue.bottom()));
+}
+
 ViewDialog::ViewDialog(QList<qint16> *aValues, bool isVertical, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ViewDialog)
@@ -91,6 +135,40 @@ ViewDialog::ViewDialog(QList<bool> *aValues, bool isVertical, QWidget *parent) :
         {
             mFastTableWidget->setText(0, i, valueToString(aValues->at(i)));
         }
+    }
+}
+
+ViewDialog::ViewDialog(QList<QPoint> *aValues, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::ViewDialog)
+{
+    VIEWDIALOG_BASE_CONSTRUCTOR;
+
+    mFastTableWidget->setRowCount(aValues->length());
+    mFastTableWidget->setColumnCount(2);
+
+    for (int i=0; i<aValues->length(); i++)
+    {
+         mFastTableWidget->setText(i, 0, valueToString(aValues->at(i).x()));
+         mFastTableWidget->setText(i, 1, valueToString(aValues->at(i).y()));
+    }
+}
+
+ViewDialog::ViewDialog(QList<QRect> *aValues, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::ViewDialog)
+{
+    VIEWDIALOG_BASE_CONSTRUCTOR;
+
+    mFastTableWidget->setRowCount(aValues->length());
+    mFastTableWidget->setColumnCount(4);
+
+    for (int i=0; i<aValues->length(); i++)
+    {
+         mFastTableWidget->setText(i, 0, valueToString(aValues->at(i).left()));
+         mFastTableWidget->setText(i, 1, valueToString(aValues->at(i).top()));
+         mFastTableWidget->setText(i, 2, valueToString(aValues->at(i).right()));
+         mFastTableWidget->setText(i, 3, valueToString(aValues->at(i).bottom()));
     }
 }
 
@@ -192,6 +270,20 @@ QString ViewDialog::valueToString(bool aValue)
     {
         return "false";
     }
+}
+
+QString ViewDialog::valueToString(CustomFastTableWidget::MouseLocation aValue)
+{
+    switch (aValue)
+    {
+        case CustomFastTableWidget::InMiddleWorld:          return "InMiddleWorld";
+        case CustomFastTableWidget::InCell:                 return "InCell";
+        case CustomFastTableWidget::InHorizontalHeaderCell: return "InHorizontalHeaderCell";
+        case CustomFastTableWidget::InVerticalHeaderCell:   return "InVerticalHeaderCell";
+        case CustomFastTableWidget::InTopLeftCorner:        return "InTopLeftCorner";
+    }
+
+    return "";
 }
 
 QString ViewDialog::valueToString(QString aValue)
