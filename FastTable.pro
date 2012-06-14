@@ -27,7 +27,7 @@ HEADERS  += src/main/mainwindow.h \
             src/fasttable/customfasttablewidget.h \
             src/fasttable/fasttablewidget.h \
             src/fasttable/fastdefines.h \
-            src/fasttable/qoptimallist.h \
+            src/fasttable/optimallist.h \
             src/tests/testdialog.h \
             src/tests/testframe.h \
             src/tests/publictablewidget.h \

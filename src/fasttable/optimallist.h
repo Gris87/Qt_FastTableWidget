@@ -1,15 +1,15 @@
-#ifndef QOPTIMALLIST_H
-#define QOPTIMALLIST_H
+#ifndef OPTIMALLIST_H
+#define OPTIMALLIST_H
 
 #include <QDebug>
 #include <QList>
 
 template <typename T>
-class QOptimalList
+class OptimalList
 {
 public:
-    QOptimalList();
-    ~QOptimalList();
+    OptimalList();
+    ~OptimalList();
 
     void clear();
 
@@ -35,7 +35,7 @@ protected:
 };
 
 template <typename T>
-QOptimalList<T>::QOptimalList()
+OptimalList<T>::OptimalList()
 {
     mBuffer=0;
     mCount=0;
@@ -43,20 +43,20 @@ QOptimalList<T>::QOptimalList()
 }
 
 template <typename T>
-QOptimalList<T>::~QOptimalList()
+OptimalList<T>::~OptimalList()
 {
     clear();
 }
 
 template <typename T>
-void QOptimalList<T>::clear()
+void OptimalList<T>::clear()
 {
     mCount=0;
     setOptimalCapacity();
 }
 
 template <typename T>
-void QOptimalList<T>::append(const T &t)
+void OptimalList<T>::append(const T &t)
 {
     ++mCount;
     setOptimalCapacity();
@@ -66,9 +66,9 @@ void QOptimalList<T>::append(const T &t)
 }
 
 template <typename T>
-void QOptimalList<T>::insert(int i, const T &t)
+void OptimalList<T>::insert(int i, const T &t)
 {
-    Q_ASSERT_X(i >= 0 && i <= mCount, "QOptimalList<T>::insert", "index out of range");
+    Q_ASSERT_X(i >= 0 && i <= mCount, "OptimalList<T>::insert", "index out of range");
 
     ++mCount;
     setOptimalCapacity();
@@ -83,9 +83,9 @@ void QOptimalList<T>::insert(int i, const T &t)
 }
 
 template <typename T>
-void QOptimalList<T>::removeAt(int i)
+void OptimalList<T>::removeAt(int i)
 {
-    Q_ASSERT_X(i >= 0 && i < mCount, "QOptimalList<T>::removeAt", "index out of range");
+    Q_ASSERT_X(i >= 0 && i < mCount, "OptimalList<T>::removeAt", "index out of range");
 
     for (int j=i+1; j<mCount; ++j)
     {
@@ -97,7 +97,7 @@ void QOptimalList<T>::removeAt(int i)
 }
 
 template <typename T>
-void QOptimalList<T>::removeLast()
+void OptimalList<T>::removeLast()
 {
     if (mCount>0)
     {
@@ -106,49 +106,49 @@ void QOptimalList<T>::removeLast()
 }
 
 template <typename T>
-const T &QOptimalList<T>::at(int i) const
+const T &OptimalList<T>::at(int i) const
 {
-    Q_ASSERT_X(i >= 0 && i < mCount, "QOptimalList<T>::at", "index out of range");
+    Q_ASSERT_X(i >= 0 && i < mCount, "OptimalList<T>::at", "index out of range");
 
     return *mBuffer[i];
 }
 
 template <typename T>
-const T &QOptimalList<T>::operator[](int i) const
+const T &OptimalList<T>::operator[](int i) const
 {
-    Q_ASSERT_X(i >= 0 && i < mCount, "QOptimalList<T>::operator[]", "index out of range");
+    Q_ASSERT_X(i >= 0 && i < mCount, "OptimalList<T>::operator[]", "index out of range");
 
     return *mBuffer[i];
 }
 
 template <typename T>
-T &QOptimalList<T>::operator[](int i)
+T &OptimalList<T>::operator[](int i)
 {
-    Q_ASSERT_X(i >= 0 && i < mCount, "QOptimalList<T>::operator[]", "index out of range");
+    Q_ASSERT_X(i >= 0 && i < mCount, "OptimalList<T>::operator[]", "index out of range");
 
     return *mBuffer[i];
 }
 
 template <typename T>
-int QOptimalList<T>::length() const
+int OptimalList<T>::length() const
 {
     return mCount;
 }
 
 template <typename T>
-int QOptimalList<T>::size() const
+int OptimalList<T>::size() const
 {
     return mCount;
 }
 
 template <typename T>
-int QOptimalList<T>::count() const
+int OptimalList<T>::count() const
 {
     return mCount;
 }
 
 template <typename T>
-void QOptimalList<T>::setOptimalCapacity()
+void OptimalList<T>::setOptimalCapacity()
 {
     int aNewCapacity=mCapacity;
 
@@ -225,4 +225,4 @@ void QOptimalList<T>::setOptimalCapacity()
     }
 }
 
-#endif // QOPTIMALLIST_H
+#endif // OPTIMALLIST_H
