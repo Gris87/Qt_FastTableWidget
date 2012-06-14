@@ -26,13 +26,14 @@ SOURCES += src/main.cpp\
 HEADERS  += src/main/mainwindow.h \
             src/fasttable/customfasttablewidget.h \
             src/fasttable/fasttablewidget.h \
+            src/fasttable/fastdefines.h \
+            src/fasttable/qoptimallist.h \
             src/tests/testdialog.h \
             src/tests/testframe.h \
             src/tests/publictablewidget.h \
             src/controller/controllerdialog.h \
             src/controller/viewdialog.h \
-            src/controller/aligndialog.h \
-            src/fasttable/fastdefines.h
+            src/controller/aligndialog.h
 
 FORMS    += src/main/mainwindow.ui \
             src/tests/testdialog.ui \
