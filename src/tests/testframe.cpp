@@ -53,7 +53,6 @@ TestFrame::TestFrame(CustomFastTableWidget* aFastTable, QWidget *parent) :
     addTestLabel("verticalHeader_SetDefaultForegroundColor");
     addTestLabel("verticalHeader_SetGridColor");
     addTestLabel("verticalHeader_SetCellBorderColor");
-    addTestLabel("setSelectionTextColor");
     addTestLabel("setDefaultWidth");
     addTestLabel("setDefaultHeight");
     addTestLabel("setColumnWidth");
@@ -754,25 +753,6 @@ void TestFrame::startTest()
         TEST_STEP(((PublicCustomFastTable*)mFastTable)->verticalHeader_GetCellBorderColor()==aOldColor);
 
         testCompleted(success, "verticalHeader_SetCellBorderColor");
-    }
-    // ----------------------------------------------------------------
-    qDebug()<<"TEST"<<(testNumber++)<<": setSelectionTextColor";
-    // ----------------------------------------------------------------
-    {
-        success=true;
-
-        QColor aOldColor=((PublicCustomFastTable*)mFastTable)->getSelectionTextColor();
-        QColor aNewColor=QColor(1, 2, 3);
-
-        mFastTable->setSelectionTextColor(aNewColor);
-
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getSelectionTextColor()==aNewColor);
-
-        mFastTable->setSelectionTextColor(aOldColor);
-
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getSelectionTextColor()==aOldColor);
-
-        testCompleted(success, "setSelectionTextColor");
     }
     // ----------------------------------------------------------------
     qDebug()<<"TEST"<<(testNumber++)<<": setDefaultWidth";

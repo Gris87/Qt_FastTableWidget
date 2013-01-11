@@ -1712,6 +1712,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
     QPalette aPalette=palette();
 
     QBrush aSelectionBrush=aPalette.highlight();
+    QColor aSelectionTextColor=aPalette.color(QPalette::HighlightedText);
 
     switch (drawComponent)
     {
@@ -1727,7 +1728,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
             if (mSelectedCells.at(row).at(column))
             {
                 aBackgroundBrush=&aSelectionBrush;
-                aTextColor=&mSelectionTextColor;
+                aTextColor=&aSelectionTextColor;
             }
             else
             {
@@ -2870,6 +2871,7 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
         {
             QPalette aPallete=palette();
 
+            // TODO: Handle windows states for palette
             switch (mStyle)
             {
                 case StyleSimple:
@@ -2893,7 +2895,7 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                     mVerticalHeader_CellBorderColor.setRgb(240, 240, 240);
 
                     aPallete.setColor(QPalette::Highlight, QColor(49, 106, 197));
-                    mSelectionTextColor.setRgb(255, 255, 255);
+                    aPallete.setColor(QPalette::HighlightedText, QColor(255, 255, 255));
                 }
                 break;
                 case StyleLinux:
@@ -2917,7 +2919,7 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                     mVerticalHeader_CellBorderColor.setRgb(249, 248, 248);
 
                     aPallete.setColor(QPalette::Highlight, QColor(235, 110, 60));
-                    mSelectionTextColor.setRgb(255, 255, 255);
+                    aPallete.setColor(QPalette::HighlightedText, QColor(255, 255, 255));
                 }
                 break;
                 case StyleWinXP:
@@ -2941,7 +2943,7 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                     mVerticalHeader_CellBorderColor.setRgb(249, 177, 25);
 
                     aPallete.setColor(QPalette::Highlight, QColor(49, 106, 197));
-                    mSelectionTextColor.setRgb(255, 255, 255);
+                    aPallete.setColor(QPalette::HighlightedText, QColor(255, 255, 255));
                 }
                 break;
                 case StyleWin7:
@@ -2965,7 +2967,7 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                     mVerticalHeader_CellBorderColor.setRgb(105, 187, 227);
 
                     aPallete.setColor(QPalette::Highlight, QColor(51, 153, 255));
-                    mSelectionTextColor.setRgb(255, 255, 255);
+                    aPallete.setColor(QPalette::HighlightedText, QColor(255, 255, 255));
                 }
                 break;
             }
@@ -4061,24 +4063,6 @@ void CustomFastTableWidget::verticalHeader_SetCellBorderColor(QColor color)
     FASTTABLE_START_PROFILE;
 
     mVerticalHeader_CellBorderColor=color;
-
-    viewport()->update();
-
-    FASTTABLE_END_PROFILE;
-}
-
-QColor CustomFastTableWidget::selectionTextColor()
-{
-    FASTTABLE_DEBUG;
-    return mSelectionTextColor;
-}
-
-void CustomFastTableWidget::setSelectionTextColor(QColor color)
-{
-    FASTTABLE_DEBUG;
-    FASTTABLE_START_PROFILE;
-
-    mSelectionTextColor=color;
 
     viewport()->update();
 

@@ -300,6 +300,7 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
     QPalette aPalette=palette();
 
     QBrush aSelectionBrush=aPalette.highlight();
+    QColor aSelectionTextColor=aPalette.color(QPalette::HighlightedText);
 
     switch (drawComponent)
     {
@@ -323,7 +324,7 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
             if (mSelectedCells.at(row).at(column))
             {
                 aBackgroundBrush=&aSelectionBrush;
-                aTextColor=&mSelectionTextColor;
+                aTextColor=&aSelectionTextColor;
             }
             else
             {

@@ -197,11 +197,6 @@ QColor PublicCustomFastTable::verticalHeader_GetCellBorderColor()
     return mVerticalHeader_CellBorderColor;
 }
 
-QColor PublicCustomFastTable::getSelectionTextColor()
-{
-    return mSelectionTextColor;
-}
-
 int PublicCustomFastTable::getRowCount()
 {
     return mRowCount;

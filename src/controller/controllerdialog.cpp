@@ -552,14 +552,17 @@ void ControllerDialog::on_selectionColorButton_clicked()
 
 void ControllerDialog::on_selectionTextColorButton_clicked()
 {
+    QPalette aPalette=mFastTableWidget->palette();
+
     QColorDialog dialog(this);
 
     dialog.setWindowTitle("Selection text color");
-    dialog.setCurrentColor(mFastTableWidget->selectionTextColor());
+    dialog.setCurrentColor(aPalette.color(QPalette::HighlightedText));
 
     if (dialog.exec())
     {
-        mFastTableWidget->setSelectionTextColor(dialog.selectedColor());
+        aPalette.setColor(QPalette::HighlightedText, dialog.selectedColor());
+        mFastTableWidget->setPalette(aPalette);
     }
 }
 

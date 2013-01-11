@@ -48,7 +48,6 @@ class CustomFastTableWidget : public QAbstractScrollArea
     Q_PROPERTY(QColor  verticalHeader_DefaultForegroundColor   READ verticalHeader_DefaultForegroundColor   WRITE verticalHeader_SetDefaultForegroundColor)
     Q_PROPERTY(QColor  verticalHeader_GridColor                READ verticalHeader_GridColor                WRITE verticalHeader_SetGridColor)
     Q_PROPERTY(QColor  verticalHeader_CellBorderColor          READ verticalHeader_CellBorderColor          WRITE verticalHeader_SetCellBorderColor)
-    Q_PROPERTY(QColor  selectionTextColor                      READ selectionTextColor                      WRITE setSelectionTextColor)
 
 public:
 
@@ -143,9 +142,6 @@ public:
 
     QColor verticalHeader_CellBorderColor();
     void verticalHeader_SetCellBorderColor(QColor color);
-
-    QColor selectionTextColor();
-    void setSelectionTextColor(QColor color);
 
     quint16 defaultWidth();
     void setDefaultWidth(quint16 width);
@@ -247,8 +243,6 @@ protected:
     QColor mVerticalHeader_DefaultForegroundColor;
     QColor mVerticalHeader_GridColor;
     QColor mVerticalHeader_CellBorderColor;
-
-    QColor mSelectionTextColor;
 
     int mRowCount;
     int mColumnCount;
