@@ -1722,6 +1722,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
 
             if (mSelectedCells.at(row).at(column))
             {
+                // TODO: Use pallete instead of mSelectionBrush
                 aBackgroundBrush=&mSelectionBrush;
                 aTextColor=&mSelectionTextColor;
             }

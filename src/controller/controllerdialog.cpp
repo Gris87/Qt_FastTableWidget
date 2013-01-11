@@ -2580,8 +2580,8 @@ void ControllerDialog::on_createCustomTableButton_clicked()
     ui->horizontalHeaderRowCountSpinBox->setValue(0);
     ui->verticalHeaderColumnCountSpinBox->setValue(0);
 
-    ui->rowCountSpinBox->setValue(50);
-    ui->columnCountSpinBox->setValue(20);
+    ui->rowCountSpinBox->setValue(100);
+    ui->columnCountSpinBox->setValue(10);
     ui->horizontalHeaderRowCountSpinBox->setValue(1);
     ui->verticalHeaderColumnCountSpinBox->setValue(1);
 
@@ -2589,13 +2589,13 @@ void ControllerDialog::on_createCustomTableButton_clicked()
     {
         for (int j=0; j<mFastTableWidget->columnCount(); ++j)
         {
-            mFastTableWidget->setText(i, j, "Hello, World");
+            mFastTableWidget->setText(i, j, "C_"+QString::number(i)+"_"+QString::number(j));
         }
     }
 
     for (int i=0; i<mFastTableWidget->columnCount(); ++i)
     {
-        mFastTableWidget->horizontalHeader_SetText(i, "Header");
+        mFastTableWidget->horizontalHeader_SetText(i, "Header_"+QString::number(i));
     }
 
     mFastTableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -2621,8 +2621,8 @@ void ControllerDialog::on_createFastTableButton_clicked()
     ui->horizontalHeaderRowCountSpinBox->setValue(0);
     ui->verticalHeaderColumnCountSpinBox->setValue(0);
 
-    ui->rowCountSpinBox->setValue(50);
-    ui->columnCountSpinBox->setValue(20);
+    ui->rowCountSpinBox->setValue(100);
+    ui->columnCountSpinBox->setValue(10);
     ui->horizontalHeaderRowCountSpinBox->setValue(1);
     ui->verticalHeaderColumnCountSpinBox->setValue(1);
 
@@ -2630,13 +2630,13 @@ void ControllerDialog::on_createFastTableButton_clicked()
     {
         for (int j=0; j<mFastTableWidget->columnCount(); ++j)
         {
-            mFastTableWidget->setText(i, j, "Hello, World");
+            mFastTableWidget->setText(i, j, "C_"+QString::number(i)+"_"+QString::number(j));
         }
     }
 
     for (int i=0; i<mFastTableWidget->columnCount(); ++i)
     {
-        mFastTableWidget->horizontalHeader_SetText(i, "Header");
+        mFastTableWidget->horizontalHeader_SetText(i, "Header_"+QString::number(i));
     }
 
     mFastTableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
