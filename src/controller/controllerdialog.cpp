@@ -536,14 +536,17 @@ void ControllerDialog::on_verticalCellBorderColorButton_clicked()
 
 void ControllerDialog::on_selectionColorButton_clicked()
 {
+    QPalette aPalette=mFastTableWidget->palette();
+
     QColorDialog dialog(this);
 
     dialog.setWindowTitle("Selection color");
-    dialog.setCurrentColor(mFastTableWidget->selectionBrush().color());
+    dialog.setCurrentColor(aPalette.color(QPalette::Highlight));
 
     if (dialog.exec())
     {
-        mFastTableWidget->setSelectionBrush(QBrush(dialog.selectedColor()));
+        aPalette.setColor(QPalette::Highlight, dialog.selectedColor());
+        mFastTableWidget->setPalette(aPalette);
     }
 }
 

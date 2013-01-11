@@ -19,6 +19,8 @@
 
 #include "fastdefines.h"
 
+// TODO: Use palette for some colors: base, window, alternateBase, text, buttonText, highlightText
+
 //------------------------------------------------------------------------------
 
 class CustomFastTableWidget : public QAbstractScrollArea
@@ -46,7 +48,6 @@ class CustomFastTableWidget : public QAbstractScrollArea
     Q_PROPERTY(QColor  verticalHeader_DefaultForegroundColor   READ verticalHeader_DefaultForegroundColor   WRITE verticalHeader_SetDefaultForegroundColor)
     Q_PROPERTY(QColor  verticalHeader_GridColor                READ verticalHeader_GridColor                WRITE verticalHeader_SetGridColor)
     Q_PROPERTY(QColor  verticalHeader_CellBorderColor          READ verticalHeader_CellBorderColor          WRITE verticalHeader_SetCellBorderColor)
-    Q_PROPERTY(QBrush  selectionBrush                          READ selectionBrush                          WRITE setSelectionBrush)
     Q_PROPERTY(QColor  selectionTextColor                      READ selectionTextColor                      WRITE setSelectionTextColor)
 
 public:
@@ -142,9 +143,6 @@ public:
 
     QColor verticalHeader_CellBorderColor();
     void verticalHeader_SetCellBorderColor(QColor color);
-
-    QBrush selectionBrush();
-    void setSelectionBrush(QBrush brush);
 
     QColor selectionTextColor();
     void setSelectionTextColor(QColor color);
@@ -250,7 +248,6 @@ protected:
     QColor mVerticalHeader_GridColor;
     QColor mVerticalHeader_CellBorderColor;
 
-    QBrush mSelectionBrush;
     QColor mSelectionTextColor;
 
     int mRowCount;

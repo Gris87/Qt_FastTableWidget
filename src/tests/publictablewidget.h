@@ -55,7 +55,6 @@ public:
     QColor verticalHeader_GetGridColor();
     QColor verticalHeader_GetCellBorderColor();
 
-    QBrush getSelectionBrush();
     QColor getSelectionTextColor();
 
     int getRowCount();
