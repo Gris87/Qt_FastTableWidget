@@ -41,7 +41,6 @@ class PublicCustomFastTable : public CustomFastTableWidget
 {
 public:
     QBrush getDefaultBackgroundBrush();
-    QColor getDefaultForegroundColor();
     QColor getGridColor();
     QColor getCellBorderColor();
 

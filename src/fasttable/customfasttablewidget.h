@@ -19,7 +19,7 @@
 
 #include "fastdefines.h"
 
-// TODO: Use palette for some colors: base, window, alternateBase, text, buttonText, highlightText
+// TODO: Use palette for some colors: base, window, alternateBase
 
 //------------------------------------------------------------------------------
 
@@ -37,7 +37,6 @@ class CustomFastTableWidget : public QAbstractScrollArea
     Q_PROPERTY(int     verticalHeader_TotalWidth               READ verticalHeader_TotalWidth)
     Q_PROPERTY(int     horizontalHeader_TotalHeight            READ horizontalHeader_TotalHeight)
     Q_PROPERTY(QBrush  defaultBackgroundBrush                  READ defaultBackgroundBrush                  WRITE setDefaultBackgroundBrush)
-    Q_PROPERTY(QColor  defaultForegroundColor                  READ defaultForegroundColor                  WRITE setDefaultForegroundColor)
     Q_PROPERTY(QColor  gridColor                               READ gridColor                               WRITE setGridColor)
     Q_PROPERTY(QColor  cellBorderColor                         READ cellBorderColor                         WRITE setCellBorderColor)
     Q_PROPERTY(QBrush  horizontalHeader_DefaultBackgroundBrush READ horizontalHeader_DefaultBackgroundBrush WRITE horizontalHeader_SetDefaultBackgroundBrush)
@@ -109,9 +108,6 @@ public:
 
     QBrush defaultBackgroundBrush();
     void setDefaultBackgroundBrush(QBrush brush);
-
-    QColor defaultForegroundColor();
-    void setDefaultForegroundColor(QColor color);
 
     QColor gridColor();
     void setGridColor(QColor color);
@@ -230,7 +226,6 @@ protected:
     DrawFunction mDrawHeaderCellFunction;
 
     QBrush mDefaultBackgroundBrush;
-    QColor mDefaultForegroundColor;
     QColor mGridColor;
     QColor mCellBorderColor;
 

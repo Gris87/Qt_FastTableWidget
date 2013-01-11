@@ -299,6 +299,7 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 
     QPalette aPalette=palette();
 
+    QColor aDefaultForegroundColor=aPalette.color(QPalette::Text);
     QBrush aSelectionBrush=aPalette.highlight();
     QColor aSelectionTextColor=aPalette.color(QPalette::HighlightedText);
 
@@ -339,7 +340,7 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 
                 if (aTextColor==0)
                 {
-                    aTextColor=&mDefaultForegroundColor;
+                    aTextColor=&aDefaultForegroundColor;
                 }
             }
 
@@ -2427,11 +2428,11 @@ QColor FastTableWidget::foregroundColor(const int row, const int column)
 
     if (aColor==0)
     {
-        aColor=&mDefaultForegroundColor;
+        FASTTABLE_END_PROFILE;
+        return palette().color(QPalette::Text);
     }
 
     FASTTABLE_END_PROFILE;
-
     return *aColor;
 }
 

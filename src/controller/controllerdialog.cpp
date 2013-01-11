@@ -393,14 +393,17 @@ void ControllerDialog::on_defaultBackgroundButton_clicked()
 
 void ControllerDialog::on_defaultForegroundButton_clicked()
 {
+    QPalette aPalette=mFastTableWidget->palette();
+
     QColorDialog dialog(this);
 
     dialog.setWindowTitle("Default foreground color");
-    dialog.setCurrentColor(mFastTableWidget->defaultForegroundColor());
+    dialog.setCurrentColor(aPalette.color(QPalette::Text));
 
     if (dialog.exec())
     {
-        mFastTableWidget->setDefaultForegroundColor(dialog.selectedColor());
+        aPalette.setColor(QPalette::Text, dialog.selectedColor());
+        mFastTableWidget->setPalette(aPalette);
     }
 }
 

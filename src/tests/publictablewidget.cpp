@@ -142,11 +142,6 @@ QBrush PublicCustomFastTable::getDefaultBackgroundBrush()
     return mDefaultBackgroundBrush;
 }
 
-QColor PublicCustomFastTable::getDefaultForegroundColor()
-{
-    return mDefaultForegroundColor;
-}
-
 QColor PublicCustomFastTable::getGridColor()
 {
     return mGridColor;

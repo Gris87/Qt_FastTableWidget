@@ -1711,6 +1711,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
 
     QPalette aPalette=palette();
 
+    QColor aDefaultForegroundColor=aPalette.color(QPalette::Text);
     QBrush aSelectionBrush=aPalette.highlight();
     QColor aSelectionTextColor=aPalette.color(QPalette::HighlightedText);
 
@@ -1733,7 +1734,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
             else
             {
                 aBackgroundBrush=&mDefaultBackgroundBrush;
-                aTextColor=&mDefaultForegroundColor;
+                aTextColor=&aDefaultForegroundColor;
             }
 
             aHeaderPressed=false;
@@ -2878,7 +2879,7 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                 {
                     mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
                     mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
-                    mDefaultForegroundColor.setRgb(0, 0, 0);
+                    aPallete.setColor(QPalette::Text, QColor(0, 0, 0));
                     mGridColor.setRgb(200, 200, 200);
                     mCellBorderColor.setRgb(180, 180, 180);
 
@@ -2902,7 +2903,7 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                 {
                     mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
                     mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
-                    mDefaultForegroundColor.setRgb(0, 0, 0);
+                    aPallete.setColor(QPalette::Text, QColor(0, 0, 0));
                     mGridColor.setRgb(202, 201, 200);
                     mCellBorderColor.setRgb(141, 140, 139);
 
@@ -2926,7 +2927,7 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                 {
                     mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
                     mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
-                    mDefaultForegroundColor.setRgb(0, 0, 0);
+                    aPallete.setColor(QPalette::Text, QColor(0, 0, 0));
                     mGridColor.setRgb(192, 192, 192);
                     mCellBorderColor.setRgb(206, 149, 58);
 
@@ -2950,7 +2951,7 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                 {
                     mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
                     mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
-                    mDefaultForegroundColor.setRgb(0, 0, 0);
+                    aPallete.setColor(QPalette::Text, QColor(0, 0, 0));
                     mGridColor.setRgb(216, 216, 216);
                     mCellBorderColor.setRgb(206, 149, 58);
 
@@ -3865,24 +3866,6 @@ void CustomFastTableWidget::setDefaultBackgroundBrush(QBrush brush)
     FASTTABLE_START_PROFILE;
 
     mDefaultBackgroundBrush=brush;
-
-    viewport()->update();
-
-    FASTTABLE_END_PROFILE;
-}
-
-QColor CustomFastTableWidget::defaultForegroundColor()
-{
-    FASTTABLE_DEBUG;
-    return mDefaultForegroundColor;
-}
-
-void CustomFastTableWidget::setDefaultForegroundColor(QColor color)
-{
-    FASTTABLE_DEBUG;
-    FASTTABLE_START_PROFILE;
-
-    mDefaultForegroundColor=color;
 
     viewport()->update();
 
