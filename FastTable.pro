@@ -4,6 +4,8 @@
 #
 #-------------------------------------------------
 
+include("src/fasttable/fasttable.pri")
+
 QT       += core gui
 
 TARGET = FastTable
@@ -24,22 +26,16 @@ CONFIG (debug, debug|release) {
     RCC_DIR = release/gen
 }
 
-SOURCES += src/main.cpp\
-           src/main/mainwindow.cpp \
-           src/fasttable/customfasttablewidget.cpp \
-           src/fasttable/fasttablewidget.cpp \
-           src/tests/testdialog.cpp \
-           src/tests/testframe.cpp \
-           src/tests/publictablewidget.cpp \
-           src/controller/controllerdialog.cpp \
-           src/controller/viewdialog.cpp \
-           src/controller/aligndialog.cpp
+SOURCES +=  src/main.cpp\
+            src/main/mainwindow.cpp \
+            src/tests/testdialog.cpp \
+            src/tests/testframe.cpp \
+            src/tests/publictablewidget.cpp \
+            src/controller/controllerdialog.cpp \
+            src/controller/viewdialog.cpp \
+            src/controller/aligndialog.cpp
 
 HEADERS  += src/main/mainwindow.h \
-            src/fasttable/customfasttablewidget.h \
-            src/fasttable/fasttablewidget.h \
-            src/fasttable/fastdefines.h \
-            src/fasttable/optimallist.h \
             src/tests/testdialog.h \
             src/tests/testframe.h \
             src/tests/publictablewidget.h \

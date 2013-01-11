@@ -1606,7 +1606,7 @@ void CustomFastTableWidget::resizeEvent(QResizeEvent *event)
     FASTTABLE_END_PROFILE;
 }
 
-void CustomFastTableWidget::paintEvent(QPaintEvent *event)
+void CustomFastTableWidget::paintEvent(QPaintEvent * /*event*/)
 {
     FASTTABLE_FREQUENT_DEBUG;
     FASTTABLE_FREQUENT_START_PROFILE;
@@ -2009,7 +2009,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
     FASTTABLE_FREQUENT_END_PROFILE;
 }
 
-void CustomFastTableWidget::paintCellLinux(QPainter &painter, const int x, const int y, const int width, const int height, const bool headerPressed, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
+void CustomFastTableWidget::paintCellLinux(QPainter &painter, const int x, const int y, const int width, const int height, const bool /*headerPressed*/, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
 {
     FASTTABLE_FREQUENT_DEBUG;
     FASTTABLE_FREQUENT_START_PROFILE;
@@ -2064,7 +2064,7 @@ void CustomFastTableWidget::paintCellLinux(QPainter &painter, const int x, const
     FASTTABLE_FREQUENT_END_PROFILE;
 }
 
-void CustomFastTableWidget::paintCellDefault(QPainter &painter, const int x, const int y, const int width, const int height, const bool headerPressed, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
+void CustomFastTableWidget::paintCellDefault(QPainter &painter, const int x, const int y, const int width, const int height, const bool /*headerPressed*/, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor)
 {
     FASTTABLE_FREQUENT_DEBUG;
     FASTTABLE_FREQUENT_START_PROFILE;
@@ -2475,7 +2475,7 @@ void CustomFastTableWidget::paintHeaderCellDefault(QPainter &painter, const int 
     FASTTABLE_FREQUENT_END_PROFILE;
 }
 
-void CustomFastTableWidget::scrollBarValueChanged(int value)
+void CustomFastTableWidget::scrollBarValueChanged(int /*value*/)
 {
     FASTTABLE_FREQUENT_DEBUG;
     FASTTABLE_FREQUENT_START_PROFILE;

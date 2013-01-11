@@ -15,7 +15,7 @@ FastTableWidget::~FastTableWidget()
     FASTTABLE_END_PROFILE;
 }
 
-void FastTableWidget::paintEvent(QPaintEvent *event)
+void FastTableWidget::paintEvent(QPaintEvent * /*event*/)
 {
     FASTTABLE_FREQUENT_DEBUG;
     FASTTABLE_FREQUENT_START_PROFILE;

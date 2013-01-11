@@ -2546,7 +2546,7 @@ void ControllerDialog::tableMergeCells()
      }
 }
 
-void ControllerDialog::tableContextMenuRequested(QPoint pos)
+void ControllerDialog::tableContextMenuRequested(QPoint /*pos*/)
 {
     QMenu *contextMenu=new QMenu;
 

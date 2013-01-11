@@ -249,7 +249,7 @@ void StatisticsFrame::startGetData()
 
         for (int i=999; i>=0; i--)
         {
-            aTableWidget->deleteRow(i);
+            aTableWidget->removeRow(i);
 
             if (i % 100==0)
             {
@@ -286,7 +286,7 @@ void StatisticsFrame::startGetData()
 
         for (int i=999; i>=0; i--)
         {
-            aTableWidget->deleteRow(0);
+            aTableWidget->removeRow(0);
 
             if (i % 100==0)
             {

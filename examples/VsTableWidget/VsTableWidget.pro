@@ -4,26 +4,22 @@
 #
 #-------------------------------------------------
 
+include("../../src/fasttable/fasttable.pri")
+
 QT       += core gui
 
 TARGET = VsTableWidget
 TEMPLATE = app
 
-
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    statisticsframe.cpp \
-    ../../src/fasttable/fasttablewidget.cpp \
-    ../../src/fasttable/customfasttablewidget.cpp
+SOURCES +=  main.cpp\
+            mainwindow.cpp \
+            statisticsframe.cpp
 
 HEADERS  += mainwindow.h \
-    statisticsframe.h \
-    ../../src/fasttable/fasttablewidget.h \
-    ../../src/fasttable/fastdefines.h \
-    ../../src/fasttable/customfasttablewidget.h
+            statisticsframe.h
 
 FORMS    += mainwindow.ui \
-    statisticsframe.ui
+            statisticsframe.ui
 
 
 
