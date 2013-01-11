@@ -79,9 +79,9 @@ void ControllerDialog::on_addRowButton_clicked()
 {
     mFastTableWidget->addRow();
 
-    disconnect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
+    ui->rowCountSpinBox->blockSignals(true);
     ui->rowCountSpinBox->setValue(mFastTableWidget->rowCount());
-    connect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
+    ui->rowCountSpinBox->blockSignals(false);
 }
 
 void ControllerDialog::on_insertRowButton_clicked()
@@ -97,9 +97,9 @@ void ControllerDialog::on_insertRowButton_clicked()
     {
         mFastTableWidget->insertRow(dialog.intValue());
 
-        disconnect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
+        ui->rowCountSpinBox->blockSignals(true);
         ui->rowCountSpinBox->setValue(mFastTableWidget->rowCount());
-        connect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
+        ui->rowCountSpinBox->blockSignals(false);
     }
 }
 
@@ -118,9 +118,9 @@ void ControllerDialog::on_deleteRowButton_clicked()
         {
             mFastTableWidget->removeRow(dialog.intValue());
 
-            disconnect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
+            ui->rowCountSpinBox->blockSignals(true);
             ui->rowCountSpinBox->setValue(mFastTableWidget->rowCount());
-            connect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
+            ui->rowCountSpinBox->blockSignals(false);
         }
     }
 }
@@ -129,9 +129,9 @@ void ControllerDialog::on_addColumnButton_clicked()
 {
     mFastTableWidget->addColumn();
 
-    disconnect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
+    ui->columnCountSpinBox->blockSignals(true);
     ui->columnCountSpinBox->setValue(mFastTableWidget->columnCount());
-    connect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
+    ui->columnCountSpinBox->blockSignals(false);
 }
 
 void ControllerDialog::on_insertColumnButton_clicked()
@@ -147,9 +147,9 @@ void ControllerDialog::on_insertColumnButton_clicked()
     {
         mFastTableWidget->insertColumn(dialog.intValue());
 
-        disconnect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
+        ui->columnCountSpinBox->blockSignals(true);
         ui->columnCountSpinBox->setValue(mFastTableWidget->columnCount());
-        connect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
+        ui->columnCountSpinBox->blockSignals(false);
     }
 }
 
@@ -168,9 +168,9 @@ void ControllerDialog::on_deleteColumnButton_clicked()
         {
             mFastTableWidget->removeColumn(dialog.intValue());
 
-            disconnect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
+            ui->columnCountSpinBox->blockSignals(true);
             ui->columnCountSpinBox->setValue(mFastTableWidget->columnCount());
-            connect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
+            ui->columnCountSpinBox->blockSignals(false);
         }
     }
 }
@@ -179,9 +179,9 @@ void ControllerDialog::on_addHeaderRowButton_clicked()
 {
     mFastTableWidget->horizontalHeader_AddRow();
 
-    disconnect(ui->horizontalHeaderRowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalHeaderRowCountSpinBox_valueChanged(int)));
+    ui->horizontalHeaderRowCountSpinBox->blockSignals(true);
     ui->horizontalHeaderRowCountSpinBox->setValue(mFastTableWidget->horizontalHeader_RowCount());
-    connect(ui->horizontalHeaderRowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalHeaderRowCountSpinBox_valueChanged(int)));
+    ui->horizontalHeaderRowCountSpinBox->blockSignals(false);
 }
 
 void ControllerDialog::on_insertHeaderRowButton_clicked()
@@ -197,9 +197,9 @@ void ControllerDialog::on_insertHeaderRowButton_clicked()
     {
         mFastTableWidget->horizontalHeader_InsertRow(dialog.intValue());
 
-        disconnect(ui->horizontalHeaderRowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalHeaderRowCountSpinBox_valueChanged(int)));
+        ui->horizontalHeaderRowCountSpinBox->blockSignals(true);
         ui->horizontalHeaderRowCountSpinBox->setValue(mFastTableWidget->horizontalHeader_RowCount());
-        connect(ui->horizontalHeaderRowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalHeaderRowCountSpinBox_valueChanged(int)));
+        ui->horizontalHeaderRowCountSpinBox->blockSignals(false);
     }
 }
 
@@ -218,9 +218,9 @@ void ControllerDialog::on_deleteHeaderRowButton_clicked()
         {
             mFastTableWidget->horizontalHeader_RemoveRow(dialog.intValue());
 
-            disconnect(ui->horizontalHeaderRowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalHeaderRowCountSpinBox_valueChanged(int)));
+            ui->horizontalHeaderRowCountSpinBox->blockSignals(true);
             ui->horizontalHeaderRowCountSpinBox->setValue(mFastTableWidget->horizontalHeader_RowCount());
-            connect(ui->horizontalHeaderRowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalHeaderRowCountSpinBox_valueChanged(int)));
+            ui->horizontalHeaderRowCountSpinBox->blockSignals(false);
         }
     }
 }
@@ -229,9 +229,9 @@ void ControllerDialog::on_addHeaderColumnButton_clicked()
 {
     mFastTableWidget->verticalHeader_AddColumn();
 
-    disconnect(ui->verticalHeaderColumnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_verticalHeaderColumnCountSpinBox_valueChanged(int)));
+    ui->verticalHeaderColumnCountSpinBox->blockSignals(true);
     ui->verticalHeaderColumnCountSpinBox->setValue(mFastTableWidget->verticalHeader_ColumnCount());
-    connect(ui->verticalHeaderColumnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_verticalHeaderColumnCountSpinBox_valueChanged(int)));
+    ui->verticalHeaderColumnCountSpinBox->blockSignals(false);
 }
 
 void ControllerDialog::on_insertHeaderColumnButton_clicked()
@@ -247,9 +247,9 @@ void ControllerDialog::on_insertHeaderColumnButton_clicked()
     {
         mFastTableWidget->verticalHeader_InsertColumn(dialog.intValue());
 
-        disconnect(ui->verticalHeaderColumnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_verticalHeaderColumnCountSpinBox_valueChanged(int)));
+        ui->verticalHeaderColumnCountSpinBox->blockSignals(true);
         ui->verticalHeaderColumnCountSpinBox->setValue(mFastTableWidget->verticalHeader_ColumnCount());
-        connect(ui->verticalHeaderColumnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_verticalHeaderColumnCountSpinBox_valueChanged(int)));
+        ui->verticalHeaderColumnCountSpinBox->blockSignals(false);
     }
 }
 
@@ -268,9 +268,9 @@ void ControllerDialog::on_deleteHeaderColumnButton_clicked()
         {
             mFastTableWidget->verticalHeader_RemoveColumn(dialog.intValue());
 
-            disconnect(ui->verticalHeaderColumnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_verticalHeaderColumnCountSpinBox_valueChanged(int)));
+            ui->verticalHeaderColumnCountSpinBox->blockSignals(true);
             ui->verticalHeaderColumnCountSpinBox->setValue(mFastTableWidget->verticalHeader_ColumnCount());
-            connect(ui->verticalHeaderColumnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_verticalHeaderColumnCountSpinBox_valueChanged(int)));
+            ui->verticalHeaderColumnCountSpinBox->blockSignals(false);
         }
     }
 }
@@ -279,18 +279,20 @@ void ControllerDialog::on_clearButton_clicked()
 {
     mFastTableWidget->clear();
 
-    disconnect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
-    disconnect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
-    disconnect(ui->horizontalHeaderRowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalHeaderRowCountSpinBox_valueChanged(int)));
-    disconnect(ui->verticalHeaderColumnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_verticalHeaderColumnCountSpinBox_valueChanged(int)));
+    ui->rowCountSpinBox->blockSignals(true);
+    ui->columnCountSpinBox->blockSignals(true);
+    ui->horizontalHeaderRowCountSpinBox->blockSignals(true);
+    ui->verticalHeaderColumnCountSpinBox->blockSignals(true);
+
     ui->rowCountSpinBox->setValue(mFastTableWidget->rowCount());
     ui->columnCountSpinBox->setValue(mFastTableWidget->columnCount());
     ui->horizontalHeaderRowCountSpinBox->setValue(mFastTableWidget->horizontalHeader_RowCount());
     ui->verticalHeaderColumnCountSpinBox->setValue(mFastTableWidget->verticalHeader_ColumnCount());
-    connect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
-    connect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
-    connect(ui->horizontalHeaderRowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalHeaderRowCountSpinBox_valueChanged(int)));
-    connect(ui->verticalHeaderColumnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_verticalHeaderColumnCountSpinBox_valueChanged(int)));
+
+    ui->rowCountSpinBox->blockSignals(false);
+    ui->columnCountSpinBox->blockSignals(false);
+    ui->horizontalHeaderRowCountSpinBox->blockSignals(false);
+    ui->verticalHeaderColumnCountSpinBox->blockSignals(false);
 }
 
 void ControllerDialog::on_selectRowButton_clicked()
@@ -2474,9 +2476,9 @@ void ControllerDialog::tableInsertRow()
     {
         mFastTableWidget->insertRow(mFastTableWidget->currentRow());
 
-        disconnect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
+        ui->rowCountSpinBox->blockSignals(true);
         ui->rowCountSpinBox->setValue(mFastTableWidget->rowCount());
-        connect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
+        ui->rowCountSpinBox->blockSignals(false);
     }
 }
 
@@ -2497,9 +2499,9 @@ void ControllerDialog::tableDeleteRow()
         mFastTableWidget->removeRow(rows.at(i));
     }
 
-    disconnect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
+    ui->rowCountSpinBox->blockSignals(true);
     ui->rowCountSpinBox->setValue(mFastTableWidget->rowCount());
-    connect(ui->rowCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_rowCountSpinBox_valueChanged(int)));
+    ui->rowCountSpinBox->blockSignals(false);
 }
 
 void ControllerDialog::tableInsertColumn()
@@ -2508,9 +2510,9 @@ void ControllerDialog::tableInsertColumn()
     {
         mFastTableWidget->insertColumn(mFastTableWidget->currentColumn());
 
-        disconnect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
+        ui->columnCountSpinBox->blockSignals(true);
         ui->columnCountSpinBox->setValue(mFastTableWidget->columnCount());
-        connect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
+        ui->columnCountSpinBox->blockSignals(false);
     }
 }
 
@@ -2531,9 +2533,9 @@ void ControllerDialog::tableDeleteColumn()
         mFastTableWidget->removeColumn(columns.at(i));
     }
 
-    disconnect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
+    ui->columnCountSpinBox->blockSignals(true);
     ui->columnCountSpinBox->setValue(mFastTableWidget->columnCount());
-    connect(ui->columnCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(on_columnCountSpinBox_valueChanged(int)));
+    ui->columnCountSpinBox->blockSignals(false);
 }
 
 void ControllerDialog::tableMergeCells()
