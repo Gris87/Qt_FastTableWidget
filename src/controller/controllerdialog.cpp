@@ -295,6 +295,11 @@ void ControllerDialog::on_clearButton_clicked()
     ui->verticalHeaderColumnCountSpinBox->blockSignals(false);
 }
 
+void ControllerDialog::on_alternatingRowColorsCheckBox_toggled(bool checked)
+{
+    mFastTableWidget->setAlternatingRowColors(checked);
+}
+
 void ControllerDialog::on_selectRowButton_clicked()
 {
     if (mFastTableWidget->rowCount()>0)
@@ -376,6 +381,22 @@ void ControllerDialog::on_selectAllButton_clicked()
 void ControllerDialog::on_unselectAllButton_clicked()
 {
     mFastTableWidget->unselectAll();
+}
+
+void ControllerDialog::on_windowColorButton_clicked()
+{
+    QPalette aPalette=mFastTableWidget->palette();
+
+    QColorDialog dialog(this);
+
+    dialog.setWindowTitle("Window color");
+    dialog.setCurrentColor(aPalette.color(QPalette::Window));
+
+    if (dialog.exec())
+    {
+        aPalette.setColor(QPalette::Window, dialog.selectedColor());
+        mFastTableWidget->setPalette(aPalette);
+    }
 }
 
 void ControllerDialog::on_defaultBackgroundButton_clicked()
@@ -2613,6 +2634,8 @@ void ControllerDialog::on_createCustomTableButton_clicked()
     ui->horizontalHeaderRowCountSpinBox->setValue(1);
     ui->verticalHeaderColumnCountSpinBox->setValue(1);
 
+    ui->alternatingRowColorsCheckBox->setChecked(mFastTableWidget->alternatingRowColors());
+
     for (int i=0; i<mFastTableWidget->rowCount(); ++i)
     {
         for (int j=0; j<mFastTableWidget->columnCount(); ++j)
@@ -2653,6 +2676,8 @@ void ControllerDialog::on_createFastTableButton_clicked()
     ui->columnCountSpinBox->setValue(10);
     ui->horizontalHeaderRowCountSpinBox->setValue(1);
     ui->verticalHeaderColumnCountSpinBox->setValue(1);
+
+    ui->alternatingRowColorsCheckBox->setChecked(mFastTableWidget->alternatingRowColors());
 
     for (int i=0; i<mFastTableWidget->rowCount(); ++i)
     {

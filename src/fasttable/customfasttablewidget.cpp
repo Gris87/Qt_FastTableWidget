@@ -33,7 +33,7 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     }
 #endif
 
-    mAlternatingRowColors=true;
+    mAlternatingRowColors=false;
 
     mRowCount=0;
     mColumnCount=0;

@@ -62,12 +62,14 @@ private slots:
     void on_insertHeaderColumnButton_clicked();
     void on_deleteHeaderColumnButton_clicked();
     void on_clearButton_clicked();
+    void on_alternatingRowColorsCheckBox_toggled(bool checked);
     void on_selectRowButton_clicked();
     void on_unselectRowButton_clicked();
     void on_selectColumnButton_clicked();
     void on_unselectColumnButton_clicked();
     void on_selectAllButton_clicked();
     void on_unselectAllButton_clicked();
+    void on_windowColorButton_clicked();
     void on_defaultBackgroundButton_clicked();
     void on_alternateBackgroundButton_clicked();
     void on_defaultForegroundButton_clicked();
