@@ -2884,14 +2884,20 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
         {
             QPalette aPallete=palette();
 
-            // TODO: Handle windows states for palette
             switch (mStyle)
             {
                 case StyleSimple:
                 {
-                    aPallete.setColor(QPalette::Base, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Active,   QPalette::Base, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Inactive, QPalette::Base, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Disabled, QPalette::Base, QColor(240, 240, 240));
+
                     aPallete.setColor(QPalette::AlternateBase, QColor(246, 246, 246));
-                    aPallete.setColor(QPalette::Text, QColor(0, 0, 0));
+
+                    aPallete.setColor(QPalette::Active,   QPalette::Text, QColor(0,   0,   0));
+                    aPallete.setColor(QPalette::Inactive, QPalette::Text, QColor(0,   0,   0));
+                    aPallete.setColor(QPalette::Disabled, QPalette::Text, QColor(120, 120, 120));
+
                     mGridColor.setRgb(200, 200, 200);
                     mCellBorderColor.setRgb(180, 180, 180);
 
@@ -2907,15 +2913,27 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                     mVerticalHeader_GridColor.setRgb(200, 200, 200);
                     mVerticalHeader_CellBorderColor.setRgb(240, 240, 240);
 
-                    aPallete.setColor(QPalette::Highlight, QColor(49, 106, 197));
-                    aPallete.setColor(QPalette::HighlightedText, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Active,   QPalette::Highlight, QColor(49,  106, 197));
+                    aPallete.setColor(QPalette::Inactive, QPalette::Highlight, QColor(240, 240, 240));
+                    aPallete.setColor(QPalette::Disabled, QPalette::Highlight, QColor(49,  106, 197));
+
+                    aPallete.setColor(QPalette::Active,   QPalette::HighlightedText, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Inactive, QPalette::HighlightedText, QColor(0, 0, 0));
+                    aPallete.setColor(QPalette::Disabled, QPalette::HighlightedText, QColor(255, 255, 255));
                 }
                 break;
                 case StyleLinux:
                 {
-                    aPallete.setColor(QPalette::Base, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Active,   QPalette::Base, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Inactive, QPalette::Base, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Disabled, QPalette::Base, QColor(240, 240, 240));
+
                     aPallete.setColor(QPalette::AlternateBase, QColor(246, 246, 246));
-                    aPallete.setColor(QPalette::Text, QColor(0, 0, 0));
+
+                    aPallete.setColor(QPalette::Active,   QPalette::Text, QColor(0,   0,   0));
+                    aPallete.setColor(QPalette::Inactive, QPalette::Text, QColor(0,   0,   0));
+                    aPallete.setColor(QPalette::Disabled, QPalette::Text, QColor(120, 120, 120));
+
                     mGridColor.setRgb(202, 201, 200);
                     mCellBorderColor.setRgb(141, 140, 139);
 
@@ -2931,15 +2949,27 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                     mVerticalHeader_GridColor.setRgb(190, 186, 182);
                     mVerticalHeader_CellBorderColor.setRgb(249, 248, 248);
 
-                    aPallete.setColor(QPalette::Highlight, QColor(235, 110, 60));
-                    aPallete.setColor(QPalette::HighlightedText, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Active,   QPalette::Highlight, QColor(235, 110, 60));
+                    aPallete.setColor(QPalette::Inactive, QPalette::Highlight, QColor(240, 240, 240));
+                    aPallete.setColor(QPalette::Disabled, QPalette::Highlight, QColor(235, 110, 60));
+
+                    aPallete.setColor(QPalette::Active,   QPalette::HighlightedText, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Inactive, QPalette::HighlightedText, QColor(0, 0, 0));
+                    aPallete.setColor(QPalette::Disabled, QPalette::HighlightedText, QColor(255, 255, 255));
                 }
                 break;
                 case StyleWinXP:
                 {
-                    aPallete.setColor(QPalette::Base, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Active,   QPalette::Base, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Inactive, QPalette::Base, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Disabled, QPalette::Base, QColor(240, 240, 240));
+
                     aPallete.setColor(QPalette::AlternateBase, QColor(246, 246, 246));
-                    aPallete.setColor(QPalette::Text, QColor(0, 0, 0));
+
+                    aPallete.setColor(QPalette::Active,   QPalette::Text, QColor(0,   0,   0));
+                    aPallete.setColor(QPalette::Inactive, QPalette::Text, QColor(0,   0,   0));
+                    aPallete.setColor(QPalette::Disabled, QPalette::Text, QColor(120, 120, 120));
+
                     mGridColor.setRgb(192, 192, 192);
                     mCellBorderColor.setRgb(206, 149, 58);
 
@@ -2955,15 +2985,27 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                     mVerticalHeader_GridColor.setRgb(199, 197, 178);
                     mVerticalHeader_CellBorderColor.setRgb(249, 177, 25);
 
-                    aPallete.setColor(QPalette::Highlight, QColor(49, 106, 197));
-                    aPallete.setColor(QPalette::HighlightedText, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Active,   QPalette::Highlight, QColor(49, 106, 197));
+                    aPallete.setColor(QPalette::Inactive, QPalette::Highlight, QColor(240, 240, 240));
+                    aPallete.setColor(QPalette::Disabled, QPalette::Highlight, QColor(49, 106, 197));
+
+                    aPallete.setColor(QPalette::Active,   QPalette::HighlightedText, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Inactive, QPalette::HighlightedText, QColor(0, 0, 0));
+                    aPallete.setColor(QPalette::Disabled, QPalette::HighlightedText, QColor(255, 255, 255));
                 }
                 break;
                 case StyleWin7:
                 {
-                    aPallete.setColor(QPalette::Base, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Active,   QPalette::Base, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Inactive, QPalette::Base, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Disabled, QPalette::Base, QColor(240, 240, 240));
+
                     aPallete.setColor(QPalette::AlternateBase, QColor(246, 246, 246));
-                    aPallete.setColor(QPalette::Text, QColor(0, 0, 0));
+
+                    aPallete.setColor(QPalette::Active,   QPalette::Text, QColor(0,   0,   0));
+                    aPallete.setColor(QPalette::Inactive, QPalette::Text, QColor(0,   0,   0));
+                    aPallete.setColor(QPalette::Disabled, QPalette::Text, QColor(120, 120, 120));
+
                     mGridColor.setRgb(216, 216, 216);
                     mCellBorderColor.setRgb(206, 149, 58);
 
@@ -2979,8 +3021,13 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                     mVerticalHeader_GridColor.setRgb(213, 213, 213);
                     mVerticalHeader_CellBorderColor.setRgb(105, 187, 227);
 
-                    aPallete.setColor(QPalette::Highlight, QColor(51, 153, 255));
-                    aPallete.setColor(QPalette::HighlightedText, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Active,   QPalette::Highlight, QColor(51, 153, 255));
+                    aPallete.setColor(QPalette::Inactive, QPalette::Highlight, QColor(240, 240, 240));
+                    aPallete.setColor(QPalette::Disabled, QPalette::Highlight, QColor(51, 153, 255));
+
+                    aPallete.setColor(QPalette::Active,   QPalette::HighlightedText, QColor(255, 255, 255));
+                    aPallete.setColor(QPalette::Inactive, QPalette::HighlightedText, QColor(0, 0, 0));
+                    aPallete.setColor(QPalette::Disabled, QPalette::HighlightedText, QColor(255, 255, 255));
                 }
                 break;
             }
