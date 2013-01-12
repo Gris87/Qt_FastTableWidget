@@ -19,8 +19,6 @@
 
 #include "fastdefines.h"
 
-// TODO: Use palette for some colors: alternateBase
-
 //------------------------------------------------------------------------------
 
 class CustomFastTableWidget : public QAbstractScrollArea
