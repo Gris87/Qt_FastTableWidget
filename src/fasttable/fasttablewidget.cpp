@@ -22,6 +22,8 @@ void FastTableWidget::paintEvent(QPaintEvent * /*event*/)
 
     QPainter painter(viewport());
 
+    painter.fillRect(0, 0, viewport()->width(), viewport()->height(), palette().color(QPalette::Window));
+
     int offsetX=-horizontalScrollBar()->value();
     int offsetY=-verticalScrollBar()->value();
 

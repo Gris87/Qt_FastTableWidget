@@ -19,7 +19,7 @@
 
 #include "fastdefines.h"
 
-// TODO: Use palette for some colors: base, window, alternateBase
+// TODO: Use palette for some colors: base, alternateBase
 
 //------------------------------------------------------------------------------
 
