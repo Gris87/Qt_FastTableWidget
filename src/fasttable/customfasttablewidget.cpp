@@ -1713,6 +1713,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
 
     QPalette aPalette=palette();
 
+    QBrush aDefaultBackgroundBrush=aPalette.base();
     QColor aDefaultForegroundColor=aPalette.color(QPalette::Text);
     QBrush aSelectionBrush=aPalette.highlight();
     QColor aSelectionTextColor=aPalette.color(QPalette::HighlightedText);
@@ -1735,7 +1736,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
             }
             else
             {
-                aBackgroundBrush=&mDefaultBackgroundBrush;
+                aBackgroundBrush=&aDefaultBackgroundBrush;
                 aTextColor=&aDefaultForegroundColor;
             }
 
@@ -1839,8 +1840,6 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
 
             if (mHorizontalHeader_SelectedColumns.at(column))
             {
-                aBackgroundBrush=&mHorizontalHeader_DefaultBackgroundBrush;
-
                 aFont->setPointSize(aFont->pointSize()+1);
                 aFont->setBold(true);
             }
@@ -2879,8 +2878,8 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
             {
                 case StyleSimple:
                 {
-                    mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
-                    mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
+                    aPallete.setColor(QPalette::Base, QColor(255, 255, 255));
+                    // TODO: Alternate
                     aPallete.setColor(QPalette::Text, QColor(0, 0, 0));
                     mGridColor.setRgb(200, 200, 200);
                     mCellBorderColor.setRgb(180, 180, 180);
@@ -2903,8 +2902,8 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                 break;
                 case StyleLinux:
                 {
-                    mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
-                    mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
+                    aPallete.setColor(QPalette::Base, QColor(255, 255, 255));
+                    // TODO: Alternate
                     aPallete.setColor(QPalette::Text, QColor(0, 0, 0));
                     mGridColor.setRgb(202, 201, 200);
                     mCellBorderColor.setRgb(141, 140, 139);
@@ -2927,8 +2926,8 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                 break;
                 case StyleWinXP:
                 {
-                    mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
-                    mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
+                    aPallete.setColor(QPalette::Base, QColor(255, 255, 255));
+                    // TODO: Alternate
                     aPallete.setColor(QPalette::Text, QColor(0, 0, 0));
                     mGridColor.setRgb(192, 192, 192);
                     mCellBorderColor.setRgb(206, 149, 58);
@@ -2951,8 +2950,8 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                 break;
                 case StyleWin7:
                 {
-                    mDefaultBackgroundBrush.setColor(QColor(255, 255, 255));
-                    mDefaultBackgroundBrush.setStyle(Qt::SolidPattern);
+                    aPallete.setColor(QPalette::Base, QColor(255, 255, 255));
+                    // TODO: Alternate
                     aPallete.setColor(QPalette::Text, QColor(0, 0, 0));
                     mGridColor.setRgb(216, 216, 216);
                     mCellBorderColor.setRgb(206, 149, 58);
@@ -3852,24 +3851,6 @@ void CustomFastTableWidget::setSizes(int aRowCount, int aColumnCount, qint16 aHo
     {
         setUpdatesEnabled(true);
     }
-
-    FASTTABLE_END_PROFILE;
-}
-
-QBrush CustomFastTableWidget::defaultBackgroundBrush()
-{
-    FASTTABLE_DEBUG;
-    return mDefaultBackgroundBrush;
-}
-
-void CustomFastTableWidget::setDefaultBackgroundBrush(QBrush brush)
-{
-    FASTTABLE_DEBUG;
-    FASTTABLE_START_PROFILE;
-
-    mDefaultBackgroundBrush=brush;
-
-    viewport()->update();
 
     FASTTABLE_END_PROFILE;
 }

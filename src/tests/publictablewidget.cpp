@@ -137,11 +137,6 @@ QList< QRect >            *PublicFastTable::verticalHeader_GetMerges()
 
 // ==============================================================================================================
 
-QBrush PublicCustomFastTable::getDefaultBackgroundBrush()
-{
-    return mDefaultBackgroundBrush;
-}
-
 QColor PublicCustomFastTable::getGridColor()
 {
     return mGridColor;

@@ -41,7 +41,6 @@ TestFrame::TestFrame(CustomFastTableWidget* aFastTable, QWidget *parent) :
     addTestLabel("setColumnCount(20)_3");
     addTestLabel("horizontalHeader_SetRowCount(2)_2");
     addTestLabel("verticalHeader_SetColumnCount(1)_2");
-    addTestLabel("setDefaultBackgroundBrush");
     addTestLabel("setGridColor");
     addTestLabel("setCellBorderColor");
     addTestLabel("horizontalHeader_SetDefaultBackgroundBrush");
@@ -524,25 +523,6 @@ void TestFrame::startTest()
         TEST_STEP(checkForSizes(50, 20, 2, 1));
 
         testCompleted(success, "verticalHeader_SetColumnCount(1)_2");
-    }
-    // ----------------------------------------------------------------
-    qDebug()<<"TEST"<<(testNumber++)<<": setDefaultBackgroundBrush";
-    // ----------------------------------------------------------------
-    {
-        success=true;
-
-        QBrush aOldBrush=((PublicCustomFastTable*)mFastTable)->getDefaultBackgroundBrush();
-        QBrush aNewBrush=QBrush(QColor(1, 2, 3));
-
-        mFastTable->setDefaultBackgroundBrush(aNewBrush);
-
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getDefaultBackgroundBrush()==aNewBrush);
-
-        mFastTable->setDefaultBackgroundBrush(aOldBrush);
-
-        TEST_STEP(((PublicCustomFastTable*)mFastTable)->getDefaultBackgroundBrush()==aOldBrush);
-
-        testCompleted(success, "setDefaultBackgroundBrush");
     }
     // ----------------------------------------------------------------
     qDebug()<<"TEST"<<(testNumber++)<<": setGridColor";
