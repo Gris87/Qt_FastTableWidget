@@ -25,6 +25,7 @@
 
 class CustomFastTableWidget : public QAbstractScrollArea
 {
+    // TODO: Properties
     Q_OBJECT
     Q_PROPERTY(int     rowCount                                READ rowCount                                WRITE setRowCount)
     Q_PROPERTY(int     columnCount                             READ columnCount                             WRITE setColumnCount)
@@ -36,6 +37,7 @@ class CustomFastTableWidget : public QAbstractScrollArea
     Q_PROPERTY(int     totalHeight                             READ totalHeight)
     Q_PROPERTY(int     verticalHeader_TotalWidth               READ verticalHeader_TotalWidth)
     Q_PROPERTY(int     horizontalHeader_TotalHeight            READ horizontalHeader_TotalHeight)
+    Q_PROPERTY(bool    alternatingRowColors                    READ alternatingRowColors                    WRITE setAlternatingRowColors)
     Q_PROPERTY(QColor  gridColor                               READ gridColor                               WRITE setGridColor)
     Q_PROPERTY(QColor  cellBorderColor                         READ cellBorderColor                         WRITE setCellBorderColor)
     Q_PROPERTY(QBrush  horizontalHeader_DefaultBackgroundBrush READ horizontalHeader_DefaultBackgroundBrush WRITE horizontalHeader_SetDefaultBackgroundBrush)
@@ -48,6 +50,8 @@ class CustomFastTableWidget : public QAbstractScrollArea
     Q_PROPERTY(QColor  verticalHeader_CellBorderColor          READ verticalHeader_CellBorderColor          WRITE verticalHeader_SetCellBorderColor)
 
 public:
+
+    Q_ENUMS(DrawComponent Style MouseLocation)
 
     enum DrawComponent {DrawCell, DrawHorizontalHeaderCell, DrawVerticalHeaderCell, DrawTopLeftCorner};
     enum Style {StyleSimple, StyleLinux, StyleWinXP, StyleWin7};
@@ -104,6 +108,9 @@ public:
     void verticalHeader_SetColumnCount(qint16 count);
 
     void setSizes(int aRowCount, int aColumnCount, qint16 aHorizontalHeaderRowCount=1, qint16 aVerticalHeaderColumnCount=1);
+
+    bool alternatingRowColors();
+    void setAlternatingRowColors(bool enable);
 
     QColor gridColor();
     void setGridColor(QColor color);
@@ -220,6 +227,8 @@ protected:
 
     DrawFunction mDrawCellFunction;
     DrawFunction mDrawHeaderCellFunction;
+
+    bool   mAlternatingRowColors;
 
     QColor mGridColor;
     QColor mCellBorderColor;

@@ -69,6 +69,7 @@ private slots:
     void on_selectAllButton_clicked();
     void on_unselectAllButton_clicked();
     void on_defaultBackgroundButton_clicked();
+    void on_alternateBackgroundButton_clicked();
     void on_defaultForegroundButton_clicked();
     void on_gridColorButton_clicked();
     void on_cellBorderColorButton_clicked();

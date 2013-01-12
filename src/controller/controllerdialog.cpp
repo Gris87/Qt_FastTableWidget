@@ -380,7 +380,6 @@ void ControllerDialog::on_unselectAllButton_clicked()
 
 void ControllerDialog::on_defaultBackgroundButton_clicked()
 {
-    // TODO: Alternate base
     QPalette aPalette=mFastTableWidget->palette();
 
     QColorDialog dialog(this);
@@ -391,6 +390,22 @@ void ControllerDialog::on_defaultBackgroundButton_clicked()
     if (dialog.exec())
     {
         aPalette.setColor(QPalette::Base, dialog.selectedColor());
+        mFastTableWidget->setPalette(aPalette);
+    }
+}
+
+void ControllerDialog::on_alternateBackgroundButton_clicked()
+{
+    QPalette aPalette=mFastTableWidget->palette();
+
+    QColorDialog dialog(this);
+
+    dialog.setWindowTitle("Alternate background color");
+    dialog.setCurrentColor(aPalette.color(QPalette::AlternateBase));
+
+    if (dialog.exec())
+    {
+        aPalette.setColor(QPalette::AlternateBase, dialog.selectedColor());
         mFastTableWidget->setPalette(aPalette);
     }
 }

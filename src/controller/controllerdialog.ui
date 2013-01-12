@@ -74,7 +74,7 @@
             <x>0</x>
             <y>0</y>
             <width>387</width>
-            <height>2789</height>
+            <height>2816</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
@@ -575,6 +575,106 @@
              <property name="spacing">
               <number>4</number>
              </property>
+             <item row="11" column="0">
+              <widget class="QPushButton" name="verticalDefaultForegroundButton">
+               <property name="text">
+                <string>Default foreground color in vertical header</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="0">
+              <widget class="QPushButton" name="verticalGridColorButton">
+               <property name="text">
+                <string>Grid color in vertical header</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="0">
+              <widget class="QPushButton" name="selectionColorButton">
+               <property name="text">
+                <string>Selection color</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="15" column="0">
+              <widget class="QPushButton" name="selectionTextColorButton">
+               <property name="text">
+                <string>Selection text color</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QPushButton" name="cellBorderColorButton">
+               <property name="text">
+                <string>Cell border color</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="0">
+              <widget class="QPushButton" name="horizontalCellBorderColorButton">
+               <property name="text">
+                <string>Cell border color in horizontal header</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="0">
+              <widget class="QPushButton" name="verticalCellBorderColorButton">
+               <property name="text">
+                <string>Cell border color in vertical header</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QPushButton" name="horizontalDefaultForegroundButton">
+               <property name="text">
+                <string>Default foreground color in horizontal header</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="0">
+              <widget class="QPushButton" name="horizontalGridColorButton">
+               <property name="text">
+                <string>Grid color in horizontal header</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="0">
+              <widget class="QPushButton" name="verticalDefaultBackgroundButton">
+               <property name="text">
+                <string>Default background color in vertical header</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
              <item row="1" column="0">
               <widget class="QPushButton" name="defaultBackgroundButton">
                <property name="text">
@@ -585,7 +685,7 @@
                </property>
               </widget>
              </item>
-             <item row="2" column="0">
+             <item row="3" column="0">
               <widget class="QPushButton" name="defaultForegroundButton">
                <property name="text">
                 <string>Default foreground color</string>
@@ -595,7 +695,7 @@
                </property>
               </widget>
              </item>
-             <item row="3" column="0">
+             <item row="4" column="0">
               <widget class="QPushButton" name="gridColorButton">
                <property name="text">
                 <string>Grid color</string>
@@ -605,7 +705,7 @@
                </property>
               </widget>
              </item>
-             <item row="5" column="0">
+             <item row="6" column="0">
               <widget class="QPushButton" name="horizontalDefaultBackgroundButton">
                <property name="text">
                 <string>Default background color in horizontal header</string>
@@ -615,100 +715,10 @@
                </property>
               </widget>
              </item>
-             <item row="6" column="0">
-              <widget class="QPushButton" name="horizontalDefaultForegroundButton">
+             <item row="2" column="0">
+              <widget class="QPushButton" name="alternateBackgroundButton">
                <property name="text">
-                <string>Default foreground color in horizontal header</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="0">
-              <widget class="QPushButton" name="horizontalGridColorButton">
-               <property name="text">
-                <string>Grid color in horizontal header</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="9" column="0">
-              <widget class="QPushButton" name="verticalDefaultBackgroundButton">
-               <property name="text">
-                <string>Default background color in vertical header</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="10" column="0">
-              <widget class="QPushButton" name="verticalDefaultForegroundButton">
-               <property name="text">
-                <string>Default foreground color in vertical header</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="11" column="0">
-              <widget class="QPushButton" name="verticalGridColorButton">
-               <property name="text">
-                <string>Grid color in vertical header</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="13" column="0">
-              <widget class="QPushButton" name="selectionColorButton">
-               <property name="text">
-                <string>Selection color</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="14" column="0">
-              <widget class="QPushButton" name="selectionTextColorButton">
-               <property name="text">
-                <string>Selection text color</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QPushButton" name="cellBorderColorButton">
-               <property name="text">
-                <string>Cell border color</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="0">
-              <widget class="QPushButton" name="horizontalCellBorderColorButton">
-               <property name="text">
-                <string>Cell border color in horizontal header</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="12" column="0">
-              <widget class="QPushButton" name="verticalCellBorderColorButton">
-               <property name="text">
-                <string>Cell border color in vertical header</string>
+                <string>Alternate background color</string>
                </property>
                <property name="autoDefault">
                 <bool>false</bool>

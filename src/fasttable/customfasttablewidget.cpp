@@ -33,6 +33,8 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     }
 #endif
 
+    mAlternatingRowColors=true;
+
     mRowCount=0;
     mColumnCount=0;
     mHorizontalHeader_RowCount=0;
@@ -1714,6 +1716,7 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
     QPalette aPalette=palette();
 
     QBrush aDefaultBackgroundBrush=aPalette.base();
+    QBrush aAlternateBackgroundBrush=aPalette.alternateBase();
     QColor aDefaultForegroundColor=aPalette.color(QPalette::Text);
     QBrush aSelectionBrush=aPalette.highlight();
     QColor aSelectionTextColor=aPalette.color(QPalette::HighlightedText);
@@ -1736,7 +1739,15 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
             }
             else
             {
-                aBackgroundBrush=&aDefaultBackgroundBrush;
+                if (mAlternatingRowColors && (row & 1))
+                {
+                    aBackgroundBrush=&aAlternateBackgroundBrush;
+                }
+                else
+                {
+                    aBackgroundBrush=&aDefaultBackgroundBrush;
+                }
+
                 aTextColor=&aDefaultForegroundColor;
             }
 
@@ -2879,7 +2890,7 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                 case StyleSimple:
                 {
                     aPallete.setColor(QPalette::Base, QColor(255, 255, 255));
-                    // TODO: Alternate
+                    aPallete.setColor(QPalette::AlternateBase, QColor(246, 246, 246));
                     aPallete.setColor(QPalette::Text, QColor(0, 0, 0));
                     mGridColor.setRgb(200, 200, 200);
                     mCellBorderColor.setRgb(180, 180, 180);
@@ -2903,7 +2914,7 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                 case StyleLinux:
                 {
                     aPallete.setColor(QPalette::Base, QColor(255, 255, 255));
-                    // TODO: Alternate
+                    aPallete.setColor(QPalette::AlternateBase, QColor(246, 246, 246));
                     aPallete.setColor(QPalette::Text, QColor(0, 0, 0));
                     mGridColor.setRgb(202, 201, 200);
                     mCellBorderColor.setRgb(141, 140, 139);
@@ -2927,7 +2938,7 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                 case StyleWinXP:
                 {
                     aPallete.setColor(QPalette::Base, QColor(255, 255, 255));
-                    // TODO: Alternate
+                    aPallete.setColor(QPalette::AlternateBase, QColor(246, 246, 246));
                     aPallete.setColor(QPalette::Text, QColor(0, 0, 0));
                     mGridColor.setRgb(192, 192, 192);
                     mCellBorderColor.setRgb(206, 149, 58);
@@ -2951,7 +2962,7 @@ void CustomFastTableWidget::setStyle(Style style, bool keepColors)
                 case StyleWin7:
                 {
                     aPallete.setColor(QPalette::Base, QColor(255, 255, 255));
-                    // TODO: Alternate
+                    aPallete.setColor(QPalette::AlternateBase, QColor(246, 246, 246));
                     aPallete.setColor(QPalette::Text, QColor(0, 0, 0));
                     mGridColor.setRgb(216, 216, 216);
                     mCellBorderColor.setRgb(206, 149, 58);
@@ -3851,6 +3862,24 @@ void CustomFastTableWidget::setSizes(int aRowCount, int aColumnCount, qint16 aHo
     {
         setUpdatesEnabled(true);
     }
+
+    FASTTABLE_END_PROFILE;
+}
+
+bool CustomFastTableWidget::alternatingRowColors()
+{
+    FASTTABLE_DEBUG;
+    return mAlternatingRowColors;
+}
+
+void CustomFastTableWidget::setAlternatingRowColors(bool enable)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    mAlternatingRowColors=enable;
+
+    viewport()->update();
 
     FASTTABLE_END_PROFILE;
 }
