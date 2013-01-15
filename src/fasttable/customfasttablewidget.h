@@ -15,15 +15,12 @@
 #include <QApplication>
 #include <QClipboard>
 
-#include "qdebug.h"
-
 #include "fastdefines.h"
 
 //------------------------------------------------------------------------------
 
 class CustomFastTableWidget : public QAbstractScrollArea
 {
-    // TODO: Properties
     Q_OBJECT
     Q_PROPERTY(int     rowCount                                READ rowCount                                WRITE setRowCount)
     Q_PROPERTY(int     columnCount                             READ columnCount                             WRITE setColumnCount)
@@ -36,6 +33,8 @@ class CustomFastTableWidget : public QAbstractScrollArea
     Q_PROPERTY(int     verticalHeader_TotalWidth               READ verticalHeader_TotalWidth)
     Q_PROPERTY(int     horizontalHeader_TotalHeight            READ horizontalHeader_TotalHeight)
     Q_PROPERTY(bool    alternatingRowColors                    READ alternatingRowColors                    WRITE setAlternatingRowColors)
+    Q_PROPERTY(bool    horizontalHeaderStretchLastSection      READ horizontalHeaderStretchLastSection      WRITE setHorizontalHeaderStretchLastSection)
+    Q_PROPERTY(bool    verticalHeaderStretchLastSection        READ verticalHeaderStretchLastSection        WRITE setVerticalHeaderStretchLastSection)
     Q_PROPERTY(QColor  gridColor                               READ gridColor                               WRITE setGridColor)
     Q_PROPERTY(QColor  cellBorderColor                         READ cellBorderColor                         WRITE setCellBorderColor)
     Q_PROPERTY(QBrush  horizontalHeader_DefaultBackgroundBrush READ horizontalHeader_DefaultBackgroundBrush WRITE horizontalHeader_SetDefaultBackgroundBrush)
@@ -109,6 +108,12 @@ public:
 
     bool alternatingRowColors();
     void setAlternatingRowColors(bool enable);
+
+    bool horizontalHeaderStretchLastSection();
+    void setHorizontalHeaderStretchLastSection(bool enable);
+
+    bool verticalHeaderStretchLastSection();
+    void setVerticalHeaderStretchLastSection(bool enable);
 
     QColor gridColor();
     void setGridColor(QColor color);
@@ -227,6 +232,8 @@ protected:
     DrawFunction mDrawHeaderCellFunction;
 
     bool   mAlternatingRowColors;
+    bool   mHorizontalHeaderStretchLastSection;
+    bool   mVerticalHeaderStretchLastSection;
 
     QColor mGridColor;
     QColor mCellBorderColor;
@@ -328,6 +335,7 @@ protected:
     static void paintHeaderCellWin7(QPainter &painter, const int x, const int y, const int width, const int height, const bool headerPressed, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor);
     static void paintHeaderCellDefault(QPainter &painter, const int x, const int y, const int width, const int height, const bool headerPressed, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor);
 
+    void updateSizes();
     void updateBarsRanges();
     virtual void updateVisibleRange();
     void initShiftSelectionForKeyboard();

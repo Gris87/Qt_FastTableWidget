@@ -34,6 +34,8 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
 #endif
 
     mAlternatingRowColors=false;
+    mHorizontalHeaderStretchLastSection=false;
+    mVerticalHeaderStretchLastSection=false;
 
     mRowCount=0;
     mColumnCount=0;
@@ -1600,9 +1602,7 @@ void CustomFastTableWidget::resizeEvent(QResizeEvent *event)
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
-    updateBarsRanges();
-    updateVisibleRange();
-
+    updateSizes();
     QAbstractScrollArea::resizeEvent(event);
 
     FASTTABLE_END_PROFILE;
@@ -2503,6 +2503,65 @@ void CustomFastTableWidget::scrollBarValueChanged(int /*value*/)
     FASTTABLE_FREQUENT_END_PROFILE;
 }
 
+void CustomFastTableWidget::updateSizes()
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    if (mHorizontalHeaderStretchLastSection && mColumnCount>0)
+    {
+        int aTotalWidth=0;
+
+        for (int i=0; i<mVerticalHeader_ColumnCount; ++i)
+        {
+            aTotalWidth+=verticalHeader_ColumnWidth(i);
+        }
+
+        for (int i=0; i<mColumnCount-1; ++i)
+        {
+            aTotalWidth+=columnWidth(i);
+        }
+
+        int aColumnWidth=viewport()->width()-aTotalWidth-1;
+
+        if (aColumnWidth<FASTTABLE_MOUSE_RESIZE_MINIMUM_WIDTH)
+        {
+            aColumnWidth=FASTTABLE_MOUSE_RESIZE_MINIMUM_WIDTH;
+        }
+
+        setColumnWidth(mColumnCount-1, aColumnWidth);
+    }
+
+    if (mVerticalHeaderStretchLastSection && mRowCount>0)
+    {
+        int aTotalHeight=0;
+
+        for (int i=0; i<mHorizontalHeader_RowCount; ++i)
+        {
+            aTotalHeight+=horizontalHeader_RowHeight(i);
+        }
+
+        for (int i=0; i<mRowCount-1; ++i)
+        {
+            aTotalHeight+=rowHeight(i);
+        }
+
+        int aRowHeight=viewport()->height()-aTotalHeight-1;
+
+        if (aRowHeight<FASTTABLE_MOUSE_RESIZE_MINIMUM_HEIGHT)
+        {
+            aRowHeight=FASTTABLE_MOUSE_RESIZE_MINIMUM_HEIGHT;
+        }
+
+        setRowHeight(mRowCount-1, aRowHeight);
+    }
+
+    updateBarsRanges();
+    updateVisibleRange();
+
+    FASTTABLE_END_PROFILE;
+}
+
 void CustomFastTableWidget::updateBarsRanges()
 {
     FASTTABLE_DEBUG;
@@ -3231,8 +3290,7 @@ void CustomFastTableWidget::insertRow(int row)
     mMouseLocationForShift=InMiddleWorld;
     mMouseSelectedCells.clear();
 
-    updateBarsRanges();
-    updateVisibleRange();
+    updateSizes();
 
     viewport()->update();
 
@@ -3318,8 +3376,7 @@ void CustomFastTableWidget::removeRow(int row)
 
     mRowCount--;
 
-    updateBarsRanges();
-    updateVisibleRange();
+    updateSizes();
 
     viewport()->update();
 
@@ -3394,8 +3451,7 @@ void CustomFastTableWidget::insertColumn(int column)
     mMouseLocationForShift=InMiddleWorld;
     mMouseSelectedCells.clear();
 
-    updateBarsRanges();
-    updateVisibleRange();
+    updateSizes();
 
     viewport()->update();
 
@@ -3486,8 +3542,7 @@ void CustomFastTableWidget::removeColumn(int column)
 
     mColumnCount--;
 
-    updateBarsRanges();
-    updateVisibleRange();
+    updateSizes();
 
     viewport()->update();
 
@@ -3543,8 +3598,7 @@ void CustomFastTableWidget::horizontalHeader_InsertRow(int row)
         mHorizontalHeader_Data[row].append("");
     }
 
-    updateBarsRanges();
-    updateVisibleRange();
+    updateSizes();
 
     viewport()->update();
 
@@ -3594,8 +3648,7 @@ void CustomFastTableWidget::horizontalHeader_RemoveRow(int row)
 
     mHorizontalHeader_RowCount--;
 
-    updateBarsRanges();
-    updateVisibleRange();
+    updateSizes();
 
     viewport()->update();
 
@@ -3648,8 +3701,7 @@ void CustomFastTableWidget::verticalHeader_InsertColumn(int column)
         mVerticalHeader_Data[i].insert(column, "");
     }
 
-    updateBarsRanges();
-    updateVisibleRange();
+    updateSizes();
 
     viewport()->update();
 
@@ -3704,8 +3756,7 @@ void CustomFastTableWidget::verticalHeader_RemoveColumn(int column)
 
     mVerticalHeader_ColumnCount--;
 
-    updateBarsRanges();
-    updateVisibleRange();
+    updateSizes();
 
     viewport()->update();
 
@@ -3927,6 +3978,40 @@ void CustomFastTableWidget::setAlternatingRowColors(bool enable)
     mAlternatingRowColors=enable;
 
     viewport()->update();
+
+    FASTTABLE_END_PROFILE;
+}
+
+bool CustomFastTableWidget::horizontalHeaderStretchLastSection()
+{
+    FASTTABLE_DEBUG;
+    return mHorizontalHeaderStretchLastSection;
+}
+
+void CustomFastTableWidget::setHorizontalHeaderStretchLastSection(bool enable)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    mHorizontalHeaderStretchLastSection=enable;
+    resize(width(), height());
+
+    FASTTABLE_END_PROFILE;
+}
+
+bool CustomFastTableWidget::verticalHeaderStretchLastSection()
+{
+    FASTTABLE_DEBUG;
+    return mVerticalHeaderStretchLastSection;
+}
+
+void CustomFastTableWidget::setVerticalHeaderStretchLastSection(bool enable)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    mVerticalHeaderStretchLastSection=enable;
+    resize(width(), height());
 
     FASTTABLE_END_PROFILE;
 }
@@ -4217,8 +4302,7 @@ void CustomFastTableWidget::setColumnWidth(const int column, quint16 width)
             FASTTABLE_ASSERT(mOffsetX.at(i)>=0);
         }
 
-        updateBarsRanges();
-        updateVisibleRange();
+        updateSizes();
 
         viewport()->update();
     }
@@ -4278,8 +4362,7 @@ void CustomFastTableWidget::setRowHeight(const int row, quint16 height)
             FASTTABLE_ASSERT(mOffsetY.at(i)>=0);
         }
 
-        updateBarsRanges();
-        updateVisibleRange();
+        updateSizes();
 
         viewport()->update();
     }
@@ -4350,8 +4433,7 @@ void CustomFastTableWidget::verticalHeader_SetColumnWidth(const int column, quin
             FASTTABLE_ASSERT(mOffsetX.at(i)>=0);
         }
 
-        updateBarsRanges();
-        updateVisibleRange();
+        updateSizes();
 
         viewport()->update();
     }
@@ -4422,8 +4504,7 @@ void CustomFastTableWidget::horizontalHeader_SetRowHeight(const int row, quint16
             FASTTABLE_ASSERT(mOffsetY.at(i)>=0);
         }
 
-        updateBarsRanges();
-        updateVisibleRange();
+        updateSizes();
 
         viewport()->update();
     }
