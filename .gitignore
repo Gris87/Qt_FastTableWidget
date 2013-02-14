@@ -1,2 +1,6 @@
+*build-*
+debug/
+release/
 *.pro.user*
-*build-desktop*
+Makefile*
+*.pdb

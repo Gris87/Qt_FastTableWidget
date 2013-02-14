@@ -1,5 +1,9 @@
 #include "statisticsframe.h"
 
+#include <QDateTime>
+
+#include "../../src/fasttable/fasttablewidget.h"
+
 StatisticsFrame::StatisticsFrame(QWidget *tableWidget, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StatisticsFrame)

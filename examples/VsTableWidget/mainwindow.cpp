@@ -1,14 +1,13 @@
 #include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+#include "../../src/fasttable/fasttablewidget.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    QRect frect = frameGeometry();
-    frect.moveCenter(QDesktopWidget().availableGeometry().center());
-    move(frect.topLeft());
 
     StatisticsFrame* aFrame;
 

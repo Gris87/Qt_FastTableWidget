@@ -4,10 +4,6 @@
 #include <QWidget>
 #include "ui_statisticsframe.h"
 
-#include <QTableWidget>
-
-#include "../../src/fasttable/fasttablewidget.h"
-
 namespace Ui {
     class StatisticsFrame;
 }

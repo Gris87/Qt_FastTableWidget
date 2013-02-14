@@ -2,11 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "ui_mainwindow.h"
 
-#include <QDesktopWidget>
-#include <QTableWidget>
-#include <QTimer>
+#include <QLabel>
 
 #include "statisticsframe.h"
 
