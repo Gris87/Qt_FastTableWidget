@@ -1,10 +1,6 @@
 #ifndef OPTIMALLIST_H
 #define OPTIMALLIST_H
 
-#include <QDebug>
-#include <QByteArray>
-#include <QList>
-
 class OptimalListSharedData
 {
 public:

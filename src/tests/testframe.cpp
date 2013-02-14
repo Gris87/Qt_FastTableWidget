@@ -1,5 +1,7 @@
 #include "testframe.h"
 
+#include "publictablewidget.h"
+
 TestFrame::TestFrame(CustomFastTableWidget* aFastTable, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TestFrame)

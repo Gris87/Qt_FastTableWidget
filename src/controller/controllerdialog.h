@@ -2,18 +2,8 @@
 #define CONTROLLERDIALOG_H
 
 #include <QDialog>
-#include "ui_controllerdialog.h"
 
-#include <QInputDialog>
-#include <QColorDialog>
-#include <QFontDialog>
-#include <QMenu>
-#include "qdebug.h"
-
-#include "viewdialog.h"
-#include "aligndialog.h"
-#include "../fasttable/fasttablewidget.h"
-#include "../tests/publictablewidget.h"
+#include "../fasttable/customfasttablewidget.h"
 
 namespace Ui {
     class ControllerDialog;
@@ -30,6 +20,9 @@ public:
     ~ControllerDialog();
 
     void setStyleButtonsFlat();
+
+private:
+    Ui::ControllerDialog *ui;
 
 private slots:
     void tableInsertRow();
@@ -213,9 +206,6 @@ private slots:
 
     void on_createCustomTableButton_clicked();
     void on_createFastTableButton_clicked();
-
-private:
-    Ui::ControllerDialog *ui;
 };
 
 #endif // CONTROLLERDIALOG_H

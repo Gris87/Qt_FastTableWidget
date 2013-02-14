@@ -6,10 +6,8 @@
 
 #include <QSplitter>
 #include <QLabel>
-#include "qdebug.h"
 
 #include "../fasttable/customfasttablewidget.h"
-#include "publictablewidget.h"
 
 #define TEST_STEP(condition) if (success)\
                              {\

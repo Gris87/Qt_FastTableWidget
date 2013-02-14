@@ -1,4 +1,8 @@
 #include "testdialog.h"
+#include "ui_testdialog.h"
+
+#include "../fasttable/fasttablewidget.h"
+#include "testframe.h"
 
 TestDialog::TestDialog(QWidget *parent) :
     QDialog(parent),

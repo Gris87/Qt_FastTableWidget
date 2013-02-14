@@ -1,4 +1,15 @@
 #include "controllerdialog.h"
+#include "ui_controllerdialog.h"
+
+#include <QInputDialog>
+#include <QColorDialog>
+#include <QFontDialog>
+#include <QMenu>
+
+#include "aligndialog.h"
+#include "viewdialog.h"
+#include "../fasttable/fasttablewidget.h"
+#include "../tests/publictablewidget.h"
 
 ControllerDialog::ControllerDialog(QWidget *parent) :
     QDialog(parent),
