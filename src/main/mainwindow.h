@@ -2,15 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "ui_mainwindow.h"
-
-#include <QDesktopWidget>
-#include <QDateTime>
-#include "qdebug.h"
-
-#include "src/controller/controllerdialog.h"
-#include "src/fasttable/fasttablewidget.h"
-#include "src/tests/testdialog.h"
 
 namespace Ui {
     class MainWindow;
@@ -24,12 +15,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private:
+    Ui::MainWindow *ui;
+
 private slots:
     void on_testButton_clicked();
     void on_controllerButton_clicked();
-
-private:
-    Ui::MainWindow *ui;
 };
 
 #endif // MAINWINDOW_H

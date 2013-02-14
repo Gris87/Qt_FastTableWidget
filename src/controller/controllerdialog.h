@@ -10,10 +10,10 @@
 #include <QMenu>
 #include "qdebug.h"
 
-#include "src/controller/viewdialog.h"
-#include "src/controller/aligndialog.h"
-#include "src/fasttable/fasttablewidget.h"
-#include "src/tests/publictablewidget.h"
+#include "viewdialog.h"
+#include "aligndialog.h"
+#include "../fasttable/fasttablewidget.h"
+#include "../tests/publictablewidget.h"
 
 namespace Ui {
     class ControllerDialog;

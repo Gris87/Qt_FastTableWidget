@@ -1,14 +1,17 @@
 #include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+#include <QDebug>
+
+#include "../controller/controllerdialog.h"
+#include "../fasttable/fasttablewidget.h"
+#include "../tests/testdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    QRect frect = frameGeometry();
-    frect.moveCenter(QDesktopWidget().availableGeometry().center());
-    move(frect.topLeft());
 
     FastTableWidget* aFastTableWidget=new FastTableWidget(this);
     ui->fastTableLayout->addWidget(aFastTableWidget);

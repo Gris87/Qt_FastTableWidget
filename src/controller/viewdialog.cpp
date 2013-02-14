@@ -1,4 +1,7 @@
 #include "viewdialog.h"
+#include "ui_viewdialog.h"
+
+#include <QDebug>
 
 ViewDialog::ViewDialog(QWidget *parent) :
     QDialog(parent),

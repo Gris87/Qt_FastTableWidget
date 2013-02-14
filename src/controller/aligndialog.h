@@ -17,6 +17,9 @@ public:
     explicit AlignDialog(int initAlignment=0, QWidget *parent = 0);
     ~AlignDialog();
 
+private:
+    Ui::AlignDialog *ui;
+
 private slots:
     void on_topLeftButton_clicked();
     void on_topButton_clicked();
@@ -27,9 +30,6 @@ private slots:
     void on_bottomLeftButton_clicked();
     void on_bottomButton_clicked();
     void on_bottomRightButton_clicked();
-
-private:
-    Ui::AlignDialog *ui;
 };
 
 #endif // ALIGNDIALOG_H

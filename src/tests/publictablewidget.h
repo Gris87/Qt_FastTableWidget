@@ -1,7 +1,7 @@
 #ifndef PUBLICTABLEWIDGET_H
 #define PUBLICTABLEWIDGET_H
 
-#include "src/fasttable/fasttablewidget.h"
+#include "../fasttable/fasttablewidget.h"
 
 class PublicFastTable : public FastTableWidget
 {

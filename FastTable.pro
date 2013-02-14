@@ -8,6 +8,8 @@ include("src/fasttable/fasttable.pri")
 
 QT       += core gui
 
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 TARGET = FastTable
 TEMPLATE = app
 
@@ -26,7 +28,7 @@ CONFIG (debug, debug|release) {
     RCC_DIR = release/gen
 }
 
-SOURCES +=  src/main.cpp\
+SOURCES +=  src/main.cpp \
             src/main/mainwindow.cpp \
             src/tests/testdialog.cpp \
             src/tests/testframe.cpp \

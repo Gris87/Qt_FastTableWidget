@@ -8,8 +8,8 @@
 #include <QLabel>
 #include "qdebug.h"
 
-#include "src/fasttable/customfasttablewidget.h"
-#include "src/tests/publictablewidget.h"
+#include "../fasttable/customfasttablewidget.h"
+#include "publictablewidget.h"
 
 #define TEST_STEP(condition) if (success)\
                              {\

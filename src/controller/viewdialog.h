@@ -2,11 +2,8 @@
 #define VIEWDIALOG_H
 
 #include <QDialog>
-#include "ui_viewdialog.h"
 
-#include "qdebug.h"
-
-#include "src/fasttable/fasttablewidget.h"
+#include "../fasttable/fasttablewidget.h"
 
 #define VIEWDIALOG_BASE_CONSTRUCTOR ui->setupUi(this);\
                                     \

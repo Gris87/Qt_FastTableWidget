@@ -1,6 +1,7 @@
 #ifndef OPTIMALLIST_H
 #define OPTIMALLIST_H
 
+#include <QDebug>
 #include <QByteArray>
 #include <QList>
 
@@ -68,7 +69,7 @@ public:
 
     int indexOf(const T &t, int from = 0) const;
     int lastIndexOf(const T &t, int from = -1) const;
-    QBool contains(const T &t) const;
+    bool contains(const T &t) const;
     bool startsWith(const T &t) const;
     bool endsWith(const T &t) const;
 
@@ -669,7 +670,7 @@ int OptimalList<T>::lastIndexOf(const T &t, int from) const
 }
 
 template <typename T>
-QBool OptimalList<T>::contains(const T &t) const
+bool OptimalList<T>::contains(const T &t) const
 {
     return indexOf(t)>=0;
 }
