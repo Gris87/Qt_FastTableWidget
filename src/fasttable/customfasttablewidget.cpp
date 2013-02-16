@@ -3982,13 +3982,13 @@ void CustomFastTableWidget::setAlternatingRowColors(bool enable)
     FASTTABLE_END_PROFILE;
 }
 
-bool CustomFastTableWidget::horizontalHeaderStretchLastSection()
+bool CustomFastTableWidget::horizontalHeader_StretchLastSection()
 {
     FASTTABLE_DEBUG;
     return mHorizontalHeaderStretchLastSection;
 }
 
-void CustomFastTableWidget::setHorizontalHeaderStretchLastSection(bool enable)
+void CustomFastTableWidget::horizontalHeader_SetStretchLastSection(bool enable)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
@@ -3999,13 +3999,13 @@ void CustomFastTableWidget::setHorizontalHeaderStretchLastSection(bool enable)
     FASTTABLE_END_PROFILE;
 }
 
-bool CustomFastTableWidget::verticalHeaderStretchLastSection()
+bool CustomFastTableWidget::verticalHeader_StretchLastSection()
 {
     FASTTABLE_DEBUG;
     return mVerticalHeaderStretchLastSection;
 }
 
-void CustomFastTableWidget::setVerticalHeaderStretchLastSection(bool enable)
+void CustomFastTableWidget::verticalHeader_SetStretchLastSection(bool enable)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;

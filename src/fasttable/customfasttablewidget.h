@@ -33,8 +33,8 @@ class CustomFastTableWidget : public QAbstractScrollArea
     Q_PROPERTY(int     verticalHeader_TotalWidth               READ verticalHeader_TotalWidth)
     Q_PROPERTY(int     horizontalHeader_TotalHeight            READ horizontalHeader_TotalHeight)
     Q_PROPERTY(bool    alternatingRowColors                    READ alternatingRowColors                    WRITE setAlternatingRowColors)
-    Q_PROPERTY(bool    horizontalHeaderStretchLastSection      READ horizontalHeaderStretchLastSection      WRITE setHorizontalHeaderStretchLastSection)
-    Q_PROPERTY(bool    verticalHeaderStretchLastSection        READ verticalHeaderStretchLastSection        WRITE setVerticalHeaderStretchLastSection)
+    Q_PROPERTY(bool    horizontalHeader_StretchLastSection     READ horizontalHeader_StretchLastSection     WRITE horizontalHeader_SetStretchLastSection)
+    Q_PROPERTY(bool    verticalHeader_StretchLastSection       READ verticalHeader_StretchLastSection       WRITE verticalHeader_SetStretchLastSection)
     Q_PROPERTY(QColor  gridColor                               READ gridColor                               WRITE setGridColor)
     Q_PROPERTY(QColor  cellBorderColor                         READ cellBorderColor                         WRITE setCellBorderColor)
     Q_PROPERTY(QBrush  horizontalHeader_DefaultBackgroundBrush READ horizontalHeader_DefaultBackgroundBrush WRITE horizontalHeader_SetDefaultBackgroundBrush)
@@ -109,11 +109,11 @@ public:
     bool alternatingRowColors();
     void setAlternatingRowColors(bool enable);
 
-    bool horizontalHeaderStretchLastSection();
-    void setHorizontalHeaderStretchLastSection(bool enable);
+    bool horizontalHeader_StretchLastSection();
+    void horizontalHeader_SetStretchLastSection(bool enable);
 
-    bool verticalHeaderStretchLastSection();
-    void setVerticalHeaderStretchLastSection(bool enable);
+    bool verticalHeader_StretchLastSection();
+    void verticalHeader_SetStretchLastSection(bool enable);
 
     QColor gridColor();
     void setGridColor(QColor color);
