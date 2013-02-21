@@ -816,7 +816,7 @@ void OptimalList<T>::setOptimalCapacity()
         }
         else
         {
-            do
+            forever
             {
                 aNewCapacity = aNewCapacity << 1;
 
@@ -824,13 +824,13 @@ void OptimalList<T>::setOptimalCapacity()
                 {
                     break;
                 }
-            } while (true);
+            }
         }
     }
     else
     if (mCount<aNewCapacity)
     {
-        do
+        forever
         {
             int aTempCapacity=aNewCapacity >> 1;
 
@@ -845,7 +845,7 @@ void OptimalList<T>::setOptimalCapacity()
             {
                 break;
             }
-        } while (true);
+        }
 
         if (mCapacity!=aNewCapacity && mBegin!=0)
         {
