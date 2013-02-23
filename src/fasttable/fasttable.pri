@@ -14,5 +14,4 @@ SOURCES += $$PWD/customfasttablewidget.cpp \
 
 HEADERS  += $$PWD/customfasttablewidget.h \
             $$PWD/fasttablewidget.h \
-            $$PWD/fastdefines.h \
-            $$PWD/optimallist.h
+            $$PWD/fastdefines.h
