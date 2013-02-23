@@ -5,6 +5,9 @@ FastTableWidget::FastTableWidget(QWidget *parent) :
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
+
+    createLists();
+
     FASTTABLE_END_PROFILE;
 }
 
@@ -12,48 +15,47 @@ FastTableWidget::~FastTableWidget()
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
+
+    deleteLists();
+
     FASTTABLE_END_PROFILE;
 }
 
 void FastTableWidget::createLists()
 {
-    CustomFastTableWidget::createLists();
+    mBackgroundBrushes                      = new QList< QList<QBrush *> >();
+    mForegroundColors                       = new QList< QList<QColor *> >();
+    mCellFonts                              = new QList< QList<QFont *> >();
+    mCellTextFlags                          = new QList< QList<int> >();
+    mCellMergeX                             = new QList< QList<quint16> >();
+    mCellMergeY                             = new QList< QList<quint16> >();
+    mCellMergeParentRow                     = new QList< QList<int> >();
+    mCellMergeParentColumn                  = new QList< QList<int> >();
+    mMerges                                 = new QList< QRect >();
 
-    mBackgroundBrushes = new QList< QList<QBrush *> >();
-    mForegroundColors = new QList< QList<QColor *> >();
-    mCellFonts = new QList< QList<QFont *> >();
-    mCellTextFlags = new QList< QList<int> >();
-    mCellMergeX = new QList< QList<quint16> >();
-    mCellMergeY = new QList< QList<quint16> >();
-    mCellMergeParentRow = new QList< QList<int> >();
-    mCellMergeParentColumn = new QList< QList<int> >();
-    mMerges = new QList< QRect >();
-
-    mHorizontalHeader_BackgroundBrushes = new QList< QList<QBrush *> >();
-    mHorizontalHeader_ForegroundColors = new QList< QList<QColor *> >();
-    mHorizontalHeader_CellFonts = new QList< QList<QFont *> >();
-    mHorizontalHeader_CellTextFlags = new QList< QList<int> >();
-    mHorizontalHeader_CellMergeX = new QList< QList<quint16> >();
-    mHorizontalHeader_CellMergeY = new QList< QList<quint16> >();
-    mHorizontalHeader_CellMergeParentRow = new QList< QList<int> >();
+    mHorizontalHeader_BackgroundBrushes     = new QList< QList<QBrush *> >();
+    mHorizontalHeader_ForegroundColors      = new QList< QList<QColor *> >();
+    mHorizontalHeader_CellFonts             = new QList< QList<QFont *> >();
+    mHorizontalHeader_CellTextFlags         = new QList< QList<int> >();
+    mHorizontalHeader_CellMergeX            = new QList< QList<quint16> >();
+    mHorizontalHeader_CellMergeY            = new QList< QList<quint16> >();
+    mHorizontalHeader_CellMergeParentRow    = new QList< QList<int> >();
     mHorizontalHeader_CellMergeParentColumn = new QList< QList<int> >();
-    mHorizontalHeader_Merges = new QList< QRect >();
+    mHorizontalHeader_Merges                = new QList< QRect >();
 
-    mVerticalHeader_BackgroundBrushes = new QList< QList<QBrush *> >();
-    mVerticalHeader_ForegroundColors = new QList< QList<QColor *> >();
-    mVerticalHeader_CellFonts = new QList< QList<QFont *> >();
-    mVerticalHeader_CellTextFlags = new QList< QList<int> >();
-    mVerticalHeader_CellMergeX = new QList< QList<quint16> >();
-    mVerticalHeader_CellMergeY = new QList< QList<quint16> >();
-    mVerticalHeader_CellMergeParentRow = new QList< QList<int> >();
-    mVerticalHeader_CellMergeParentColumn = new QList< QList<int> >();
-    mVerticalHeader_Merges = new QList< QRect >();
+    mVerticalHeader_BackgroundBrushes       = new QList< QList<QBrush *> >();
+    mVerticalHeader_ForegroundColors        = new QList< QList<QColor *> >();
+    mVerticalHeader_CellFonts               = new QList< QList<QFont *> >();
+    mVerticalHeader_CellTextFlags           = new QList< QList<int> >();
+    mVerticalHeader_CellMergeX              = new QList< QList<quint16> >();
+    mVerticalHeader_CellMergeY              = new QList< QList<quint16> >();
+    mVerticalHeader_CellMergeParentRow      = new QList< QList<int> >();
+    mVerticalHeader_CellMergeParentColumn   = new QList< QList<int> >();
+    mVerticalHeader_Merges                  = new QList< QRect >();
 }
 
 void FastTableWidget::deleteLists()
 {
-    CustomFastTableWidget::deleteLists();
-
     delete mBackgroundBrushes;
     delete mForegroundColors;
     delete mCellFonts;

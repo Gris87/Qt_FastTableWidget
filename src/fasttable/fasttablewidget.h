@@ -145,11 +145,11 @@ protected:
     QList< QList<int> >      *mVerticalHeader_CellMergeParentColumn;
     QList< QRect >           *mVerticalHeader_Merges;
 
-    void paintEvent(QPaintEvent *event);
-    void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent);
-
     void createLists();
     void deleteLists();
+
+    void paintEvent(QPaintEvent *event);
+    void paintCell(QPainter &painter, const int x, const int y, const int width, const int height, const int row, const int column, const DrawComponent drawComponent);
 
     void updateVisibleRange();
 };

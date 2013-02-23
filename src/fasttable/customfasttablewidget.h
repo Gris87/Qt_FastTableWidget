@@ -311,6 +311,9 @@ protected:
     QTimer mMouseHoldTimer;
     QMouseEvent mMouseEvent;
 
+    void createLists();
+    void deleteLists();
+
     void keyPressEvent(QKeyEvent *event);
     bool focusNextPrevChild(bool next);
     void mousePressEvent(QMouseEvent *event);
@@ -319,9 +322,6 @@ protected:
     void leaveEvent(QEvent *event);
     void resizeEvent(QResizeEvent *event);
     void paintEvent(QPaintEvent *event);
-
-    virtual void createLists();
-    virtual void deleteLists();
 
     virtual void selectRangeForHandlers(int resX, int resY);
     virtual void horizontalHeader_SelectRangeForHandlers(int resX);
