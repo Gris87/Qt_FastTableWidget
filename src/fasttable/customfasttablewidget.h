@@ -269,24 +269,24 @@ protected:
 
     int mVerticalHeader_VisibleRight;
 
-    QList< QStringList > mData;
-    QList< qint16 >      mRowHeights;
-    QList< qint16 >      mColumnWidths;
-    QList< int >         mOffsetX;
-    QList< int >         mOffsetY;
+    QList< QStringList > *mData;
+    QList< qint16 >      *mRowHeights;
+    QList< qint16 >      *mColumnWidths;
+    QList< int >         *mOffsetX;
+    QList< int >         *mOffsetY;
 
-    QList< QStringList > mHorizontalHeader_Data;
-    QList< qint16 >      mHorizontalHeader_RowHeights;
-    QList< int >         mHorizontalHeader_OffsetY;
+    QList< QStringList > *mHorizontalHeader_Data;
+    QList< qint16 >      *mHorizontalHeader_RowHeights;
+    QList< int >         *mHorizontalHeader_OffsetY;
 
-    QList< QStringList > mVerticalHeader_Data;
-    QList< qint16 >      mVerticalHeader_ColumnWidths;
-    QList< int >         mVerticalHeader_OffsetX;
+    QList< QStringList > *mVerticalHeader_Data;
+    QList< qint16 >      *mVerticalHeader_ColumnWidths;
+    QList< int >         *mVerticalHeader_OffsetX;
 
-    QList< QList<bool> > mSelectedCells;
-    QList< QPoint >      mCurSelection;
-    QList< int >         mHorizontalHeader_SelectedColumns;
-    QList< int >         mVerticalHeader_SelectedRows;
+    QList< QList<bool> > *mSelectedCells;
+    QList< QPoint >      *mCurSelection;
+    QList< int >         *mHorizontalHeader_SelectedColumns;
+    QList< int >         *mVerticalHeader_SelectedRows;
 
     int mCurrentRow;
     int mCurrentColumn;
@@ -306,7 +306,7 @@ protected:
     MouseLocation mMouseLocation;
     MouseLocation mMouseLocationForShift;
 
-    QList< QList<bool> > mMouseSelectedCells;
+    QList< QList<bool> > *mMouseSelectedCells;
 
     QTimer mMouseHoldTimer;
     QMouseEvent mMouseEvent;
@@ -319,6 +319,9 @@ protected:
     void leaveEvent(QEvent *event);
     void resizeEvent(QResizeEvent *event);
     void paintEvent(QPaintEvent *event);
+
+    virtual void createLists();
+    virtual void deleteLists();
 
     virtual void selectRangeForHandlers(int resX, int resY);
     virtual void horizontalHeader_SelectRangeForHandlers(int resX);

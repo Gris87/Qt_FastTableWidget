@@ -2,137 +2,137 @@
 
 QList< QList<QBrush *> >  *PublicFastTable::getBackgroundBrushes()
 {
-    return &mBackgroundBrushes;
+    return mBackgroundBrushes;
 }
 
 QList< QList<QColor *> >  *PublicFastTable::getForegroundColors()
 {
-    return &mForegroundColors;
+    return mForegroundColors;
 }
 
 QList< QList<QFont *> >   *PublicFastTable::getCellFonts()
 {
-    return &mCellFonts;
+    return mCellFonts;
 }
 
 QList< QList<int> >       *PublicFastTable::getCellTextFlags()
 {
-    return &mCellTextFlags;
+    return mCellTextFlags;
 }
 
 QList< QList<quint16> >   *PublicFastTable::getCellMergeX()
 {
-    return &mCellMergeX;
+    return mCellMergeX;
 }
 
 QList< QList<quint16> >   *PublicFastTable::getCellMergeY()
 {
-    return &mCellMergeY;
+    return mCellMergeY;
 }
 
 QList< QList<int> >       *PublicFastTable::getCellMergeParentRow()
 {
-    return &mCellMergeParentRow;
+    return mCellMergeParentRow;
 }
 
 QList< QList<int> >       *PublicFastTable::getCellMergeParentColumn()
 {
-    return &mCellMergeParentColumn;
+    return mCellMergeParentColumn;
 }
 
 QList< QRect >            *PublicFastTable::getMerges()
 {
-    return &mMerges;
+    return mMerges;
 }
 
 QList< QList<QBrush *> >  *PublicFastTable::horizontalHeader_GetBackgroundBrushes()
 {
-    return &mHorizontalHeader_BackgroundBrushes;
+    return mHorizontalHeader_BackgroundBrushes;
 }
 
 QList< QList<QColor *> >  *PublicFastTable::horizontalHeader_GetForegroundColors()
 {
-    return &mHorizontalHeader_ForegroundColors;
+    return mHorizontalHeader_ForegroundColors;
 }
 
 QList< QList<QFont *> >   *PublicFastTable::horizontalHeader_GetCellFonts()
 {
-    return &mHorizontalHeader_CellFonts;
+    return mHorizontalHeader_CellFonts;
 }
 
 QList< QList<int> >       *PublicFastTable::horizontalHeader_GetCellTextFlags()
 {
-    return &mHorizontalHeader_CellTextFlags;
+    return mHorizontalHeader_CellTextFlags;
 }
 
 QList< QList<quint16> >   *PublicFastTable::horizontalHeader_GetCellMergeX()
 {
-    return &mHorizontalHeader_CellMergeX;
+    return mHorizontalHeader_CellMergeX;
 }
 
 QList< QList<quint16> >   *PublicFastTable::horizontalHeader_GetCellMergeY()
 {
-    return &mHorizontalHeader_CellMergeY;
+    return mHorizontalHeader_CellMergeY;
 }
 
 QList< QList<int> >       *PublicFastTable::horizontalHeader_GetCellMergeParentRow()
 {
-    return &mHorizontalHeader_CellMergeParentRow;
+    return mHorizontalHeader_CellMergeParentRow;
 }
 
 QList< QList<int> >       *PublicFastTable::horizontalHeader_GetCellMergeParentColumn()
 {
-    return &mHorizontalHeader_CellMergeParentColumn;
+    return mHorizontalHeader_CellMergeParentColumn;
 }
 
 QList< QRect >            *PublicFastTable::horizontalHeader_GetMerges()
 {
-    return &mHorizontalHeader_Merges;
+    return mHorizontalHeader_Merges;
 }
 
 QList< QList<QBrush *> >  *PublicFastTable::verticalHeader_GetBackgroundBrushes()
 {
-    return &mVerticalHeader_BackgroundBrushes;
+    return mVerticalHeader_BackgroundBrushes;
 }
 
 QList< QList<QColor *> >  *PublicFastTable::verticalHeader_GetForegroundColors()
 {
-    return &mVerticalHeader_ForegroundColors;
+    return mVerticalHeader_ForegroundColors;
 }
 
 QList< QList<QFont *> >   *PublicFastTable::verticalHeader_GetCellFonts()
 {
-    return &mVerticalHeader_CellFonts;
+    return mVerticalHeader_CellFonts;
 }
 
 QList< QList<int> >       *PublicFastTable::verticalHeader_GetCellTextFlags()
 {
-    return &mVerticalHeader_CellTextFlags;
+    return mVerticalHeader_CellTextFlags;
 }
 
 QList< QList<quint16> >   *PublicFastTable::verticalHeader_GetCellMergeX()
 {
-    return &mVerticalHeader_CellMergeX;
+    return mVerticalHeader_CellMergeX;
 }
 
 QList< QList<quint16> >   *PublicFastTable::verticalHeader_GetCellMergeY()
 {
-    return &mVerticalHeader_CellMergeY;
+    return mVerticalHeader_CellMergeY;
 }
 
 QList< QList<int> >       *PublicFastTable::verticalHeader_GetCellMergeParentRow()
 {
-    return &mVerticalHeader_CellMergeParentRow;
+    return mVerticalHeader_CellMergeParentRow;
 }
 
 QList< QList<int> >       *PublicFastTable::verticalHeader_GetCellMergeParentColumn()
 {
-    return &mVerticalHeader_CellMergeParentColumn;
+    return mVerticalHeader_CellMergeParentColumn;
 }
 
 QList< QRect >            *PublicFastTable::verticalHeader_GetMerges()
 {
-    return &mVerticalHeader_Merges;
+    return mVerticalHeader_Merges;
 }
 
 // ==============================================================================================================
@@ -269,77 +269,77 @@ int PublicCustomFastTable::verticalHeader_GetVisibleRight()
 
 QList< QStringList > *PublicCustomFastTable::getData()
 {
-    return &mData;
+    return mData;
 }
 
 QList< qint16 >      *PublicCustomFastTable::getRowHeights()
 {
-    return &mRowHeights;
+    return mRowHeights;
 }
 
 QList< qint16 >      *PublicCustomFastTable::getColumnWidths()
 {
-    return &mColumnWidths;
+    return mColumnWidths;
 }
 
 QList< int >         *PublicCustomFastTable::getOffsetX()
 {
-    return &mOffsetX;
+    return mOffsetX;
 }
 
 QList< int >         *PublicCustomFastTable::getOffsetY()
 {
-    return &mOffsetY;
+    return mOffsetY;
 }
 
 QList< QStringList > *PublicCustomFastTable::horizontalHeader_GetData()
 {
-    return &mHorizontalHeader_Data;
+    return mHorizontalHeader_Data;
 }
 
 QList< qint16 >      *PublicCustomFastTable::horizontalHeader_GetRowHeights()
 {
-    return &mHorizontalHeader_RowHeights;
+    return mHorizontalHeader_RowHeights;
 }
 
 QList< int >         *PublicCustomFastTable::horizontalHeader_GetOffsetY()
 {
-    return &mHorizontalHeader_OffsetY;
+    return mHorizontalHeader_OffsetY;
 }
 
 QList< QStringList > *PublicCustomFastTable::verticalHeader_GetData()
 {
-    return &mVerticalHeader_Data;
+    return mVerticalHeader_Data;
 }
 
 QList< qint16 >      *PublicCustomFastTable::verticalHeader_GetColumnWidths()
 {
-    return &mVerticalHeader_ColumnWidths;
+    return mVerticalHeader_ColumnWidths;
 }
 
 QList< int >         *PublicCustomFastTable::verticalHeader_GetOffsetX()
 {
-    return &mVerticalHeader_OffsetX;
+    return mVerticalHeader_OffsetX;
 }
 
 QList< QList<bool> > *PublicCustomFastTable::getSelectedCells()
 {
-    return &mSelectedCells;
+    return mSelectedCells;
 }
 
 QList< QPoint >      *PublicCustomFastTable::getCurSelection()
 {
-    return &mCurSelection;
+    return mCurSelection;
 }
 
 QList< int >         *PublicCustomFastTable::horizontalHeader_GetSelectedColumns()
 {
-    return &mHorizontalHeader_SelectedColumns;
+    return mHorizontalHeader_SelectedColumns;
 }
 
 QList< int >         *PublicCustomFastTable::verticalHeader_GetSelectedRows()
 {
-    return &mVerticalHeader_SelectedRows;
+    return mVerticalHeader_SelectedRows;
 }
 
 int PublicCustomFastTable::getCurrentRow()
@@ -414,5 +414,5 @@ CustomFastTableWidget::MouseLocation PublicCustomFastTable::getMouseLocationForS
 
 QList< QList<bool> > *PublicCustomFastTable::getMouseSelectedCells()
 {
-    return &mMouseSelectedCells;
+    return mMouseSelectedCells;
 }
