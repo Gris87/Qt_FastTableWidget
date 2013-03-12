@@ -34,10 +34,21 @@ FastTableWidget::~FastTableWidget()
 
 void FastTableWidget::createLists()
 {
-    mBackgroundBrushes                      = new QList< QList<QBrush *> >();
-    mForegroundColors                       = new QList< QList<QColor *> >();
-    mCellFonts                              = new QList< QList<QFont *> >();
-    mCellTextFlags                          = new QList< QList<int> >();
+    if (mUseInternalData)
+    {
+        mBackgroundBrushes                  = new QList< QList<QBrush *> >();
+        mForegroundColors                   = new QList< QList<QColor *> >();
+        mCellFonts                          = new QList< QList<QFont *> >();
+        mCellTextFlags                      = new QList< QList<int> >();
+    }
+    else
+    {
+        mBackgroundBrushes                  = 0;
+        mForegroundColors                   = 0;
+        mCellFonts                          = 0;
+        mCellTextFlags                      = 0;
+    }
+
     mCellMergeX                             = new QList< QList<quint16> >();
     mCellMergeY                             = new QList< QList<quint16> >();
     mCellMergeParentRow                     = new QList< QList<int> >();
@@ -67,10 +78,26 @@ void FastTableWidget::createLists()
 
 void FastTableWidget::deleteLists()
 {
-    delete mBackgroundBrushes;
-    delete mForegroundColors;
-    delete mCellFonts;
-    delete mCellTextFlags;
+    if (mBackgroundBrushes)
+    {
+        delete mBackgroundBrushes;
+    }
+
+    if (mForegroundColors)
+    {
+        delete mForegroundColors;
+    }
+
+    if (mCellFonts)
+    {
+        delete mCellFonts;
+    }
+
+    if (mCellTextFlags)
+    {
+        delete mCellTextFlags;
+    }
+
     delete mCellMergeX;
     delete mCellMergeY;
     delete mCellMergeParentRow;
@@ -374,8 +401,10 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
     bool    aHeaderPressed;
     QColor  *aGridColor;
     QBrush  *aBackgroundBrush;
+    QBrush  aTextBackgroundBrush;
     QColor  *aBorderColor;
     QColor  *aTextColor;
+    QColor  aForegroundColor;
     QString *aText;
     QString aTextString;
     QFont   *aFont;
@@ -384,55 +413,67 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 
     QPalette aPalette=palette();
 
-    QBrush aDefaultBackgroundBrush=backgroundBrush(row, column);
-    QBrush aAlternateBackgroundBrush=aPalette.alternateBase();
-    QColor aDefaultForegroundColor=foregroundColor(row, column);
-    QBrush aSelectionBrush=aPalette.highlight();
-    QColor aSelectionTextColor=aPalette.color(QPalette::HighlightedText);
-
     switch (drawComponent)
     {
         case DrawCell:
         {
             FASTTABLE_ASSERT(row>=0 && row<mSelectedCells->length());
             FASTTABLE_ASSERT(column>=0 && column<mSelectedCells->at(row).length());
-            FASTTABLE_ASSERT(row>=0 && row<mBackgroundBrushes->length());
-            FASTTABLE_ASSERT(column>=0 && column<mBackgroundBrushes->at(row).length());
-            FASTTABLE_ASSERT(row>=0 && row<mForegroundColors->length());
-            FASTTABLE_ASSERT(column>=0 && column<mForegroundColors->at(row).length());
-            FASTTABLE_ASSERT(row>=0 && row<mCellFonts->length());
-            FASTTABLE_ASSERT(column>=0 && column<mCellFonts->at(row).length());
-            FASTTABLE_ASSERT(row>=0 && row<mCellTextFlags->length());
-            FASTTABLE_ASSERT(column>=0 && column<mCellTextFlags->at(row).length());
+            FASTTABLE_ASSERT(mBackgroundBrushes==0 || (row>=0 && row<mBackgroundBrushes->length()));
+            FASTTABLE_ASSERT(mBackgroundBrushes==0 || (column>=0 && column<mBackgroundBrushes->at(row).length()));
+            FASTTABLE_ASSERT(mForegroundColors==0 || (row>=0 && row<mForegroundColors->length()));
+            FASTTABLE_ASSERT(mForegroundColors==0 || (column>=0 && column<mForegroundColors->at(row).length()));
+            FASTTABLE_ASSERT(mCellFonts==0 || (row>=0 && row<mCellFonts->length()));
+            FASTTABLE_ASSERT(mCellFonts==0 || (column>=0 && column<mCellFonts->at(row).length()));
 
             aGridColor=&mGridColor;
 
             if (mSelectedCells->at(row).at(column))
             {
-                aBackgroundBrush=&aSelectionBrush;
-                aTextColor=&aSelectionTextColor;
+                aTextBackgroundBrush=aPalette.highlight();
+                aForegroundColor=aPalette.color(QPalette::HighlightedText);
+
+                aBackgroundBrush=&aTextBackgroundBrush;
+                aTextColor=&aForegroundColor;
             }
             else
             {
-                aBackgroundBrush=mBackgroundBrushes->at(row).at(column);
+                if (mBackgroundBrushes)
+                {
+                    aBackgroundBrush=mBackgroundBrushes->at(row).at(column);
+                }
+                else
+                {
+                    aBackgroundBrush=0;
+                }
 
                 if (aBackgroundBrush==0)
                 {
-                    if (mAlternatingRowColors && (row & 1))
+                    if (mUseInternalData && mAlternatingRowColors && (row & 1))
                     {
-                        aBackgroundBrush=&aAlternateBackgroundBrush;
+                        aTextBackgroundBrush=aPalette.alternateBase();
                     }
                     else
                     {
-                        aBackgroundBrush=&aDefaultBackgroundBrush;
+                        aTextBackgroundBrush=backgroundBrush(row, column);
                     }
+
+                    aBackgroundBrush=&aTextBackgroundBrush;
                 }
 
-                aTextColor=mForegroundColors->at(row).at(column);
+                if (mForegroundColors)
+                {
+                    aTextColor=mForegroundColors->at(row).at(column);
+                }
+                else
+                {
+                    aTextColor=0;
+                }
 
                 if (aTextColor==0)
                 {
-                    aTextColor=&aDefaultForegroundColor;
+                    aForegroundColor=foregroundColor(row, column);
+                    aTextColor=&aForegroundColor;
                 }
             }
 
@@ -450,15 +491,22 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
             aTextString=text(row, column);
             aText=&aTextString;
 
-            aFont=mCellFonts->at(row).at(column);
+            if (mCellFonts)
+            {
+                aFont=mCellFonts->at(row).at(column);
+            }
+            else
+            {
+                aFont=0;
+            }
 
             if (aFont==0)
             {
-                aTextFont=font();
+                aTextFont=cellFont(row, column);
                 aFont=&aTextFont;
             }
 
-            textFlags=mCellTextFlags->at(row).at(column);
+            textFlags=cellTextFlags(row, column);
         }
         break;
         case DrawHorizontalHeaderCell:
@@ -890,10 +938,27 @@ void FastTableWidget::clear()
     verticalHeader_ResetForegroundColors();
     verticalHeader_ResetFonts();
 
-    mBackgroundBrushes->clear();
-    mForegroundColors->clear();
-    mCellFonts->clear();
-    mCellTextFlags->clear();
+    // If you don't use internal data, you may reimplement this function in your class
+    if (mBackgroundBrushes)
+    {
+        mBackgroundBrushes->clear();
+    }
+
+    if (mForegroundColors)
+    {
+        mForegroundColors->clear();
+    }
+
+    if (mCellFonts)
+    {
+        mCellFonts->clear();
+    }
+
+    if (mCellTextFlags)
+    {
+        mCellTextFlags->clear();
+    }
+
     mCellMergeX->clear();
     mCellMergeY->clear();
     mCellMergeParentRow->clear();
@@ -930,22 +995,25 @@ void FastTableWidget::resetBackgroundBrushes()
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
-    for (int i=0; i<mRowCount; ++i)
+    if (mBackgroundBrushes)
     {
-        for (int j=0; j<mColumnCount; ++j)
+        for (int i=0; i<mRowCount; ++i)
         {
-            FASTTABLE_ASSERT(i<mBackgroundBrushes->length());
-            FASTTABLE_ASSERT(j<mBackgroundBrushes->at(i).length());
-
-            if (mBackgroundBrushes->at(i).at(j))
+            for (int j=0; j<mColumnCount; ++j)
             {
-                delete mBackgroundBrushes->at(i).at(j);
-                (*mBackgroundBrushes)[i][j]=0;
+                FASTTABLE_ASSERT(i<mBackgroundBrushes->length());
+                FASTTABLE_ASSERT(j<mBackgroundBrushes->at(i).length());
+
+                if (mBackgroundBrushes->at(i).at(j))
+                {
+                    delete mBackgroundBrushes->at(i).at(j);
+                    (*mBackgroundBrushes)[i][j]=0;
+                }
             }
         }
-    }
 
-    viewport()->update();
+        viewport()->update();
+    }
 
     FASTTABLE_END_PROFILE;
 }
@@ -955,22 +1023,25 @@ void FastTableWidget::resetForegroundColors()
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
-    for (int i=0; i<mRowCount; ++i)
+    if (mForegroundColors)
     {
-        for (int j=0; j<mColumnCount; ++j)
+        for (int i=0; i<mRowCount; ++i)
         {
-            FASTTABLE_ASSERT(i<mForegroundColors->length());
-            FASTTABLE_ASSERT(j<mForegroundColors->at(i).length());
-
-            if (mForegroundColors->at(i).at(j))
+            for (int j=0; j<mColumnCount; ++j)
             {
-                delete mForegroundColors->at(i).at(j);
-                (*mForegroundColors)[i][j]=0;
+                FASTTABLE_ASSERT(i<mForegroundColors->length());
+                FASTTABLE_ASSERT(j<mForegroundColors->at(i).length());
+
+                if (mForegroundColors->at(i).at(j))
+                {
+                    delete mForegroundColors->at(i).at(j);
+                    (*mForegroundColors)[i][j]=0;
+                }
             }
         }
-    }
 
-    viewport()->update();
+        viewport()->update();
+    }
 
     FASTTABLE_END_PROFILE;
 }
@@ -980,22 +1051,25 @@ void FastTableWidget::resetFonts()
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
-    for (int i=0; i<mRowCount; ++i)
+    if (mCellFonts)
     {
-        for (int j=0; j<mColumnCount; ++j)
+        for (int i=0; i<mRowCount; ++i)
         {
-            FASTTABLE_ASSERT(i<mCellFonts->length());
-            FASTTABLE_ASSERT(j<mCellFonts->at(i).length());
-
-            if (mCellFonts->at(i).at(j))
+            for (int j=0; j<mColumnCount; ++j)
             {
-                delete mCellFonts->at(i).at(j);
-                (*mCellFonts)[i][j]=0;
+                FASTTABLE_ASSERT(i<mCellFonts->length());
+                FASTTABLE_ASSERT(j<mCellFonts->at(i).length());
+
+                if (mCellFonts->at(i).at(j))
+                {
+                    delete mCellFonts->at(i).at(j);
+                    (*mCellFonts)[i][j]=0;
+                }
             }
         }
-    }
 
-    viewport()->update();
+        viewport()->update();
+    }
 
     FASTTABLE_END_PROFILE;
 }
@@ -1005,18 +1079,21 @@ void FastTableWidget::resetCellTextFlags()
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
-    for (int i=0; i<mRowCount; ++i)
+    if (mCellTextFlags)
     {
-        for (int j=0; j<mColumnCount; ++j)
+        for (int i=0; i<mRowCount; ++i)
         {
-            FASTTABLE_ASSERT(i<mCellTextFlags->length());
-            FASTTABLE_ASSERT(j<mCellTextFlags->at(i).length());
+            for (int j=0; j<mColumnCount; ++j)
+            {
+                FASTTABLE_ASSERT(i<mCellTextFlags->length());
+                FASTTABLE_ASSERT(j<mCellTextFlags->at(i).length());
 
-            (*mCellTextFlags)[i][j]=FASTTABLE_DEFAULT_TEXT_FLAG;
+                (*mCellTextFlags)[i][j]=FASTTABLE_DEFAULT_TEXT_FLAG;
+            }
         }
-    }
 
-    viewport()->update();
+        viewport()->update();
+    }
 
     FASTTABLE_END_PROFILE;
 }
@@ -1218,6 +1295,7 @@ void FastTableWidget::resetBackgroundBrush(const int row, const int column)
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
+    FASTTABLE_ASSERT(mUseInternalData);
     FASTTABLE_ASSERT(row<mBackgroundBrushes->length());
     FASTTABLE_ASSERT(column<mBackgroundBrushes->at(row).length());
 
@@ -1237,6 +1315,7 @@ void FastTableWidget::resetForegroundColor(const int row, const int column)
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
+    FASTTABLE_ASSERT(mUseInternalData);
     FASTTABLE_ASSERT(row<mForegroundColors->length());
     FASTTABLE_ASSERT(column<mForegroundColors->at(row).length());
 
@@ -1256,6 +1335,7 @@ void FastTableWidget::resetFont(const int row, const int column)
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
+    FASTTABLE_ASSERT(mUseInternalData);
     FASTTABLE_ASSERT(row<mCellFonts->length());
     FASTTABLE_ASSERT(column<mCellFonts->at(row).length());
 
@@ -1275,6 +1355,7 @@ void FastTableWidget::resetCellTextFlag(const int row, const int column)
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
+    FASTTABLE_ASSERT(mUseInternalData);
     FASTTABLE_ASSERT(row<mCellTextFlags->length());
     FASTTABLE_ASSERT(column<mCellTextFlags->at(row).length());
 
@@ -1434,10 +1515,10 @@ void FastTableWidget::insertRow(int row)
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
-    FASTTABLE_ASSERT(row>=0 && row<=mBackgroundBrushes->length());
-    FASTTABLE_ASSERT(row>=0 && row<=mForegroundColors->length());
-    FASTTABLE_ASSERT(row>=0 && row<=mCellFonts->length());
-    FASTTABLE_ASSERT(row>=0 && row<=mCellTextFlags->length());
+    FASTTABLE_ASSERT(mBackgroundBrushes==0 || (row>=0 && row<=mBackgroundBrushes->length()));
+    FASTTABLE_ASSERT(mForegroundColors==0 || (row>=0 && row<=mForegroundColors->length()));
+    FASTTABLE_ASSERT(mCellFonts==0 || (row>=0 && row<=mCellFonts->length()));
+    FASTTABLE_ASSERT(mCellTextFlags==0 || (row>=0 && row<=mCellTextFlags->length()));
     FASTTABLE_ASSERT(row>=0 && row<=mCellMergeX->length());
     FASTTABLE_ASSERT(row>=0 && row<=mCellMergeY->length());
     FASTTABLE_ASSERT(row>=0 && row<=mCellMergeParentRow->length());
@@ -1460,10 +1541,26 @@ void FastTableWidget::insertRow(int row)
     QList<int> aNewRowint;
     QList<quint16> aNewRowqint16;
 
-    mBackgroundBrushes->insert(row, aNewRowBrush);
-    mForegroundColors->insert(row, aNewRowColor);
-    mCellFonts->insert(row, aNewRowFont);
-    mCellTextFlags->insert(row, aNewRowint);
+    if (mBackgroundBrushes)
+    {
+        mBackgroundBrushes->insert(row, aNewRowBrush);
+    }
+
+    if (mForegroundColors)
+    {
+        mForegroundColors->insert(row, aNewRowColor);
+    }
+
+    if (mCellFonts)
+    {
+        mCellFonts->insert(row, aNewRowFont);
+    }
+
+    if (mCellTextFlags)
+    {
+        mCellTextFlags->insert(row, aNewRowint);
+    }
+
     mCellMergeX->insert(row, aNewRowqint16);
     mCellMergeY->insert(row, aNewRowqint16);
     mCellMergeParentRow->insert(row, aNewRowint);
@@ -1480,10 +1577,26 @@ void FastTableWidget::insertRow(int row)
 
     for (int i=0; i<mColumnCount; ++i)
     {
-        (*mBackgroundBrushes)[row].append(0);
-        (*mForegroundColors)[row].append(0);
-        (*mCellFonts)[row].append(0);
-        (*mCellTextFlags)[row].append(FASTTABLE_DEFAULT_TEXT_FLAG);
+        if (mBackgroundBrushes)
+        {
+            (*mBackgroundBrushes)[row].append(0);
+        }
+
+        if (mForegroundColors)
+        {
+            (*mForegroundColors)[row].append(0);
+        }
+
+        if (mCellFonts)
+        {
+            (*mCellFonts)[row].append(0);
+        }
+
+        if (mCellTextFlags)
+        {
+            (*mCellTextFlags)[row].append(FASTTABLE_DEFAULT_TEXT_FLAG);
+        }
+
         (*mCellMergeX)[row].append(1);
         (*mCellMergeY)[row].append(1);
         (*mCellMergeParentRow)[row].append(-1);
@@ -1568,10 +1681,10 @@ void FastTableWidget::removeRow(int row)
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
-    FASTTABLE_ASSERT(row>=0 && row<mBackgroundBrushes->length());
-    FASTTABLE_ASSERT(row>=0 && row<mForegroundColors->length());
-    FASTTABLE_ASSERT(row>=0 && row<mCellFonts->length());
-    FASTTABLE_ASSERT(row>=0 && row<mCellTextFlags->length());
+    FASTTABLE_ASSERT(mBackgroundBrushes==0 || (row>=0 && row<mBackgroundBrushes->length()));
+    FASTTABLE_ASSERT(mForegroundColors==0 || (row>=0 && row<mForegroundColors->length()));
+    FASTTABLE_ASSERT(mCellFonts==0 || (row>=0 && row<mCellFonts->length()));
+    FASTTABLE_ASSERT(mCellTextFlags==0 || (row>=0 && row<mCellTextFlags->length()));
     FASTTABLE_ASSERT(row>=0 && row<mCellMergeX->length());
     FASTTABLE_ASSERT(row>=0 && row<mCellMergeY->length());
     FASTTABLE_ASSERT(row>=0 && row<mCellMergeParentRow->length());
@@ -1586,21 +1699,24 @@ void FastTableWidget::removeRow(int row)
     FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellMergeParentRow->length());
     FASTTABLE_ASSERT(row>=0 && row<mVerticalHeader_CellMergeParentColumn->length());
 
-    for (int i=0; i<mColumnCount; ++i)
+    if (mUseInternalData)
     {
-        if (mBackgroundBrushes->at(row).at(i))
+        for (int i=0; i<mColumnCount; ++i)
         {
-            delete mBackgroundBrushes->at(row).at(i);
-        }
+            if (mBackgroundBrushes->at(row).at(i))
+            {
+                delete mBackgroundBrushes->at(row).at(i);
+            }
 
-        if (mForegroundColors->at(row).at(i))
-        {
-            delete mForegroundColors->at(row).at(i);
-        }
+            if (mForegroundColors->at(row).at(i))
+            {
+                delete mForegroundColors->at(row).at(i);
+            }
 
-        if (mCellFonts->at(row).at(i))
-        {
-            delete mCellFonts->at(row).at(i);
+            if (mCellFonts->at(row).at(i))
+            {
+                delete mCellFonts->at(row).at(i);
+            }
         }
     }
 
@@ -1728,10 +1844,26 @@ void FastTableWidget::removeRow(int row)
         }
     }
 
-    mBackgroundBrushes->removeAt(row);
-    mForegroundColors->removeAt(row);
-    mCellFonts->removeAt(row);
-    mCellTextFlags->removeAt(row);
+    if (mBackgroundBrushes)
+    {
+        mBackgroundBrushes->removeAt(row);
+    }
+
+    if (mForegroundColors)
+    {
+        mForegroundColors->removeAt(row);
+    }
+
+    if (mCellFonts)
+    {
+        mCellFonts->removeAt(row);
+    }
+
+    if (mCellTextFlags)
+    {
+        mCellTextFlags->removeAt(row);
+    }
+
     mCellMergeX->removeAt(row);
     mCellMergeY->removeAt(row);
     mCellMergeParentRow->removeAt(row);
@@ -1760,19 +1892,35 @@ void FastTableWidget::insertColumn(int column)
 
     for (int i=0; i<mRowHeights->length(); ++i)
     {
-        FASTTABLE_ASSERT(column>=0 && column<=mBackgroundBrushes->at(i).length());
-        FASTTABLE_ASSERT(column>=0 && column<=mForegroundColors->at(i).length());
-        FASTTABLE_ASSERT(column>=0 && column<=mCellFonts->at(i).length());
-        FASTTABLE_ASSERT(column>=0 && column<=mCellTextFlags->at(i).length());
+        FASTTABLE_ASSERT(mBackgroundBrushes==0 || (column>=0 && column<=mBackgroundBrushes->at(i).length()));
+        FASTTABLE_ASSERT(mForegroundColors==0 || (column>=0 && column<=mForegroundColors->at(i).length()));
+        FASTTABLE_ASSERT(mCellFonts==0 || (column>=0 && column<=mCellFonts->at(i).length()));
+        FASTTABLE_ASSERT(mCellTextFlags==0 || (column>=0 && column<=mCellTextFlags->at(i).length()));
         FASTTABLE_ASSERT(column>=0 && column<=mCellMergeX->at(i).length());
         FASTTABLE_ASSERT(column>=0 && column<=mCellMergeY->at(i).length());
         FASTTABLE_ASSERT(column>=0 && column<=mCellMergeParentRow->at(i).length());
         FASTTABLE_ASSERT(column>=0 && column<=mCellMergeParentColumn->at(i).length());
 
-        (*mBackgroundBrushes)[i].insert(column, 0);
-        (*mForegroundColors)[i].insert(column, 0);
-        (*mCellFonts)[i].insert(column, 0);
-        (*mCellTextFlags)[i].insert(column, FASTTABLE_DEFAULT_TEXT_FLAG);
+        if (mBackgroundBrushes)
+        {
+            (*mBackgroundBrushes)[i].insert(column, 0);
+        }
+
+        if (mForegroundColors)
+        {
+            (*mForegroundColors)[i].insert(column, 0);
+        }
+
+        if (mCellFonts)
+        {
+            (*mCellFonts)[i].insert(column, 0);
+        }
+
+        if (mCellTextFlags)
+        {
+            (*mCellTextFlags)[i].insert(column, FASTTABLE_DEFAULT_TEXT_FLAG);
+        }
+
         (*mCellMergeX)[i].insert(column, 1);
         (*mCellMergeY)[i].insert(column, 1);
         (*mCellMergeParentRow)[i].insert(column, -1);
@@ -1974,34 +2122,50 @@ void FastTableWidget::removeColumn(int column)
 
     for (int i=0; i<mRowHeights->length(); ++i)
     {
-        FASTTABLE_ASSERT(column>=0 && column<mBackgroundBrushes->at(i).length());
-        FASTTABLE_ASSERT(column>=0 && column<mForegroundColors->at(i).length());
-        FASTTABLE_ASSERT(column>=0 && column<mCellFonts->at(i).length());
-        FASTTABLE_ASSERT(column>=0 && column<mCellTextFlags->at(i).length());
+        FASTTABLE_ASSERT(mBackgroundBrushes==0 || (column>=0 && column<mBackgroundBrushes->at(i).length()));
+        FASTTABLE_ASSERT(mForegroundColors==0 || (column>=0 && column<mForegroundColors->at(i).length()));
+        FASTTABLE_ASSERT(mCellFonts==0 || (column>=0 && column<mCellFonts->at(i).length()));
+        FASTTABLE_ASSERT(mCellTextFlags==0 || (column>=0 && column<mCellTextFlags->at(i).length()));
         FASTTABLE_ASSERT(column>=0 && column<mCellMergeX->at(i).length());
         FASTTABLE_ASSERT(column>=0 && column<mCellMergeY->at(i).length());
         FASTTABLE_ASSERT(column>=0 && column<mCellMergeParentRow->at(i).length());
         FASTTABLE_ASSERT(column>=0 && column<mCellMergeParentColumn->at(i).length());
 
-        if (mBackgroundBrushes->at(i).at(column))
+        if (mBackgroundBrushes)
         {
-            delete mBackgroundBrushes->at(i).at(column);
+            if (mBackgroundBrushes->at(i).at(column))
+            {
+                delete mBackgroundBrushes->at(i).at(column);
+            }
+
+            (*mBackgroundBrushes)[i].removeAt(column);
         }
 
-        if (mForegroundColors->at(i).at(column))
+        if (mForegroundColors)
         {
-            delete mForegroundColors->at(i).at(column);
+            if (mForegroundColors->at(i).at(column))
+            {
+                delete mForegroundColors->at(i).at(column);
+            }
+
+            (*mForegroundColors)[i].removeAt(column);
         }
 
-        if (mCellFonts->at(i).at(column))
+        if (mCellFonts)
         {
-            delete mCellFonts->at(i).at(column);
+            if (mCellFonts->at(i).at(column))
+            {
+                delete mCellFonts->at(i).at(column);
+            }
+
+            (*mCellFonts)[i].removeAt(column);
         }
 
-        (*mBackgroundBrushes)[i].removeAt(column);
-        (*mForegroundColors)[i].removeAt(column);
-        (*mCellFonts)[i].removeAt(column);
-        (*mCellTextFlags)[i].removeAt(column);
+        if (mCellTextFlags)
+        {
+            (*mCellTextFlags)[i].removeAt(column);
+        }
+
         (*mCellMergeX)[i].removeAt(column);
         (*mCellMergeY)[i].removeAt(column);
         (*mCellMergeParentRow)[i].removeAt(column);

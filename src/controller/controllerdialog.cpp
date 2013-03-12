@@ -2669,6 +2669,23 @@ void ControllerDialog::tableContextMenuRequested(QPoint /*pos*/)
 \
     ui->textButton->setEnabled(aUseInternalData); \
     ui->textViewButton->setEnabled(aUseInternalData); \
+\
+    ui->backgroundButton->setEnabled(aUseInternalData); \
+    ui->resetBackgroundButton->setEnabled(aUseInternalData); \
+    ui->resetAllBackgroundButton->setEnabled(aUseInternalData); \
+\
+    ui->foregroundButton->setEnabled(aUseInternalData); \
+    ui->resetForegroundButton->setEnabled(aUseInternalData); \
+    ui->resetAllForegroundButton->setEnabled(aUseInternalData); \
+\
+    ui->cellFontButton->setEnabled(aUseInternalData); \
+    ui->resetCellFontButton->setEnabled(aUseInternalData); \
+    ui->resetAllCellFontButton->setEnabled(aUseInternalData); \
+\
+    ui->cellTextFlagsButton->setEnabled(aUseInternalData); \
+    ui->resetCellTextFlagsButton->setEnabled(aUseInternalData); \
+    ui->resetAllCellTextFlagsButton->setEnabled(aUseInternalData); \
+\
     ui->fastTableControlWidget->setVisible(aFastTableControl); \
 \
     setStyleButtonsFlat(); \

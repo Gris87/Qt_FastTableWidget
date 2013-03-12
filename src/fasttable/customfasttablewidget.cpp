@@ -1792,8 +1792,10 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
     bool    aHeaderPressed;
     QColor  *aGridColor;
     QBrush  *aBackgroundBrush;
+    QBrush  aTextBackgroundBrush;
     QColor  *aBorderColor;
     QColor  *aTextColor;
+    QColor  aForegroundColor;
     QString *aText;
     QString aTextString;
     QFont   *aFont;
@@ -1801,12 +1803,6 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
     int     textFlags;
 
     QPalette aPalette=palette();
-
-    QBrush aDefaultBackgroundBrush=backgroundBrush(row, column);
-    QBrush aAlternateBackgroundBrush=aPalette.alternateBase();
-    QColor aDefaultForegroundColor=foregroundColor(row, column);
-    QBrush aSelectionBrush=aPalette.highlight();
-    QColor aSelectionTextColor=aPalette.color(QPalette::HighlightedText);
 
     switch (drawComponent)
     {
@@ -1819,22 +1815,27 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
 
             if (mSelectedCells->at(row).at(column))
             {
-                aBackgroundBrush=&aSelectionBrush;
-                aTextColor=&aSelectionTextColor;
+                aTextBackgroundBrush=aPalette.highlight();
+                aForegroundColor=aPalette.color(QPalette::HighlightedText);
             }
             else
             {
                 if (mUseInternalData && mAlternatingRowColors && (row & 1))
                 {
-                    aBackgroundBrush=&aAlternateBackgroundBrush;
+                    aTextBackgroundBrush=aPalette.alternateBase();
                 }
                 else
                 {
-                    aBackgroundBrush=&aDefaultBackgroundBrush;
+                    aTextBackgroundBrush=backgroundBrush(row, column);
                 }
 
-                aTextColor=&aDefaultForegroundColor;
+                aForegroundColor=foregroundColor(row, column);
             }
+
+            aBackgroundBrush=&aTextBackgroundBrush;
+            aTextColor=&aForegroundColor;
+
+
 
             aHeaderPressed=false;
 
