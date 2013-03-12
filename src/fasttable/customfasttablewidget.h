@@ -190,8 +190,8 @@ public:
     virtual QRect verticalHeader_CellRectangle(const int row, const int column);
     void scrollToCell(const int row, const int column);
 
-    QString text(const int row, const int column);
-    void setText(const int row, const int column, const QString text);
+    virtual QString text(const int row, const int column);
+    virtual void setText(const int row, const int column, const QString text);
 
     QString horizontalHeader_Text(const int row, const int column);
     QString horizontalHeader_Text(const int column);
@@ -202,6 +202,18 @@ public:
     QString verticalHeader_Text(const int row);
     void verticalHeader_SetText(const int row, const int column, const QString text);
     void verticalHeader_SetText(const int row, const QString text);
+
+    virtual QBrush backgroundBrush(const int row, const int column);
+    virtual void setBackgroundBrush(const int row, const int column, const QBrush brush);
+
+    virtual QColor foregroundColor(const int row, const int column);
+    virtual void setForegroundColor(const int row, const int column, const QColor color);
+
+    virtual QFont cellFont(const int row, const int column);
+    virtual void setCellFont(const int row, const int column, const QFont font);
+
+    virtual int cellTextFlags(const int row, const int column);
+    virtual void setCellTextFlags(const int row, const int column, const int flags);
 
     virtual bool cellSelected(const int row, const int column);
     virtual void setCellSelected(const int row, const int column, const bool selected);
