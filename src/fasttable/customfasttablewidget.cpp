@@ -4974,7 +4974,7 @@ QString CustomFastTableWidget::text(const int row, const int column)
 {
     FASTTABLE_DEBUG;
 
-    // If you don't use internal data, you need to reimplement this function in your class
+    // If you don't use internal data, you have to reimplement this function in your class
     FASTTABLE_ASSERT(mUseInternalData);
     FASTTABLE_ASSERT(row>=0 && row<mData->length());
     FASTTABLE_ASSERT(column>=0 && column<mData->at(row).length());
@@ -4987,7 +4987,7 @@ void CustomFastTableWidget::setText(const int row, const int column, const QStri
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
-    // If you don't use internal data, you need to reimplement this function in your class
+    // If you don't use internal data, you may reimplement this function in your class
     FASTTABLE_ASSERT(mUseInternalData);
     FASTTABLE_ASSERT(row>=0 && row<mData->length());
     FASTTABLE_ASSERT(column>=0 && column<mData->at(row).length());
@@ -5113,7 +5113,7 @@ QBrush CustomFastTableWidget::backgroundBrush(const int /*row*/, const int /*col
 void CustomFastTableWidget::setBackgroundBrush(const int /*row*/, const int /*column*/, const QBrush /*brush*/)
 {
     // Nothing
-    // If you don't use internal data, you need to reimplement this function in your class
+    // If you don't use internal data, you may reimplement this function in your class
 
     FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(!mUseInternalData);
@@ -5130,7 +5130,7 @@ QColor CustomFastTableWidget::foregroundColor(const int /*row*/, const int /*col
 void CustomFastTableWidget::setForegroundColor(const int /*row*/, const int /*column*/, const QColor /*color*/)
 {
     // Nothing
-    // If you don't use internal data, you need to reimplement this function in your class
+    // If you don't use internal data, you may reimplement this function in your class
 
     FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(!mUseInternalData);
@@ -5147,7 +5147,7 @@ QFont CustomFastTableWidget::cellFont(const int /*row*/, const int /*column*/)
 void CustomFastTableWidget::setCellFont(const int /*row*/, const int /*column*/, const QFont /*font*/)
 {
     // Nothing
-    // If you don't use internal data, you need to reimplement this function in your class
+    // If you don't use internal data, you may reimplement this function in your class
 
     FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(!mUseInternalData);
@@ -5164,7 +5164,7 @@ int CustomFastTableWidget::cellTextFlags(const int /*row*/, const int /*column*/
 void CustomFastTableWidget::setCellTextFlags(const int /*row*/, const int /*column*/, const int /*flags*/)
 {
     // Nothing
-    // If you don't use internal data, you need to reimplement this function in your class
+    // If you don't use internal data, you may reimplement this function in your class
 
     FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(!mUseInternalData);

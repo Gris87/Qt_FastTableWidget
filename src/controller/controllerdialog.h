@@ -206,6 +206,8 @@ private slots:
 
     void on_createCustomTableButton_clicked();
     void on_createFastTableButton_clicked();
+    void on_createCustomTablePersonalButton_clicked();
+    void on_createFastTablePersonalButton_clicked();
 };
 
 #endif // CONTROLLERDIALOG_H

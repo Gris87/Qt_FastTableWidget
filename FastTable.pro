@@ -28,29 +28,34 @@ CONFIG (debug, debug|release) {
     RCC_DIR = release/gen
 }
 
-SOURCES +=  src/main.cpp \
-            src/main/mainwindow.cpp \
-            src/tests/testdialog.cpp \
-            src/tests/testframe.cpp \
-            src/tests/publictablewidget.cpp \
+SOURCES +=  \
+            src/controller/aligndialog.cpp \
             src/controller/controllerdialog.cpp \
+            src/controller/customfasttablepersonal.cpp \
             src/controller/viewdialog.cpp \
-            src/controller/aligndialog.cpp
+            src/main.cpp \
+            src/main/mainwindow.cpp \
+            src/tests/publictablewidget.cpp \
+            src/tests/testdialog.cpp \
+            src/tests/testframe.cpp
 
-HEADERS  += src/main/mainwindow.h \
-            src/tests/testdialog.h \
-            src/tests/testframe.h \
-            src/tests/publictablewidget.h \
+HEADERS  += \
+            src/controller/aligndialog.h \
             src/controller/controllerdialog.h \
+            src/controller/customfasttablepersonal.h \
             src/controller/viewdialog.h \
-            src/controller/aligndialog.h
+            src/main/mainwindow.h \
+            src/tests/publictablewidget.h \
+            src/tests/testdialog.h \
+            src/tests/testframe.h
 
-FORMS    += src/main/mainwindow.ui \
-            src/tests/testdialog.ui \
-            src/tests/testframe.ui \
+FORMS    += \
+            src/controller/aligndialog.ui \
             src/controller/controllerdialog.ui \
             src/controller/viewdialog.ui \
-            src/controller/aligndialog.ui
+            src/main/mainwindow.ui \
+            src/tests/testdialog.ui \
+            src/tests/testframe.ui
 
 OTHER_FILES += \
-    TODO.txt
+            TODO.txt
