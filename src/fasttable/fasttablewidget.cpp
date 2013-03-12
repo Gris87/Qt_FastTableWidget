@@ -377,16 +377,16 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
     QColor  *aBorderColor;
     QColor  *aTextColor;
     QString *aText;
-    QString aVerticalText;
+    QString aTextString;
     QFont   *aFont;
     QFont   aTextFont;
     int     textFlags;
 
     QPalette aPalette=palette();
 
-    QBrush aDefaultBackgroundBrush=aPalette.base();
+    QBrush aDefaultBackgroundBrush=backgroundBrush(row, column);
     QBrush aAlternateBackgroundBrush=aPalette.alternateBase();
-    QColor aDefaultForegroundColor=aPalette.color(QPalette::Text);
+    QColor aDefaultForegroundColor=foregroundColor(row, column);
     QBrush aSelectionBrush=aPalette.highlight();
     QColor aSelectionTextColor=aPalette.color(QPalette::HighlightedText);
 
@@ -400,8 +400,6 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
             FASTTABLE_ASSERT(column>=0 && column<mBackgroundBrushes->at(row).length());
             FASTTABLE_ASSERT(row>=0 && row<mForegroundColors->length());
             FASTTABLE_ASSERT(column>=0 && column<mForegroundColors->at(row).length());
-            FASTTABLE_ASSERT(row>=0 && row<mData->length());
-            FASTTABLE_ASSERT(column>=0 && column<mData->at(row).length());
             FASTTABLE_ASSERT(row>=0 && row<mCellFonts->length());
             FASTTABLE_ASSERT(column>=0 && column<mCellFonts->at(row).length());
             FASTTABLE_ASSERT(row>=0 && row<mCellTextFlags->length());
@@ -449,7 +447,8 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
                 aBorderColor=0;
             }
 
-            aText=&(*mData)[row][column];
+            aTextString=text(row, column);
+            aText=&aTextString;
 
             aFont=mCellFonts->at(row).at(column);
 
@@ -714,8 +713,8 @@ void FastTableWidget::paintCell(QPainter &painter, const int x, const int y, con
 
             if (*aText=="")
             {
-                aVerticalText=QString::number(row+1);
-                aText=&aVerticalText;
+                aTextString=QString::number(row+1);
+                aText=&aTextString;
             }
 
             aFont=mVerticalHeader_CellFonts->at(row).at(column);
@@ -1759,7 +1758,7 @@ void FastTableWidget::insertColumn(int column)
 
     CustomFastTableWidget::insertColumn(column);
 
-    for (int i=0; i<mData->length(); ++i)
+    for (int i=0; i<mRowHeights->length(); ++i)
     {
         FASTTABLE_ASSERT(column>=0 && column<=mBackgroundBrushes->at(i).length());
         FASTTABLE_ASSERT(column>=0 && column<=mForegroundColors->at(i).length());
@@ -1780,7 +1779,7 @@ void FastTableWidget::insertColumn(int column)
         (*mCellMergeParentColumn)[i].insert(column, -1);
     }
 
-    for (int i=0; i<mHorizontalHeader_Data->length(); ++i)
+    for (int i=0; i<mHorizontalHeader_RowHeights->length(); ++i)
     {
         FASTTABLE_ASSERT(column>=0 && column<=mHorizontalHeader_BackgroundBrushes->at(i).length());
         FASTTABLE_ASSERT(column>=0 && column<=mHorizontalHeader_ForegroundColors->at(i).length());
@@ -1973,7 +1972,7 @@ void FastTableWidget::removeColumn(int column)
         }
     }
 
-    for (int i=0; i<mData->length(); ++i)
+    for (int i=0; i<mRowHeights->length(); ++i)
     {
         FASTTABLE_ASSERT(column>=0 && column<mBackgroundBrushes->at(i).length());
         FASTTABLE_ASSERT(column>=0 && column<mForegroundColors->at(i).length());
@@ -2009,7 +2008,7 @@ void FastTableWidget::removeColumn(int column)
         (*mCellMergeParentColumn)[i].removeAt(column);
     }
 
-    for (int i=0; i<mHorizontalHeader_Data->length(); ++i)
+    for (int i=0; i<mHorizontalHeader_RowHeights->length(); ++i)
     {
         FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_BackgroundBrushes->at(i).length());
         FASTTABLE_ASSERT(column>=0 && column<mHorizontalHeader_ForegroundColors->at(i).length());
@@ -2231,7 +2230,7 @@ void FastTableWidget::verticalHeader_InsertColumn(int column)
 
     CustomFastTableWidget::verticalHeader_InsertColumn(column);
 
-    for (int i=0; i<mData->length(); ++i)
+    for (int i=0; i<mRowHeights->length(); ++i)
     {
         FASTTABLE_ASSERT(column>=0 && column<=mVerticalHeader_BackgroundBrushes->at(i).length());
         FASTTABLE_ASSERT(column>=0 && column<=mVerticalHeader_ForegroundColors->at(i).length());
@@ -2343,7 +2342,7 @@ void FastTableWidget::verticalHeader_RemoveColumn(int column)
         }
     }
 
-    for (int i=0; i<mData->length(); ++i)
+    for (int i=0; i<mRowHeights->length(); ++i)
     {
         FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_BackgroundBrushes->at(i).length());
         FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_ForegroundColors->at(i).length());
@@ -2389,6 +2388,8 @@ QBrush FastTableWidget::backgroundBrush(const int row, const int column)
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
+    // If you don't use internal data, you have to reimplement this function in your class
+    FASTTABLE_ASSERT(mUseInternalData);
     FASTTABLE_ASSERT(row>=0 && row<mBackgroundBrushes->length());
     FASTTABLE_ASSERT(column>=0 && column<mBackgroundBrushes->at(row).length());
 
@@ -2417,6 +2418,8 @@ void FastTableWidget::setBackgroundBrush(const int row, const int column, const 
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
+    // If you don't use internal data, you may reimplement this function in your class
+    FASTTABLE_ASSERT(mUseInternalData);
     FASTTABLE_ASSERT(row>=0 && row<mBackgroundBrushes->length());
     FASTTABLE_ASSERT(column>=0 && column<mBackgroundBrushes->at(row).length());
 
@@ -2523,6 +2526,8 @@ QColor FastTableWidget::foregroundColor(const int row, const int column)
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
+    // If you don't use internal data, you have to reimplement this function in your class
+    FASTTABLE_ASSERT(mUseInternalData);
     FASTTABLE_ASSERT(row>=0 && row<mForegroundColors->length());
     FASTTABLE_ASSERT(column>=0 && column<mForegroundColors->at(row).length());
 
@@ -2543,6 +2548,8 @@ void FastTableWidget::setForegroundColor(const int row, const int column, const 
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
+    // If you don't use internal data, you may reimplement this function in your class
+    FASTTABLE_ASSERT(mUseInternalData);
     FASTTABLE_ASSERT(row>=0 && row<mForegroundColors->length());
     FASTTABLE_ASSERT(column>=0 && column<mForegroundColors->at(row).length());
 
@@ -2647,6 +2654,9 @@ void FastTableWidget::verticalHeader_SetForegroundColor(const int row, const int
 QFont FastTableWidget::cellFont(const int row, const int column)
 {
     FASTTABLE_DEBUG;
+
+    // If you don't use internal data, you have to reimplement this function in your class
+    FASTTABLE_ASSERT(mUseInternalData);
     FASTTABLE_ASSERT(row>=0 && row<mCellFonts->length());
     FASTTABLE_ASSERT(column>=0 && column<mCellFonts->at(row).length());
 
@@ -2663,6 +2673,8 @@ void FastTableWidget::setCellFont(const int row, const int column, const QFont f
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
+    // If you don't use internal data, you may reimplement this function in your class
+    FASTTABLE_ASSERT(mUseInternalData);
     FASTTABLE_ASSERT(row>=0 && row<mCellFonts->length());
     FASTTABLE_ASSERT(column>=0 && column<mCellFonts->at(row).length());
 
@@ -2755,6 +2767,9 @@ void FastTableWidget::verticalHeader_SetCellFont(const int row, const int column
 int FastTableWidget::cellTextFlags(const int row, const int column)
 {
     FASTTABLE_DEBUG;
+
+    // If you don't use internal data, you have to reimplement this function in your class
+    FASTTABLE_ASSERT(mUseInternalData);
     FASTTABLE_ASSERT(row>=0 && row<mCellTextFlags->length());
     FASTTABLE_ASSERT(column>=0 && column<mCellTextFlags->at(row).length());
 
@@ -2766,6 +2781,8 @@ void FastTableWidget::setCellTextFlags(const int row, const int column, const in
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
+    // If you don't use internal data, you may reimplement this function in your class
+    FASTTABLE_ASSERT(mUseInternalData);
     FASTTABLE_ASSERT(row>=0 && row<mCellTextFlags->length());
     FASTTABLE_ASSERT(column>=0 && column<mCellTextFlags->at(row).length());
 
