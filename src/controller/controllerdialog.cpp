@@ -8,6 +8,7 @@
 
 #include "aligndialog.h"
 #include "customfasttablepersonal.h"
+#include "fasttablepersonal.h"
 #include "viewdialog.h"
 #include "../fasttable/fasttablewidget.h"
 #include "../tests/publictablewidget.h"
@@ -2628,134 +2629,68 @@ void ControllerDialog::tableContextMenuRequested(QPoint /*pos*/)
     contextMenu->show();
 }
 
+#define CREATE_FAST_TABLE(aClassName, aUseInternalData, aFastTableControl) \
+    mFastTableWidget=new aClassName(this); \
+    ui->fastTableLayout->addWidget(mFastTableWidget); \
+\
+    ui->defaultWidthSpinBox->setValue(100); \
+    ui->defaultHeightSpinBox->setValue(30); \
+\
+    ui->rowCountSpinBox->setValue(0); \
+    ui->columnCountSpinBox->setValue(0); \
+    ui->horizontalHeaderRowCountSpinBox->setValue(0); \
+    ui->verticalHeaderColumnCountSpinBox->setValue(0); \
+\
+    ui->rowCountSpinBox->setValue(100); \
+    ui->columnCountSpinBox->setValue(10); \
+    ui->horizontalHeaderRowCountSpinBox->setValue(1); \
+    ui->verticalHeaderColumnCountSpinBox->setValue(1); \
+\
+    ui->alternatingRowColorsCheckBox->setChecked(mFastTableWidget->alternatingRowColors()); \
+\
+    if (aUseInternalData) \
+    { \
+        for (int i=0; i<mFastTableWidget->rowCount(); ++i) \
+        { \
+            for (int j=0; j<mFastTableWidget->columnCount(); ++j) \
+            { \
+                mFastTableWidget->setText(i, j, "C_"+QString::number(i)+"_"+QString::number(j)); \
+            } \
+        } \
+    } \
+\
+    for (int i=0; i<mFastTableWidget->columnCount(); ++i) \
+    { \
+        mFastTableWidget->horizontalHeader_SetText(i, "Header_"+QString::number(i)); \
+    } \
+\
+    mFastTableWidget->setContextMenuPolicy(Qt::CustomContextMenu); \
+    connect(mFastTableWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(tableContextMenuRequested(QPoint))); \
+\
+    ui->textButton->setEnabled(aUseInternalData); \
+    ui->textViewButton->setEnabled(aUseInternalData); \
+    ui->fastTableControlWidget->setVisible(aFastTableControl); \
+\
+    setStyleButtonsFlat(); \
+\
+    ui->mainStackedWidget->setCurrentIndex(0);
+
 void ControllerDialog::on_createCustomTableButton_clicked()
 {
-    mFastTableWidget=new CustomFastTableWidget(this);
-    ui->fastTableLayout->addWidget(mFastTableWidget);
-
-    ui->defaultWidthSpinBox->setValue(100);
-    ui->defaultHeightSpinBox->setValue(30);
-
-    ui->rowCountSpinBox->setValue(0);
-    ui->columnCountSpinBox->setValue(0);
-    ui->horizontalHeaderRowCountSpinBox->setValue(0);
-    ui->verticalHeaderColumnCountSpinBox->setValue(0);
-
-    ui->rowCountSpinBox->setValue(100);
-    ui->columnCountSpinBox->setValue(10);
-    ui->horizontalHeaderRowCountSpinBox->setValue(1);
-    ui->verticalHeaderColumnCountSpinBox->setValue(1);
-
-    ui->alternatingRowColorsCheckBox->setChecked(mFastTableWidget->alternatingRowColors());
-
-    for (int i=0; i<mFastTableWidget->rowCount(); ++i)
-    {
-        for (int j=0; j<mFastTableWidget->columnCount(); ++j)
-        {
-            mFastTableWidget->setText(i, j, "C_"+QString::number(i)+"_"+QString::number(j));
-        }
-    }
-
-    for (int i=0; i<mFastTableWidget->columnCount(); ++i)
-    {
-        mFastTableWidget->horizontalHeader_SetText(i, "Header_"+QString::number(i));
-    }
-
-    mFastTableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(mFastTableWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(tableContextMenuRequested(QPoint)));
-
-    ui->textButton->setEnabled(true);
-    ui->textViewButton->setEnabled(true);
-    ui->fastTableControlWidget->setVisible(false);
-
-    setStyleButtonsFlat();
-
-    ui->mainStackedWidget->setCurrentIndex(0);
+    CREATE_FAST_TABLE(CustomFastTableWidget,   true,  false);
 }
 
 void ControllerDialog::on_createFastTableButton_clicked()
 {
-    mFastTableWidget=new FastTableWidget(this);
-    ui->fastTableLayout->addWidget(mFastTableWidget);
-
-    ui->defaultWidthSpinBox->setValue(100);
-    ui->defaultHeightSpinBox->setValue(30);
-
-    ui->rowCountSpinBox->setValue(0);
-    ui->columnCountSpinBox->setValue(0);
-    ui->horizontalHeaderRowCountSpinBox->setValue(0);
-    ui->verticalHeaderColumnCountSpinBox->setValue(0);
-
-    ui->rowCountSpinBox->setValue(100);
-    ui->columnCountSpinBox->setValue(10);
-    ui->horizontalHeaderRowCountSpinBox->setValue(1);
-    ui->verticalHeaderColumnCountSpinBox->setValue(1);
-
-    ui->alternatingRowColorsCheckBox->setChecked(mFastTableWidget->alternatingRowColors());
-
-    for (int i=0; i<mFastTableWidget->rowCount(); ++i)
-    {
-        for (int j=0; j<mFastTableWidget->columnCount(); ++j)
-        {
-            mFastTableWidget->setText(i, j, "C_"+QString::number(i)+"_"+QString::number(j));
-        }
-    }
-
-    for (int i=0; i<mFastTableWidget->columnCount(); ++i)
-    {
-        mFastTableWidget->horizontalHeader_SetText(i, "Header_"+QString::number(i));
-    }
-
-    mFastTableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(mFastTableWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(tableContextMenuRequested(QPoint)));
-
-    ui->textButton->setEnabled(true);
-    ui->textViewButton->setEnabled(true);
-    ui->fastTableControlWidget->setVisible(true);
-
-    setStyleButtonsFlat();
-
-    ui->mainStackedWidget->setCurrentIndex(0);
+    CREATE_FAST_TABLE(FastTableWidget,         true,  true);
 }
 
 void ControllerDialog::on_createCustomTablePersonalButton_clicked()
 {
-    mFastTableWidget=new CustomFastTablePersonal(this);
-    ui->fastTableLayout->addWidget(mFastTableWidget);
-
-    ui->defaultWidthSpinBox->setValue(100);
-    ui->defaultHeightSpinBox->setValue(30);
-
-    ui->rowCountSpinBox->setValue(0);
-    ui->columnCountSpinBox->setValue(0);
-    ui->horizontalHeaderRowCountSpinBox->setValue(0);
-    ui->verticalHeaderColumnCountSpinBox->setValue(0);
-
-    ui->rowCountSpinBox->setValue(100);
-    ui->columnCountSpinBox->setValue(10);
-    ui->horizontalHeaderRowCountSpinBox->setValue(1);
-    ui->verticalHeaderColumnCountSpinBox->setValue(1);
-
-    ui->alternatingRowColorsCheckBox->setChecked(mFastTableWidget->alternatingRowColors());
-
-    for (int i=0; i<mFastTableWidget->columnCount(); ++i)
-    {
-        mFastTableWidget->horizontalHeader_SetText(i, "Header_"+QString::number(i));
-    }
-
-    mFastTableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(mFastTableWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(tableContextMenuRequested(QPoint)));
-
-    ui->textButton->setEnabled(false);
-    ui->textViewButton->setEnabled(false);
-    ui->fastTableControlWidget->setVisible(false);
-
-    setStyleButtonsFlat();
-
-    ui->mainStackedWidget->setCurrentIndex(0);
+    CREATE_FAST_TABLE(CustomFastTablePersonal, false, false);
 }
 
 void ControllerDialog::on_createFastTablePersonalButton_clicked()
 {
-
+    CREATE_FAST_TABLE(FastTablePersonal,       false, true);
 }

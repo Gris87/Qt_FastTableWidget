@@ -32,6 +32,7 @@ SOURCES +=  \
             src/controller/aligndialog.cpp \
             src/controller/controllerdialog.cpp \
             src/controller/customfasttablepersonal.cpp \
+            src/controller/fasttablepersonal.cpp \
             src/controller/viewdialog.cpp \
             src/main.cpp \
             src/main/mainwindow.cpp \
@@ -43,6 +44,7 @@ HEADERS  += \
             src/controller/aligndialog.h \
             src/controller/controllerdialog.h \
             src/controller/customfasttablepersonal.h \
+            src/controller/fasttablepersonal.h \
             src/controller/viewdialog.h \
             src/main/mainwindow.h \
             src/tests/publictablewidget.h \
