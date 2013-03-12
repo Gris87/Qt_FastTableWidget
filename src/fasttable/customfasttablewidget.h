@@ -57,6 +57,7 @@ public:
     typedef void (*DrawFunction)(QPainter &painter, const int x, const int y, const int width, const int height, const bool headerPressed, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor);
 
     explicit CustomFastTableWidget(QWidget *parent = 0);
+    explicit CustomFastTableWidget(const bool aUseInternalData, QWidget *parent = 0);
     ~CustomFastTableWidget();
 
     virtual void clear();
@@ -226,6 +227,8 @@ public:
     bool atTopLeftCorner(const int x, const int y);
 
 protected:
+    bool mUseInternalData;
+
     Style mStyle;
 
     DrawFunction mDrawCellFunction;
@@ -311,6 +314,7 @@ protected:
     QTimer mMouseHoldTimer;
     QMouseEvent mMouseEvent;
 
+    void init(const bool aUseInternalData);
     void createLists();
     void deleteLists();
 

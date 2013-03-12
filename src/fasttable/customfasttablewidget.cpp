@@ -7,6 +7,41 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
+    init(true);
+
+    FASTTABLE_END_PROFILE;
+}
+
+CustomFastTableWidget::CustomFastTableWidget(const bool aUseInternalData, QWidget *parent) :
+    QAbstractScrollArea(parent),
+    mMouseEvent(QEvent::MouseMove, QPoint(0, 0), Qt::NoButton, Qt::NoButton, Qt::NoModifier)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    init(aUseInternalData);
+
+    FASTTABLE_END_PROFILE;
+}
+
+CustomFastTableWidget::~CustomFastTableWidget()
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    clear();
+    deleteLists();
+
+    FASTTABLE_END_PROFILE;
+}
+
+void CustomFastTableWidget::init(const bool aUseInternalData)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    mUseInternalData=aUseInternalData;
+
     createLists();
 
     mStyle=StyleSimple;
@@ -85,17 +120,6 @@ CustomFastTableWidget::CustomFastTableWidget(QWidget *parent) :
 
     connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(scrollBarValueChanged(int)));
     connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(scrollBarValueChanged(int)));
-
-    FASTTABLE_END_PROFILE;
-}
-
-CustomFastTableWidget::~CustomFastTableWidget()
-{
-    FASTTABLE_DEBUG;
-    FASTTABLE_START_PROFILE;
-
-    clear();
-    deleteLists();
 
     FASTTABLE_END_PROFILE;
 }

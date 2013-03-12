@@ -11,6 +11,7 @@ class FastTableWidget : public CustomFastTableWidget
 
 public:
     explicit FastTableWidget(QWidget *parent = 0);
+    explicit FastTableWidget(const bool aUseInternalData, QWidget *parent = 0);
     ~FastTableWidget();
 
     void clear();

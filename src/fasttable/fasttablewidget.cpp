@@ -11,6 +11,17 @@ FastTableWidget::FastTableWidget(QWidget *parent) :
     FASTTABLE_END_PROFILE;
 }
 
+FastTableWidget::FastTableWidget(const bool aUseInternalData, QWidget *parent) :
+    CustomFastTableWidget(aUseInternalData, parent)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    createLists();
+
+    FASTTABLE_END_PROFILE;
+}
+
 FastTableWidget::~FastTableWidget()
 {
     FASTTABLE_DEBUG;
