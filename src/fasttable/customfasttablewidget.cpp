@@ -1451,12 +1451,24 @@ void CustomFastTableWidget::selectRangeForHandlers(int resX, int resY)
     int lastMaxX=qMax(mCurrentColumn, mLastX);
     int lastMaxY=qMax(mCurrentRow, mLastY);
 
-    FASTTABLE_ASSERT(lastMaxY-lastMinY+1==mMouseSelectedCells->length());
+    // Do not process mouse selection if selection was changed programmatically during mouse button holding
+    {
+        if (lastMaxY-lastMinY+1!=mMouseSelectedCells->length())
+        {
+            return;
+        }
+
+        for (int i=lastMinY; i<=lastMaxY; i++)
+        {
+            if (lastMaxX-lastMinX+1!=mMouseSelectedCells->at(i-lastMinY).length())
+            {
+                return;
+            }
+        }
+    }
 
     for (int i=lastMinY; i<=lastMaxY; i++)
     {
-        FASTTABLE_ASSERT(lastMaxX-lastMinX+1==mMouseSelectedCells->at(i-lastMinY).length());
-
         for (int j=lastMinX; j<=lastMaxX; j++)
         {
             setCellSelected(i, j, mMouseSelectedCells->at(i-lastMinY).at(j-lastMinX));
