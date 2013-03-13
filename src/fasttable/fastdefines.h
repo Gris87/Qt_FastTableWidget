@@ -127,6 +127,8 @@
 #define FASTTABLE_DEFAULT_TEXT_FLAG        Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap
 #define FASTTABLE_HEADER_DEFAULT_TEXT_FLAG Qt::AlignCenter | Qt::TextWordWrap
 
+#define FASTTABLE_TEXT_MARGIN 4
+
 #define FASTTABLE_MOUSE_HOLD_SCROLL_SPEED 15
 
 #define FASTTABLE_MOUSE_RESIZE_THRESHOLD 3

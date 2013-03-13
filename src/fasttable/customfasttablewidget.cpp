@@ -2116,11 +2116,11 @@ void CustomFastTableWidget::paintCell(QPainter &painter, const int x, const int 
         (*mDrawHeaderCellFunction)(painter, x, y, width, height, headerPressed, aGridColor, aBackgroundBrush, aBorderColor);
     }
 
-    if (width>8 && height>8 && aText)
+    if (width>FASTTABLE_TEXT_MARGIN*2 && height>FASTTABLE_TEXT_MARGIN*2 && aText)
     {
         painter.setPen(QPen(*aTextColor));
         painter.setFont(*aFont);
-        painter.drawText(x+4, y+4, width-8, height-8, aTextFlags, *aText);
+        painter.drawText(x+FASTTABLE_TEXT_MARGIN, y+FASTTABLE_TEXT_MARGIN, width-FASTTABLE_TEXT_MARGIN*2, height-FASTTABLE_TEXT_MARGIN*2, aTextFlags, *aText);
     }
 
     FASTTABLE_FREQUENT_END_PROFILE;
