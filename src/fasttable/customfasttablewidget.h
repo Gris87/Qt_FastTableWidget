@@ -47,7 +47,6 @@ class CustomFastTableWidget : public QAbstractScrollArea
     Q_PROPERTY(QColor  verticalHeader_CellBorderColor          READ verticalHeader_CellBorderColor          WRITE verticalHeader_SetCellBorderColor)
 
 public:
-
     Q_ENUMS(DrawComponent Style MouseLocation)
 
     enum DrawComponent {DrawCell, DrawHorizontalHeaderCell, DrawVerticalHeaderCell, DrawTopLeftCorner};
@@ -59,6 +58,9 @@ public:
     explicit CustomFastTableWidget(QWidget *parent = 0);
     explicit CustomFastTableWidget(const bool aUseInternalData, QWidget *parent = 0);
     ~CustomFastTableWidget();
+
+    inline bool updatesEnabled() const;
+    void setUpdatesEnabled(bool enable);
 
     virtual void clear();
 
@@ -153,16 +155,16 @@ public:
     void setDefaultHeight(quint16 height);
 
     quint16 columnWidth(const int column);
-    void setColumnWidth(const int column, quint16 width);
+    void setColumnWidth(const int column, quint16 width, bool forceUpdate=true);
 
     quint16 rowHeight(const int row);
-    void setRowHeight(const int row, quint16 height);
+    void setRowHeight(const int row, quint16 height, bool forceUpdate=true);
 
     quint16 verticalHeader_ColumnWidth(const int column);
-    void verticalHeader_SetColumnWidth(const int column, quint16 width);
+    void verticalHeader_SetColumnWidth(const int column, quint16 width, bool forceUpdate=true);
 
     quint16 horizontalHeader_RowHeight(const int row);
-    void horizontalHeader_SetRowHeight(const int row, quint16 height);
+    void horizontalHeader_SetRowHeight(const int row, quint16 height, bool forceUpdate=true);
 
     int totalWidth();
     int totalHeight();
@@ -170,16 +172,21 @@ public:
     int horizontalHeader_TotalHeight();
 
     bool columnVisible(const int column);
-    void setColumnVisible(const int column, bool visible);
+    void setColumnVisible(const int column, bool visible, bool forceUpdate=true);
 
     bool rowVisible(const int row);
-    void setRowVisible(const int row, bool visible);
+    void setRowVisible(const int row, bool visible, bool forceUpdate=true);
 
     bool verticalHeader_ColumnVisible(const int column);
-    void verticalHeader_SetColumnVisible(const int column, bool visible);
+    void verticalHeader_SetColumnVisible(const int column, bool visible, bool forceUpdate=true);
 
     bool horizontalHeader_RowVisible(const int row);
-    void horizontalHeader_SetRowVisible(const int row, bool visible);
+    void horizontalHeader_SetRowVisible(const int row, bool visible, bool forceUpdate=true);
+
+    void updateOffsetsX(const int fromIndex=0);
+    void updateOffsetsY(const int fromIndex=0);
+    void verticalHeader_UpdateOffsetsX(const int fromIndex=0);
+    void horizontalHeader_UpdateOffsetsY(const int fromIndex=0);
 
     QRect visibleRange();
     QRect horizontalHeader_VisibleRange();

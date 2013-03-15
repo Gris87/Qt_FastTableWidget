@@ -184,6 +184,16 @@ void CustomFastTableWidget::deleteLists()
     delete mMouseSelectedCells;
 }
 
+bool CustomFastTableWidget::updatesEnabled() const
+{
+    return viewport()->updatesEnabled();
+}
+
+void CustomFastTableWidget::setUpdatesEnabled(bool enable)
+{
+    viewport()->setUpdatesEnabled(enable);
+}
+
 void CustomFastTableWidget::keyPressEvent(QKeyEvent *event)
 {
     FASTTABLE_FREQUENT_DEBUG;
@@ -4388,7 +4398,7 @@ quint16 CustomFastTableWidget::columnWidth(const int column)
     }
 }
 
-void CustomFastTableWidget::setColumnWidth(const int column, quint16 width)
+void CustomFastTableWidget::setColumnWidth(const int column, quint16 width, bool forceUpdate)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
@@ -4416,18 +4426,22 @@ void CustomFastTableWidget::setColumnWidth(const int column, quint16 width)
 
         FASTTABLE_ASSERT(mTotalWidth>=0);
 
-        for (int i=column+1; i<mColumnCount; ++i)
+        // If you don't use forceUpdate you need to use updateOffsetsX later
+        if (forceUpdate)
         {
-            FASTTABLE_ASSERT(i<mOffsetX->length());
+            for (int i=column+1; i<mColumnCount; ++i)
+            {
+                FASTTABLE_ASSERT(i<mOffsetX->length());
 
-            (*mOffsetX)[i]+=aDiff;
+                (*mOffsetX)[i]+=aDiff;
 
-            FASTTABLE_ASSERT(mOffsetX->at(i)>=0);
+                FASTTABLE_ASSERT(mOffsetX->at(i)>=0);
+            }
+
+            updateSizes();
+
+            viewport()->update();
         }
-
-        updateSizes();
-
-        viewport()->update();
     }
 
     FASTTABLE_END_PROFILE;
@@ -4448,7 +4462,7 @@ quint16 CustomFastTableWidget::rowHeight(const int row)
     }
 }
 
-void CustomFastTableWidget::setRowHeight(const int row, quint16 height)
+void CustomFastTableWidget::setRowHeight(const int row, quint16 height, bool forceUpdate)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
@@ -4476,18 +4490,22 @@ void CustomFastTableWidget::setRowHeight(const int row, quint16 height)
 
         FASTTABLE_ASSERT(mTotalHeight>=0);
 
-        for (int i=row+1; i<mRowCount; ++i)
+        // If you don't use forceUpdate you need to use updateOffsetsY later
+        if (forceUpdate)
         {
-            FASTTABLE_ASSERT(i<mOffsetY->length());
+            for (int i=row+1; i<mRowCount; ++i)
+            {
+                FASTTABLE_ASSERT(i<mOffsetY->length());
 
-            (*mOffsetY)[i]+=aDiff;
+                (*mOffsetY)[i]+=aDiff;
 
-            FASTTABLE_ASSERT(mOffsetY->at(i)>=0);
+                FASTTABLE_ASSERT(mOffsetY->at(i)>=0);
+            }
+
+            updateSizes();
+
+            viewport()->update();
         }
-
-        updateSizes();
-
-        viewport()->update();
     }
 
     FASTTABLE_END_PROFILE;
@@ -4508,7 +4526,7 @@ quint16 CustomFastTableWidget::verticalHeader_ColumnWidth(const int column)
     }
 }
 
-void CustomFastTableWidget::verticalHeader_SetColumnWidth(const int column, quint16 width)
+void CustomFastTableWidget::verticalHeader_SetColumnWidth(const int column, quint16 width, bool forceUpdate)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
@@ -4538,27 +4556,31 @@ void CustomFastTableWidget::verticalHeader_SetColumnWidth(const int column, quin
         FASTTABLE_ASSERT(mVerticalHeader_TotalWidth>=0);
         FASTTABLE_ASSERT(mTotalWidth>=0);
 
-        for (int i=column+1; i<mVerticalHeader_ColumnCount; ++i)
+        // If you don't use forceUpdate you need to use verticalHeader_UpdateOffsetsX later
+        if (forceUpdate)
         {
-            FASTTABLE_ASSERT(i<mVerticalHeader_OffsetX->length());
+            for (int i=column+1; i<mVerticalHeader_ColumnCount; ++i)
+            {
+                FASTTABLE_ASSERT(i<mVerticalHeader_OffsetX->length());
 
-            (*mVerticalHeader_OffsetX)[i]+=aDiff;
+                (*mVerticalHeader_OffsetX)[i]+=aDiff;
 
-            FASTTABLE_ASSERT(mVerticalHeader_OffsetX->at(i)>=0);
+                FASTTABLE_ASSERT(mVerticalHeader_OffsetX->at(i)>=0);
+            }
+
+            for (int i=0; i<mColumnCount; ++i)
+            {
+                FASTTABLE_ASSERT(i<mOffsetX->length());
+
+                (*mOffsetX)[i]+=aDiff;
+
+                FASTTABLE_ASSERT(mOffsetX->at(i)>=0);
+            }
+
+            updateSizes();
+
+            viewport()->update();
         }
-
-        for (int i=0; i<mColumnCount; ++i)
-        {
-            FASTTABLE_ASSERT(i<mOffsetX->length());
-
-            (*mOffsetX)[i]+=aDiff;
-
-            FASTTABLE_ASSERT(mOffsetX->at(i)>=0);
-        }
-
-        updateSizes();
-
-        viewport()->update();
     }
 
     FASTTABLE_END_PROFILE;
@@ -4579,7 +4601,7 @@ quint16 CustomFastTableWidget::horizontalHeader_RowHeight(const int row)
     }
 }
 
-void CustomFastTableWidget::horizontalHeader_SetRowHeight(const int row, quint16 height)
+void CustomFastTableWidget::horizontalHeader_SetRowHeight(const int row, quint16 height, bool forceUpdate)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
@@ -4609,27 +4631,31 @@ void CustomFastTableWidget::horizontalHeader_SetRowHeight(const int row, quint16
         FASTTABLE_ASSERT(mHorizontalHeader_TotalHeight>=0);
         FASTTABLE_ASSERT(mTotalHeight>=0);
 
-        for (int i=row+1; i<mHorizontalHeader_RowCount; ++i)
+        // If you don't use forceUpdate you need to use horizontalHeader_UpdateOffsetsY later
+        if (forceUpdate)
         {
-            FASTTABLE_ASSERT(i<mHorizontalHeader_OffsetY->length());
+            for (int i=row+1; i<mHorizontalHeader_RowCount; ++i)
+            {
+                FASTTABLE_ASSERT(i<mHorizontalHeader_OffsetY->length());
 
-            (*mHorizontalHeader_OffsetY)[i]+=aDiff;
+                (*mHorizontalHeader_OffsetY)[i]+=aDiff;
 
-            FASTTABLE_ASSERT(mHorizontalHeader_OffsetY->at(i)>=0);
+                FASTTABLE_ASSERT(mHorizontalHeader_OffsetY->at(i)>=0);
+            }
+
+            for (int i=0; i<mRowCount; ++i)
+            {
+                FASTTABLE_ASSERT(i<mOffsetY->length());
+
+                (*mOffsetY)[i]+=aDiff;
+
+                FASTTABLE_ASSERT(mOffsetY->at(i)>=0);
+            }
+
+            updateSizes();
+
+            viewport()->update();
         }
-
-        for (int i=0; i<mRowCount; ++i)
-        {
-            FASTTABLE_ASSERT(i<mOffsetY->length());
-
-            (*mOffsetY)[i]+=aDiff;
-
-            FASTTABLE_ASSERT(mOffsetY->at(i)>=0);
-        }
-
-        updateSizes();
-
-        viewport()->update();
     }
 
     FASTTABLE_END_PROFILE;
@@ -4667,7 +4693,7 @@ bool CustomFastTableWidget::columnVisible(const int column)
     return mColumnWidths->at(column)>=0;
 }
 
-void CustomFastTableWidget::setColumnVisible(const int column, bool visible)
+void CustomFastTableWidget::setColumnVisible(const int column, bool visible, bool forceUpdate)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
@@ -4688,11 +4714,11 @@ void CustomFastTableWidget::setColumnVisible(const int column, bool visible)
                 prevWidth=-10;
             }
 
-            setColumnWidth(column, -prevWidth);
+            setColumnWidth(column, -prevWidth, forceUpdate);
         }
         else
         {
-            setColumnWidth(column, 0);
+            setColumnWidth(column, 0, forceUpdate);
             (*mColumnWidths)[column]=-prevWidth;
         }
     }
@@ -4705,10 +4731,10 @@ bool CustomFastTableWidget::rowVisible(const int row)
     FASTTABLE_DEBUG;
     FASTTABLE_ASSERT(row<mRowHeights->length());
 
-    return mRowHeights->at(row)>=0;
+    return mRowHeights->at(row)>0;
 }
 
-void CustomFastTableWidget::setRowVisible(const int row, bool visible)
+void CustomFastTableWidget::setRowVisible(const int row, bool visible, bool forceUpdate)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
@@ -4729,11 +4755,11 @@ void CustomFastTableWidget::setRowVisible(const int row, bool visible)
                 prevHeight=-10;
             }
 
-            setRowHeight(row, -prevHeight);
+            setRowHeight(row, -prevHeight, forceUpdate);
         }
         else
         {
-            setRowHeight(row, 0);
+            setRowHeight(row, 0, forceUpdate);
             (*mRowHeights)[row]=-prevHeight;
         }
     }
@@ -4749,7 +4775,7 @@ bool CustomFastTableWidget::verticalHeader_ColumnVisible(const int column)
     return mVerticalHeader_ColumnWidths->at(column)>=0;
 }
 
-void CustomFastTableWidget::verticalHeader_SetColumnVisible(const int column, bool visible)
+void CustomFastTableWidget::verticalHeader_SetColumnVisible(const int column, bool visible, bool forceUpdate)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
@@ -4770,11 +4796,11 @@ void CustomFastTableWidget::verticalHeader_SetColumnVisible(const int column, bo
                 prevWidth=-10;
             }
 
-            verticalHeader_SetColumnWidth(column, -prevWidth);
+            verticalHeader_SetColumnWidth(column, -prevWidth, forceUpdate);
         }
         else
         {
-            verticalHeader_SetColumnWidth(column, 0);
+            verticalHeader_SetColumnWidth(column, 0, forceUpdate);
             (*mVerticalHeader_ColumnWidths)[column]=-prevWidth;
         }
     }
@@ -4790,7 +4816,7 @@ bool CustomFastTableWidget::horizontalHeader_RowVisible(const int row)
     return mHorizontalHeader_RowHeights->at(row)>=0;
 }
 
-void CustomFastTableWidget::horizontalHeader_SetRowVisible(const int row, bool visible)
+void CustomFastTableWidget::horizontalHeader_SetRowVisible(const int row, bool visible, bool forceUpdate)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
@@ -4811,16 +4837,144 @@ void CustomFastTableWidget::horizontalHeader_SetRowVisible(const int row, bool v
                 prevHeight=-10;
             }
 
-            horizontalHeader_SetRowHeight(row, -prevHeight);
+            horizontalHeader_SetRowHeight(row, -prevHeight, forceUpdate);
         }
         else
         {
-            horizontalHeader_SetRowHeight(row, 0);
+            horizontalHeader_SetRowHeight(row, 0, forceUpdate);
             (*mHorizontalHeader_RowHeights)[row]=-prevHeight;
         }
     }
 
     FASTTABLE_END_PROFILE;
+}
+
+void CustomFastTableWidget::updateOffsetsX(const int fromIndex)
+{
+    int aCurOffset;
+
+    if (fromIndex==0)
+    {
+        aCurOffset=mVerticalHeader_TotalWidth;
+    }
+    else
+    {
+        aCurOffset=mOffsetX->at(fromIndex);
+    }
+
+    for (int i=fromIndex; i<mColumnCount; ++i)
+    {
+        FASTTABLE_ASSERT(i<mOffsetX->length());
+        FASTTABLE_ASSERT(i<mColumnWidths->length());
+
+        (*mOffsetX)[i]=aCurOffset;
+
+        if (mColumnWidths->at(i)>0)
+        {
+            aCurOffset+=mColumnWidths->at(i);
+        }
+
+        FASTTABLE_ASSERT(mOffsetX->at(i)>=0);
+    }
+
+    updateSizes();
+
+    viewport()->update();
+}
+
+void CustomFastTableWidget::updateOffsetsY(const int fromIndex)
+{
+    int aCurOffset;
+
+    if (fromIndex==0)
+    {
+        aCurOffset=mHorizontalHeader_TotalHeight;
+    }
+    else
+    {
+        aCurOffset=mOffsetY->at(fromIndex);
+    }
+
+    for (int i=fromIndex; i<mRowCount; ++i)
+    {
+        FASTTABLE_ASSERT(i<mOffsetY->length());
+        FASTTABLE_ASSERT(i<mRowHeights->length());
+
+        (*mOffsetY)[i]=aCurOffset;
+
+        if (mRowHeights->at(i)>0)
+        {
+            aCurOffset+=mRowHeights->at(i);
+        }
+
+        FASTTABLE_ASSERT(mOffsetY->at(i)>=0);
+    }
+
+    updateSizes();
+
+    viewport()->update();
+}
+
+void CustomFastTableWidget::verticalHeader_UpdateOffsetsX(const int fromIndex)
+{
+    int aCurOffset;
+
+    if (fromIndex==0)
+    {
+        aCurOffset=0;
+    }
+    else
+    {
+        aCurOffset=mVerticalHeader_OffsetX->at(fromIndex);
+    }
+
+    for (int i=fromIndex; i<mVerticalHeader_ColumnCount; ++i)
+    {
+        FASTTABLE_ASSERT(i<mVerticalHeader_OffsetX->length());
+        FASTTABLE_ASSERT(i<mVerticalHeader_ColumnWidths->length());
+
+        (*mVerticalHeader_OffsetX)[i]=aCurOffset;
+
+        if (mVerticalHeader_ColumnWidths->at(i)>0)
+        {
+            aCurOffset+=mVerticalHeader_ColumnWidths->at(i);
+        }
+
+        FASTTABLE_ASSERT(mVerticalHeader_OffsetX->at(i)>=0);
+    }
+
+    updateOffsetsX();
+}
+
+void CustomFastTableWidget::horizontalHeader_UpdateOffsetsY(const int fromIndex)
+{
+    int aCurOffset;
+
+    if (fromIndex==0)
+    {
+        aCurOffset=0;
+    }
+    else
+    {
+        aCurOffset=mHorizontalHeader_OffsetY->at(fromIndex);
+    }
+
+    for (int i=fromIndex; i<mHorizontalHeader_RowCount; ++i)
+    {
+        FASTTABLE_ASSERT(i<mHorizontalHeader_OffsetY->length());
+        FASTTABLE_ASSERT(i<mHorizontalHeader_RowHeights->length());
+
+        (*mHorizontalHeader_OffsetY)[i]=aCurOffset;
+
+        if (mHorizontalHeader_RowHeights->at(i)>0)
+        {
+            aCurOffset+=mHorizontalHeader_RowHeights->at(i);
+        }
+
+        FASTTABLE_ASSERT(mHorizontalHeader_OffsetY->at(i)>=0);
+    }
+
+    updateOffsetsY();
 }
 
 QRect CustomFastTableWidget::visibleRange()
