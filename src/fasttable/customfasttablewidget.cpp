@@ -3049,6 +3049,8 @@ void CustomFastTableWidget::clear()
 
     viewport()->update();
 
+    emit selectionChanged();
+
     FASTTABLE_END_PROFILE;
 }
 
@@ -3333,41 +3335,60 @@ void CustomFastTableWidget::selectAll()
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
-    mCurSelection->clear();
-
-    QPoint aCellPos;
-
-    for (int i=0; i<mRowCount; ++i)
-    {
-        for (int j=0; j<mColumnCount; ++j)
-        {
-            FASTTABLE_ASSERT(i<mSelectedCells->length());
-            FASTTABLE_ASSERT(j<mSelectedCells->at(i).length());
-
-            aCellPos.setX(j);
-            aCellPos.setY(i);
-
-            mCurSelection->append(aCellPos);
-
-            (*mSelectedCells)[i][j]=true;
-        }
-    }
-
-    for (int i=0; i<mRowCount; ++i)
-    {
-        FASTTABLE_ASSERT(i<mVerticalHeader_SelectedRows->length());
-
-        (*mVerticalHeader_SelectedRows)[i]=mColumnCount;
-    }
+    bool allSelected=true;
 
     for (int i=0; i<mColumnCount; ++i)
     {
         FASTTABLE_ASSERT(i<mHorizontalHeader_SelectedColumns->length());
 
-        (*mHorizontalHeader_SelectedColumns)[i]=mRowCount;
+        if (mHorizontalHeader_SelectedColumns->at(i)!=mRowCount)
+        {
+            allSelected=false;
+            break;
+        }
     }
 
-    viewport()->update();
+    if (!allSelected)
+    {
+        QPoint aCellPos;
+
+        for (int i=0; i<mRowCount; ++i)
+        {
+            for (int j=0; j<mColumnCount; ++j)
+            {
+                FASTTABLE_ASSERT(i<mSelectedCells->length());
+                FASTTABLE_ASSERT(j<mSelectedCells->at(i).length());
+
+                if (!mSelectedCells->at(i).at(j))
+                {
+                    aCellPos.setX(j);
+                    aCellPos.setY(i);
+
+                    mCurSelection->append(aCellPos);
+
+                    (*mSelectedCells)[i][j]=true;
+                }
+            }
+        }
+
+        for (int i=0; i<mRowCount; ++i)
+        {
+            FASTTABLE_ASSERT(i<mVerticalHeader_SelectedRows->length());
+
+            (*mVerticalHeader_SelectedRows)[i]=mColumnCount;
+        }
+
+        for (int i=0; i<mColumnCount; ++i)
+        {
+            FASTTABLE_ASSERT(i<mHorizontalHeader_SelectedColumns->length());
+
+            (*mHorizontalHeader_SelectedColumns)[i]=mRowCount;
+        }
+
+        viewport()->update();
+
+        emit selectionChanged();
+    }
 
     FASTTABLE_END_PROFILE;
 }
@@ -3377,31 +3398,36 @@ void CustomFastTableWidget::unselectAll()
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
-    for (int i=0; i<mCurSelection->length(); ++i)
+    if (mCurSelection->length()>0)
     {
-        FASTTABLE_ASSERT(mCurSelection->at(i).y()<mSelectedCells->length());
-        FASTTABLE_ASSERT(mCurSelection->at(i).x()<mSelectedCells->at(mCurSelection->at(i).y()).length());
+        for (int i=0; i<mCurSelection->length(); ++i)
+        {
+            FASTTABLE_ASSERT(mCurSelection->at(i).y()<mSelectedCells->length());
+            FASTTABLE_ASSERT(mCurSelection->at(i).x()<mSelectedCells->at(mCurSelection->at(i).y()).length());
 
-        (*mSelectedCells)[mCurSelection->at(i).y()][mCurSelection->at(i).x()]=false;
+            (*mSelectedCells)[mCurSelection->at(i).y()][mCurSelection->at(i).x()]=false;
+        }
+
+        mCurSelection->clear();
+
+        for (int i=0; i<mRowCount; ++i)
+        {
+            FASTTABLE_ASSERT(i<mVerticalHeader_SelectedRows->length());
+
+            (*mVerticalHeader_SelectedRows)[i]=0;
+        }
+
+        for (int i=0; i<mColumnCount; ++i)
+        {
+            FASTTABLE_ASSERT(i<mHorizontalHeader_SelectedColumns->length());
+
+            (*mHorizontalHeader_SelectedColumns)[i]=0;
+        }
+
+        viewport()->update();
+
+        emit selectionChanged();
     }
-
-    mCurSelection->clear();
-
-    for (int i=0; i<mRowCount; ++i)
-    {
-        FASTTABLE_ASSERT(i<mVerticalHeader_SelectedRows->length());
-
-        (*mVerticalHeader_SelectedRows)[i]=0;
-    }
-
-    for (int i=0; i<mColumnCount; ++i)
-    {
-        FASTTABLE_ASSERT(i<mHorizontalHeader_SelectedColumns->length());
-
-        (*mHorizontalHeader_SelectedColumns)[i]=0;
-    }
-
-    viewport()->update();
 
     FASTTABLE_END_PROFILE;
 }
@@ -5460,6 +5486,8 @@ void CustomFastTableWidget::setCellSelected(const int row, const int column, con
         }
 
         viewport()->update();
+
+        emit selectionChanged();
     }
 
     FASTTABLE_END_PROFILE;

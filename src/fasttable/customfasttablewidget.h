@@ -377,6 +377,17 @@ protected slots:
     void scrollBarValueChanged(int value);
 
     void mouseHoldTick();
+
+signals:
+    void cellClicked(int row, int column);
+    void cellDoubleClicked(int row, int column);
+    void horizontalHeader_cellClicked(int row, int column);
+    void horizontalHeader_cellDoubleClicked(int row, int column);
+    void verticalHeader_cellClicked(int row, int column);
+    void verticalHeader_cellDoubleClicked(int row, int column);
+
+    void cellChanged(int row, int column);
+    void selectionChanged();
 };
 
 #endif // CUSTOMCustomFastTableWidget_H
