@@ -209,17 +209,24 @@ void CustomFastTableWidget::keyPressEvent(QKeyEvent *event)
         }
         else
         {
-            if (mCurrentRow>0)
+            int aNextRow=mCurrentRow-1;
+
+            while (aNextRow>=0 && !rowVisible(aNextRow))
+            {
+                --aNextRow;
+            }
+
+            if (aNextRow>=0)
             {
                 if (event->modifiers() & Qt::ShiftModifier)
                 {
                     initShiftSelectionForKeyboard();
 
-                    selectRangeForHandlers(mCurrentColumn, mCurrentRow-1);
+                    selectRangeForHandlers(mCurrentColumn, aNextRow);
                 }
                 else
                 {
-                    setCurrentCell(mCurrentRow-1, mCurrentColumn);
+                    setCurrentCell(aNextRow, mCurrentColumn);
 
                     initShiftSelection();
                 }
@@ -239,17 +246,24 @@ void CustomFastTableWidget::keyPressEvent(QKeyEvent *event)
         }
         else
         {
-            if (mCurrentRow<mRowCount-1)
+            int aNextRow=mCurrentRow+1;
+
+            while (aNextRow<mRowCount && !rowVisible(aNextRow))
+            {
+                ++aNextRow;
+            }
+
+            if (aNextRow<mRowCount)
             {
                 if (event->modifiers() & Qt::ShiftModifier)
                 {
                     initShiftSelectionForKeyboard();
 
-                    selectRangeForHandlers(mCurrentColumn, mCurrentRow+1);
+                    selectRangeForHandlers(mCurrentColumn, aNextRow);
                 }
                 else
                 {
-                    setCurrentCell(mCurrentRow+1, mCurrentColumn);
+                    setCurrentCell(aNextRow, mCurrentColumn);
 
                     initShiftSelection();
                 }
@@ -269,17 +283,24 @@ void CustomFastTableWidget::keyPressEvent(QKeyEvent *event)
         }
         else
         {
-            if (mCurrentColumn>0)
+            int aNextColumn=mCurrentColumn-1;
+
+            while (aNextColumn>=0 && !columnVisible(aNextColumn))
+            {
+                --aNextColumn;
+            }
+
+            if (aNextColumn>=0)
             {
                 if (event->modifiers() & Qt::ShiftModifier)
                 {
                     initShiftSelectionForKeyboard();
 
-                    selectRangeForHandlers(mCurrentColumn-1, mCurrentRow);
+                    selectRangeForHandlers(aNextColumn, mCurrentRow);
                 }
                 else
                 {
-                    setCurrentCell(mCurrentRow, mCurrentColumn-1);
+                    setCurrentCell(mCurrentRow, aNextColumn);
 
                     initShiftSelection();
                 }
@@ -299,17 +320,24 @@ void CustomFastTableWidget::keyPressEvent(QKeyEvent *event)
         }
         else
         {
-            if (mCurrentColumn<mColumnCount-1)
+            int aNextColumn=mCurrentColumn+1;
+
+            while (aNextColumn<mColumnCount && !columnVisible(aNextColumn))
+            {
+                ++aNextColumn;
+            }
+
+            if (aNextColumn<mColumnCount)
             {
                 if (event->modifiers() & Qt::ShiftModifier)
                 {
                     initShiftSelectionForKeyboard();
 
-                    selectRangeForHandlers(mCurrentColumn+1, mCurrentRow);
+                    selectRangeForHandlers(aNextColumn, mCurrentRow);
                 }
                 else
                 {
-                    setCurrentCell(mCurrentRow, mCurrentColumn+1);
+                    setCurrentCell(mCurrentRow, aNextColumn);
 
                     initShiftSelection();
                 }
@@ -329,31 +357,39 @@ void CustomFastTableWidget::keyPressEvent(QKeyEvent *event)
         }
         else
         {
-            if (mCurrentRow>0)
+            int aNextRow=mCurrentRow;
+            int aGoodRow;
+            int aCount=0;
+
+            for (int i=0; i<10; ++i)
+            {
+                do
+                {
+                    --aNextRow;
+                } while (aNextRow>=0 && !rowVisible(aNextRow));
+
+                if (aNextRow>=0)
+                {
+                    aGoodRow=aNextRow;
+                    ++aCount;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if (aCount>0)
             {
                 if (event->modifiers() & Qt::ShiftModifier)
                 {
                     initShiftSelectionForKeyboard();
 
-                    if (mCurrentRow>10)
-                    {
-                        selectRangeForHandlers(mCurrentColumn, mCurrentRow-10);
-                    }
-                    else
-                    {
-                        selectRangeForHandlers(mCurrentColumn, 0);
-                    }
+                    selectRangeForHandlers(mCurrentColumn, aGoodRow);
                 }
                 else
                 {
-                    if (mCurrentRow>10)
-                    {
-                        setCurrentCell(mCurrentRow-10, mCurrentColumn);
-                    }
-                    else
-                    {
-                        setCurrentCell(0, mCurrentColumn);
-                    }
+                    setCurrentCell(aGoodRow, mCurrentColumn);
 
                     initShiftSelection();
                 }
@@ -373,31 +409,39 @@ void CustomFastTableWidget::keyPressEvent(QKeyEvent *event)
         }
         else
         {
-            if (mCurrentRow<mRowCount-1)
+            int aNextRow=mCurrentRow;
+            int aGoodRow;
+            int aCount=0;
+
+            for (int i=0; i<10; ++i)
+            {
+                do
+                {
+                    ++aNextRow;
+                } while (aNextRow<mRowCount && !rowVisible(aNextRow));
+
+                if (aNextRow<mRowCount)
+                {
+                    aGoodRow=aNextRow;
+                    ++aCount;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if (aCount>0)
             {
                 if (event->modifiers() & Qt::ShiftModifier)
                 {
                     initShiftSelectionForKeyboard();
 
-                    if (mCurrentRow<mRowCount-10)
-                    {
-                        selectRangeForHandlers(mCurrentColumn, mCurrentRow+10);
-                    }
-                    else
-                    {
-                        selectRangeForHandlers(mCurrentColumn, mRowCount-1);
-                    }
+                    selectRangeForHandlers(mCurrentColumn, aGoodRow);
                 }
                 else
                 {
-                    if (mCurrentRow<mRowCount-10)
-                    {
-                        setCurrentCell(mCurrentRow+10, mCurrentColumn);
-                    }
-                    else
-                    {
-                        setCurrentCell(mRowCount-1, mCurrentColumn);
-                    }
+                    setCurrentCell(aGoodRow, mCurrentColumn);
 
                     initShiftSelection();
                 }
@@ -417,17 +461,27 @@ void CustomFastTableWidget::keyPressEvent(QKeyEvent *event)
         }
         else
         {
-            if (event->modifiers() & Qt::ShiftModifier)
-            {
-                initShiftSelectionForKeyboard();
+            int aNextRow=0;
 
-                selectRangeForHandlers(mCurrentColumn, 0);
+            while (aNextRow<mRowCount && !rowVisible(aNextRow))
+            {
+                ++aNextRow;
             }
-            else
-            {
-                setCurrentCell(0, mCurrentColumn);
 
-                initShiftSelection();
+            if (aNextRow<mRowCount)
+            {
+                if (event->modifiers() & Qt::ShiftModifier)
+                {
+                    initShiftSelectionForKeyboard();
+
+                    selectRangeForHandlers(mCurrentColumn, aNextRow);
+                }
+                else
+                {
+                    setCurrentCell(aNextRow, mCurrentColumn);
+
+                    initShiftSelection();
+                }
             }
         }
 
@@ -444,17 +498,27 @@ void CustomFastTableWidget::keyPressEvent(QKeyEvent *event)
         }
         else
         {
-            if (event->modifiers() & Qt::ShiftModifier)
-            {
-                initShiftSelectionForKeyboard();
+            int aNextRow=mRowCount-1;
 
-                selectRangeForHandlers(mCurrentColumn, mRowCount-1);
+            while (aNextRow>=0 && !rowVisible(aNextRow))
+            {
+                --aNextRow;
             }
-            else
-            {
-                setCurrentCell(mRowCount-1, mCurrentColumn);
 
-                initShiftSelection();
+            if (aNextRow>=0)
+            {
+                if (event->modifiers() & Qt::ShiftModifier)
+                {
+                    initShiftSelectionForKeyboard();
+
+                    selectRangeForHandlers(mCurrentColumn, aNextRow);
+                }
+                else
+                {
+                    setCurrentCell(aNextRow, mCurrentColumn);
+
+                    initShiftSelection();
+                }
             }
         }
 
@@ -477,6 +541,11 @@ void CustomFastTableWidget::keyPressEvent(QKeyEvent *event)
 
             for (int i=aCopyRect.top(); i<=aCopyRect.bottom(); i++)
             {
+                if (!rowVisible(i))
+                {
+                    continue;
+                }
+
                 if (toClipboard!="")
                 {
                     toClipboard.append("\n");
@@ -486,6 +555,11 @@ void CustomFastTableWidget::keyPressEvent(QKeyEvent *event)
 
                 for (int j=aCopyRect.left(); j<=aCopyRect.right(); j++)
                 {
+                    if (!columnVisible(j))
+                    {
+                        continue;
+                    }
+
                     if (aRow!="")
                     {
                         aRow.append("\t");
