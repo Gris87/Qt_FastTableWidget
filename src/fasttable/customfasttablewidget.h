@@ -342,6 +342,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
+    void mouseDoubleClickEvent(QMouseEvent *event);
     void leaveEvent(QEvent *event);
     void resizeEvent(QResizeEvent *event);
     void paintEvent(QPaintEvent *event);
@@ -380,11 +381,20 @@ protected slots:
 
 signals:
     void cellClicked(int row, int column);
+    void cellRightClicked(int row, int column);
     void cellDoubleClicked(int row, int column);
-    void horizontalHeader_cellClicked(int row, int column);
-    void horizontalHeader_cellDoubleClicked(int row, int column);
-    void verticalHeader_cellClicked(int row, int column);
-    void verticalHeader_cellDoubleClicked(int row, int column);
+
+    void horizontalHeader_CellClicked(int row, int column);
+    void horizontalHeader_CellRightClicked(int row, int column);
+    void horizontalHeader_CellDoubleClicked(int row, int column);
+
+    void verticalHeader_CellClicked(int row, int column);
+    void verticalHeader_CellRightClicked(int row, int column);
+    void verticalHeader_CellDoubleClicked(int row, int column);
+
+    void topLeftCornerClicked();
+    void topLeftCornerRightClicked();
+    void topLeftCornerDoubleClicked();
 
     void cellChanged(int row, int column);
     void selectionChanged();

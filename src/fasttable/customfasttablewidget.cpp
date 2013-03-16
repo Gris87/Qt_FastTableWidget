@@ -689,6 +689,8 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
             fillShiftSelection();
 
             selectRangeForHandlers(pos.x(), pos.y());
+
+            emit cellClicked(pos.x(), pos.y());
         }
         else
         {
@@ -736,6 +738,16 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
 
                     setCurrentCell(mLastY, mLastX);
                 }
+            }
+
+            if (event->button()==Qt::LeftButton)
+            {
+                emit cellClicked(pos.y(), pos.x());
+            }
+            else
+            if (event->button()==Qt::RightButton)
+            {
+                emit cellRightClicked(pos.y(), pos.x());
             }
         }
     }
@@ -898,6 +910,16 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                     }
 
                     viewport()->update();
+
+                    if (event->button()==Qt::LeftButton)
+                    {
+                        emit horizontalHeader_CellClicked(pos.y(), pos.x());
+                    }
+                    else
+                    if (event->button()==Qt::RightButton)
+                    {
+                        emit horizontalHeader_CellRightClicked(pos.y(), pos.x());
+                    }
                 }
             }
         }
@@ -1059,6 +1081,16 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                         mMouseSelectedCells->append(aRow);
 
                         viewport()->update();
+
+                        if (event->button()==Qt::LeftButton)
+                        {
+                            emit verticalHeader_CellClicked(pos.y(), pos.x());
+                        }
+                        else
+                        if (event->button()==Qt::RightButton)
+                        {
+                            emit verticalHeader_CellRightClicked(pos.y(), pos.x());
+                        }
                     }
                 }
             }
@@ -1102,6 +1134,16 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                 else
                 {
                     viewport()->update();
+
+                    if (event->button()==Qt::LeftButton)
+                    {
+                        emit topLeftCornerClicked();
+                    }
+                    else
+                    if (event->button()==Qt::RightButton)
+                    {
+                        emit topLeftCornerRightClicked();
+                    }
                 }
             }
         }
@@ -1753,6 +1795,54 @@ void CustomFastTableWidget::mouseReleaseEvent(QMouseEvent *event)
 
     mouseMoveEvent(event);
     QAbstractScrollArea::mouseReleaseEvent(event);
+
+    FASTTABLE_END_PROFILE;
+}
+
+void CustomFastTableWidget::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    if (event->button()==Qt::LeftButton)
+    {
+        int x=event->x();
+        int y=event->y();
+
+        QPoint pos;
+
+        pos=cellAt(x, y);
+
+        if (pos!=QPoint(-1, -1))
+        {
+            emit cellDoubleClicked(pos.y(), pos.x());
+        }
+        else
+        {
+            pos=horizontalHeader_CellAt(x, y);
+
+            if (pos!=QPoint(-1, -1))
+            {
+                emit horizontalHeader_CellDoubleClicked(pos.y(), pos.x());
+            }
+            else
+            {
+                pos=verticalHeader_CellAt(x, y);
+
+                if (pos!=QPoint(-1, -1))
+                {
+                    emit verticalHeader_CellDoubleClicked(pos.y(), pos.x());
+                }
+                else
+                if (atTopLeftCorner(x, y))
+                {
+                    emit topLeftCornerDoubleClicked();
+                }
+            }
+        }
+    }
+
+    QAbstractScrollArea::mouseDoubleClickEvent(event);
 
     FASTTABLE_END_PROFILE;
 }
