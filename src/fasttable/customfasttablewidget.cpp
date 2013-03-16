@@ -3082,6 +3082,9 @@ void CustomFastTableWidget::clear()
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
+    int aOldCurrentRow=mCurrentRow;
+    int aOldCurrentColumn=mCurrentColumn;
+
     mRowCount=0;
     mColumnCount=0;
     mHorizontalHeader_RowCount=0;
@@ -3140,6 +3143,12 @@ void CustomFastTableWidget::clear()
     viewport()->update();
 
     emit selectionChanged();
+
+    if (aOldCurrentRow!=mCurrentRow || aOldCurrentColumn!=mCurrentColumn)
+    {
+        emit currentCellChanged(aOldCurrentRow, aOldCurrentColumn, mCurrentRow, mCurrentColumn);
+        emit cellChanged(mCurrentRow, mCurrentColumn);
+    }
 
     FASTTABLE_END_PROFILE;
 }
@@ -5739,6 +5748,9 @@ void CustomFastTableWidget::setCurrentCell(int row, int column, const bool keepS
         )
        )
     {
+        int aOldCurrentRow=mCurrentRow;
+        int aOldCurrentColumn=mCurrentColumn;
+
         mCurrentRow=row;
         mCurrentColumn=column;
 
@@ -5753,6 +5765,9 @@ void CustomFastTableWidget::setCurrentCell(int row, int column, const bool keepS
         }
 
         viewport()->update();
+
+        emit currentCellChanged(aOldCurrentRow, aOldCurrentColumn, mCurrentRow, mCurrentColumn);
+        emit cellChanged(mCurrentRow, mCurrentColumn);
     }
 
     FASTTABLE_END_PROFILE;

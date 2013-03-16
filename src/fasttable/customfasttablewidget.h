@@ -396,6 +396,7 @@ signals:
     void topLeftCornerRightClicked();
     void topLeftCornerDoubleClicked();
 
+    void currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void cellChanged(int row, int column);
     void selectionChanged();
 };
