@@ -5697,7 +5697,7 @@ QPoint CustomFastTableWidget::cellAt(const int x, const int y)
 
     for (int i=mVisibleLeft; i<=mVisibleRight; ++i)
     {
-        if (x>=offsetX+mOffsetX->at(i) && (mColumnWidths->at(i)<=0 || x<offsetX+mOffsetX->at(i)+mColumnWidths->at(i)))
+        if (x>=offsetX+mOffsetX->at(i) && x<offsetX+mOffsetX->at(i)+mColumnWidths->at(i))
         {
             resX=i;
             break;
@@ -5716,7 +5716,7 @@ QPoint CustomFastTableWidget::cellAt(const int x, const int y)
 
     for (int i=mVisibleTop; i<=mVisibleBottom; ++i)
     {
-        if (y>=offsetY+mOffsetY->at(i) && (mRowHeights->at(i)<=0 || y<offsetY+mOffsetY->at(i)+mRowHeights->at(i)))
+        if (y>=offsetY+mOffsetY->at(i) && y<offsetY+mOffsetY->at(i)+mRowHeights->at(i))
         {
             resY=i;
             break;
@@ -5757,7 +5757,7 @@ QPoint CustomFastTableWidget::horizontalHeader_CellAt(const int x, const int y)
 
     for (int i=mVisibleLeft; i<=mVisibleRight; ++i)
     {
-        if (x>=offsetX+mOffsetX->at(i) && (mColumnWidths->at(i)<=0 || x<offsetX+mOffsetX->at(i)+mColumnWidths->at(i)))
+        if (x>=offsetX+mOffsetX->at(i) && x<offsetX+mOffsetX->at(i)+mColumnWidths->at(i))
         {
             resX=i;
             break;
@@ -5776,7 +5776,7 @@ QPoint CustomFastTableWidget::horizontalHeader_CellAt(const int x, const int y)
 
     for (int i=0; i<=mHorizontalHeader_VisibleBottom; ++i)
     {
-        if (y>=mHorizontalHeader_OffsetY->at(i) && (mHorizontalHeader_RowHeights->at(i)<=0 || y<mHorizontalHeader_OffsetY->at(i)+mHorizontalHeader_RowHeights->at(i)))
+        if (y>=mHorizontalHeader_OffsetY->at(i) && y<mHorizontalHeader_OffsetY->at(i)+mHorizontalHeader_RowHeights->at(i))
         {
             resY=i;
             break;
@@ -5817,7 +5817,7 @@ QPoint CustomFastTableWidget::verticalHeader_CellAt(const int x, const int y)
 
     for (int i=0; i<=mVerticalHeader_VisibleRight; ++i)
     {
-        if (x>=mVerticalHeader_OffsetX->at(i) && (mVerticalHeader_ColumnWidths->at(i)<=0 || x<mVerticalHeader_OffsetX->at(i)+mVerticalHeader_ColumnWidths->at(i)))
+        if (x>=mVerticalHeader_OffsetX->at(i) && x<mVerticalHeader_OffsetX->at(i)+mVerticalHeader_ColumnWidths->at(i))
         {
             resX=i;
             break;
@@ -5836,7 +5836,7 @@ QPoint CustomFastTableWidget::verticalHeader_CellAt(const int x, const int y)
 
     for (int i=mVisibleTop; i<=mVisibleBottom; ++i)
     {
-        if (y>=offsetY+mOffsetY->at(i) && (mRowHeights->at(i)<=0 || y<offsetY+mOffsetY->at(i)+mRowHeights->at(i)))
+        if (y>=offsetY+mOffsetY->at(i) && y<offsetY+mOffsetY->at(i)+mRowHeights->at(i))
         {
             resY=i;
             break;
