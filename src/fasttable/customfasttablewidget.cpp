@@ -5717,21 +5717,63 @@ QPoint CustomFastTableWidget::currentCell()
     return QPoint(mCurrentColumn, mCurrentRow);
 }
 
-void CustomFastTableWidget::setCurrentCell(int row, int column, const bool keepSelection)
+void CustomFastTableWidget::setCurrentCell(const int row, const int column, const bool keepSelection)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
-    if (row<0 || column<0 || row>=mRowCount || column>=mColumnCount)
+    int realRow=row;
+    int realColumn=column;
+
+    if (realRow>=0 && realRow<mRowCount && realColumn>=0 && realColumn<mColumnCount)
     {
-        row=-1;
-        column=-1;
+        if (!rowVisible(realRow))
+        {
+            do
+            {
+                --realRow;
+            } while (realRow>=0 && !rowVisible(realRow));
+
+            if (realRow<0)
+            {
+                realRow=row;
+
+                do
+                {
+                    ++realRow;
+                } while (realRow<mRowCount && !rowVisible(realRow));
+            }
+        }
+
+        if (realRow<mRowCount && !columnVisible(realColumn))
+        {
+            do
+            {
+                --realColumn;
+            } while (realColumn>=0 && !columnVisible(realColumn));
+
+            if (realColumn<0)
+            {
+                realColumn=column;
+
+                do
+                {
+                    ++realColumn;
+                } while (realColumn<mColumnCount && !columnVisible(realColumn));
+            }
+        }
+    }
+
+    if (realRow<0 || realColumn<0 || realRow>=mRowCount || realColumn>=mColumnCount)
+    {
+        realRow=-1;
+        realColumn=-1;
     }
 
     if (
-        mCurrentRow!=row
+        mCurrentRow!=realRow
         ||
-        mCurrentColumn!=column
+        mCurrentColumn!=realColumn
         ||
         (
          !keepSelection
@@ -5740,9 +5782,9 @@ void CustomFastTableWidget::setCurrentCell(int row, int column, const bool keepS
           mCurSelection->length()>1
           ||
           (
-           row>=0
+           realRow>=0
            &&
-           !mSelectedCells->at(row).at(column)
+           !mSelectedCells->at(realRow).at(realColumn)
           )
          )
         )
@@ -5751,16 +5793,16 @@ void CustomFastTableWidget::setCurrentCell(int row, int column, const bool keepS
         int aOldCurrentRow=mCurrentRow;
         int aOldCurrentColumn=mCurrentColumn;
 
-        mCurrentRow=row;
-        mCurrentColumn=column;
+        mCurrentRow=realRow;
+        mCurrentColumn=realColumn;
 
         if (!keepSelection)
         {
             unselectAll();
 
-            if (row>=0)
+            if (realRow>=0)
             {
-                setCellSelected(row, column, true);
+                setCellSelected(realRow, realColumn, true);
             }
         }
 

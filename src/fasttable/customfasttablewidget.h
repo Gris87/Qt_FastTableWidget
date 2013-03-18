@@ -232,7 +232,7 @@ public:
     bool columnHasSelection(const int column);
 
     QPoint currentCell();
-    virtual void setCurrentCell(int row, int column, const bool keepSelection=false);
+    virtual void setCurrentCell(const int row, const int column, const bool keepSelection=false);
 
     int currentRow();
     void setCurrentRow(const int row, const bool keepSelection=false);
