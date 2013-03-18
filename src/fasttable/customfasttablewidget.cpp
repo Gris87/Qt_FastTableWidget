@@ -769,6 +769,8 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                 &&
                 !mShiftPressed
                 &&
+                event->button()==Qt::LeftButton
+                &&
                 (
                  x<offsetX+mOffsetX->at(mLastX)+FASTTABLE_MOUSE_RESIZE_THRESHOLD
                  ||
@@ -803,6 +805,8 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                 !mCtrlPressed
                 &&
                 !mShiftPressed
+                &&
+                event->button()==Qt::LeftButton
                 &&
                 (
                  (
@@ -941,6 +945,8 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                     &&
                     !mShiftPressed
                     &&
+                    event->button()==Qt::LeftButton
+                    &&
                     (
                      (
                       mLastX>0 && x<mVerticalHeader_OffsetX->at(mLastX)+FASTTABLE_MOUSE_RESIZE_THRESHOLD
@@ -966,6 +972,8 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                     !mCtrlPressed
                     &&
                     !mShiftPressed
+                    &&
+                    event->button()==Qt::LeftButton
                     &&
                     (
                      y<offsetY+mOffsetY->at(mLastY)+FASTTABLE_MOUSE_RESIZE_THRESHOLD
@@ -1109,6 +1117,8 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                     &&
                     !mShiftPressed
                     &&
+                    event->button()==Qt::LeftButton
+                    &&
                     x>mVerticalHeader_TotalWidth-FASTTABLE_MOUSE_RESIZE_THRESHOLD
                    )
                 {
@@ -1122,6 +1132,8 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                     !mCtrlPressed
                     &&
                     !mShiftPressed
+                    &&
+                    event->button()==Qt::LeftButton
                     &&
                     y>mHorizontalHeader_TotalHeight-FASTTABLE_MOUSE_RESIZE_THRESHOLD
                    )
@@ -2787,12 +2799,22 @@ void CustomFastTableWidget::updateSizes()
 
         for (int i=0; i<mVerticalHeader_ColumnCount; ++i)
         {
-            aTotalWidth+=verticalHeader_ColumnWidth(i);
+            FASTTABLE_ASSERT(i<mVerticalHeader_ColumnWidths->length());
+
+            if (mVerticalHeader_ColumnWidths->at(i)>0)
+            {
+                aTotalWidth+=mVerticalHeader_ColumnWidths->at(i);
+            }
         }
 
         for (int i=0; i<mColumnCount-1; ++i)
         {
-            aTotalWidth+=columnWidth(i);
+            FASTTABLE_ASSERT(i<mColumnWidths->length());
+
+            if (mColumnWidths->at(i)>0)
+            {
+                aTotalWidth+=mColumnWidths->at(i);
+            }
         }
 
         int aColumnWidth=viewport()->width()-aTotalWidth-1;
@@ -2811,12 +2833,22 @@ void CustomFastTableWidget::updateSizes()
 
         for (int i=0; i<mHorizontalHeader_RowCount; ++i)
         {
-            aTotalHeight+=horizontalHeader_RowHeight(i);
+            FASTTABLE_ASSERT(i<mHorizontalHeader_RowHeights->length());
+
+            if (mHorizontalHeader_RowHeights->at(i)>0)
+            {
+                aTotalHeight+=mHorizontalHeader_RowHeights->at(i);
+            }
         }
 
         for (int i=0; i<mRowCount-1; ++i)
         {
-            aTotalHeight+=rowHeight(i);
+            FASTTABLE_ASSERT(i<mRowHeights->length());
+
+            if (mRowHeights->at(i)>0)
+            {
+                aTotalHeight+=mRowHeights->at(i);
+            }
         }
 
         int aRowHeight=viewport()->height()-aTotalHeight-1;
@@ -4326,7 +4358,11 @@ void CustomFastTableWidget::horizontalHeader_SetStretchLastSection(bool enable)
     FASTTABLE_START_PROFILE;
 
     mHorizontalHeaderStretchLastSection=enable;
-    resize(width(), height());
+
+    if (mHorizontalHeaderStretchLastSection)
+    {
+        updateSizes();
+    }
 
     FASTTABLE_END_PROFILE;
 }
@@ -4343,7 +4379,11 @@ void CustomFastTableWidget::verticalHeader_SetStretchLastSection(bool enable)
     FASTTABLE_START_PROFILE;
 
     mVerticalHeaderStretchLastSection=enable;
-    resize(width(), height());
+
+    if (mVerticalHeaderStretchLastSection)
+    {
+        updateSizes();
+    }
 
     FASTTABLE_END_PROFILE;
 }
