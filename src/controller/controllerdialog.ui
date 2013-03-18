@@ -74,7 +74,7 @@
             <x>0</x>
             <y>0</y>
             <width>387</width>
-            <height>2871</height>
+            <height>2913</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
@@ -500,6 +500,20 @@
             <widget class="QCheckBox" name="alternatingRowColorsCheckBox">
              <property name="text">
               <string>Alternating row colors</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="horizontalStrectCheckBox">
+             <property name="text">
+              <string>HorizontalHeader: stretch last section</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="verticalStrectCheckBox">
+             <property name="text">
+              <string>VerticalHeader: stretch last section</string>
              </property>
             </widget>
            </item>

@@ -56,6 +56,8 @@ private slots:
     void on_deleteHeaderColumnButton_clicked();
     void on_clearButton_clicked();
     void on_alternatingRowColorsCheckBox_toggled(bool checked);
+    void on_horizontalStrectCheckBox_toggled(bool checked);
+    void on_verticalStrectCheckBox_toggled(bool checked);
     void on_selectRowButton_clicked();
     void on_unselectRowButton_clicked();
     void on_selectColumnButton_clicked();

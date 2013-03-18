@@ -313,6 +313,16 @@ void ControllerDialog::on_alternatingRowColorsCheckBox_toggled(bool checked)
     mFastTableWidget->setAlternatingRowColors(checked);
 }
 
+void ControllerDialog::on_horizontalStrectCheckBox_toggled(bool checked)
+{
+    mFastTableWidget->horizontalHeader_SetStretchLastSection(checked);
+}
+
+void ControllerDialog::on_verticalStrectCheckBox_toggled(bool checked)
+{
+    mFastTableWidget->verticalHeader_SetStretchLastSection(checked);
+}
+
 void ControllerDialog::on_selectRowButton_clicked()
 {
     if (mFastTableWidget->rowCount()>0)
@@ -2647,6 +2657,9 @@ void ControllerDialog::tableContextMenuRequested(QPoint /*pos*/)
     ui->verticalHeaderColumnCountSpinBox->setValue(1); \
 \
     ui->alternatingRowColorsCheckBox->setChecked(mFastTableWidget->alternatingRowColors()); \
+\
+    ui->horizontalStrectCheckBox->setChecked(mFastTableWidget->horizontalHeader_StretchLastSection()); \
+    ui->verticalStrectCheckBox->setChecked(mFastTableWidget->verticalHeader_StretchLastSection()); \
 \
     if (aUseInternalData) \
     { \
