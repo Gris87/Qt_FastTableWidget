@@ -782,15 +782,22 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
 
                 if (x<offsetX+mOffsetX->at(mLastX)+FASTTABLE_MOUSE_RESIZE_THRESHOLD)
                 {
-                    mMouseResizeCell--;
+                    int aLastX=mLastX;
 
-                    if (mLastX==0)
+                    while (aLastX>0 && !columnVisible(aLastX-1))
+                    {
+                        --aLastX;
+                    }
+
+                    mMouseResizeCell=mVerticalHeader_ColumnCount+aLastX-1;
+
+                    if (aLastX==0)
                     {
                         mMouseResizeLineX=mVerticalHeader_TotalWidth;
                     }
                     else
                     {
-                        mMouseResizeLineX=mOffsetX->at(mLastX-1)+mColumnWidths->at(mLastX-1);
+                        mMouseResizeLineX=mOffsetX->at(aLastX-1)+mColumnWidths->at(aLastX-1);
                     }
                 }
                 else
@@ -823,12 +830,20 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
 
                 if (y<mHorizontalHeader_OffsetY->at(mLastY)+FASTTABLE_MOUSE_RESIZE_THRESHOLD)
                 {
-                    mMouseResizeCell--;
+                    --mMouseResizeCell;
+
+                    while (mMouseResizeCell>=0 && mHorizontalHeader_RowHeights->at(mMouseResizeCell)<=0)
+                    {
+                        --mMouseResizeCell;
+                    }
                 }
 
-                mMouseResizeLineY=mHorizontalHeader_OffsetY->at(mMouseResizeCell)+mHorizontalHeader_RowHeights->at(mMouseResizeCell);
+                if (mMouseResizeCell>=0)
+                {
+                    mMouseResizeLineY=mHorizontalHeader_OffsetY->at(mMouseResizeCell)+mHorizontalHeader_RowHeights->at(mMouseResizeCell);
 
-                viewport()->update();
+                    viewport()->update();
+                }
             }
             else
             {
@@ -960,12 +975,20 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
 
                     if (x<mVerticalHeader_OffsetX->at(mLastX)+FASTTABLE_MOUSE_RESIZE_THRESHOLD)
                     {
-                        mMouseResizeCell--;
+                        --mMouseResizeCell;
+
+                        while (mMouseResizeCell>=0 && mVerticalHeader_ColumnWidths->at(mMouseResizeCell)<=0)
+                        {
+                            --mMouseResizeCell;
+                        }
                     }
 
-                    mMouseResizeLineX=mVerticalHeader_OffsetX->at(mMouseResizeCell)+mVerticalHeader_ColumnWidths->at(mMouseResizeCell);
+                    if (mMouseResizeCell>=0)
+                    {
+                        mMouseResizeLineX=mVerticalHeader_OffsetX->at(mMouseResizeCell)+mVerticalHeader_ColumnWidths->at(mMouseResizeCell);
 
-                    viewport()->update();
+                        viewport()->update();
+                    }
                 }
                 else
                 if (
@@ -986,15 +1009,22 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
 
                     if (y<offsetY+mOffsetY->at(mLastY)+FASTTABLE_MOUSE_RESIZE_THRESHOLD)
                     {
-                        mMouseResizeCell--;
+                        int aLastY=mLastY;
 
-                        if (mLastY==0)
+                        while (aLastY>0 && !rowVisible(aLastY-1))
+                        {
+                            --aLastY;
+                        }
+
+                        mMouseResizeCell=mHorizontalHeader_RowCount+aLastY-1;
+
+                        if (aLastY==0)
                         {
                             mMouseResizeLineY=mHorizontalHeader_TotalHeight;
                         }
                         else
                         {
-                            mMouseResizeLineY=mOffsetY->at(mLastY-1)+mRowHeights->at(mLastY-1);
+                            mMouseResizeLineY=mOffsetY->at(aLastY-1)+mRowHeights->at(aLastY-1);
                         }
                     }
                     else
@@ -3243,6 +3273,268 @@ void CustomFastTableWidget::unselectColumn(const int column)
     }
 
     FASTTABLE_END_PROFILE;
+}
+
+void CustomFastTableWidget::searchNext(const QString &pattern, const QTableWidget::SelectionBehavior behaviour, const int column)
+{
+    FASTTABLE_ASSERT(behaviour==QTableWidget::SelectItems || behaviour==QTableWidget::SelectRows);
+
+    if (mRowCount<=0 || mColumnCount<=0)
+    {
+        return;
+    }
+
+    if (behaviour==QTableWidget::SelectItems)
+    {
+        int aCurRow=mCurrentRow;
+        int aCurColumn=mCurrentColumn;
+
+        if (aCurRow<0)
+        {
+            aCurRow=0;
+        }
+
+        if (aCurColumn<0)
+        {
+            aCurColumn=0;
+        }
+
+        int aInitRow=aCurRow;
+        int aInitColumn=aCurColumn;
+
+        while (true)
+        {
+            ++aCurColumn;
+
+            if (aCurColumn>=mColumnCount)
+            {
+                aCurColumn=0;
+                ++aCurRow;
+
+                if (aCurRow>=mRowCount)
+                {
+                    aCurRow=0;
+                }
+            }
+
+            if (aCurRow==aInitRow && aCurColumn==aInitColumn)
+            {
+                break;
+            }
+
+            if (
+                rowVisible(aCurRow)
+                &&
+                columnVisible(aCurColumn)
+                &&
+                (
+                 column<0
+                 ||
+                 aCurColumn==column
+                )
+                &&
+                text(aCurRow, aCurColumn).contains(pattern, Qt::CaseInsensitive)
+               )
+            {
+                break;
+            }
+        }
+
+        setCurrentCell(aCurRow, aCurColumn);
+        scrollToCurrentCell();
+    }
+    else
+    {
+        int aCurRow=mCurrentRow;
+
+        if (aCurRow<0)
+        {
+            aCurRow=0;
+        }
+
+        int aInitPos=aCurRow;
+
+        while (true)
+        {
+            ++aCurRow;
+
+            if (aCurRow>=mRowCount)
+            {
+                aCurRow=0;
+            }
+
+            if (aCurRow==aInitPos)
+            {
+                break;
+            }
+
+            if (!rowVisible(aCurRow))
+            {
+                continue;
+            }
+
+            if (column<0)
+            {
+                bool good=false;
+
+                for (int i=0; i<mColumnCount; ++i)
+                {
+                    if (text(aCurRow, i).contains(pattern, Qt::CaseInsensitive))
+                    {
+                        good=true;
+                        break;
+                    }
+                }
+
+                if (good)
+                {
+                    break;
+                }
+            }
+            else
+            {
+                if (text(aCurRow, column).contains(pattern, Qt::CaseInsensitive))
+                {
+                    break;
+                }
+            }
+        }
+
+        setCurrentCell(aCurRow, 0);
+        scrollToCurrentCell();
+        selectRow(aCurRow);
+    }
+}
+
+void CustomFastTableWidget::searchPrevious(const QString &pattern, const QTableWidget::SelectionBehavior behaviour, const int column)
+{
+    FASTTABLE_ASSERT(behaviour==QTableWidget::SelectItems || behaviour==QTableWidget::SelectRows);
+
+    if (mRowCount<=0 || mColumnCount<=0)
+    {
+        return;
+    }
+
+    if (behaviour==QTableWidget::SelectItems)
+    {
+        int aCurRow=mCurrentRow;
+        int aCurColumn=mCurrentColumn;
+
+        if (aCurRow<0)
+        {
+            aCurRow=0;
+        }
+
+        if (aCurColumn<0)
+        {
+            aCurColumn=0;
+        }
+
+        int aInitRow=aCurRow;
+        int aInitColumn=aCurColumn;
+
+        while (true)
+        {
+            --aCurColumn;
+
+            if (aCurColumn<0)
+            {
+                aCurColumn=mColumnCount-1;
+                --aCurRow;
+
+                if (aCurRow<0)
+                {
+                    aCurRow=mRowCount-1;
+                }
+            }
+
+            if (aCurRow==aInitRow && aCurColumn==aInitColumn)
+            {
+                break;
+            }
+
+            if (
+                rowVisible(aCurRow)
+                &&
+                columnVisible(aCurColumn)
+                &&
+                (
+                 column<0
+                 ||
+                 aCurColumn==column
+                )
+                &&
+                text(aCurRow, aCurColumn).contains(pattern, Qt::CaseInsensitive)
+               )
+            {
+                break;
+            }
+        }
+
+        setCurrentCell(aCurRow, aCurColumn);
+        scrollToCurrentCell();
+    }
+    else
+    {
+        int aCurRow=mCurrentRow;
+
+        if (aCurRow<0)
+        {
+            aCurRow=0;
+        }
+
+        int aInitPos=aCurRow;
+
+        while (true)
+        {
+            --aCurRow;
+
+            if (aCurRow<0)
+            {
+                aCurRow=mRowCount-1;
+            }
+
+            if (aCurRow==aInitPos)
+            {
+                break;
+            }
+
+            if (!rowVisible(aCurRow))
+            {
+                continue;
+            }
+
+            if (column<0)
+            {
+                bool good=false;
+
+                for (int i=0; i<mColumnCount; ++i)
+                {
+                    if (text(aCurRow, i).contains(pattern, Qt::CaseInsensitive))
+                    {
+                        good=true;
+                        break;
+                    }
+                }
+
+                if (good)
+                {
+                    break;
+                }
+            }
+            else
+            {
+                if (text(aCurRow, column).contains(pattern, Qt::CaseInsensitive))
+                {
+                    break;
+                }
+            }
+        }
+
+        setCurrentCell(aCurRow, 0);
+        scrollToCurrentCell();
+        selectRow(aCurRow);
+    }
 }
 
 CustomFastTableWidget::Style CustomFastTableWidget::style()

@@ -70,6 +70,9 @@ public:
     virtual void selectColumn(const int column);
     virtual void unselectColumn(const int column);
 
+    void searchNext(const QString &pattern, const QTableWidget::SelectionBehavior behaviour=QTableWidget::SelectItems, const int column=-1);
+    void searchPrevious(const QString &pattern, const QTableWidget::SelectionBehavior behaviour=QTableWidget::SelectItems, const int column=-1);
+
     Style style();
     void setStyle(Style style, bool keepColors=false);
 
