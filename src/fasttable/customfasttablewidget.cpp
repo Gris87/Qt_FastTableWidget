@@ -844,6 +844,15 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
 
                     viewport()->update();
                 }
+                else
+                {
+                    mMousePressed=false;
+                    mCtrlPressed=false;
+                    mShiftPressed=false;
+                    mMouseLocation=InMiddleWorld;
+                    mLastX=-1;
+                    mLastY=-1;
+                }
             }
             else
             {
@@ -988,6 +997,15 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                         mMouseResizeLineX=mVerticalHeader_OffsetX->at(mMouseResizeCell)+mVerticalHeader_ColumnWidths->at(mMouseResizeCell);
 
                         viewport()->update();
+                    }
+                    else
+                    {
+                        mMousePressed=false;
+                        mCtrlPressed=false;
+                        mShiftPressed=false;
+                        mMouseLocation=InMiddleWorld;
+                        mLastX=-1;
+                        mLastY=-1;
                     }
                 }
                 else
