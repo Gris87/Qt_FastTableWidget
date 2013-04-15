@@ -1,6 +1,8 @@
 #ifndef OPTIMALLIST_H
 #define OPTIMALLIST_H
 
+#include <QTypeInfo>
+
 class OptimalListSharedData
 {
 public:
