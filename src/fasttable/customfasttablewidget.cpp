@@ -608,8 +608,8 @@ void CustomFastTableWidget::keyPressEvent(QKeyEvent *event)
             event->key()!=Qt::Key_Tab
            )
         {
-            QKeyEvent *aNewEvent = new QKeyEvent(QEvent::KeyPress, event->key(), Qt::NoModifier);
-            QCoreApplication::postEvent(mEditor, aNewEvent);
+            QKeyEvent *aNewEvent=new QKeyEvent(QEvent::KeyPress, event->key(), Qt::NoModifier);
+            QCoreApplication::postEvent(mEditor, aNewEvent); // TODO: HERE
         }
     }
     else
@@ -2886,6 +2886,7 @@ void CustomFastTableWidget::scrollBarValueChanged(int /*value*/)
     FASTTABLE_FREQUENT_START_PROFILE;
 
     updateVisibleRange();
+    updateEditorPosition();
 
     FASTTABLE_FREQUENT_END_PROFILE;
 }
@@ -2965,6 +2966,7 @@ void CustomFastTableWidget::updateSizes()
 
     updateBarsRanges();
     updateVisibleRange();
+    updateEditorPosition();
 
     FASTTABLE_END_PROFILE;
 }
