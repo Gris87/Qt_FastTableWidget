@@ -113,6 +113,11 @@ void CustomFastTableWidget::init(const bool aUseInternalData)
     mMouseHoldTimer.setInterval(5);
     connect(&mMouseHoldTimer, SIGNAL(timeout()), this, SLOT(mouseHoldTick()));
 
+    mEditable=true;
+    mEditCellRow=-1;
+    mEditCellColumn=-1;
+    mEditor=0;
+
     setMouseTracking(true);
 
     horizontalScrollBar()->setSingleStep(100);
@@ -3217,6 +3222,10 @@ void CustomFastTableWidget::clear()
     mMouseResizeCell=-1;
 
     mMouseSelectedCells->clear();
+
+    mEditCellRow=-1;
+    mEditCellColumn=-1;
+    mEditor=0;        // TODO: FastTable: Remove editor
 
     updateBarsRanges();
 
@@ -6385,4 +6394,14 @@ bool CustomFastTableWidget::atTopLeftCorner(const int x, const int y)
     QSize areaSize=viewport()->size();
 
     return x>=0 && y>=0 && x<mVerticalHeader_TotalWidth && y<mHorizontalHeader_TotalHeight && x<areaSize.width() && y<areaSize.height();
+}
+
+bool CustomFastTableWidget::isEditable() const
+{
+    return mEditable;
+}
+
+void CustomFastTableWidget::setEditable(const bool aEditable)
+{
+    mEditable=aEditable;
 }

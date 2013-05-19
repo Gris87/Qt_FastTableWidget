@@ -59,7 +59,7 @@ public:
     explicit CustomFastTableWidget(const bool aUseInternalData, QWidget *parent = 0);
     ~CustomFastTableWidget();
 
-    inline bool updatesEnabled() const;
+    bool updatesEnabled() const;
     void setUpdatesEnabled(bool enable);
 
     virtual void clear();
@@ -248,6 +248,9 @@ public:
     QPoint verticalHeader_CellAt(const int x, const int y);
     bool atTopLeftCorner(const int x, const int y);
 
+    bool isEditable() const;
+    void setEditable(const bool aEditable);
+
 protected:
     bool mUseInternalData;
 
@@ -333,12 +336,17 @@ protected:
 
     QList< QList<bool> > *mMouseSelectedCells;
 
-    QTimer mMouseHoldTimer;
+    QTimer      mMouseHoldTimer;
     QMouseEvent mMouseEvent;
+
+    bool     mEditable;
+    int      mEditCellRow;
+    int      mEditCellColumn;
+    QWidget *mEditor;
 
     void init(const bool aUseInternalData);
     void createLists();
-    void deleteLists();
+    virtual void deleteLists();        // TODO: FastTable: DO NOT FORGET IT
 
     void keyPressEvent(QKeyEvent *event);
     bool focusNextPrevChild(bool next);
