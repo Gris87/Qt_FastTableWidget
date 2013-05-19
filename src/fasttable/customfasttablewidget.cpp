@@ -1961,6 +1961,68 @@ void CustomFastTableWidget::mouseDoubleClickEvent(QMouseEvent *event)
     FASTTABLE_END_PROFILE;
 }
 
+bool CustomFastTableWidget::eventFilter(QObject *aObject, QEvent *aEvent)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    if (aObject==mEditor)
+    {
+        if (aEvent->type()==QEvent::KeyPress)
+        {
+            QKeyEvent* aKeyEvent=(QKeyEvent *)aEvent;
+
+            if (aKeyEvent->key()==Qt::Key_Escape)
+            {
+                removeEditor();
+                setFocus();
+                return true;
+            }
+            else
+            if (
+                aKeyEvent->key()==Qt::Key_Return
+                ||
+                aKeyEvent->key()==Qt::Key_Enter
+               )
+            {
+                finishEditing();
+                setFocus();
+                return true;
+            }
+            else
+            if (
+                aKeyEvent->key()==Qt::Key_Up
+                ||
+                aKeyEvent->key()==Qt::Key_Down
+                ||
+                aKeyEvent->key()==Qt::Key_PageUp
+                ||
+                aKeyEvent->key()==Qt::Key_PageDown
+                ||
+                aKeyEvent->key()==Qt::Key_Home
+                ||
+                aKeyEvent->key()==Qt::Key_End
+               )
+            {
+                keyPressEvent(aKeyEvent);
+                setFocus();
+                return true;
+            }
+            else
+            if (aKeyEvent->key()==Qt::Key_Tab)
+            {
+                focusNextPrevChild(aKeyEvent->modifiers() | ~Qt::ShiftModifier);
+                setFocus();
+                return true;
+            }
+        }
+    }
+
+    FASTTABLE_END_PROFILE;
+
+    return QAbstractScrollArea::eventFilter(aObject, aEvent);
+}
+
 void CustomFastTableWidget::leaveEvent(QEvent *event)
 {
     FASTTABLE_DEBUG;
@@ -6491,6 +6553,7 @@ void CustomFastTableWidget::editCell(const int row, const int column)
         mEditCellColumn=column;
 
         mEditor=createEditor(mEditCellRow, mEditCellColumn);
+        mEditor->installEventFilter(this);
         mEditor->setFocus();
         mEditor->show();
 
