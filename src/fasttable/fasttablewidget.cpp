@@ -217,6 +217,12 @@ void FastTableWidget::paintEvent(QPaintEvent * /*event*/)
         }
     }
 
+    if (mEditor)
+    {
+        mEditorPaintByTable=true;
+        mEditor->render(&painter, mapTo(window(), mEditor->pos()));
+    }
+
     if (mHorizontalHeader_VisibleBottom>=0 && mVisibleLeft>=0)
     {
         FASTTABLE_ASSERT(mHorizontalHeader_VisibleBottom<mHorizontalHeader_OffsetY->length());

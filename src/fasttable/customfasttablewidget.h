@@ -347,6 +347,7 @@ protected:
     int                             mEditCellRow;
     int                             mEditCellColumn;
     QWidget                        *mEditor;
+    bool                            mEditorPaintByTable;
 
     void init(const bool aUseInternalData);
     void createLists();

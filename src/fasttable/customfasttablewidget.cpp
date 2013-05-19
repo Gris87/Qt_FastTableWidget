@@ -117,6 +117,7 @@ void CustomFastTableWidget::init(const bool aUseInternalData)
     mEditCellRow=-1;
     mEditCellColumn=-1;
     mEditor=0;
+    mEditorPaintByTable=false;
 
     setMouseTracking(true);
 
@@ -2016,6 +2017,17 @@ bool CustomFastTableWidget::eventFilter(QObject *aObject, QEvent *aEvent)
                 return true;
             }
         }
+        else
+        if (aEvent->type()==QEvent::Paint)
+        {
+            if (!mEditorPaintByTable)
+            {
+                viewport()->update();
+                return true;
+            }
+
+            mEditorPaintByTable=false;
+        }
     }
 
     FASTTABLE_END_PROFILE;
@@ -2086,6 +2098,12 @@ void CustomFastTableWidget::paintEvent(QPaintEvent * /*event*/)
                 }
             }
         }
+    }
+
+    if (mEditor)
+    {
+        mEditorPaintByTable=true;
+        mEditor->render(&painter, mapTo(window(), mEditor->pos()));
     }
 
     if (mHorizontalHeader_VisibleBottom>=0 && mVisibleLeft>=0)
