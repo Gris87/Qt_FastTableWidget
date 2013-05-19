@@ -6228,6 +6228,10 @@ void CustomFastTableWidget::setCurrentCell(const int row, const int column, cons
         {
             editCell(mCurrentRow, mCurrentColumn);
         }
+        else
+        {
+            finishEditing();
+        }
 
         emit currentCellChanged(aOldCurrentRow, aOldCurrentColumn, mCurrentRow, mCurrentColumn);
         emit cellChanged(mCurrentRow, mCurrentColumn);
