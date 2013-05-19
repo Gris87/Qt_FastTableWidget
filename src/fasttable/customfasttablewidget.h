@@ -14,6 +14,8 @@
 #include <QTimer>
 #include <QApplication>
 #include <QClipboard>
+#include <QLineEdit>
+#include <QAbstractItemView>
 
 #include "fastdefines.h"
 
@@ -248,8 +250,10 @@ public:
     QPoint verticalHeader_CellAt(const int x, const int y);
     bool atTopLeftCorner(const int x, const int y);
 
-    bool isEditable() const;
-    void setEditable(const bool aEditable);
+    QAbstractItemView::EditTriggers editTriggers() const;
+    void setEditTriggers(const QAbstractItemView::EditTriggers aEditTriggers);
+
+    virtual void editCell(const int row, const int column);
 
 protected:
     bool mUseInternalData;
@@ -339,10 +343,10 @@ protected:
     QTimer      mMouseHoldTimer;
     QMouseEvent mMouseEvent;
 
-    bool     mEditable;
-    int      mEditCellRow;
-    int      mEditCellColumn;
-    QWidget *mEditor;
+    QAbstractItemView::EditTriggers mEditTriggers;
+    int                             mEditCellRow;
+    int                             mEditCellColumn;
+    QWidget                        *mEditor;
 
     void init(const bool aUseInternalData);
     void createLists();
@@ -379,6 +383,13 @@ protected:
     void initShiftSelectionForKeyboard();
     void initShiftSelection();
     void fillShiftSelection();
+
+    void removeEditor();
+    virtual QWidget* createEditor(const int row, const int column);
+    virtual QString editorText(QWidget *editor, const int row, const int column);
+    void updateEditorPosition();
+    void finishEditing();
+    virtual void commitData(QWidget *editor, const int row, const int column);
 
 public slots:
     void scrollToTop();

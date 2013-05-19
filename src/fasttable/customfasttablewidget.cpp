@@ -113,7 +113,7 @@ void CustomFastTableWidget::init(const bool aUseInternalData)
     mMouseHoldTimer.setInterval(5);
     connect(&mMouseHoldTimer, SIGNAL(timeout()), this, SLOT(mouseHoldTick()));
 
-    mEditable=true;
+    mEditTriggers=QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed | QAbstractItemView::AnyKeyPressed;
     mEditCellRow=-1;
     mEditCellColumn=-1;
     mEditor=0;
@@ -3225,7 +3225,7 @@ void CustomFastTableWidget::clear()
 
     mEditCellRow=-1;
     mEditCellColumn=-1;
-    mEditor=0;        // TODO: FastTable: Remove editor
+    removeEditor();
 
     updateBarsRanges();
 
@@ -6396,12 +6396,91 @@ bool CustomFastTableWidget::atTopLeftCorner(const int x, const int y)
     return x>=0 && y>=0 && x<mVerticalHeader_TotalWidth && y<mHorizontalHeader_TotalHeight && x<areaSize.width() && y<areaSize.height();
 }
 
-bool CustomFastTableWidget::isEditable() const
+QAbstractItemView::EditTriggers CustomFastTableWidget::editTriggers() const
 {
-    return mEditable;
+    FASTTABLE_DEBUG;
+    return mEditTriggers;
 }
 
-void CustomFastTableWidget::setEditable(const bool aEditable)
+void CustomFastTableWidget::setEditTriggers(const QAbstractItemView::EditTriggers aEditTriggers)
 {
-    mEditable=aEditable;
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    mEditTriggers=aEditTriggers;
+
+    FASTTABLE_END_PROFILE;
+}
+
+void CustomFastTableWidget::editCell(const int row, const int column)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    mEditCellRow=row;
+    mEditCellColumn=column;
+
+    removeEditor();
+    mEditor=createEditor(mEditCellRow, mEditCellColumn);
+    updateEditorPosition();
+
+    FASTTABLE_END_PROFILE;
+}
+
+void CustomFastTableWidget::removeEditor()
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    if (mEditor)
+    {
+        delete mEditor;
+        mEditor=0;
+    }
+
+    FASTTABLE_END_PROFILE;
+}
+
+QWidget* CustomFastTableWidget::createEditor(const int row, const int column)
+{
+    FASTTABLE_DEBUG;
+    return new QLineEdit(text(row, column), this);
+}
+
+QString CustomFastTableWidget::editorText(QWidget *editor, const int /*row*/, const int /*column*/)
+{
+    FASTTABLE_DEBUG;
+    return ((QLineEdit *)editor)->text();
+}
+
+void CustomFastTableWidget::updateEditorPosition()
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+    FASTTABLE_ASSERT(mEditor);
+
+    mEditor->setGeometry(cellRectangle(mEditCellRow, mEditCellColumn));
+
+    FASTTABLE_END_PROFILE;
+}
+
+void CustomFastTableWidget::finishEditing()
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    commitData(mEditor, mEditCellRow, mEditCellColumn);
+    removeEditor();
+
+    FASTTABLE_END_PROFILE;
+}
+
+void CustomFastTableWidget::commitData(QWidget *editor, const int row, const int column)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    setText(row, column, editorText(editor, row, column))
+
+    FASTTABLE_END_PROFILE;
 }
