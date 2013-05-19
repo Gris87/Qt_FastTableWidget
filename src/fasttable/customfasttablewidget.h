@@ -384,6 +384,7 @@ protected:
     void initShiftSelection();
     void fillShiftSelection();
 
+    bool isEditKey(const QString aText);
     void removeEditor();
     virtual QWidget* createEditor(const int row, const int column);
     virtual QString editorText(QWidget *editor, const int row, const int column);

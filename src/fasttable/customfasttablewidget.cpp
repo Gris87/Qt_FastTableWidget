@@ -113,7 +113,7 @@ void CustomFastTableWidget::init(const bool aUseInternalData)
     mMouseHoldTimer.setInterval(5);
     connect(&mMouseHoldTimer, SIGNAL(timeout()), this, SLOT(mouseHoldTick()));
 
-    mEditTriggers=QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed | QAbstractItemView::AnyKeyPressed;
+    mEditTriggers=QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed;
     mEditCellRow=-1;
     mEditCellColumn=-1;
     mEditor=0;
@@ -577,6 +577,39 @@ void CustomFastTableWidget::keyPressEvent(QKeyEvent *event)
             }
 
             QApplication::clipboard()->setText(toClipboard);
+        }
+    }
+    else
+    if (
+        mCurrentRow>=0
+        &&
+        mCurrentColumn>=0
+        &&
+        (
+         (mEditTriggers & QAbstractItemView::AnyKeyPressed)
+         ||
+         (
+          isEditKey(event->text())
+          &&
+          (mEditTriggers & QAbstractItemView::EditKeyPressed)
+         )
+        )
+       )
+    {
+        editCell(mCurrentRow, mCurrentColumn);
+
+        if (
+            event->key()!=Qt::Key_Return
+            &&
+            event->key()!=Qt::Key_Enter
+            &&
+            event->key()!=Qt::Key_Escape
+            &&
+            event->key()!=Qt::Key_Tab
+           )
+        {
+            QKeyEvent *aNewEvent = new QKeyEvent(QEvent::KeyPress, event->key(), Qt::NoModifier);
+            QCoreApplication::postEvent(mEditor, aNewEvent);
         }
     }
     else
@@ -6459,6 +6492,26 @@ void CustomFastTableWidget::editCell(const int row, const int column)
     }
 
     FASTTABLE_END_PROFILE;
+}
+
+bool CustomFastTableWidget::isEditKey(const QString aText)
+{
+    FASTTABLE_DEBUG;
+
+    if (aText=="")
+    {
+        return false;
+    }
+
+    ushort aCode=aText.at(0).unicode();
+
+    return (
+            aCode!=27
+            &&
+            aCode!=8
+            &&
+            aCode!=127
+           );
 }
 
 void CustomFastTableWidget::removeEditor()
