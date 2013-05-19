@@ -722,6 +722,15 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                 }
                 else
                 {
+                    if (
+                        cellSelected(mLastY, mLastX)
+                        &&
+                        (mEditTriggers & QAbstractItemView::SelectedClicked)
+                       )
+                    {
+                        editCell(mLastY, mLastX);
+                    }
+
                     setCurrentCell(mLastY, mLastX);
                 }
 
