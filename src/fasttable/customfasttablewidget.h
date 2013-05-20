@@ -351,7 +351,7 @@ protected:
 
     void init(const bool aUseInternalData);
     void createLists();
-    virtual void deleteLists();        // TODO: FastTable: DO NOT FORGET IT
+    virtual void deleteLists();
 
     void keyPressEvent(QKeyEvent *event);
     bool focusNextPrevChild(bool next);
