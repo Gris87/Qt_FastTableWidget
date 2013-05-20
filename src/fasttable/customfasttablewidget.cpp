@@ -538,47 +538,7 @@ void CustomFastTableWidget::keyPressEvent(QKeyEvent *event)
     else
     if (event==QKeySequence::Copy)
     {
-        QList<QRect> aRanges=selectedRanges();
-
-        if (aRanges.length()>0)
-        {
-            QRect aCopyRect=aRanges.at(0);
-            QString toClipboard="";
-
-            for (int i=aCopyRect.top(); i<=aCopyRect.bottom(); i++)
-            {
-                if (!rowVisible(i))
-                {
-                    continue;
-                }
-
-                if (toClipboard!="")
-                {
-                    toClipboard.append("\n");
-                }
-
-                QString aRow="";
-
-                for (int j=aCopyRect.left(); j<=aCopyRect.right(); j++)
-                {
-                    if (!columnVisible(j))
-                    {
-                        continue;
-                    }
-
-                    if (aRow!="")
-                    {
-                        aRow.append("\t");
-                    }
-
-                    aRow.append(text(i, j));
-                }
-
-                toClipboard.append(aRow);
-            }
-
-            QApplication::clipboard()->setText(toClipboard);
-        }
+        copy();
     }
     else
     if (
@@ -3368,11 +3328,56 @@ void CustomFastTableWidget::clear()
 
     if (aOldCurrentRow!=mCurrentRow || aOldCurrentColumn!=mCurrentColumn)
     {
-        emit currentCellChanged(aOldCurrentRow, aOldCurrentColumn, mCurrentRow, mCurrentColumn);
+        emit currentCellChanged(mCurrentRow, mCurrentColumn, aOldCurrentRow, aOldCurrentColumn);
         emit cellChanged(mCurrentRow, mCurrentColumn);
     }
 
     FASTTABLE_END_PROFILE;
+}
+
+void CustomFastTableWidget::copy()
+{
+    QList<QRect> aRanges=selectedRanges();
+
+    if (aRanges.length()>0)
+    {
+        QRect aCopyRect=aRanges.at(0);
+        QString toClipboard="";
+
+        for (int i=aCopyRect.top(); i<=aCopyRect.bottom(); i++)
+        {
+            if (!rowVisible(i))
+            {
+                continue;
+            }
+
+            if (toClipboard!="")
+            {
+                toClipboard.append("\n");
+            }
+
+            QString aRow="";
+
+            for (int j=aCopyRect.left(); j<=aCopyRect.right(); j++)
+            {
+                if (!columnVisible(j))
+                {
+                    continue;
+                }
+
+                if (aRow!="")
+                {
+                    aRow.append("\t");
+                }
+
+                aRow.append(text(i, j));
+            }
+
+            toClipboard.append(aRow);
+        }
+
+        QApplication::clipboard()->setText(toClipboard);
+    }
 }
 
 void CustomFastTableWidget::selectRow(const int row)
@@ -6345,7 +6350,7 @@ void CustomFastTableWidget::setCurrentCell(const int row, const int column, cons
             finishEditing();
         }
 
-        emit currentCellChanged(aOldCurrentRow, aOldCurrentColumn, mCurrentRow, mCurrentColumn);
+        emit currentCellChanged(mCurrentRow, mCurrentColumn, aOldCurrentRow, aOldCurrentColumn);
         emit cellChanged(mCurrentRow, mCurrentColumn);
     }
 

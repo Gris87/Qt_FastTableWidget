@@ -66,6 +66,8 @@ public:
 
     virtual void clear();
 
+    void copy();
+
     virtual void selectRow(const int row);
     virtual void unselectRow(const int row);
 
