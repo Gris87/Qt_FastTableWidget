@@ -103,6 +103,11 @@ private slots:
     void on_verticalTextButton_clicked();
     void on_cellSelectedButton_clicked();
     void on_currentCellButton_clicked();
+    void on_currentChangedCheckBox_toggled(bool checked);
+    void on_doubleClickedCheckBox_toggled(bool checked);
+    void on_selectedClickedCheckBox_toggled(bool checked);
+    void on_editKeyPressedCheckBox_toggled(bool checked);
+    void on_anyKeyPressedCheckBox_toggled(bool checked);
 
     void on_backgroundButton_clicked();
     void on_resetBackgroundButton_clicked();

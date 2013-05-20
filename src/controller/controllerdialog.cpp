@@ -1105,6 +1105,66 @@ void ControllerDialog::on_currentCellButton_clicked()
     }
 }
 
+void ControllerDialog::on_currentChangedCheckBox_toggled(bool checked)
+{
+    if (checked)
+    {
+        mFastTableWidget->setEditTriggers(mFastTableWidget->editTriggers() | QAbstractItemView::CurrentChanged);
+    }
+    else
+    {
+        mFastTableWidget->setEditTriggers(mFastTableWidget->editTriggers() & ~QAbstractItemView::CurrentChanged);
+    }
+}
+
+void ControllerDialog::on_doubleClickedCheckBox_toggled(bool checked)
+{
+    if (checked)
+    {
+        mFastTableWidget->setEditTriggers(mFastTableWidget->editTriggers() | QAbstractItemView::DoubleClicked);
+    }
+    else
+    {
+        mFastTableWidget->setEditTriggers(mFastTableWidget->editTriggers() & ~QAbstractItemView::DoubleClicked);
+    }
+}
+
+void ControllerDialog::on_selectedClickedCheckBox_toggled(bool checked)
+{
+    if (checked)
+    {
+        mFastTableWidget->setEditTriggers(mFastTableWidget->editTriggers() | QAbstractItemView::SelectedClicked);
+    }
+    else
+    {
+        mFastTableWidget->setEditTriggers(mFastTableWidget->editTriggers() & ~QAbstractItemView::SelectedClicked);
+    }
+}
+
+void ControllerDialog::on_editKeyPressedCheckBox_toggled(bool checked)
+{
+    if (checked)
+    {
+        mFastTableWidget->setEditTriggers(mFastTableWidget->editTriggers() | QAbstractItemView::EditKeyPressed);
+    }
+    else
+    {
+        mFastTableWidget->setEditTriggers(mFastTableWidget->editTriggers() & ~QAbstractItemView::EditKeyPressed);
+    }
+}
+
+void ControllerDialog::on_anyKeyPressedCheckBox_toggled(bool checked)
+{
+    if (checked)
+    {
+        mFastTableWidget->setEditTriggers(mFastTableWidget->editTriggers() | QAbstractItemView::AnyKeyPressed);
+    }
+    else
+    {
+        mFastTableWidget->setEditTriggers(mFastTableWidget->editTriggers() & ~QAbstractItemView::AnyKeyPressed);
+    }
+}
+
 void ControllerDialog::on_backgroundButton_clicked()
 {
     if (mFastTableWidget->rowCount()>0 && mFastTableWidget->columnCount()>0)
@@ -2682,6 +2742,12 @@ void ControllerDialog::tableContextMenuRequested(QPoint /*pos*/)
 \
     ui->textButton->setEnabled(aUseInternalData); \
     ui->textViewButton->setEnabled(aUseInternalData); \
+\
+    ui->currentChangedCheckBox->setChecked( mFastTableWidget->editTriggers() & QAbstractItemView::CurrentChanged); \
+    ui->doubleClickedCheckBox->setChecked(  mFastTableWidget->editTriggers() & QAbstractItemView::DoubleClicked); \
+    ui->selectedClickedCheckBox->setChecked(mFastTableWidget->editTriggers() & QAbstractItemView::SelectedClicked); \
+    ui->editKeyPressedCheckBox->setChecked( mFastTableWidget->editTriggers() & QAbstractItemView::EditKeyPressed); \
+    ui->anyKeyPressedCheckBox->setChecked(  mFastTableWidget->editTriggers() & QAbstractItemView::AnyKeyPressed); \
 \
     ui->backgroundButton->setEnabled(aUseInternalData); \
     ui->resetBackgroundButton->setEnabled(aUseInternalData); \

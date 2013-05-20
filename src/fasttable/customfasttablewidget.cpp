@@ -762,10 +762,13 @@ void CustomFastTableWidget::mousePressEvent(QMouseEvent *event)
                         (mEditTriggers & QAbstractItemView::SelectedClicked)
                        )
                     {
+                        setCurrentCell(mLastY, mLastX);
                         editCell(mLastY, mLastX);
                     }
-
-                    setCurrentCell(mLastY, mLastX);
+                    else
+                    {
+                        setCurrentCell(mLastY, mLastX);
+                    }
                 }
 
                 QList<bool> aRow;
@@ -4088,6 +4091,11 @@ void CustomFastTableWidget::insertRow(int row)
         mCurrentRow++;
     }
 
+    if (mEditCellRow>=row)
+    {
+        mEditCellRow++;
+    }
+
     mMouseXForShift=-1;
     mMouseYForShift=-1;
     mMouseLocationForShift=InMiddleWorld;
@@ -4176,6 +4184,16 @@ void CustomFastTableWidget::removeRow(int row)
         setCellSelected(mCurrentRow, mCurrentColumn, true);
     }
 
+    if (mEditCellRow==row)
+    {
+        removeEditor();
+    }
+    else
+    if (mEditCellRow>row)
+    {
+        mEditCellRow--;
+    }
+
     mMouseXForShift=-1;
     mMouseYForShift=-1;
     mMouseLocationForShift=InMiddleWorld;
@@ -4255,6 +4273,11 @@ void CustomFastTableWidget::insertColumn(int column)
     if (mCurrentColumn>=column)
     {
         mCurrentColumn++;
+    }
+
+    if (mEditCellColumn>=column)
+    {
+        mEditCellColumn++;
     }
 
     mMouseXForShift=-1;
@@ -4347,6 +4370,16 @@ void CustomFastTableWidget::removeColumn(int column)
     if (mCurrentRow>=0 && mCurrentColumn>=0)
     {
         setCellSelected(mCurrentRow, mCurrentColumn, true);
+    }
+
+    if (mEditCellColumn==column)
+    {
+        removeEditor();
+    }
+    else
+    if (mEditCellColumn>column)
+    {
+        mEditCellColumn--;
     }
 
     mMouseXForShift=-1;
@@ -6553,7 +6586,11 @@ void CustomFastTableWidget::setEditTriggers(const QAbstractItemView::EditTrigger
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
-    mEditTriggers=aEditTriggers;
+    if (mEditTriggers!=aEditTriggers)
+    {
+        mEditTriggers=aEditTriggers;
+        removeEditor();
+    }
 
     FASTTABLE_END_PROFILE;
 }
