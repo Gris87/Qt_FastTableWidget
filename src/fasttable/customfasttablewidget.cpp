@@ -609,8 +609,7 @@ void CustomFastTableWidget::keyPressEvent(QKeyEvent *event)
             event->key()!=Qt::Key_Tab
            )
         {
-            QKeyEvent *aNewEvent=new QKeyEvent(QEvent::KeyPress, event->key(), Qt::NoModifier);
-            QCoreApplication::postEvent(mEditor, aNewEvent); // TODO: HERE
+            QCoreApplication::postEvent(mEditor, new QKeyEvent(QEvent::KeyPress, event->key(), event->modifiers(), event->text()));
         }
     }
     else
