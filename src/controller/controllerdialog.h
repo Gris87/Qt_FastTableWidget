@@ -55,6 +55,8 @@ private slots:
     void on_insertHeaderColumnButton_clicked();
     void on_deleteHeaderColumnButton_clicked();
     void on_clearButton_clicked();
+    void on_fontButton_clicked();
+    void on_autoVerticalHeaderSizeCheckBox_toggled(bool checked);
     void on_alternatingRowColorsCheckBox_toggled(bool checked);
     void on_horizontalStrectCheckBox_toggled(bool checked);
     void on_verticalStrectCheckBox_toggled(bool checked);

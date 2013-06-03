@@ -308,6 +308,24 @@ void ControllerDialog::on_clearButton_clicked()
     ui->verticalHeaderColumnCountSpinBox->blockSignals(false);
 }
 
+void ControllerDialog::on_fontButton_clicked()
+{
+    QFontDialog dialog(this);
+
+    dialog.setWindowTitle("Default font");
+    dialog.setCurrentFont(mFastTableWidget->font());
+
+    if (dialog.exec())
+    {
+        mFastTableWidget->setFont(dialog.selectedFont());
+    }
+}
+
+void ControllerDialog::on_autoVerticalHeaderSizeCheckBox_toggled(bool checked)
+{
+    mFastTableWidget->setAutoVerticalHeaderSize(checked);
+}
+
 void ControllerDialog::on_alternatingRowColorsCheckBox_toggled(bool checked)
 {
     mFastTableWidget->setAlternatingRowColors(checked);
@@ -2716,8 +2734,8 @@ void ControllerDialog::tableContextMenuRequested(QPoint /*pos*/)
     ui->horizontalHeaderRowCountSpinBox->setValue(1); \
     ui->verticalHeaderColumnCountSpinBox->setValue(1); \
 \
+    ui->autoVerticalHeaderSizeCheckBox->setChecked(mFastTableWidget->autoVerticalHeaderSize()); \
     ui->alternatingRowColorsCheckBox->setChecked(mFastTableWidget->alternatingRowColors()); \
-\
     ui->horizontalStrectCheckBox->setChecked(mFastTableWidget->horizontalHeader_StretchLastSection()); \
     ui->verticalStrectCheckBox->setChecked(mFastTableWidget->verticalHeader_StretchLastSection()); \
 \

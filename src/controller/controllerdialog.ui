@@ -101,7 +101,7 @@
             <x>0</x>
             <y>0</y>
             <width>387</width>
-            <height>3066</height>
+            <height>3114</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
@@ -538,6 +538,23 @@
             <widget class="Line" name="line_12">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="fontButton">
+             <property name="text">
+              <string>Font</string>
+             </property>
+             <property name="autoDefault">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="autoVerticalHeaderSizeCheckBox">
+             <property name="text">
+              <string>Auto vertical header size</string>
              </property>
             </widget>
            </item>
