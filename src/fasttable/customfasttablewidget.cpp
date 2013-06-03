@@ -4568,6 +4568,11 @@ void CustomFastTableWidget::verticalHeader_InsertColumn(int column)
 
     updateSizes();
 
+    if (mAutoVerticalHeaderSize)
+    {
+        updateVerticalHeaderSize();
+    }
+
     viewport()->update();
 
     FASTTABLE_END_PROFILE;
