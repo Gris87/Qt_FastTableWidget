@@ -16,6 +16,7 @@
 #include <QClipboard>
 #include <QLineEdit>
 #include <QAbstractItemView>
+#include <QFontMetrics>
 
 #include "fastdefines.h"
 
@@ -115,6 +116,11 @@ public:
     void verticalHeader_SetColumnCount(qint16 count);
 
     void setSizes(int aRowCount, int aColumnCount, qint16 aHorizontalHeaderRowCount=1, qint16 aVerticalHeaderColumnCount=1);
+
+    void setFont(const QFont &aFont);
+
+    bool autoVerticalHeaderSize();
+    void setAutoVerticalHeaderSize(bool enable);
 
     bool alternatingRowColors();
     void setAlternatingRowColors(bool enable);
@@ -265,6 +271,7 @@ protected:
     DrawFunction mDrawCellFunction;
     DrawFunction mDrawHeaderCellFunction;
 
+    bool   mAutoVerticalHeaderSize;
     bool   mAlternatingRowColors;
     bool   mHorizontalHeaderStretchLastSection;
     bool   mVerticalHeaderStretchLastSection;
@@ -381,6 +388,7 @@ protected:
     static void paintHeaderCellWin7(QPainter &painter, const int x, const int y, const int width, const int height, const bool headerPressed, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor);
     static void paintHeaderCellDefault(QPainter &painter, const int x, const int y, const int width, const int height, const bool headerPressed, QColor *aGridColor, QBrush *aBackgroundBrush, QColor *aBorderColor);
 
+    void updateVerticalHeaderSize();
     void updateSizes();
     void updateBarsRanges();
     virtual void updateVisibleRange();

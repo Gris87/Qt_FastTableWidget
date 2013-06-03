@@ -70,6 +70,7 @@ void CustomFastTableWidget::init(const bool aUseInternalData)
     }
 #endif
 
+    mAutoVerticalHeaderSize=true;
     mAlternatingRowColors=false;
     mHorizontalHeaderStretchLastSection=false;
     mVerticalHeaderStretchLastSection=false;
@@ -2933,6 +2934,19 @@ void CustomFastTableWidget::scrollBarValueChanged(int /*value*/)
     FASTTABLE_FREQUENT_END_PROFILE;
 }
 
+void CustomFastTableWidget::updateVerticalHeaderSize()
+{
+    QFont aFont=font();
+    aFont.setBold(true);
+
+    int aColumnWidth=QFontMetrics(aFont).width(QString::number(rowCount()*10))+FASTTABLE_TEXT_MARGIN*2;
+
+    for (int i=0; i<verticalHeader_ColumnCount(); ++i)
+    {
+        verticalHeader_SetColumnWidth(i, aColumnWidth);
+    }
+}
+
 void CustomFastTableWidget::updateSizes()
 {
     FASTTABLE_DEBUG;
@@ -3342,7 +3356,7 @@ void CustomFastTableWidget::copy()
     if (aRanges.length()>0)
     {
         QRect aCopyRect=aRanges.at(0);
-        QString toClipboard="";
+        QStringList toClipboard;
 
         for (int i=aCopyRect.top(); i<=aCopyRect.bottom(); i++)
         {
@@ -3351,12 +3365,7 @@ void CustomFastTableWidget::copy()
                 continue;
             }
 
-            if (toClipboard!="")
-            {
-                toClipboard.append("\n");
-            }
-
-            QString aRow="";
+            QStringList aRow;
 
             for (int j=aCopyRect.left(); j<=aCopyRect.right(); j++)
             {
@@ -3365,18 +3374,13 @@ void CustomFastTableWidget::copy()
                     continue;
                 }
 
-                if (aRow!="")
-                {
-                    aRow.append("\t");
-                }
-
                 aRow.append(text(i, j));
             }
 
-            toClipboard.append(aRow);
+            toClipboard.append(aRow.join("\t"));
         }
 
-        QApplication::clipboard()->setText(toClipboard);
+        QApplication::clipboard()->setText(toClipboard.join("\n"));
     }
 }
 
@@ -4107,6 +4111,11 @@ void CustomFastTableWidget::insertRow(int row)
 
     updateSizes();
 
+    if (mAutoVerticalHeaderSize)
+    {
+        updateVerticalHeaderSize();
+    }
+
     viewport()->update();
 
     FASTTABLE_END_PROFILE;
@@ -4206,6 +4215,11 @@ void CustomFastTableWidget::removeRow(int row)
     mRowCount--;
 
     updateSizes();
+
+    if (mAutoVerticalHeaderSize)
+    {
+        updateVerticalHeaderSize();
+    }
 
     viewport()->update();
 
@@ -4810,6 +4824,45 @@ void CustomFastTableWidget::setSizes(int aRowCount, int aColumnCount, qint16 aHo
     if (wasAllowUpdates)
     {
         setUpdatesEnabled(true);
+    }
+
+    FASTTABLE_END_PROFILE;
+}
+
+void CustomFastTableWidget::setFont(const QFont &aFont)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    QAbstractScrollArea::setFont(aFont);
+
+    if (mAutoVerticalHeaderSize)
+    {
+        updateVerticalHeaderSize();
+    }
+
+    FASTTABLE_END_PROFILE;
+}
+
+bool CustomFastTableWidget::autoVerticalHeaderSize()
+{
+    FASTTABLE_DEBUG;
+    return mAutoVerticalHeaderSize;
+}
+
+void CustomFastTableWidget::setAutoVerticalHeaderSize(bool enable)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    if (mAutoVerticalHeaderSize!=enable)
+    {
+        mAutoVerticalHeaderSize=enable;
+
+        if (mAutoVerticalHeaderSize)
+        {
+            updateVerticalHeaderSize();
+        }
     }
 
     FASTTABLE_END_PROFILE;
