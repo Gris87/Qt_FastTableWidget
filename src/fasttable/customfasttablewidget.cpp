@@ -6634,7 +6634,7 @@ bool CustomFastTableWidget::atTopLeftCorner(const int x, const int y)
 
     QSize areaSize=viewport()->size();
 
-    return x>=0 && y>=0 && x<mVerticalHeader_TotalWidth && y<mHorizontalHeader_TotalHeight && x<areaSize.width() && y<areaSize.height();
+    return x>=0 && y>=0 && x<mVerticalHeader_TotalWidth && y<mHorizontalHeader_TotalHeight && x<areaSize.width() && y<areaSize.height() && mRowCount>0 && mColumnCount>0;
 }
 
 QAbstractItemView::EditTriggers CustomFastTableWidget::editTriggers() const
