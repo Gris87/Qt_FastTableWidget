@@ -65,6 +65,9 @@ public:
     bool updatesEnabled() const;
     void setUpdatesEnabled(bool enable);
 
+    void setHorizontalScrollBar(QScrollBar *scrollbar);
+    void setVerticalScrollBar(QScrollBar *scrollbar);
+
     virtual void clear();
 
     void copy();
@@ -195,6 +198,11 @@ public:
 
     bool horizontalHeader_RowVisible(const int row);
     void horizontalHeader_SetRowVisible(const int row, bool visible, bool forceUpdate=true);
+
+    int rowOffset(const int row);
+    int columnOffset(const int column);
+    int horizontalHeader_rowOffset(const int row);
+    int verticalHeader_columnOffset(const int column);
 
     void updateOffsetsX(const int fromIndex=0);
     void updateOffsetsY(const int fromIndex=0);
@@ -434,6 +442,12 @@ signals:
     void currentCellChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
     void cellChanged(int row, int column);
     void selectionChanged();
+
+    void rowHeightChanged(int row, int value);
+    void columnWidthChanged(int column, int value);
+
+    void horizontalHeader_RowHeightChanged(int row, int value);
+    void verticalHeader_ColumnWidthChanged(int column, int value);
 };
 
 #endif // CUSTOMCustomFastTableWidget_H

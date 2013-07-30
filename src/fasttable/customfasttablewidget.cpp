@@ -201,6 +201,32 @@ void CustomFastTableWidget::setUpdatesEnabled(bool enable)
     viewport()->setUpdatesEnabled(enable);
 }
 
+void CustomFastTableWidget::setHorizontalScrollBar(QScrollBar *scrollbar)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    scrollbar->setSingleStep(100);
+    connect(scrollbar, SIGNAL(valueChanged(int)), this, SLOT(scrollBarValueChanged(int)));
+
+    QAbstractScrollArea::setHorizontalScrollBar(scrollbar);
+
+    FASTTABLE_END_PROFILE;
+}
+
+void CustomFastTableWidget::setVerticalScrollBar(QScrollBar *scrollbar)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_START_PROFILE;
+
+    scrollbar->setSingleStep(100);
+    connect(scrollbar, SIGNAL(valueChanged(int)), this, SLOT(scrollBarValueChanged(int)));
+
+    QAbstractScrollArea::setVerticalScrollBar(scrollbar);
+
+    FASTTABLE_END_PROFILE;
+}
+
 void CustomFastTableWidget::keyPressEvent(QKeyEvent *event)
 {
     FASTTABLE_FREQUENT_DEBUG;
@@ -5226,6 +5252,8 @@ void CustomFastTableWidget::setColumnWidth(const int column, quint16 width, bool
 
             viewport()->update();
         }
+
+        emit columnWidthChanged(column, width);
     }
 
     FASTTABLE_END_PROFILE;
@@ -5290,6 +5318,8 @@ void CustomFastTableWidget::setRowHeight(const int row, quint16 height, bool for
 
             viewport()->update();
         }
+
+        emit rowHeightChanged(row, height);
     }
 
     FASTTABLE_END_PROFILE;
@@ -5365,6 +5395,8 @@ void CustomFastTableWidget::verticalHeader_SetColumnWidth(const int column, quin
 
             viewport()->update();
         }
+
+        emit verticalHeader_ColumnWidthChanged(column, width);
     }
 
     FASTTABLE_END_PROFILE;
@@ -5440,6 +5472,8 @@ void CustomFastTableWidget::horizontalHeader_SetRowHeight(const int row, quint16
 
             viewport()->update();
         }
+
+        emit horizontalHeader_RowHeightChanged(row, height);
     }
 
     FASTTABLE_END_PROFILE;
@@ -5631,6 +5665,38 @@ void CustomFastTableWidget::horizontalHeader_SetRowVisible(const int row, bool v
     }
 
     FASTTABLE_END_PROFILE;
+}
+
+int CustomFastTableWidget::rowOffset(const int row)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_ASSERT(row>=0 && row<mOffsetY->length());
+
+    return mOffsetY->at(row);
+}
+
+int CustomFastTableWidget::columnOffset(const int column)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_ASSERT(column>=0 && column<mOffsetX->length());
+
+    return mOffsetX->at(column);
+}
+
+int CustomFastTableWidget::horizontalHeader_rowOffset(const int row)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_ASSERT(row>=0 && row<mHorizontalHeader_OffsetY->length());
+
+    return mHorizontalHeader_OffsetY->at(row);
+}
+
+int CustomFastTableWidget::verticalHeader_columnOffset(const int column)
+{
+    FASTTABLE_DEBUG;
+    FASTTABLE_ASSERT(column>=0 && column<mVerticalHeader_OffsetX->length());
+
+    return mVerticalHeader_OffsetX->at(column);
 }
 
 void CustomFastTableWidget::updateOffsetsX(const int fromIndex)
