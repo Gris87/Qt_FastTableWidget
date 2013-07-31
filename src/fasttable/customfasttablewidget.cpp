@@ -3470,7 +3470,7 @@ void CustomFastTableWidget::unselectColumn(const int column)
     FASTTABLE_END_PROFILE;
 }
 
-void CustomFastTableWidget::searchNext(const QString &pattern, const QTableWidget::SelectionBehavior behaviour, const int column)
+void CustomFastTableWidget::searchNext(const QString &pattern, const QTableWidget::SelectionBehavior behaviour, const int column, const bool centered)
 {
     FASTTABLE_ASSERT(behaviour==QTableWidget::SelectItems || behaviour==QTableWidget::SelectRows);
 
@@ -3536,7 +3536,7 @@ void CustomFastTableWidget::searchNext(const QString &pattern, const QTableWidge
         }
 
         setCurrentCell(aCurRow, aCurColumn);
-        scrollToCurrentCell();
+        scrollToCurrentCell(centered);
     }
     else
     {
@@ -3596,12 +3596,12 @@ void CustomFastTableWidget::searchNext(const QString &pattern, const QTableWidge
         }
 
         setCurrentCell(aCurRow, 0);
-        scrollToCurrentCell();
+        scrollToCurrentCell(centered);
         selectRow(aCurRow);
     }
 }
 
-void CustomFastTableWidget::searchPrevious(const QString &pattern, const QTableWidget::SelectionBehavior behaviour, const int column)
+void CustomFastTableWidget::searchPrevious(const QString &pattern, const QTableWidget::SelectionBehavior behaviour, const int column, const bool centered)
 {
     FASTTABLE_ASSERT(behaviour==QTableWidget::SelectItems || behaviour==QTableWidget::SelectRows);
 
@@ -3667,7 +3667,7 @@ void CustomFastTableWidget::searchPrevious(const QString &pattern, const QTableW
         }
 
         setCurrentCell(aCurRow, aCurColumn);
-        scrollToCurrentCell();
+        scrollToCurrentCell(centered);
     }
     else
     {
@@ -3727,7 +3727,7 @@ void CustomFastTableWidget::searchPrevious(const QString &pattern, const QTableW
         }
 
         setCurrentCell(aCurRow, 0);
-        scrollToCurrentCell();
+        scrollToCurrentCell(centered);
         selectRow(aCurRow);
     }
 }
@@ -5938,7 +5938,7 @@ void CustomFastTableWidget::scrollToBottom()
     FASTTABLE_END_PROFILE;
 }
 
-void CustomFastTableWidget::scrollToCell(const int row, const int column)
+void CustomFastTableWidget::scrollToCell(const int row, const int column, const bool centered)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
@@ -5953,36 +5953,46 @@ void CustomFastTableWidget::scrollToCell(const int row, const int column)
         QSize areaSize=viewport()->size();
         QRect aCellRect=cellRectangle(row, column);
 
-        if (aCellRect.left()-mVerticalHeader_TotalWidth<horizontalScrollBar()->value())
+        if (centered)
         {
-            horizontalScrollBar()->setValue(aCellRect.left()-mVerticalHeader_TotalWidth);
-        }
-        else
-        if (aCellRect.right()>horizontalScrollBar()->value()+areaSize.width())
-        {
-            horizontalScrollBar()->setValue(aCellRect.right()-areaSize.width());
-        }
+            QPoint aCenter=aCellRect.center();
 
-        if (aCellRect.top()-mHorizontalHeader_TotalHeight<verticalScrollBar()->value())
-        {
-            verticalScrollBar()->setValue(aCellRect.top()-mHorizontalHeader_TotalHeight);
+            horizontalScrollBar()->setValue(aCenter.x()-(areaSize.width()>>1));
+            verticalScrollBar()->setValue(aCenter.y()-(areaSize.height()>>1));
         }
         else
-        if (aCellRect.bottom()>verticalScrollBar()->value()+areaSize.height())
         {
-            verticalScrollBar()->setValue(aCellRect.bottom()-areaSize.height());
+            if (aCellRect.left()-mVerticalHeader_TotalWidth<horizontalScrollBar()->value())
+            {
+                horizontalScrollBar()->setValue(aCellRect.left()-mVerticalHeader_TotalWidth);
+            }
+            else
+            if (aCellRect.right()>horizontalScrollBar()->value()+areaSize.width())
+            {
+                horizontalScrollBar()->setValue(aCellRect.right()-areaSize.width());
+            }
+
+            if (aCellRect.top()-mHorizontalHeader_TotalHeight<verticalScrollBar()->value())
+            {
+                verticalScrollBar()->setValue(aCellRect.top()-mHorizontalHeader_TotalHeight);
+            }
+            else
+            if (aCellRect.bottom()>verticalScrollBar()->value()+areaSize.height())
+            {
+                verticalScrollBar()->setValue(aCellRect.bottom()-areaSize.height());
+            }
         }
     }
 
     FASTTABLE_END_PROFILE;
 }
 
-void CustomFastTableWidget::scrollToCurrentCell()
+void CustomFastTableWidget::scrollToCurrentCell(const bool centered)
 {
     FASTTABLE_DEBUG;
     FASTTABLE_START_PROFILE;
 
-    scrollToCell(mCurrentRow, mCurrentColumn);
+    scrollToCell(mCurrentRow, mCurrentColumn, centered);
 
     FASTTABLE_END_PROFILE;
 }

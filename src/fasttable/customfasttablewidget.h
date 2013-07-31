@@ -78,8 +78,8 @@ public:
     virtual void selectColumn(const int column);
     virtual void unselectColumn(const int column);
 
-    void searchNext(const QString &pattern, const QTableWidget::SelectionBehavior behaviour=QTableWidget::SelectItems, const int column=-1);
-    void searchPrevious(const QString &pattern, const QTableWidget::SelectionBehavior behaviour=QTableWidget::SelectItems, const int column=-1);
+    void searchNext(const QString &pattern, const QTableWidget::SelectionBehavior behaviour=QTableWidget::SelectItems, const int column=-1, const bool centered=true);
+    void searchPrevious(const QString &pattern, const QTableWidget::SelectionBehavior behaviour=QTableWidget::SelectItems, const int column=-1, const bool centered=true);
 
     Style style();
     void setStyle(Style style, bool keepColors=false);
@@ -216,7 +216,7 @@ public:
     virtual QRect cellRectangle(const int row, const int column);
     virtual QRect horizontalHeader_CellRectangle(const int row, const int column);
     virtual QRect verticalHeader_CellRectangle(const int row, const int column);
-    void scrollToCell(const int row, const int column);
+    void scrollToCell(const int row, const int column, const bool centered=false);
 
     virtual QString text(const int row, const int column);
     virtual void setText(const int row, const int column, const QString text);
@@ -415,7 +415,7 @@ protected:
 public slots:
     void scrollToTop();
     void scrollToBottom();
-    void scrollToCurrentCell();
+    void scrollToCurrentCell(const bool centered=false);
 
 protected slots:
     void scrollBarValueChanged(int value);
